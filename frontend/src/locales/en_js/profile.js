@@ -5,6 +5,16 @@ export const profile = {
   organization: "Organization",
   title: "Profile",
   likes: "My Favorites",
+  tabs: {
+    all: "All",
+    collections: "Collections",
+    models: "Models",
+    datasets: "Datasets",
+    codes: "Codes",
+    prompts: "Prompts",
+    spaces: "Application Spaces",
+    mcps: "MCPs"
+  },
   menu: {
     accountInformation: "Account Information",
     accessToken: "Access Token",
@@ -17,7 +27,6 @@ export const profile = {
     warningTipDesc: "Are you sure to leave the Settings page unsaved?",
   },
   edit: {
-    userAvatar: "User Avatar",
     uploadAvatar: "Upload Avatar",
     removeAvatar: "Remove Avatar",
     confirmUpdateTitle: "Profile Update",

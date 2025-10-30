@@ -1,9 +1,9 @@
 <template>
   <div
-    class="my-8 md:my-0 md:border-none py-6">
+    class="flex flex-col gap-6 my-8 md:my-0 md:border-none py-6">
     <!-- 展示英文名 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelName') }}
         </div>
@@ -22,11 +22,9 @@
       </div>
     </div>
 
-    <el-divider />
-
     <!-- 更新模型别名 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelNickName') }}
         </div>
@@ -41,6 +39,7 @@
           size="large"
           class="!w-[512px] sm:!w-full" />
         <CsgButton
+          v-if="hasNicknameChanged"
           @click="updateNickname"
           class="btn btn-secondary-gray btn-sm w-fit"
           :name="$t('all.update')"
@@ -48,11 +47,9 @@
       </div>
     </div>
 
-    <el-divider />
-
     <!-- 更新模型简介 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelDesc') }}
         </div>
@@ -68,6 +65,7 @@
           type="textarea"
           class="!w-[512px] sm:!w-full" />
         <CsgButton
+          v-if="hasDescChanged"
           @click="updateModelDesc"
           class="btn btn-secondary-gray btn-sm w-fit"
           :name="$t('all.update')"
@@ -78,8 +76,8 @@
     <el-divider />
 
     <!-- 模型标签 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelTag') }}
         </div>
@@ -125,6 +123,7 @@
             </p>
           </div>
           <CsgButton
+            v-if="hasTagsChanged"
             @click="updateTags"
             class="btn btn-secondary-gray btn-sm w-fit"
             :name="$t('all.update')"
@@ -135,11 +134,9 @@
       </div>
     </div>
 
-    <el-divider />
-
     <!-- 行业标签 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelIndustryTag') }}
         </div>
@@ -189,6 +186,7 @@
             </p>
           </div>
           <CsgButton
+            v-if="hasIndustryTagsChanged"
             @click="updateIndustryTags"
             class="btn btn-secondary-gray btn-sm w-fit"
             :name="$t('all.update')"
@@ -202,8 +200,8 @@
     <el-divider />
 
     <!-- 修改可见性 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.edit.changeVisibility') }}
         </div>
@@ -240,11 +238,10 @@
       </div>
     </div>
 
-    <el-divider />
 
     <!-- 删除模型 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col gap-1.5">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col gap-1.5">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.edit.delModel') }}
         </div>
@@ -324,11 +321,33 @@
         ],
         isUpdatingTags: false,
         isUpdatingIndustryTags: false,
+        originalModelNickname: this.modelNickname || '',
+        originalModelDesc: this.modelDesc || '',
+        originalTags: [],
+        originalIndustryTags: [],
       }
     },
     computed: {
       ...mapState(useRepoDetailStore, ['isPrivate']),
       ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
+      hasNicknameChanged() {
+        return this.theModelNickname.trim() !== this.originalModelNickname.trim()
+      },
+      hasDescChanged() {
+        return this.theModelDesc.trim() !== this.originalModelDesc.trim()
+      },
+      hasTagsChanged() {
+        if (this.originalTags.length !== this.selectedTags.length) return true
+        const originalTagIds = this.originalTags.map(tag => tag.uid).sort()
+        const currentTagIds = this.selectedTags.map(tag => tag.uid).sort()
+        return JSON.stringify(originalTagIds) !== JSON.stringify(currentTagIds)
+      },
+      hasIndustryTagsChanged() {
+        if (this.originalIndustryTags.length !== this.selectedIndustryTags.length) return true
+        const originalTagIds = this.originalIndustryTags.map(tag => tag.uid).sort()
+        const currentTagIds = this.selectedIndustryTags.map(tag => tag.uid).sort()
+        return JSON.stringify(originalTagIds) !== JSON.stringify(currentTagIds)
+      },
       visibilityName: {
         get() {
           return !!this.privateVisibility ? 'Private' : 'Public'
@@ -408,6 +427,13 @@
             return tag
           })
         ]
+        // Store original values for comparison
+        if (this.originalTags.length === 0) {
+          this.originalTags = JSON.parse(JSON.stringify(this.selectedTags))
+        }
+        if (this.originalIndustryTags.length === 0) {
+          this.originalIndustryTags = JSON.parse(JSON.stringify(this.selectedIndustryTags))
+        }
       },
       clickDelete() {
         if (this.delDesc === this.modelPath) {

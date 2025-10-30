@@ -55,7 +55,7 @@ describe('NewCode', () => {
       const wrapper = createWrapper()
       await triggerFormButton(wrapper)
       await waitFor(() => {
-        expect(wrapper.find('.el-form-item__error').text()).toBe( 'Please input Code Name')
+        expect(wrapper.find('.el-form-item__error').text()).toBe( 'Please input Code Repository Name')
       })
     })
 

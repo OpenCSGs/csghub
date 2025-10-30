@@ -41,7 +41,179 @@
   </div>
 
   <div
-    class="border border-gray-200 rounded-md my-8 md:my-0 md:border-none px-6 py-6">
+  class="flex flex-col gap-6 my-8 md:my-0 md:border-none py-6">
+     <!-- 展示英文名 -->
+     <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('application_spaces.name') }}
+        </div>
+        <div class="text-sm text-gray-600 leading-5">
+          {{ $t('application_spaces.nameTips') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <p class="text-gray-700 text-sm">
+          {{ $t('application_spaces.namespaceName') }}
+        </p>
+        <div
+          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-3.5 py-2.5 border">
+          {{ applicationSpacePath }}
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 更新应用空间别名 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('application_spaces.nickname') }}
+        </div>
+        <div class="text-sm text-gray-600 leading-5">
+          {{ $t('application_spaces.edit.tips') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <el-input
+          v-model="theApplicationSpaceNickname"
+          clearable
+          size="large"
+          class="!w-[512px] sm:!w-full" />
+        <CsgButton
+          v-if="hasNicknameChanged"
+          @click="updateNickname"
+          class="btn btn-secondary-gray btn-sm"
+          style="width:fit-content"
+          data-test="update-nickname"
+          :name="$t('all.update')"
+        />
+      </div>
+    </div>
+
+
+    <!-- 更新应用空间简介 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('application_spaces.desc') }}
+        </div>
+        <div class="text-sm text-gray-600 leading-5">
+          {{ $t('application_spaces.edit.tips2') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <el-input
+          v-model="theApplicationSpaceDesc"
+          clearable
+          size="large"
+          type="textarea"
+          class="!w-[512px] sm:!w-full" />
+        <CsgButton
+          v-if="hasDescChanged"
+          @click="updateApplicationSpaceDesc"
+          class="btn btn-secondary-gray btn-sm"
+          style="width:fit-content"
+          data-test="update-description"
+          :name="$t('all.update')"
+        />
+      </div>
+    </div>
+    
+    <el-divider />
+    
+    <!-- 应用标签 -->
+    <div class="flex xl:flex-col gap-8">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('application_spaces.applicationSpaceTag') }}
+        </div>
+        <div class="text-sm font-light text-gray-600 leading-5">
+          {{ $t('application_spaces.edit.tips3') }}
+        </div>
+      </div>
+      <div
+        class="flex flex-col gap-1.5"
+        ref="tagListContainer">
+        <p class="text-gray-700 text-sm">{{ $t('application_spaces.applicationSpaceTag') }}</p>
+        <div class="flex flex-col gap-1.5 w-[512px] md:w-full">
+          <div class="relative">
+            <div
+              class="flex gap-1 flex-wrap items-center w-full border rounded-md border-gray-300 min-h-[40px] p-1.5">
+              <div
+                class="scroll-container flex gap-1 flex-wrap max-h-[120px] overflow-y-auto">
+                <span
+                  v-for="tag in selectedTags"
+                  :key="tag.uid"
+                  class="flex items-center text-sm text-gray-700 gap-1 border rounded-sm border-gray-300 px-1 py-0.5">
+                  {{
+                    this.$i18n.locale === 'zh'
+                      ? tag.zh_name || tag.show_name || tag.name
+                      : tag.name
+                  }}
+                  <el-icon><Close @click="removeTag(tag.uid)" /></el-icon>
+                </span>
+              </div>
+              <input
+                class="w-full max-h-8 outline-none"
+                v-model="tagInput"
+                @focus="handleTagInputFocus"
+                @input="showTagList" />
+            </div>
+            <div
+              v-show="shouldShowTagList"
+              class="absolute top-full left-0 right-0 mt-1 rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-1 px-1.5 z-10">
+              <p
+                v-for="tag in theTagList"
+                @click="selectTag(tag)"
+                class="flex gap-2 items-center cursor-pointer p-2.5 hover:bg-gray-50 rounded">
+                {{
+                  this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name
+                }}
+              </p>
+            </div>
+          </div>
+          <CsgButton
+            v-if="hasTagsChanged"
+            @click="updateTags"
+            class="btn btn-secondary-gray btn-sm w-fit"
+            :name="$t('all.update')"
+            :loading="isUpdatingTags"
+            :disabled="isUpdatingTags"
+          />
+        </div>
+      </div>
+    </div>
+
+    <el-divider />
+
+    <!-- space cluster -->
+    <div class="flex xl:flex-col gap-8 mb-[24px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('application_spaces.new.cluster') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <div class="flex flex-col gap-1.5">
+          <el-select
+            v-model="theClusterId"
+            :placeholder="$t('all.pleaseSelect', { value: $t('application_spaces.new.cluster') })"
+            size="large"
+            class="!w-[512px] sm:!w-full"
+            @change="onClusterSelectChange"
+          >
+            <el-option
+              v-for="item in spaceClusters"
+              :key="item.cluster_id"
+              :label="item.region"
+              :value="item.cluster_id"
+            />
+          </el-select>
+        </div>
+      </div>
+    </div>
+
     <!-- cloud resource -->
     <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -70,6 +242,14 @@
             :disabled="!item.is_available"
           />
         </el-select>
+        <CsgButton
+          v-if="hasClusterOrResourceChanged"
+          @click="updateClusterAndResource"
+          class="btn btn-secondary-gray btn-sm mt-2 w-fit"
+          data-test="update-cluster-resource"
+          :name="$t('all.update')"
+          :disabled="!theCloudResource || !theClusterId || resourcesLoading"
+        />
       </div>
     </div>
 
@@ -102,7 +282,6 @@
       </div>
     </div>
 
-    <el-divider />
 
     <!-- 重启 Space -->
     <div class="flex xl:flex-col gap-[32px]">
@@ -118,86 +297,6 @@
           style="width:fit-content"
           :disabled="notInitialized"
           :name="$t('application_spaces.restart')"
-        />
-      </div>
-    </div>
-
-    <el-divider />
-
-    <!-- 展示英文名 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-5 font-medium">
-          {{ $t('application_spaces.name') }}
-        </div>
-        <div class="text-sm text-gray-600 leading-5">
-          {{ $t('application_spaces.nameTips') }}
-        </div>
-      </div>
-      <div class="flex flex-col gap-1.5">
-        <p class="text-gray-700 text-sm">
-          {{ $t('application_spaces.namespaceName') }}
-        </p>
-        <div
-          class="w-[512px] sm:w-full rounded-md bg-gray-50 px-3.5 py-2.5 border">
-          {{ applicationSpacePath }}
-        </div>
-      </div>
-    </div>
-
-    <el-divider />
-
-    <!-- 更新应用空间别名 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-5 font-medium">
-          {{ $t('application_spaces.nickname') }}
-        </div>
-        <div class="text-sm text-gray-600 leading-5">
-          {{ $t('application_spaces.edit.tips') }}
-        </div>
-      </div>
-      <div class="flex flex-col gap-1.5">
-        <el-input
-          v-model="theApplicationSpaceNickname"
-          clearable
-          size="large"
-          class="!w-[512px] sm:!w-full" />
-        <CsgButton
-          @click="updateNickname"
-          class="btn btn-secondary-gray btn-sm"
-          style="width:fit-content"
-          data-test="update-nickname"
-          :name="$t('all.update')"
-        />
-      </div>
-    </div>
-
-    <el-divider />
-
-    <!-- 更新应用空间简介 -->
-    <div class="flex xl:flex-col gap-[32px]">
-      <div class="w-[380px] sm:w-full flex flex-col">
-        <div class="text-sm text-gray-700 leading-5 font-medium">
-          {{ $t('application_spaces.desc') }}
-        </div>
-        <div class="text-sm text-gray-600 leading-5">
-          {{ $t('application_spaces.edit.tips2') }}
-        </div>
-      </div>
-      <div class="flex flex-col gap-1.5">
-        <el-input
-          v-model="theApplicationSpaceDesc"
-          clearable
-          size="large"
-          type="textarea"
-          class="!w-[512px] sm:!w-full" />
-        <CsgButton
-          @click="updateApplicationSpaceDesc"
-          class="btn btn-secondary-gray btn-sm"
-          style="width:fit-content"
-          data-test="update-description"
-          :name="$t('all.update')"
         />
       </div>
     </div>
@@ -220,6 +319,7 @@
             <el-input v-model="theVariables[name]" size="large" class="!w-[400px] sm:!w-full"></el-input>
           </div>
           <CsgButton
+            v-if="hasVariablesChanged"
             @click="updateVaribles"
             class="btn btn-secondary-gray btn-sm"
             style="width:fit-content"
@@ -249,6 +349,7 @@
             :hideTitle="true"
           />
           <CsgButton
+            v-if="hasEnvChanged"
             @click="updateEnv"
             class="btn btn-secondary-gray btn-sm"
             style="width:fit-content"
@@ -330,7 +431,6 @@
       </div>
     </div>
 
-    <el-divider />
 
     <!-- cover image feature temporarily disabled
     <div class="flex xl:flex-col gap-[32px]">
@@ -440,7 +540,8 @@
       appStatus: String,
       cloudResource: String,
       coverImage: String,
-      variables: Object
+      variables: Object,
+      tags: { type: Object, default: () => ({}) }
     },
 
     components: { ApplicationSpaceEnvEditor },
@@ -452,9 +553,13 @@
         theApplicationSpaceNickname: this.applicationSpaceNickname || '',
         theApplicationSpaceDesc: this.applicationSpaceDesc || '',
         theVariables: this.variables || {},
-        theCloudResource: /^\d+$/.test(this.cloudResource)
-          ? Number(this.cloudResource)
-          : this.cloudResource,
+        theClusterId: this.clusterId || '',
+        theCloudResource: this.cloudResource != null ? String(this.cloudResource) : '',
+        originalApplicationSpaceNickname: this.applicationSpaceNickname || '',
+        originalApplicationSpaceDesc: this.applicationSpaceDesc || '',
+        originalVariables: JSON.stringify(this.variables || {}),
+        originalClusterId: this.clusterId || '',
+        originalCloudResource: this.cloudResource != null ? String(this.cloudResource) : '',
         options: [
           { value: 'Private', label: this.$t('all.private') },
           { value: 'Public', label: this.$t('all.public') }
@@ -472,7 +577,20 @@
         imageUploaded: false,
         envJSON:'',
         secretJSON:'',
-        t: useI18n()
+        t: useI18n(),
+        // tags related
+        tagListContainer: null,
+        theTagList: [],
+        allTagList: [],
+        selectedTags: [],
+        shouldShowTagList: false,
+        tagInput: '',
+        originalEnvJSON: '',
+        originalSecretJSON: '',
+        detailLoaded: false,
+        detailLoading: false,
+        isUpdatingTags: false,
+        originalTags: []
       }
     },
 
@@ -515,6 +633,29 @@
       },
       notInitialized() {
         return this.appStatus === 'NoAppFile'
+      },
+      hasNicknameChanged() {
+        return this.theApplicationSpaceNickname.trim() !== this.originalApplicationSpaceNickname.trim()
+      },
+      hasDescChanged() {
+        return this.theApplicationSpaceDesc.trim() !== this.originalApplicationSpaceDesc.trim()
+      },
+      hasVariablesChanged() {
+        return JSON.stringify(this.theVariables) !== this.originalVariables
+      },
+      hasClusterOrResourceChanged() {
+        return (this.theClusterId !== this.originalClusterId) || 
+               (this.theCloudResource !== this.originalCloudResource)
+      },
+      hasEnvChanged() {
+        return (this.envJSON !== this.originalEnvJSON) || 
+               (this.secretJSON !== this.originalSecretJSON)
+      },
+      hasTagsChanged() {
+        if (this.originalTags.length !== this.selectedTags.length) return true
+        const originalTagIds = this.originalTags.map(tag => tag.uid).sort()
+        const currentTagIds = this.selectedTags.map(tag => tag.uid).sort()
+        return JSON.stringify(originalTagIds) !== JSON.stringify(currentTagIds)
       }
     },
 
@@ -530,12 +671,35 @@
       },
       variables(newVariables, _) {
         this.theVariables = newVariables
+      },
+      tagList: {
+        handler(newTagList) {
+          this.theTagList = newTagList
+        },
+        immediate: true,
+        deep: true
+      },
+      tags: {
+        handler() {
+          this.getSelectTags()
+        },
+        immediate: true,
+        deep: true
       }
     },
     emits: ['showSpaceLogs'],
-    mounted() {
-      this.fetchSpaceResources()
+    async mounted() {
+      await this.fetchClusters()
+      // this.fetchSpaceResources()
       this.fetchSpaceDetail()
+      if (this.tags && Object.keys(this.tags).length > 0) {
+        this.getSelectTags()
+      }
+      document.addEventListener('click', this.collapseTagList)
+      this.getSpaceTags()
+    },
+    beforeUnmount() {
+      document.removeEventListener('click', this.collapseTagList)
     },
     inject: ['fetchRepoDetail'],
     methods: {
@@ -571,17 +735,165 @@
         }
       },
 
-      async fetchSpaceResources() {
-        const { data, error } = await useFetchApi(`/space_resources?cluster_id=${this.clusterId}&deploy_type=0`).json()
+      // tags related methods (mirroring McpSettings.vue)
+      collapseTagList(event) {
+        if (this.$refs.tagListContainer && !this.$refs.tagListContainer.contains(event.target)) {
+          this.shouldShowTagList = false
+        }
+      },
 
+      getSelectTags() {
+        if (!this.tags) return
+        const industryTags = (this.tags.industry_tags || []).map((tag) => {
+          return {
+            ...tag,
+            uid: tag.category + tag.name
+          }
+        })
+        this.selectedTags = industryTags
+        // Store original values for comparison
+        if (this.originalTags.length === 0) {
+          this.originalTags = JSON.parse(JSON.stringify(this.selectedTags))
+        }
+      },
+
+      async getSpaceTags() {
+        const { data, error } = await useFetchApi('/tags?scope=space').json()
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
+        } else {
+          const body = data.value
+          const industryTags = body?.data?.filter(item => item.category === 'industry') || []
+          this.allTagList = industryTags
+          this.theTagList = industryTags
+        }
+      },
+      handleTagInputFocus() {
+        this.theTagList = this.allTagList
+        this.shouldShowTagList = true
+      },
+
+      showTagList() {
+        if (this.tagInput !== '') {
+          const userTriggerTagList = (this.allTagList || []).filter((tag) => {
+            return (
+              (tag.show_name && tag.show_name.includes(this.tagInput)) ||
+              (tag.name && tag.name.includes(this.tagInput))
+            )
+          })
+          this.theTagList = userTriggerTagList
+          this.shouldShowTagList = userTriggerTagList.length > 0
+        } else {
+          this.theTagList = this.allTagList
+          this.shouldShowTagList = true
+        }
+      },
+
+      selectTag(newTag) {
+        const findTag = this.selectedTags.find((tag) => tag.uid === (newTag.category + newTag.name))
+        if (!findTag) {
+          this.selectedTags.push({ 
+            name: newTag.name, 
+            zh_name: newTag.show_name,
+            category: newTag.category,
+            uid: newTag.category + newTag.name
+          })
+          this.tagInput = ''
+          this.shouldShowTagList = false
+        }
+      },
+
+      removeTag(tagUid) {
+        this.selectedTags = this.selectedTags.filter((item) => item.uid !== tagUid)
+      },
+
+      async updateTags() {
+        if (this.isUpdatingTags) return
+        
+        this.isUpdatingTags = true
+        try {
+          const tags = this.selectedTags.map((tag) => tag.name)
+          const options = {
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(tags)
+          }
+          const { error } = await useFetchApi(`/spaces/${this.path}/tags/industry`, options).post().json()
+          if (error.value) {
+            ElMessage({ message: error.value.msg, type: 'warning' })
+          } else {
+            await this.fetchRepoDetail(true)
+            ElMessage({ message: this.$t('all.updateSuccess'), type: 'success' })
+          }
+        } catch (error) {
+        } finally {
+          this.isUpdatingTags = false
+        }
+      },
+
+      async fetchClusters() {
+        const { data, error } = await useFetchApi('/cluster').json()
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
+        } else {
+          const body = data.value
+          this.spaceClusters = body.data || []
+          const preferred = this.clusterId || this.theClusterId || this.spaceClusters[0]?.cluster_id || ''
+          if (preferred !== this.theClusterId) {
+            this.theClusterId = preferred
+          }
+        }
+      },
+
+      async fetchSpaceResources(forcePickFirst = false) {
+        const cid = this.theClusterId || this.clusterId
+        if (!cid) return
+        this.resourcesLoading = true
+        const { data, error } = await useFetchApi(`/space_resources?cluster_id=${cid}&deploy_type=0`).json()
         if (!data.value) {
           ElMessage({
             message: error.value.msg || t('application_spaces.new.failedFetchResources'),
             type: 'warning'
           })
         } else {
-          this.spaceResources = data.value.data
+          const list = data.value.data || []
+          this.spaceResources = list
+          const ids = list.map(item => String(item.id))
+          const current = this.theCloudResource ? String(this.theCloudResource) : ''
+          if (forcePickFirst) {
+            const firstAvailable = list.find(item => item.is_available) || null
+            this.theCloudResource = firstAvailable ? String(firstAvailable.id) : ''
+          } else {
+            if (!current || !ids.includes(current)) {
+              const propVal = this.cloudResource != null ? String(this.cloudResource) : ''
+              if (propVal && ids.includes(propVal)) {
+                this.theCloudResource = propVal
+              } else {
+                const firstAvailable = list.find(item => item.is_available) || null
+                this.theCloudResource = firstAvailable ? String(firstAvailable.id) : ''
+              }
+            }
+          }
+          // Set original values after resource is set
+          if (!this.originalCloudResource && this.theCloudResource) {
+            this.originalCloudResource = this.theCloudResource
+          }
         }
+        this.resourcesLoading = false
+      },
+
+      async updateClusterAndResource() {
+        const rid = Number(this.theCloudResource)
+        if (Number.isNaN(rid)) return
+        
+        const payload = { 
+          cluster_id: this.theClusterId,
+          resource_id: rid
+        }
+        await this.updateApplicationSpace(payload, this.$t('application_spaces.edit.cloudResource'))
+      },
+
+      onClusterSelectChange() {
+        this.fetchSpaceResources(true)
       },
 
       async stopSpace() {
@@ -686,6 +998,9 @@
           if (envJSON) {
             try {
               this.envJSON = envJSON
+              if (!this.originalEnvJSON) {
+                this.originalEnvJSON = envJSON
+              }
             } catch (error) {
               console.log(error)
             }
@@ -693,6 +1008,9 @@
           if (secretJSON) {
             try {
               this.secretJSON = secretJSON
+              if (!this.originalSecretJSON) {
+                this.originalSecretJSON = secretJSON
+              }
             } catch (error) {
               console.log(error)
             }
@@ -826,6 +1144,30 @@
 
       showErrorLogs() {
         this.$emit('showSpaceLogs')
+      }
+    },
+    watch: {
+      clusterId: {
+        handler(cid) {
+          if (cid && this.theClusterId !== cid) {
+            this.theClusterId = cid
+            // Set original clusterId if not set yet
+            if (!this.originalClusterId) {
+              this.originalClusterId = cid
+            }
+            // 同步刷新资源，确保资源列表与下拉展示一致
+            this.fetchSpaceResources()
+          }
+        },
+        immediate: true
+      },
+      cloudResource: {
+        handler(resource) {
+          if (resource != null && !this.originalCloudResource) {
+            this.originalCloudResource = String(resource)
+          }
+        },
+        immediate: true
       }
     }
   }

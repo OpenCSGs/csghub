@@ -6,6 +6,8 @@ export const endpoints = {
   summary: 'Overview',
   logDownload: 'Download Logs',
   gpuMemoryRequired: 'GPU Memory Required: ',
+  gpuMemoryRecommendation: 'Recommended Minimum GPU Memory: ',
+  lowMemory: 'Low Memory',
   detail: {
     endpointUrl: 'Inference Endpoint URL',
     modelId: 'Model ID',

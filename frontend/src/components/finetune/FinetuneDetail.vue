@@ -281,10 +281,7 @@
       }
     })
 
-    const success = await fetchRepoDetail()
-    if (success && repoDetailStore.clusterId) {
-      fetchResources()
-    }
+    await fetchRepoDetail()
   }
 
   const toNotebookPage = () => {
@@ -401,20 +398,13 @@
       await tabChange({ paneName: getDefaultTab() })
     }
 
-    const success = await fetchRepoDetail()
-    if (success) {
-      if (repoDetailStore.clusterId) {
-        fetchResources()
-      }
-
-      if (
-        isStatusSSEConnected.value === false &&
-        allStatus.includes(repoDetailStore.status) &&
-        repoDetailStore.modelId &&
-        repoDetailStore.deployId
-      ) {
-        syncfinetuneStatus()
-      }
+    if (
+      isStatusSSEConnected.value === false &&
+      allStatus.includes(repoDetailStore.status) &&
+      repoDetailStore.modelId &&
+      repoDetailStore.deployId
+    ) {
+      syncfinetuneStatus()
     }
 
     setRepoTab({

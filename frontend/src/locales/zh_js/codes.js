@@ -17,8 +17,7 @@ export const codes = {
     codeNickName: "代码仓库别名",
     codeDesc: "代码仓库简介",
     public: "公开",
-    publicDesc:
-      "任何互联网上的人都可以看到这个仓库。只有你（个人）或你所在组织的成员可以提交。",
+    publicDesc: "任何互联网上的人都可以看到这个仓库。只有你（个人）或你所在组织的成员可以提交。",
     private: "私有",
     privateDesc: "只有你（个人）或你所在组织的成员可以看到并提交到这个仓库。",
     tips: "创建代码仓库后，你可以使用网页或 Git 上传你的文件。",

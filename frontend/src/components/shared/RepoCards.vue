@@ -9,7 +9,9 @@
         :selectedTagType="selectedTagType"
         :externalActiveTags="activeTags"
         @resetTags="resetTags"
-        :repoType="repoType" />
+        @updateCategories="updateTagCategoriesList"
+        :repoType="repoType"
+        ref="tagSidebarRef" />
     </div>
     <div class="pt-8 w-full">
       <div class="flex flex-wrap justify-between items-center gap-2">
@@ -47,7 +49,6 @@
             class="!w-auto min-w-[180px]"
             :placeholder="$t(`${repoType}s.placeholder`)"
             :prefix-icon="Search"
-            @change="filterChange"
             @keyup.enter="filterChange"
             size="large" />
         </div>
@@ -75,7 +76,6 @@
               :label="item.label"
               :value="item.value" />
           </el-select>
-
           <el-select
             v-if="repoType === 'space'"
             :placeholder="$t('spaces.sdkPlaceholder')"
@@ -144,7 +144,7 @@
       <CsgPagination
         :perPage="perPage"
         :currentPage="currentPage"
-        @currentChange="reloadRepos"
+        @currentChange="handlePageChange"
         :total="totalRepos" />
     </div>
   </div>
@@ -167,10 +167,18 @@
   })
 
   const activeTags = ref({})
+  const tagCategoriesList = ref([])
+  const tagSidebarRef = ref(null)
+  
+  const updateTagCategoriesList = (categories) => {
+    if (categories && categories.length > 0) {
+      tagCategoriesList.value = categories
+    }
+  }
 
   const getQueryParams = () => {
     const { searchParams } = new URL(window.location.href)
-    return {
+    const params = {
       tag: searchParams.get('tag') ?? '',
       tagType: searchParams.get('tag_type') ?? '',
       page: parseInt(searchParams.get('page')) || 1,
@@ -180,6 +188,18 @@
       source: searchParams.get('source') ?? 'all',
       sdk: searchParams.get('sdk') ?? ''
     }
+    
+    params.categoryTags = {}
+    
+    const standardParams = ['tag', 'tag_type', 'page', 'search', 'sort', 'filter', 'source', 'sdk', 'tag_category', 'tag_name', 'tag_group', 'list_serverless']
+    
+    for (const [key, value] of searchParams.entries()) {
+      if (!standardParams.includes(key) && value) {
+        params.categoryTags[key] = value.split(',').map(tag => tag.trim().toLowerCase())
+      }
+    }
+    
+    return params
   }
 
   const updateUrlParams = (mode = 'replace') => {
@@ -198,26 +218,20 @@
     
     params.delete('tag_category')
     params.delete('tag_name')
+    params.delete('tag_group')
+    params.delete('tag')
+    params.delete('tag_type')
+    tagCategoriesList.value.forEach(category => {
+      params.delete(category)
+    })
 
-    for (let [category, tags] of Object.entries(activeTags.value)) {
-      if (Array.isArray(tags)) {
-        tags.forEach((tag) => {
-          params.append('tag_category', category)
-          params.append('tag_name', tag.toLowerCase())
-        })
+    for (const [category, tags] of Object.entries(activeTags.value)) {
+      if (Array.isArray(tags) && tags.length > 0) {
+        const tagValues = tags.map(tag => tag.toLowerCase()).join(',')
+        if (tagValues) {
+          params.set(category, tagValues)
+        }
       }
-    }
-
-    if (selectedTag.value) {
-      params.set('tag', selectedTag.value)
-    } else {
-      params.delete('tag')
-    }
-    
-    if (selectedTagType.value) {
-      params.set('tag_type', selectedTagType.value)
-    } else {
-      params.delete('tag_type')
     }
     
     if (mode === 'push') {
@@ -236,41 +250,43 @@
     filterSelection.value = params.filter
     sourceSelection.value = params.source
     searchSdk.value = params.sdk
-    selectedTag.value = params.tag.toLowerCase()
-    selectedTagType.value = params.tagType.toLowerCase()
 
     const url = new URL(window.location.href)
     const sp = url.searchParams
+    const restored = {}
+    
     const categories = sp.getAll('tag_category')
     const names = sp.getAll('tag_name')
-    const restored = {}
     for (let i = 0; i < Math.min(categories.length, names.length); i++) {
       const c = categories[i]
       const n = (names[i] || '').toLowerCase()
       if (!restored[c]) restored[c] = []
       if (n) restored[c].push(n)
     }
+    
+    for (const [category, tags] of Object.entries(params.categoryTags)) {
+      if (!restored[category]) {
+        restored[category] = []
+      }
+      
+      tags.forEach(tag => {
+        if (!restored[category].includes(tag)) {
+          restored[category].push(tag)
+        }
+      })
+    }
+    
     activeTags.value = restored
 
-    let count = 0
-    let onlyOneTag = ''
-    let onlyOneCategory = ''
-    for (let [category, tgs] of Object.entries(activeTags.value)) {
-      if (Array.isArray(tgs)) {
-        tgs.forEach((tag) => {
-          count += 1
-          if (count === 1) {
-            onlyOneTag = tag
-            onlyOneCategory = category
-          }
-        })
-      }
-    }
-    if (count === 1) {
-      selectedTag.value = onlyOneTag
-      selectedTagType.value = onlyOneCategory
-    } else if (count > 1) {
-      // 多选时清空单选字段，避免歧义
+    const categoriesWithTags = Object.entries(activeTags.value).filter(
+      ([_, tgs]) => Array.isArray(tgs) && tgs.length > 0
+    )
+    
+    if (categoriesWithTags.length === 1) {
+      const [category, tgs] = categoriesWithTags[0]
+      selectedTag.value = tgs.join(',')
+      selectedTagType.value = category
+    } else {
       selectedTag.value = ''
       selectedTagType.value = ''
     }
@@ -293,7 +309,6 @@
   const loading = ref(true)
   const windowWidth = ref(window.innerWidth)
 
-  // 监听窗口大小变化
   const updateWindowWidth = () => {
     windowWidth.value = window.innerWidth
   }
@@ -393,23 +408,15 @@
 
   const resetTags = (tags) => {
     activeTags.value = tags
-    let onlyOneTag = ''
-    let onlyOneCategory = ''
-    let count = 0
-    for (let [category, tgs] of Object.entries(activeTags.value)) {
-      if (Array.isArray(tgs)) {
-        tgs.forEach((tag) => {
-          count += 1
-          if (count === 1) {
-            onlyOneTag = tag.toLowerCase()
-            onlyOneCategory = category
-          }
-        })
-      }
-    }
-    if (count === 1) {
-      selectedTag.value = onlyOneTag
-      selectedTagType.value = onlyOneCategory
+    
+    const categoriesWithTags = Object.entries(activeTags.value).filter(
+      ([_, tgs]) => Array.isArray(tgs) && tgs.length > 0
+    )
+    
+    if (categoriesWithTags.length === 1) {
+      const [category, tgs] = categoriesWithTags[0]
+      selectedTag.value = tgs.map(tag => tag.toLowerCase()).join(',')
+      selectedTagType.value = category
     } else {
       selectedTag.value = ''
       selectedTagType.value = ''
@@ -417,13 +424,30 @@
 
     currentPage.value = 1
     updateUrlParams('push')
-    reloadRepos(1)
+    reloadRepos()
   }
 
   const filterChange = () => {
     currentPage.value = 1
-    updateUrlParams('push')
-    reloadRepos(1)
+    
+    const currentUrl = new URL(window.location.href)
+    const newUrl = new URL(window.location.href)
+    const newParams = newUrl.searchParams
+    
+    newParams.set('page', '1')
+    newParams.set('search', nameFilterInput.value)
+    newParams.set('sort', sortSelection.value)
+    newParams.set('filter', filterSelection.value)
+    newParams.set('source', sourceSelection.value)
+    if (props.repoType === 'space') {
+      newParams.set('sdk', searchSdk.value)
+    }
+    
+    if (currentUrl.toString() !== newUrl.toString()) {
+      updateUrlParams('push')
+    }
+    
+    reloadRepos()
   }
 
   const handleSpaceGuideClick = () => {
@@ -432,12 +456,18 @@
 
   const handleMcpGuideClick = () => {
     window.open('https://opencsg.com/docs/mcp/mcp_intro', '_blank')
-  } 
+  }
+
+  const handlePageChange = (page) => {
+    reloadRepos(page, true)
+  }
   
-  const reloadRepos = (childCurrent) => {
+  const reloadRepos = (childCurrent, shouldUpdateUrl = false) => {
     if (childCurrent) {
       currentPage.value = childCurrent
-      updateUrlParams('replace')
+      if (shouldUpdateUrl) {
+        updateUrlParams('push')
+      }
     }
     
     let url = `/${props.repoType}s`
@@ -466,9 +496,14 @@
     }
 
     for (let [category, tags] of Object.entries(activeTags.value)) {
-      tags.forEach((tag) => {
-        url = url + `&tag_category=${category}&tag_name=${tag.toLowerCase()}`
-      })
+      if (Array.isArray(tags)) {
+        tags.forEach((tag) => {
+          url = url + `&tag_category=${category}&tag_name=${tag.toLowerCase()}`
+          if(props.repoType === 'model'){
+            url = url + `&tag_group=`
+          }
+        })
+      }
     }
 
     url = url + `&source=${sourceSelection.value === 'all' ? '' : sourceSelection.value}`
@@ -511,6 +546,13 @@
 
   const handlePopState = () => {
     initializeFromParams()
+    
+    if (tagSidebarRef.value) {
+      nextTick(() => {
+        tagSidebarRef.value.syncUIFromActiveTags()
+      })
+    }
+    
     reloadRepos()
   }
 
@@ -518,6 +560,7 @@
     window.addEventListener('resize', updateWindowWidth)
     window.addEventListener('popstate', handlePopState)
     
+    updateUrlParams('replace')
     reloadRepos()
   })
 

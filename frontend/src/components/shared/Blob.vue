@@ -179,8 +179,20 @@
       class="border border-t-0 border-gray-200 rounded-b"
     >
       <div
-        class="text-xs text-gray-700 px-4 py-2 flex items-center justify-end border-b border-gray-200"
+        class="text-xs text-gray-700 px-4 py-2 flex items-center justify-between border-b border-gray-200"
       >
+        <div class="flex items-center gap-4">
+          <div
+            v-if="canWrite"
+            class="flex items-center gap-1 cursor-pointer hover:underline"
+          >
+            <SvgIcon name="delete" />
+            <a
+              @click.prevent="deleteFile"
+              >{{ $t('all.delete') }}</a
+            >
+          </div>
+        </div>
         <div>{{ formatBytes(size) }}</div>
       </div>
       <div
