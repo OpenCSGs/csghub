@@ -74,6 +74,12 @@
               <div class="flex">
                 <div
                   class="mr-[12px] hover:underline cursor-pointer"
+                  @click="delTemplate(item.name, item.id)"
+                >
+                  {{ t('prompts.del') }}
+                </div>
+                <div
+                  class="mr-[12px] hover:underline cursor-pointer"
                   @click="router.push(`/datapipelines/createTemplate?url=customize&type=copy&templateId=${item.id}`)"
                 >
                   {{ t('dataPipelines.copy') }}
@@ -109,7 +115,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import useFetchApi from "../../../../packs/useFetchApi";
 import { useI18n } from "vue-i18n";
 
@@ -131,7 +137,7 @@ const router = useRouter();
 
 const searchForm = ref({
   page: 1,
-  page_size: 100,
+  page_size: 1000,
   buildin: false // true 内置
 })
 
@@ -144,7 +150,6 @@ const getTemplatesListFun = async () => {
   const url = `/dataflow/algo_templates?${params.toString()}`
 
   const { data } = await useFetchApi(url).get().json();
-  console.log('data=', data.value.templates)
   if (data.value) {
     const res = data.value.data.templates;
     templateList.value = res;
@@ -174,6 +179,34 @@ const handleDelete = async (id) => {
     getTemplatesListFun();
   }
 };
+
+const delTemplate = (name, id) => {
+  ElMessageBox.confirm(
+    t('dataPipelines.delTemplateTips', { name }),
+    t("dataPipelines.delTemplateTitle"),
+    {
+      confirmButtonText: t("dataPipelines.confirm"),
+      cancelButtonText: t("dataPipelines.cancel"),
+      type: 'warning',
+    }
+  )
+    .then(async () => {
+      const url = `/dataflow/algo_templates/${id}`;
+      const { data, error } = await useFetchApi(url).delete().json();
+      if (data.value.code === 200) {
+        ElMessage({
+          message: t('dataPipelines.delSuccess'),
+          type: "success",
+        });
+        getTemplatesListFun();
+      } else {
+        ElMessage({
+          message: `${t('dataPipelines.delFailed')}: ${error.value.msg}`,
+          type: "error",
+        });
+      }
+    })
+}
 
 onMounted(() => {
   getTemplatesListFun();

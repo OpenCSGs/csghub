@@ -1196,7 +1196,7 @@ const submit = (type) => {
               }
               // Mongodb
               if (typeId.value === 2) {
-                params.extra_config.hive = getSelectedData().map(
+                params.extra_config.mongo = getSelectedData().map(
                   (item) => item.table_name
                 );
 
