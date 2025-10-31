@@ -1679,12 +1679,12 @@
       })
     }
 
-    // 按拓扑顺序生成YAML节点，使用operator_name作为键
+    // 按拓扑顺序生成YAML节点，使用节点的唯一ID作为键
     sortedNodes.forEach(nodeId => {
       const node = nodes.value.find(n => n.id === nodeId)
       if (node) {
-        // 使用operator_name作为键，如果operator_name无效则回退到id
-        const nodeKey = node.operator_name || node.id
+        // 使用节点的唯一ID作为键，避免重复
+        const nodeKey = node.id
 
         // 处理节点配置中的数组字段，转为逗号分隔字符串
         const processedConfigs = (node.configs || []).map(config => {
@@ -1698,7 +1698,7 @@
             }
           }
           return config
-        });
+        })
 
         console.log('processedConfigs=', processedConfigs)
         
