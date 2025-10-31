@@ -301,6 +301,47 @@
       </div>
     </div>
 
+    <el-divider />
+
+    <!-- min replica -->
+    <div class="flex xl:flex-col gap-8">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('endpoints.settings.minReplica') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <p class="text-gray-700 text-sm">
+          {{ $t('endpoints.settings.currentMinReplica') }}
+        </p>
+        <el-select
+          v-model="theMinReplica"
+          :placeholder="$t('all.select')"
+          size="large"
+          class="!w-[512px] sm:!w-full"
+          :disabled="!isSpaceStopped"
+        >
+          <el-option
+            :key="0"
+            :label="0"
+            :value="0"
+          />
+          <el-option
+            :key="1"
+            :label="1"
+            :value="1"
+          />
+        </el-select>
+        <CsgButton
+          v-if="hasMinReplicaChanged"
+          @click="updateMinReplica"
+          class="btn btn-secondary-gray btn-sm w-fit"
+          :name="$t('all.update')"
+          :disabled="!isSpaceStopped"
+        />
+      </div>
+    </div>
+
     <!-- docker space variables -->
     <el-divider v-if="theVariables && Object.keys(theVariables).length > 0"/>
     <div v-if="theVariables && Object.keys(theVariables).length > 0">
@@ -541,7 +582,8 @@
       cloudResource: String,
       coverImage: String,
       variables: Object,
-      tags: { type: Object, default: () => ({}) }
+      tags: { type: Object, default: () => ({}) },
+      minReplica: Number
     },
 
     components: { ApplicationSpaceEnvEditor },
@@ -555,11 +597,13 @@
         theVariables: this.variables || {},
         theClusterId: this.clusterId || '',
         theCloudResource: this.cloudResource != null ? String(this.cloudResource) : '',
+        theMinReplica: this.minReplica != null ? this.minReplica : 0,
         originalApplicationSpaceNickname: this.applicationSpaceNickname || '',
         originalApplicationSpaceDesc: this.applicationSpaceDesc || '',
         originalVariables: JSON.stringify(this.variables || {}),
         originalClusterId: this.clusterId || '',
         originalCloudResource: this.cloudResource != null ? String(this.cloudResource) : '',
+        originalMinReplica: this.minReplica != null ? this.minReplica : 0,
         options: [
           { value: 'Private', label: this.$t('all.private') },
           { value: 'Public', label: this.$t('all.public') }
@@ -656,6 +700,9 @@
         const originalTagIds = this.originalTags.map(tag => tag.uid).sort()
         const currentTagIds = this.selectedTags.map(tag => tag.uid).sort()
         return JSON.stringify(originalTagIds) !== JSON.stringify(currentTagIds)
+      },
+      hasMinReplicaChanged() {
+        return this.theMinReplica !== this.originalMinReplica
       }
     },
 
@@ -1103,6 +1150,11 @@
         this.updateApplicationSpace(payload,this.$t('application_spaces.edit.spaceVariables'))
       },
 
+      updateMinReplica() {
+        const payload = { min_replica: this.theMinReplica }
+        this.updateApplicationSpace(payload, this.$t('endpoints.settings.minReplica'))
+      },
+
       async updateApplicationSpace(payload,field) {
         const applicationSpaceUpdateEndpoint = `/spaces/${this.path}`
         const options = {
@@ -1165,6 +1217,17 @@
         handler(resource) {
           if (resource != null && !this.originalCloudResource) {
             this.originalCloudResource = String(resource)
+          }
+        },
+        immediate: true
+      },
+      minReplica: {
+        handler(newVal) {
+          if (newVal != null) {
+            this.theMinReplica = newVal
+            if (this.originalMinReplica === (this.minReplica != null ? this.minReplica : 0)) {
+              this.originalMinReplica = newVal
+            }
           }
         },
         immediate: true
