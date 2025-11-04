@@ -122,5 +122,15 @@ export const endpoints = {
     one_w: "最近 1 周",
     usageInPercent: "用量百分比",
     usageInGb: "用量GB",
+  },
+  timeDurations: {
+    '10mins': '最近 10 分鐘',
+    '30mins': '最近 30 分鐘',
+    '1hour': '最近 1 小時',
+    '6hours': '最近 6 小時',
+    '1day': '最近 1 天',
+    '2days': '最近 2 天',
+    '1week': '最近 1 週',
+    'all': '全部'
   }
 }

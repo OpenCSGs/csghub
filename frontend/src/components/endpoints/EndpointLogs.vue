@@ -1,20 +1,36 @@
 <template>
   <div class="my-4">
     <div class="flex justify-between items-center pb-2">
-      <el-select
-        v-model="currentInstance"
-        placeholder="Select"
-        class="!w-[240px] mb-1 ml-1"
-        size="large"
-        @change="refreshInstanceLogs"
-      >
-        <el-option
-          v-for="instance in instances"
-          :key="instance.name"
-          :label="instance.name"
-          :value="instance.name"
-        />
-      </el-select>
+      <div class="flex justify-start items-center gap-3">
+        <el-select
+          v-model="currentInstance"
+          placeholder="Select"
+          class="!w-[240px] mb-1 ml-1"
+          size="large"
+          @change="refreshInstanceLogs"
+        >
+          <el-option
+            v-for="instance in instances"
+            :key="instance.name"
+            :label="instance.name"
+            :value="instance.name"
+          />
+        </el-select>
+        <el-select
+          v-model="timeDuration"
+          placeholder="Select"
+          class="!w-[150px] mb-1"
+          size="large"
+          @change="reloadTimeLogs"
+        >
+          <el-option
+            v-for="time in timeSelectObj"
+            :key="time"
+            :label="$t(`endpoints.timeDurations.${time}`)"
+            :value="time"
+          />
+        </el-select>
+      </div>
       <CsgButton
         class="btn btn-primary btn-sm"
         :name="$t('endpoints.logDownload')"
@@ -54,6 +70,8 @@
   const currentInstance = computed(() => {
     return repoDetailStore.activeInstance
   })
+  const timeSelectObj = ['10mins', '30mins', '1hour', '6hours', '1day', '2days', '1week','all']
+  const timeDuration = ref('10mins')
 
   watch([() => props.modelId, () => props.deployId], () => {
     if (currentInstance.value && isLogsSSEConnected.value === false) {
@@ -67,8 +85,12 @@
     }
   })
 
+  const reloadTimeLogs = ()=>{
+    syncInstanceLogs(currentInstance.value)
+  }
+
   const syncInstanceLogs = (instanceName) => {
-    fetchEventSource(`${csghubServer}/api/v1/models/${props.modelId}/run/${props.deployId}/logs/${instanceName}`, {
+    fetchEventSource(`${csghubServer}/api/v1/models/${props.modelId}/run/${props.deployId}/logs/${instanceName}?since=${timeDuration.value=='all'?'':timeDuration.value}`, {
       openWhenHidden: true,
       headers: {
         Authorization: `Bearer ${cookies.get('user_token')}`,

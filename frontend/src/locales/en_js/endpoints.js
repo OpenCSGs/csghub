@@ -122,5 +122,15 @@ export const endpoints = {
     one_w: "Last 1 week",
     usageInPercent: "Usage in percent",
     usageInGb: "Usage in GB",
+  },
+  timeDurations: {
+    '10mins': 'Last 10mins',
+    '30mins': 'Last 30mins',
+    '1hour': 'Last 1hour',
+    '6hours': 'Last 6hours',
+    '1day': 'Last 1day',
+    '2days': 'Last 2days',
+    '1week': 'Last 1week',
+    'all': "All"
   }
 }
