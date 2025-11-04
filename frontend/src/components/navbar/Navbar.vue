@@ -570,7 +570,9 @@
           />
           <span class="text-md text-gray-700">{{ $t('navbar.checkAll') }}</span>
         </div>
-        <div v-if="hasSelectedMessages" class="flex items-center justify-end gap-4">
+        <div
+          v-if="hasSelectedMessages"
+          class="flex items-center justify-end gap-4">
           <CsgButton
             v-if="hasUnreadSelectedMessages"
             :disabled="buttonsDisabled"
@@ -598,7 +600,12 @@
     <div
       class="msg-list-container h-[calc(100vh-200px)] overflow-y-auto"
       ref="msgListContainer"
-      @scroll="handleScroll">
+      @scroll="handleScroll"
+      :style="{
+        'height': `calc(100% - 170px)`,
+        'overflow-y': 'auto',
+        'padding-bottom': '20px'
+      }">
       <div
         v-for="(item, index) in msgList"
         :key="index"
@@ -616,8 +623,22 @@
                 :name="`${item.notification_type}-message`"
                 class="w-10 h-10" />
               <div class="text-sm">
-                <p :class="item.is_read ? 'text-gray-500 font-normal' : 'text-gray-700 font-medium'" class="line-clamp-1 hover:underline">{{ item.title }}</p>
-                <p :class="item.is_read ? 'text-gray-500 font-light' : 'text-gray-600 font-light'" class="line-clamp-1 hover:underline">
+                <p
+                  :class="
+                    item.is_read
+                      ? 'text-gray-500 font-normal'
+                      : 'text-gray-700 font-medium'
+                  "
+                  class="line-clamp-1 hover:underline">
+                  {{ item.title }}
+                </p>
+                <p
+                  :class="
+                    item.is_read
+                      ? 'text-gray-500 font-light'
+                      : 'text-gray-600 font-light'
+                  "
+                  class="line-clamp-1 hover:underline">
                   {{ item.click_action_url }}
                 </p>
               </div>
@@ -746,7 +767,7 @@
       </el-form>
     </div>
     <div
-      class=" border-t border-gray-200 flex justify-end items-center gap-3 p-6">
+      class="border-t border-gray-200 flex justify-end items-center gap-3 p-6">
       <CsgButton
             class="btn btn-secondary-gray btn-md flex-1"
             :name="$t('navbar.userSetCancel')"
@@ -799,6 +820,10 @@
       const { cookies } = useCookies()
 
       return {
+        currencyObj: {
+          USD: '$',
+          CNY: '¥'
+        },
         selectAll: false,
         selectedItems: [],
         showUserSet: false,
@@ -920,7 +945,38 @@
         return this.selectedItems.length > 0
       },
       hasUnreadSelectedMessages() {
-        return this.selectedItems.some(item => !item.is_read)
+        return this.selectedItems.some((item) => !item.is_read)
+      },
+      showEmailMissingOrPhoneMissing() {
+        if (isEE()) return false
+        if (isOverseas()) return false
+        return (
+          this.initialized &&
+          this.isLoggedIn &&
+          (!this.hasEmail || !this.hasPhone) &&
+          !this.canChangeUsername
+        )
+      },
+      showUsernameNeedChange() {
+        if (isEE()) return false
+        if (isOverseas()) return false
+        return (
+          this.initialized &&
+          this.isLoggedIn &&
+          this.canChangeUsername &&
+          this.hasEmail &&
+          this.hasPhone
+        )
+      },
+      showUsernameAndEmailOrPhoneMissing() {
+        if (isEE()) return false
+        if (isOverseas()) return false
+        return (
+          this.initialized &&
+          this.isLoggedIn &&
+          this.canChangeUsername &&
+          (!this.hasEmail || !this.hasPhone)
+        )
       }
     },
     methods: {
@@ -1144,34 +1200,260 @@
         this.hasNewMassage = false
         this.getNewMsg()
       },
+      formatNotification(notification) {
+        if (notification.title && notification.content) {
+          return {
+            title: notification.title,
+            content: notification.content
+          }
+        }
+
+        switch (notification.template) {
+          case 'user-verify':
+            return {
+              title: this.$t('notification.userVerify.title'),
+              content:
+                notification.payload.verify_status === 'approved'
+                  ? this.$t('notification.userVerify.approved')
+                  : this.$t('notification.userVerify.rejected')
+            }
+
+          case 'org-verify':
+            return {
+              title: this.$t('notification.orgVerify.title'),
+              content:
+                notification.payload.verify_status === 'approved'
+                  ? this.$t('notification.orgVerify.approved')
+                  : this.$t('notification.orgVerify.rejected')
+            }
+
+          case 'org-member': {
+            const { operation, org_name, user_name, new_role } =
+              notification.payload
+            if (operation === 'add') {
+              return {
+                title: this.$t('notification.orgMember.changeTitle'),
+                content: this.$t('notification.orgMember.memberAdded', {
+                  user: user_name,
+                  org: org_name
+                })
+              }
+            } else if (operation === 'remove') {
+              return {
+                title: this.$t('notification.orgMember.changeTitle'),
+                content: this.$t('notification.orgMember.memberRemoved', {
+                  user: user_name,
+                  org: org_name
+                })
+              }
+            } else {
+              return {
+                title: this.$t('notification.orgMember.roleChangeTitle'),
+                content: this.$t('notification.orgMember.roleUpdated', {
+                  user: user_name,
+                  role: new_role,
+                  org: org_name
+                })
+              }
+            }
+          }
+
+          case 'discussion':
+            return {
+              title: this.$t('notification.discussion.title', {
+                type: notification.payload.repo_type
+              }),
+              content: this.$t('notification.discussion.content', {
+                type: notification.payload.repo_type
+              })
+            }
+
+          case 'recharge':
+            let status = notification.payload.status
+              ? this.$t(`notification.status.${notification.payload.status}`)
+              : ''
+            let currency = notification.payload.currency
+              ? this.currencyObj[notification.payload.currency]
+              : ''
+            return {
+              title: this.$t('notification.recharge.title', { status: status }),
+              content: this.$t('notification.recharge.content', {
+                orderNo: notification.payload.order_no,
+                status: status,
+                currency: currency,
+                amount: notification.payload.amount || ''
+              })
+            }
+
+          case 'low-balance':
+            return {
+              title: this.$t('notification.lowBalance.title'),
+              content: this.$t('notification.lowBalance.content', {
+                amount: notification.payload.amount,
+                currency: window.currencyName
+              })
+            }
+
+          case 'inviter-pending-award':
+            return {
+              title: this.$t('notification.invitationPending.title'),
+              content: this.$t('notification.invitationPending.content', {
+                amount: notification.payload.amount,
+                currency: window.currencyName
+              })
+            }
+          case 'inviter-award':
+            return {
+              title: this.$t('notification.invitationAward.title'),
+              content: this.$t('notification.invitationAward.content', {
+                amount: notification.payload.amount,
+                currency: window.currencyName
+              })
+            }
+          case 'invitee-award':
+            return {
+              title: this.$t('notification.inviteeAward.title'),
+              content: this.$t('notification.inviteeAward.content', {
+                amount: notification.payload.amount,
+                currency: window.currencyName
+              })
+            }
+          case 'invitation-award-cancelled':
+            return {
+              title: this.$t('notification.invitationCancel.title'),
+              content: this.$t('notification.invitationCancel.content', {
+                amount: notification.payload.amount,
+                currency: window.currencyName
+              })
+            }
+
+          case 'deployment':
+            const { deploy_type, git_path, deploy_name, deploy_id } =
+              notification.payload
+            switch (deploy_type) {
+              case 'space':
+                return {
+                  title: this.$t('notification.deployment.spaceTitle', {
+                    path: git_path
+                  }),
+                  content: this.$t('notification.deployment.spaceContent', {
+                    path: git_path
+                  })
+                }
+              case 'inference':
+                return {
+                  title: this.$t('notification.deployment.inferenceTitle', {
+                    deploy_name: deploy_name,
+                    deploy_id: deploy_id
+                  }),
+                  content: this.$t('notification.deployment.inferenceContent', {
+                    deploy_name: deploy_name,
+                    deploy_id: deploy_id
+                  })
+                }
+              case 'finetune':
+                return {
+                  title: this.$t('notification.deployment.finetuneTitle', {
+                    deploy_name: deploy_name,
+                    deploy_id: deploy_id
+                  }),
+                  content: this.$t('notification.deployment.finetuneContent', {
+                    deploy_name: deploy_name,
+                    deploy_id: deploy_id
+                  })
+                }
+              case 'evaluation':
+                return {
+                  title: this.$t('notification.deployment.evaluationTitle', {
+                    deploy_name: deploy_name
+                  }),
+                  content: this.$t(
+                    'notification.deployment.evaluationContent',
+                    { deploy_name: deploy_name }
+                  )
+                }
+              case 'serverless':
+                return {
+                  title: this.$t('notification.deployment.serverlessTitle'),
+                  content: this.$t('notification.deployment.serverlessContent')
+                }
+              default:
+                return {
+                  title: this.$t('notification.default.title'),
+                  content: this.$t('notification.default.content')
+                }
+            }
+
+          case 'asset-management': {
+            const { operation, repo_path, repo_type } = notification.payload
+            if (['create', 'delete', 'add'].includes(operation)) {
+              return {
+                title: this.$t(`notification.asset.${operation}Title`, {
+                  type: repo_type,
+                  path: repo_path
+                }),
+                content: this.$t(`notification.asset.${operation}Content`, {
+                  type: repo_type,
+                  path: repo_path
+                })
+              }
+            }
+          }
+
+          default:
+            return {
+              title: this.$t('notification.default.title'),
+              content: this.$t('notification.default.content')
+            }
+        }
+      },
       async getNewMsg() {
         if (!this.cookies.get('login_identity')) return
         if (this.pollTimer) {
           clearTimeout(this.pollTimer)
           this.pollTimer = null
         }
+        
+        // 防止重复调用
+        if (this.isPolling) {
+          return
+        }
+        
+        this.isPolling = true
         this.getMsgNum()
         const { data, error } = await useFetchApi(
           `/notifications/poll/1?timezone=${this.timezone}`
         ).json()
+        this.isPolling = false
         if (data.value) {
-          this.newMsg =
+          const rawMsg =
             data.value.data.data?.length > 0 ? data.value.data.data[0] : null
 
-          const pollTime = new Date(data.value.data.next_poll_time).getTime()
-          const now = Date.now()
-
-          const delay = Math.max(0, pollTime - now)
-
-          this.pollTimer = setTimeout(() => {
-            if (!this.hasNewMassage) {
-              this.getNewMsg()
+          if (rawMsg) {
+            const formattedMsg = this.formatNotification(rawMsg)
+            this.newMsg = {
+              ...rawMsg,
+              title: formattedMsg.title,
+              content: formattedMsg.content
             }
-          }, delay)
 
-          if (this.newMsg) {
-            this.hasNewMassage = true
-            this.showMsgList = false
+            const pollTime = new Date(data.value.data.next_poll_time).getTime()
+            const now = Date.now()
+
+            const delay = Math.max(0, pollTime - now)
+
+            this.pollTimer = setTimeout(() => {
+              if (!this.hasNewMassage) {
+                this.getNewMsg()
+              }
+            }, delay)
+
+            if (this.newMsg.title || this.newMsg.content) {
+              this.hasNewMassage = true
+              this.showMsgList = false
+            }
+          } else {
+            this.newMsg = { title: '', content: '' }
           }
         } else {
           this.pollTimer = setTimeout(() => {
@@ -1181,40 +1463,80 @@
           }, 300000)
         }
       },
+
       async getMsgList(reset = false) {
         if (this.loading || this.noMore) return
 
+        // 防止短时间内重复调用
+        if (this.msgListLoading) {
+            return
+        }
+
         this.loading = true
+        this.msgListLoading = true
 
         try {
-          const { data } = await useFetchApi(`/notifications?notification_type=${this.selectedFilter === 'all' ? '' : this.selectedFilter}&page=${this.currentPage}&page_size=${this.pageSize}&title=${this.searchText || ''}&unread_only=${this.onlyUnread}`).get().json()
+          const { data } = await useFetchApi(
+            `/notifications?notification_type=${
+              this.selectedFilter === 'all' ? '' : this.selectedFilter
+            }&unread_only=${this.onlyUnread}&page=1&page_size=500`
+          )
+            .get()
+            .json()
 
           if (data.value?.data) {
             this.msgNum = data.value.data.unread_count
-            const newMessages = data.value.data.messages.map(msg => ({
+            const allMessages = data.value.data.messages.map((msg) => {
+              const formatted = this.formatNotification(msg)
+              return {
                 ...msg,
+                title: formatted.title,
+                content: formatted.content,
                 checked: false
-            }))
-            
-            if (reset) {
-              this.msgList = newMessages
-            } else {
-              this.msgList = [...this.msgList, ...newMessages]
-            }
-            
-            this.currentPage++
+              }
+            })
 
-            if (data.value.data.messages.length < this.pageSize) {
-              this.noMore = true
+            if (this.searchText) {
+              const searchTextLower = this.searchText.toLowerCase()
+              this.allMsgCache = allMessages.filter(
+                (msg) =>
+                  msg.title.toLowerCase().includes(searchTextLower) ||
+                  msg.content.toLowerCase().includes(searchTextLower)
+              )
+            } else {
+              this.allMsgCache = allMessages
             }
+
+            if (reset || !this.allMsgCache) {
+              this.currentPage = 1
+              this.noMore = false
+            }
+
+            // load first page
+            this.loadMoreMessages()
           } else {
             this.noMore = true
             this.msgNum = 0
+            this.allMsgCache = []
           }
         } catch (error) {
           console.error('获取消息失败:', error)
         } finally {
           this.loading = false
+          this.msgListLoading = false
+        }
+      },
+
+      loadMoreMessages() {
+        const startIdx = (this.currentPage - 1) * this.pageSize
+        const endIdx = startIdx + this.pageSize
+        const newMessages = this.allMsgCache.slice(startIdx, endIdx)
+
+        this.msgList = [...this.msgList, ...newMessages]
+        this.currentPage++
+
+        if (endIdx >= this.allMsgCache.length) {
+          this.noMore = true
         }
       },
 
@@ -1225,14 +1547,14 @@
 
         if (
           scrollTop > this.lastScrollTop &&
-          scrollHeight - (scrollTop + clientHeight) < scrollThreshold
+          scrollHeight - (scrollTop + clientHeight) < scrollThreshold &&
+          !this.noMore
         ) {
-          this.getMsgList()
+          this.loadMoreMessages()
         }
 
         this.lastScrollTop = scrollTop
       },
-
       resetList() {
         this.msgList = []
         this.currentPage = 1
