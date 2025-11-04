@@ -17,5 +17,11 @@ export const errors_page = {
   },
   serverError: {
     title: 'Server Error {errorCode}'
+  },
+  conflict:{
+    title: 'Resource Conflict',
+    decName: 'Username {username} already exists',
+    dec: 'Email {username} already exists',
+    contact: 'Please try another login method or contact '
   }
 }
