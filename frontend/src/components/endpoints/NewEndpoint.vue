@@ -304,7 +304,6 @@
   import EngineArgs from './EngineArgs.vue'
   import { fetchResourcesInType } from '../shared/deploy_instance/fetchResourceInCategory'
   import ResourceSelector from '../shared/deploy_instance/ResourceSelector.vue'
-  import BalanceInsufficientDialog from '../dialog/BalanceInsufficientDialog.vue'
   import { Vue3Lottie } from 'vue3-lottie'
   import lightAnimation from '../../assets/animations/light.json'
 

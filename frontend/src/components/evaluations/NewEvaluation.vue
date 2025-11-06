@@ -346,7 +346,6 @@
   import { useI18n } from 'vue-i18n'
   import { fetchResourcesInType } from '../shared/deploy_instance/fetchResourceInCategory'
   import ResourceSelector from '../shared/deploy_instance/ResourceSelector.vue'
-  import BalanceInsufficientDialog from '../dialog/BalanceInsufficientDialog.vue'
 
   const props = defineProps({
     namespace: String

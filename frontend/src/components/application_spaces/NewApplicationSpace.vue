@@ -411,7 +411,6 @@
   import useUserStore from '../../stores/UserStore'
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
   import ApplicationSpaceEnvEditor from './ApplicationSpaceEnvEditor.vue'
-  import BalanceInsufficientDialog from '../dialog/BalanceInsufficientDialog.vue'
   import ResourceSelector from '../shared/deploy_instance/ResourceSelector.vue'
   const props = defineProps({
     licenses: Array
