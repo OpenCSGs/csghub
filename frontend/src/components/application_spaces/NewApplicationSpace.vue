@@ -335,25 +335,16 @@
           class="w-full !mb-0"
           :label="$t('application_spaces.new.cloudResource')"
         >
-          <el-select
-            v-model="dataForm.cloud_resource"
-            :placeholder="
-              t('all.pleaseSelect', {
-                value: t('application_spaces.new.cloudResource')
-              })
-            "
-            size="large"
-            style="width: 100%"
-            @change="resourceChange"
-          >
-            <el-option
-              v-for="item in spaceResources"
-              :key="item.name"
-              :label="item.name"
-              :value="item.id"
-              :disabled="!item.is_available"
-            />
-          </el-select>
+          <ResourceSelector
+            :category-resources="spaceResources"
+            v-model:selected="dataForm.cloud_resource"
+            :model-min-gpu-memory="0"
+            :show-indicator="false"
+            :show-type="false"
+            :show-price="false"
+            display-name-field="label"
+            value-format="id"
+          />
           <p class="text-gray-600 mt-[8px] font-light">
             {{ $t('application_spaces.new.cloudResourceDesc1') }}
           </p>
@@ -413,13 +404,15 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed } from 'vue'
+  import { ref, onMounted, inject, computed, watch } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi'
   import useUserStore from '../../stores/UserStore'
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
   import ApplicationSpaceEnvEditor from './ApplicationSpaceEnvEditor.vue'
+  import BalanceInsufficientDialog from '../dialog/BalanceInsufficientDialog.vue'
+  import ResourceSelector from '../shared/deploy_instance/ResourceSelector.vue'
   const props = defineProps({
     licenses: Array
   })
@@ -657,6 +650,11 @@
   const resourceChange = (e) => {
     handleResourceType(e)
   }
+
+  // 监听资源变化，保持与原先 @change 行为一致
+  watch(() => dataForm.value.cloud_resource, (e) => {
+    resourceChange(e)
+  })
 
   const handleResourceType = (resourceId) => {
     const flatResources = spaceResources.value.flatMap((group) => group.options)

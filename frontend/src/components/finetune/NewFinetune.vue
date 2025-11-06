@@ -85,10 +85,7 @@
           :label="t('finetune.new.cluster')"
           class="w-full"
           prop="cluster_id">
-          <div class="w-full flex items-center justify-start gap-[36px]">
-            <div v-if="Array.isArray(typeList)&&typeList.length>0" class="flex items-center justify-start gap-1">
-              <p v-for="item in typeList" :key="item" class="px-3 py-2 cursor-pointer text-md font-medium rounded-sm" :class="activeType==item?'bg-gray-50 text-gray-700':'bg-white text-gray-500'" @click="setActiveType(item)">{{item}}</p>
-            </div>
+          <div class="w-full flex flex-row sm:flex-col items-start sm:items-start justify-start gap-4 sm:gap-4 mb-4">
             <el-select
               v-model="dataForm.cluster_id"
               :placeholder="
@@ -112,14 +109,11 @@
                 {{ $t('finetune.new.clusterDec2') }}
               </p>
           </div>
-          <div class="grid grid-cols-4 items-center gap-6 mb-6 md:grid-cols-2">
-            <div v-for="item in selResourceList" :key="item.id" class="flex flex-col items-center gap-2 text-center p-4 rounded-2xl border bg-white relative overflow-hidden shadow-lg" :class="[item.is_available?'cursor-pointer':'cursor-not-allowed',dataForm.resource_id==`${item.id}/${item.order_detail_id}`?'border-brand-500':(item.is_available?'border-gray-500':'border-gray-300')]" @click="changeCloudResource(item)">
-              <i class="block w-[24px] h-[4px] rounded-xs bg-gray-400 shadow-sm"/>
-              <p class="text-md font-medium" :class="item.is_available?'text-gray-700':'text-gray-500'">{{item.resources[activeType.toLowerCase()]?.type}}</p>
-              <p class="text-md" :class="item.is_available?'text-gray-700':'text-gray-500'">{{item.name}}</p>
-              <p class="text-gray-500 text-md">{{item.priceValue}}</p>
-            </div>
-          </div>
+          <ResourceSelector
+            :category-resources="finetuneResources"
+            v-model:selected="dataForm.resource_id"
+            :model-min-gpu-memory="minGpuMemory"
+          />
           <div class="flex flex-col mt-2">
             <p
               v-if="minGpuMemory"
@@ -207,6 +201,8 @@
   import useFetchApi from '@/packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
   import { fetchResourcesInType } from '../shared/deploy_instance/fetchResourceInCategory'
+  import ResourceSelector from '../shared/deploy_instance/ResourceSelector.vue'
+  import BalanceInsufficientDialog from '../dialog/BalanceInsufficientDialog.vue'
   import { Vue3Lottie } from 'vue3-lottie'
   import lightAnimation from '../../assets/animations/light.json'
 
@@ -241,9 +237,7 @@
   const animationData = ref(lightAnimation)
   const lottieRef = ref(null)
   const isPlaying = ref(false)
-  const typeList = ref([])
-  const activeType = ref('')
-  const selResourceList = ref([])
+  
   const rules = ref({
     deploy_name: [
       {
@@ -305,9 +299,7 @@
     const categoryResources = await fetchResourcesInType(dataForm.value.cluster_id, 2)
     const firstAvailableResource = categoryResources.flatMap(item => item.options).find((item) => item.is_available)
     finetuneResources.value = categoryResources
-    typeList.value = categoryResources.map(item=>item.label)
-    activeType.value = typeList.value[0]||''
-    selResourceList.value = categoryResources.find(item=>item.label == activeType.value)?.options||[]
+    // 资源类型标签与选项选择逻辑由 ResourceSelector 组件内部处理
     if (firstAvailableResource) {
       dataForm.value.resource_id = `${firstAvailableResource.id}/${firstAvailableResource.order_detail_id}`
       resetCurrentRuntimeFramework()
@@ -317,15 +309,9 @@
     }
   }
 
-  const setActiveType = (type)=>{
-    activeType.value = type
-    selResourceList.value = finetuneResources.value.find(item=>item.label == activeType.value)?.options||[]
-  }
+  
 
-  const changeCloudResource = (item)=>{
-    dataForm.value.resource_id = `${item.id}/${item.order_detail_id}`
-    resetCurrentRuntimeFramework()
-  }
+  
 
   const resetCurrentRuntimeFramework = async () => {
     // if we have current runtime framework
@@ -457,6 +443,11 @@
         loading.value = false
       })
   }
+
+  // 当资源选择变化时，重置框架版本（保持与原行为一致）
+  watch(() => dataForm.value.resource_id, () => {
+    resetCurrentRuntimeFramework()
+  })
 
   const submitFinetuneForm = async () => {
     const options = {
