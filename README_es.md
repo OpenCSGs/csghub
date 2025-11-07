@@ -36,7 +36,7 @@ Para ayudar a los usuarios a familiarizarse rápidamente con CSGHub, hemos produ
 
 - **Usuarios que desean explorar rápidamente:** Pueden experimentar la versión SaaS gratuita de CSGHub en el sitio web de [OpenCSG](https://opencsg.com). Consulte esta [guía de inicio rápido](./docs/csghub_saas_zh.md) para administrar grandes modelos y conjuntos de datos a través de la interfaz de CSGHub SaaS e implementar aplicaciones de grandes modelos.
 
-- **Para usuarios que buscan más práctica:** Consulten la [documentación oficial de CSGHub](https://opencsg.com/docs/csghub/101/introduction). Actualmente, la documentación proporciona métodos de instalación con [Docker Compose](https://opencsg.com/docs/csghub/101/install/install_csghub_by_docker)  y [Helm Chart](https://opencsg.com/docs/csghub/101/install/install_csghub_by_helm).
+- **Para usuarios que buscan más práctica:** Consulten la [documentación oficial de CSGHub](https://opencsg.com/docs/csghub/101/introduction). Actualmente, la documentación proporciona métodos de instalación con [Docker Compose](https://opencsg.com/docs/en/csghub/101/install/docker/overview)  y [Helm Chart](https://opencsg.com/docs/en/csghub/101/install/kubernetes/overview).
 
     _Para más información y tutoriales avanzados, consulten el Centro de [Documentación de OpenCSG](https://opencsg.com/docs/intro)._
 

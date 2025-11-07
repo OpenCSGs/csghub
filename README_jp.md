@@ -36,7 +36,7 @@ CSGHub の主要な機能と使い方を素早く理解していただくため�
 
 - **探索したい方：** [OpenCSGのウェブサイト](https://opencsg.com)で、CSGHubの無料SaaS版を試用できます。[クイックスタートガイド](./docs/csghub_saas_en.md)を参考にして、CSGHub SaaSインターフェースを使い、LLMやデータセットの管理とLLMアプリケーションのデプロイをお試しください。
 
-- **さらに実践したいユーザー向け:** [CSGHub公式ドキュメント](https://opencsg.com/docs/csghub/101/introduction)を参照してください。このドキュメントでは現在、[Docker Compose](https://opencsg.com/docs/csghub/101/install/install_csghub_by_docker)と[Helm Chart](https://opencsg.com/docs/csghub/101/install/install_csghub_by_helm)を使用したインストール方法が紹介されています。
+- **さらに実践したいユーザー向け:** [CSGHub公式ドキュメント](https://opencsg.com/docs/csghub/101/introduction)を参照してください。このドキュメントでは現在、[Docker Compose](https://opencsg.com/docs/en/csghub/101/install/docker/overview)と[Helm Chart](https://opencsg.com/docs/en/csghub/101/install/kubernetes/overview)を使用したインストール方法が紹介されています。
 
     _詳細情報と高度なチュートリアルについては、[OpenCSGドキュメントセンター](https://opencsg.com/docs/intro)を参照してください。_
 
