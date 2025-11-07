@@ -344,7 +344,7 @@
   import { ElInput, ElMessage } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
-  import { fetchResourcesInType } from '../shared/deploy_instance/fetchResourceInCategory'
+  import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory'
   import ResourceSelector from '../shared/deploy_instance/ResourceSelector.vue'
 
   const props = defineProps({
