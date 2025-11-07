@@ -36,7 +36,7 @@ CSGHub 를 빠르게 익힐 수 있도록 주요 기능과 사용 방법을 소�
 
 - **탐색을 원하는 사용자:** [OpenCSG 웹사이트](https://opencsg.com)에서 CSGHub의 무료 SaaS 버전을 사용해 보세요. [간단한 빠른 시작 가이드](./docs/csghub_saas_en.md)를 참조하여 CSGHub SaaS 인터페이스로 LLM과 데이터셋을 관리하고 LLM 애플리케이션을 배포해 보세요.
 
-- **추가 연습을 원하는 사용자:** [CSGHub 공식 문서](https://opencsg.com/docs/csghub/101/introduction)를 참조하세요. 이 문서는 현재 [Docker Compose](https://opencsg.com/docs/csghub/101/install/install_csghub_by_docker) 및 [Helm Chart](https://opencsg.com/docs/csghub/101/install/install_csghub_by_helm)를 사용한 설치 방법을 제공합니다.
+- **추가 연습을 원하는 사용자:** [CSGHub 공식 문서](https://opencsg.com/docs/csghub/101/introduction)를 참조하세요. 이 문서는 현재 [Docker Compose](https://opencsg.com/docs/en/csghub/101/install/docker/overview) 및 [Helm Chart](https://opencsg.com/docs/en/csghub/101/install/kubernetes/overview) 를 사용한 설치 방법을 제공합니다.
 
     _자세한 내용 및 고급 튜토리얼은 [OpenCSG 문서 센터](https://opencsg.com/docs/intro)를 참조하세요._
 
