@@ -123,6 +123,7 @@
               {{ t("dataPipelines.customTemplate") }}
             </el-menu-item>
             <el-menu-item
+              v-if="isadmin"
               index="3-3"
               @click="handleClickMenu('/datapipelines/operatorManagement')"
             >
@@ -205,6 +206,7 @@ const router = useRouter();
 const route = useRoute();
 const routes = router.getRoutes();
 const currentRoute = ref("1-1");
+const isadmin = ref(false);
 const menuRoutes = {
   // "/datapipelines/dataCollectionTask": "1-1",
   "/datapipelines/dataSourceManagement": "1-1",
@@ -241,10 +243,18 @@ function handleResize() {
 }
 onMounted(() => {
   handleResize();
+  getAdminStatus();
   window.addEventListener("resize", handleResize);
   const currentPath = router.currentRoute.value.path;
   currentRoute.value = menuRoutes[currentPath] || "1-1";
 });
+
+const getAdminStatus = async () => {
+  const { data } = await useFetchApi(`/dataflow/operator/isAdmin/torf`, {})
+    .get()
+    .json();
+  isadmin.value = data.value.data.isadmin;
+};
 
 const jump = async () => {
   const loading = ElLoading.service({
@@ -265,7 +275,6 @@ const jump = async () => {
   loading.close();
   console.log(data, "datadatadata");
   if (data.value?.code === 200) {
-    // http://192.168.10.37:8080/user/login1/?email=${userStore.username}@qq.com
     window.open(
       `${data.value.data}`,
       "_blank"

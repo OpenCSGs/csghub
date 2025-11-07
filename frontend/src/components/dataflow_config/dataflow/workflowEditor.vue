@@ -52,7 +52,7 @@
                     draggable="true"
                     @dragstart="onDragStart($event, node)"
                   >
-                    <img :src="origin + node.icon" class="node-preview">
+                    <img :src="`data:image/png;base64,${node.pic_base64}`" class="node-preview">
                     <el-tooltip
                       :content="node.display_name"
                       placement="bottom-start"
@@ -129,7 +129,7 @@
       v-model="configsDrawer"
       :title="selectedNode ? selectedNode.display_name : t('dataPipelines.nodeConfig')"
       direction="rtl"
-      :before-close="configsDrawerClose"
+      :before-close="handleBeforeClose"
       :size="drawerWidth"
       style="height: calc(100% - 81px);"
     >
@@ -199,17 +199,21 @@
   import { ref, onMounted, onUnmounted, computed, defineProps, defineExpose, watch } from 'vue'
   import * as G6 from '@antv/g6'
   import { ElMessage } from 'element-plus'
+  import useUserStore from "@/stores/UserStore";
   import useFetchApi from "@/packs/useFetchApi";
   import DynamicForm from './components/dynamicForm.vue'
   import jsYaml from 'js-yaml';
   import zhOps from "../../../locales/zh_js/operator_zh.json";
   import enOps from "../../../locales/en_js/operator_en.json";
+  import zhHantOps from '../../../locales/zh_hant_js/operator_zhHant.json'
   import { useI18n } from "vue-i18n";
   const { t, locale } = useI18n();
   const operatorI18n = {
     zh: zhOps,
     en: enOps,
+    zhHant: zhHantOps
   };
+  const userStore = useUserStore();
   const origin = window.location.origin + '/'; 
   const configsDrawer = ref(false)
   const drawerWidth = ref('410px')
@@ -310,11 +314,13 @@
   // 查询当前用户所在的组织
   const getUserInfo = async () => {
     try {
-      const { data } = await useFetchApi(`/user/root`).get().json()
+      const { data } = await useFetchApi(`/user/${userStore.username}`).get().json()
       const { orgs } = data.value.data
       if (orgs) {
          const orgPaths = orgs.map(org => org.path).join(',') || ''
          await getOperatorList(orgPaths)
+      } else {
+        await getOperatorList()
       }
     } catch (error) {
       console.error('获取用户信息失败:', error)
@@ -322,7 +328,7 @@
   }
 
   // 获取节点列表
-  const getOperatorList = async (orgPaths) => {
+  const getOperatorList = async (orgPaths = '') => {
     try {
       isLoading.value = true
       const full_path = orgPaths ? `?full_path=${orgPaths}` : ''
@@ -491,7 +497,7 @@
             y: -height/2 + 10,
             width: 40,
             height: 40,
-            img: origin + cfg.icon,
+            img: cfg.icon,
             cursor: 'move',
             radius: 12,
             // crossorigin: 'anonymous',
@@ -1329,7 +1335,7 @@
             operator_name: node.operator_name,
             display_name: i18nData?.name || node.display_name || node.operator_name,
             configs: configs,
-            icon: origin + node.icon,
+            icon: node.icon,
             color: node.color || '#ccc',
             x: node.position?.x || Math.random() * 300,
             y: node.position?.y || Math.random() * 300,
@@ -1361,6 +1367,15 @@
     configsDrawer.value = false
     tabsValue.value = 'config'
     logLevelval.value = 'all'
+  }
+
+  // 处理抽屉关闭前的事件
+  const handleBeforeClose = async (done) => {
+    await dynamicFormRefs.value.handleSave()
+    done();
+    configsDrawer.value = false;
+    tabsValue.value = 'config';
+    logLevelval.value = 'all';
   }
   
   // 处理键盘事件
@@ -1403,7 +1418,7 @@
       operator_name: node.operator_name,
       display_name: node.display_name,
       configs: node.configs,
-      icon: node.icon,
+      icon: node.pic_base64,
       color: node.color || "#ccc"
     }))
     event.dataTransfer.effectAllowed = 'copy'
@@ -1431,7 +1446,7 @@
         configs: data.configs,
         operator_name: data.operator_name,
         display_name: data.display_name,
-        icon: data.icon,
+        icon: `data:image/png;base64,${data.icon}`,
         color: data.color,
         x: point.x,
         y: point.y
@@ -1664,21 +1679,38 @@
       })
     }
 
-    // 按拓扑顺序生成YAML节点，使用operator_name作为键
+    // 按拓扑顺序生成YAML节点，使用节点的唯一ID作为键
     sortedNodes.forEach(nodeId => {
       const node = nodes.value.find(n => n.id === nodeId)
       if (node) {
-        // 使用operator_name作为键，如果operator_name无效则回退到id
-        const nodeKey = node.operator_name || node.id
+        // 使用节点的唯一ID作为键，避免重复
+        const nodeKey = node.id
+
+        // 处理节点配置中的数组字段，转为逗号分隔字符串
+        const processedConfigs = (node.configs || []).map(config => {
+          if (config.config_type === 'select-v2' && Array.isArray(config.final_value)) {
+            const arrayStr = config.final_value
+              .map(item => `'${item}'`)
+              .join(', ')
+            return {
+              ...config,
+              final_value: `[${arrayStr}]`
+            }
+          }
+          return config
+        })
+
+        console.log('processedConfigs=', processedConfigs)
+        
         dsl.process[nodeKey] = {
           id: node.id,
           operator_id: node.operatorId,
           operator_type: node.operator_type,
           operator_name: node.operator_name,
           display_name: node.display_name,
-          icon: node.icon,
+          icon: node.icon.includes('data:image/png;base64,') ? node.icon : `data:image/png;base64,${node.icon}`,
           position: { x: node.x, y: node.y },
-          configs: node.configs || []
+          configs: processedConfigs
         }
       }
     })
@@ -1792,8 +1824,23 @@
   }
 
   const formatTimestamp = (timestamp) => {
+    // 检查时间戳是否为 null、undefined 或无效值
+    if (timestamp === null || timestamp === undefined || timestamp === '') {
+      return '-';
+    }
+    
+    // 检查时间戳是否为有效数字
+    if (typeof timestamp !== 'number' || isNaN(timestamp)) {
+      return '-';
+    }
+    
     // 检查时间戳是否为秒级
     const date = new Date(timestamp > 9999999999 ? timestamp : timestamp * 1000);
+    
+    // 检查日期对象是否有效
+    if (isNaN(date.getTime())) {
+      return '-';
+    }
 
     // 格式化年、月、日、时、分、秒
     const year = date.getFullYear();

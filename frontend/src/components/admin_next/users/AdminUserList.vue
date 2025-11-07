@@ -3,7 +3,7 @@
     <!-- search & filter -->
     <div class="flex items-center gap-3 w-full">
       <el-input v-model="keyword" :placeholder="$t('admin.name') + ',' + $t('admin.email') + ',' + $t('admin.phone')" size="large" :prefix-icon="Search"
-        @input="searchUsers" />
+        @input="debouncedSearch" />
     </div>
     <Table
       :data="users"
@@ -51,7 +51,8 @@
 
 <script setup>
 import { Container, Pagination, Table } from '../admin_component'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
+import { debounce } from 'lodash'
 import { Search } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 import useFetchApi from '../../../packs/useFetchApi'
@@ -76,6 +77,12 @@ const searchUsers = () => {
   page.value = 1
   fetchUsers()
 }
+
+const debouncedSearch = debounce(searchUsers, 500)
+
+onUnmounted(() => {
+  debouncedSearch.cancel()
+})
 
 const showDetail = (row) => {
   window.location.href = `/admin_panel/users/${row.username}`

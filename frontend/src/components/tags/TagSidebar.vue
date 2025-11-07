@@ -6,6 +6,7 @@
         :name="category.name"
         :zhName="category.show_name"
         :activeCategory="activeNavItem"
+        :activeTags="activeTags"
         @changeActiveItem="changeActiveItem" />
     </div>
     <div>
@@ -28,14 +29,17 @@
   import { ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import TagCategory from './TagCategory.vue'
-
   const props = defineProps({
     repoType: String,
     selectedTag: String,
-    selectedTagType: String
+    selectedTagType: String,
+    externalActiveTags: {
+      type: Object,
+      default: () => ({})
+    }
   })
 
-  const emit = defineEmits(['resetTags'])
+  const emit = defineEmits(['resetTags', 'updateCategories'])
 
   const { t } = useI18n()
 
@@ -58,7 +62,13 @@
   const activeTags = ref({})
 
   const avaliableCategories = computed(() => {
-    return tagCategories.value.filter((c) => c.scope === props.repoType && c.enabled && c.name !== 'publisher')
+    return tagCategories.value.filter((c) => {
+      // 当repoType为mcp时，过滤掉runmode类别
+      if (props.repoType === 'mcp' && c.name === 'runmode') {
+        return false
+      }
+      return c.scope === props.repoType && c.enabled && c.name !== 'publisher'
+    })
   })
 
   watch(avaliableCategories,
@@ -66,6 +76,7 @@
       if (newValue.length > 0 && newValue[0]?.name) {
         activeNavItem.value = newValue[0].name
       }
+      emit('updateCategories', newValue.map(item => item.name))
     }
   )
 
@@ -94,13 +105,20 @@
 
   const setTagNameFromParams = () => {
     if (props.selectedTagType && props.selectedTag) {
+      const tags = props.selectedTag.split(',').map(t => t.trim()).filter(t => t)
       if (activeTags.value[props.selectedTagType] === undefined) {
-        activeTags.value[props.selectedTagType] = []
-        activeTags.value[props.selectedTagType].push(props.selectedTag)
+        activeTags.value[props.selectedTagType] = tags
+        return true
       } else if (Array.isArray(activeTags.value[props.selectedTagType])) {
-        activeTags.value[props.selectedTagType].push(props.selectedTag)
+        tags.forEach(tag => {
+          if (!activeTags.value[props.selectedTagType].includes(tag)) {
+            activeTags.value[props.selectedTagType].push(tag)
+          }
+        })
+        return true
       }
     }
+    return false
   }
 
   const setTagTypeFromParams = () => {
@@ -111,9 +129,51 @@
 
   const emitTagFromParams = () => {
     setTagTypeFromParams()
-    setTagNameFromParams()
-    emitTag()
+    const changed = setTagNameFromParams()
+    if (changed) emitTag()
   }
+
+  const syncUIFromActiveTags = () => {
+    const categoriesWithTags = Object.entries(activeTags.value).filter(
+      ([_, tags]) => Array.isArray(tags) && tags.length > 0
+    )
+    
+    const currentCategoryTags = activeTags.value[activeNavItem.value]
+    const currentHasTags = Array.isArray(currentCategoryTags) && currentCategoryTags.length > 0
+    
+    if (!currentHasTags) {
+      if (categoriesWithTags.length > 0) {
+        activeNavItem.value = categoriesWithTags[0][0]
+      } else {
+        if (avaliableCategories.value.length > 0) {
+          activeNavItem.value = avaliableCategories.value[0].name
+        }
+      }
+    }
+  }
+
+  defineExpose({
+    syncUIFromActiveTags
+  })
+
+  watch(
+    () => props.externalActiveTags,
+    (val) => {
+      activeTags.value = JSON.parse(JSON.stringify(val || {}))
+    },
+    { deep: true, immediate: true }
+  )
+
+  watch(
+    () => [props.selectedTag, props.selectedTagType],
+    ([tag, type]) => {
+      if (type && tag) {
+        activeNavItem.value = type
+        const tags = tag.split(',').map(t => t.trim()).filter(t => t)
+        activeTags.value = { [type]: tags }
+      }
+    }
+  )
 
   async function fetchTags() {
     const params = new URLSearchParams({
@@ -180,10 +240,3 @@
     // }
   })
 </script>
-
-<style scoped>
-  .active-type {
-    box-shadow: 0px 0px 0px 4px rgba(152, 162, 179, 0.14);
-    border-radius: var(--border-radius-sm);
-  }
-</style>

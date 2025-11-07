@@ -8,6 +8,8 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 import 'element-plus/dist/index.css'
 import './assets/stylesheets/element-plus/_variables.css'
+import "./assets/stylesheets/element-plus/index.css";
+import "./assets/stylesheets/element-plus/dropdown.css";
 import './assets/stylesheets/markdown.css'
 import './style.css'
 import { createWebHistory, createRouter } from "vue-router";
@@ -288,13 +290,20 @@ const routes = [
       repoName: route.params.name
     })
   },
-  { 
-    path: '/mcp/servers/:namespace/:name', 
+  {
+    path: '/mcp/servers/:namespace/:name',
     component: RepoDetail,
-    props: (route) => ({ 
+    props: (route) => ({
       repoType: 'mcp',
       namespace: route.params.namespace,
       repoName: route.params.name
+    })
+  },
+  {
+    path: '/profile/:username',
+    component: Profile,
+    props: (route) => ({
+      username: route.params.username
     })
   }
 

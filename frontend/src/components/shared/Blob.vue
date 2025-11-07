@@ -1,5 +1,10 @@
 <template>
-  <div class="min-h-[300px] py-8 md:px-5">
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('repo.loading')" 
+  />
+  
+  <div v-if="!isDataLoading" class="min-h-[300px] py-8 md:px-5">
     <div class="flex items-center justify-between">
       <div class="flex items-center flex-wrap gap-4">
         <BranchDropdown
@@ -174,8 +179,20 @@
       class="border border-t-0 border-gray-200 rounded-b"
     >
       <div
-        class="text-xs text-gray-700 px-4 py-2 flex items-center justify-end border-b border-gray-200"
+        class="text-xs text-gray-700 px-4 py-2 flex items-center justify-between border-b border-gray-200"
       >
+        <div class="flex items-center gap-4">
+          <div
+            v-if="canWrite"
+            class="flex items-center gap-1 cursor-pointer hover:underline"
+          >
+            <SvgIcon name="delete" />
+            <a
+              @click.prevent="deleteFile"
+              >{{ $t('all.delete') }}</a
+            >
+          </div>
+        </div>
         <div>{{ formatBytes(size) }}</div>
       </div>
       <div
@@ -249,6 +266,7 @@
   import TextViewer from './viewers/TextViewer.vue'
   import CodeViewer from './viewers/CodeViewer.vue'
   import BranchDropdown from './BranchDropdown.vue'
+  import LoadingSpinner from './LoadingSpinner.vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
   import useFetchApi from '../../packs/useFetchApi'
   import resolveContent from '../../packs/resolveContent'
@@ -256,6 +274,7 @@
   import { createAndClickAnchor } from '../../packs/utils'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
   import { copyToClipboard } from '@/packs/clipboard'
+  import { ToNotFoundPage } from '@/packs/utils'
 
   const props = defineProps({
     // branches: Object,
@@ -283,6 +302,8 @@
   const lastCommit = ref({})
   const currentBranch = ref(props.currentBranch)
   const currentPath = ref(props.currentPath || '')
+  
+  const isDataLoading = ref(false)
 
   let prefixPath = document.location.pathname.split('/')[1]
   let apiPrefixPath = document.location.pathname.split('/')[1]
@@ -350,7 +371,6 @@
     const isLastItem = index === breadcrumb.value.length - 1
     
     if (isLastItem) {
-      // 如果是最后一个面包屑项（当前文件），导航到blob页面
       const query = {
         tab: 'files',
         actionName: 'blob',
@@ -372,7 +392,6 @@
       
       fetchFileContent()
     } else {
-      // 否则导航到文件列表页面
       const query = {
         tab: 'files',
         actionName: 'files',
@@ -475,10 +494,42 @@
   }
 
   const fetchFileContent = async () => {
+    if (isDataLoading.value) {
+      return false
+    }
+    
+    isDataLoading.value = true
+    
     try {
-      const { data, error } = await useFetchApi(
+      const { response, data, error } = await useFetchApi(
         `/${apiPrefixPath}/${props.namespacePath}/blob/${currentPath.value}?ref=${currentBranch.value}`
       ).json()
+
+      if (response.value.status === 404) {
+        setRepoTab({
+          actionName: 'files',
+          lastPath: '',
+          fileNotFound: {
+            show: true,
+            fileName: currentPath.value,
+            branchName: currentBranch.value
+          }
+        })
+        
+        const query = {
+          tab: 'files',
+          actionName: 'files'
+        }
+        if (currentBranch.value) {
+          query.branch = currentBranch.value
+        }
+        
+        router.push({
+          path: router.currentRoute.value.path,
+          query
+        })
+        return false
+      }
 
       if (data.value) {
         const result = data.value
@@ -486,15 +537,30 @@
         detectFileType()
         updateFileData(result.data)
         lfsContentRegex()
+        return true
       } else {
-        console.log(error.value.msg)
+        ElMessage({
+          message: error.value.msg || t('shared.fetchFileError'),
+          type: 'warning'
+        })
+        return false
       }
     } catch (err) {
-      console.error(err)
+      ElMessage({
+        message: t('shared.fetchFileError'),
+        type: 'error'
+      })
+      return false
+    } finally {
+      isDataLoading.value = false
     }
   }
 
   const lfsDownload = async () => {
+    if (isDataLoading.value) {
+      return
+    }
+    
     const url = `/${apiPrefixPath}/${props.namespacePath}/download/${lfsRelativePath.value}?ref=${currentBranch.value}&lfs=true&lfs_path=${lfsRelativePath.value}&save_as=${currentPath.value}`
 
     try {
@@ -515,6 +581,10 @@
   }
 
   const normalFileDownload = async () => {
+    if (isDataLoading.value) {
+      return
+    }
+    
     const url = `/${apiPrefixPath}/${props.namespacePath}/download/${path.value}?ref=${currentBranch.value}`
 
     try {
@@ -535,6 +605,10 @@
   }
 
   const deleteFile = async () => {
+    if (isDataLoading.value) {
+      return
+    }
+    
     ElMessageBox.confirm(
       t('shared.deleteFileConfirm'),
       t('shared.deleteFile'),
@@ -580,11 +654,11 @@
       .catch(() => {})
   }
 
-  const init = () => {
-    fetchFileContent()
+  const init = async () => {
+    await fetchFileContent()
   }
 
   onMounted(() => {
-    fetchFileContent()
+    init()
   })
 </script>

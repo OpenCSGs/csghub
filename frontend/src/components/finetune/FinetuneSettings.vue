@@ -139,6 +139,7 @@
           {{ $t('finetune.detail.settings.resourcesTip3') }}
         </p>
         <el-select
+          v-if="cloudResources.length > 0"
           v-model="currentResource"
           :placeholder="$t('all.select')"
           size="large"
@@ -158,6 +159,11 @@
               :disabled="!item.is_available" />
           </el-option-group>
         </el-select>
+        <el-skeleton v-else animated class="!w-[512px] sm:!w-full">
+          <template #template>
+            <el-skeleton-item variant="text" style="height: 40px" />
+          </template>
+        </el-skeleton>
       </div>
     </div>
 
@@ -244,9 +250,14 @@ const currentResource = computed(() => {
   })
 
   const currentResourceDetail = computed(() => {
-    return cloudResources.value.find((resource) => {
-      return resource.id === currentResource.value
-    })
+    // cloudResources 是分组数组，需要在 options 中查找
+    for (const group of cloudResources.value) {
+      const found = group.options?.find((resource) => {
+        return resource.id === currentResource.value
+      })
+      if (found) return found
+    }
+    return null
   })
 
   const currentCid = computed(() => {
@@ -275,8 +286,9 @@ const currentResource = computed(() => {
     return ['Stopped'].includes(props.appStatus)
   })
 
-  watch(currentCid, (newVal) => {
-    if (newVal) {
+  // 监听 clusterId 变化，只在真正变化时才重新加载
+  watch(() => props.finetune?.clusterId, (newVal, oldVal) => {
+    if (newVal && newVal !== oldVal) {
       fetchResources()
     }
   })
@@ -309,6 +321,8 @@ const currentResource = computed(() => {
   }
 
   const fetchResources = async () => {
+    if (!currentCid.value) return
+    
     // finetune can only use none cpu resources, so passing deploy type 2, means resoruces fit for finetune
     const categoryResources = await fetchResourcesInCategory(currentCid.value, 2)
     cloudResources.value = categoryResources

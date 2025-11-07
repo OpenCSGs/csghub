@@ -109,6 +109,27 @@
 
   const { t, locale } = useI18n()
 
+  const getReturnParams = () => {
+    const { searchParams } = new URL(window.location.href)
+    const returnParams = new URLSearchParams()
+    
+    const paramsToKeep = ['page', 'search', 'sort', 'filter', 'source', 'sdk']
+    paramsToKeep.forEach(param => {
+      const value = searchParams.get(param)
+      if (value) {
+        returnParams.set(param, value)
+      }
+    })
+    
+    return returnParams.toString()
+  }
+
+  const detailLink = computed(() => {
+    const returnParams = getReturnParams()
+    const returnQuery = returnParams ? `?return=${encodeURIComponent('?' + returnParams)}` : ''
+    return `/spaces/${props.repo.path}${returnQuery}`
+  })
+
   const gradientColors = [
     'fill-amber-500',    
     'fill-rose-500',     
@@ -148,14 +169,6 @@
       taskTag = taskTag ? taskTag['show_name'] : null
     }
     return { path: displayName, visibility, taskTag }
-  })
-
-  const detailLink = computed(() => {
-    setRepoTab({
-      repoType: 'space',
-      tab: 'summary',
-    })
-    return `/spaces/${props.repo.path}?tab=summary`
   })
 </script>
 

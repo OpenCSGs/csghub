@@ -33,6 +33,7 @@
       v-model="taskUseType"
       class="mt-8"
       @change="changeTaskType"
+      v-if="false"
     >
       <el-radio
         label="ops"
@@ -45,7 +46,7 @@
         >{{ $t('dataPipelines.taskType2') }}</el-radio
       >
     </el-radio-group>
-    <div class="mainOption flex items-center justify-between">
+    <div class="mainOption flex items-center justify-between mt-[10px]">
       <el-form
         ref="ruleFormRef"
         :model="form"
@@ -571,7 +572,7 @@
     route.query.templateId ? route.query.templateId * 1 : 0
   )
   const selToolName = ref(route.query.selToolName || '')
-  const taskUseType = ref(route.query.type ? route.query.type : 'ops')
+  const taskUseType = ref(route.query.type ? route.query.type : 'tool')
   const toolListAll = ref([])
   const seltool = ref({})
   const form = ref({

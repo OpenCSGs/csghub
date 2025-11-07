@@ -381,7 +381,7 @@
       const body = data.value
       frameworks.value = body.data || []
       const currentFramework = body.data?.find((framework) => {
-        return framework.frame_name.toLowerCase() === props.framework.toLowerCase() && framework.compute_type === currentResourceDetail.value?.type
+        return framework.frame_name?.toLowerCase() === props.framework?.toLowerCase() && framework.compute_type === currentResourceDetail.value?.type
       })
       currentFrameworkId.value = currentFramework?.id
     }
@@ -491,14 +491,14 @@
     const { data, error } = await useFetchApi(endpointUpdateEndpoint, options)
       .put()
       .json()
-
+      
     if (error.value) {
       ElMessage({ message: error.value.msg, type: 'warning' })
     } else {
       if (payload.hasOwnProperty('private')) {
         repoDetailStore.updateVisibility(payload.private)
       }
-      fetchRepoDetail()
+      fetchRepoDetail(true)
       ElMessage({ message: data.value.msg, type: 'success' })
     }
   }

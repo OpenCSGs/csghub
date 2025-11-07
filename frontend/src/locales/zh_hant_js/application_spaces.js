@@ -1,5 +1,6 @@
 export const application_spaces = {
   title: "應用空間",
+  loading: '正在載入應用空間資訊...',
   placeholder: "應用空間名字",
   name: "應用空間名稱",
   nameTips: "應用於空間路徑，創建後不可更改",
@@ -19,6 +20,7 @@ export const application_spaces = {
   sendRequest: 'API 調用示例',
   endpointUrl: 'SSE 服務 URL',
   mcpSpaceType: '應用空間類型：MCP',
+  applicationSpaceTag: "應用空間標籤",
   gradioGuide: {
     notice: '開始使用您的 gradio 應用空間！',
     noticeDesc: '應用空間創建成功！空間執行需要程式檔案，請參考下面案例建立 app.py 檔案。',
@@ -99,6 +101,7 @@ export const application_spaces = {
     runningStatusDesc: '切換執行或關停應用空間',
     tips: "將會顯示在應用空間列表頁面中，選填",
     tips2: "一段關於應用空間的介紹，選填",
+    tips3: "選擇應用對應的分类标签，便于用户在筛选时更快的找到您的应用。",
     changeVisibility: "修改應用空間可見性",
     statusText: "當前應用空間目前是",
     status: "狀態。",

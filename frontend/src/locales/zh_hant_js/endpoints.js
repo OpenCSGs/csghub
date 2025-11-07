@@ -1,10 +1,13 @@
 export const endpoints = {
   title: "專屬執行個體",
+  loading: '正在載入專屬執行個體資訊...',
   resourceType: '資源類型',
   replica: "彈性副本",
   summary: '概觀',
   logDownload: '下載日誌',
   gpuMemoryRequired: '最小顯存需求：',
+  gpuMemoryRecommendation: '建議顯存需求：',
+  lowMemory: '顯存不足',
   detail: {
     endpointUrl: '專屬執行個體 URL',
     modelId: '模型 ID',

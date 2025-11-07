@@ -1,6 +1,6 @@
 <template>
   <span
-    class="mr-1 py-2 px-3 rounded-sm text-sm font-medium text-gray-500 cursor-pointer hover:bg-gray-50"
+    class="mr-1 py-2 px-3 rounded-sm text-sm font-medium text-gray-500 cursor-pointer hover:bg-gray-50 relative"
     data-type="Task"
     :class="
       isActive
@@ -9,6 +9,11 @@
     "
     @click="emit('changeActiveItem', name)">
     {{ showName() }}
+    <span
+      v-if="hasSelectedTags"
+      class="absolute w-1.5 h-1.5 top-1.5 right-1.5 rounded-full"
+      style="background-color: #4d6ad6;">
+    </span>
   </span>
 </template>
 
@@ -22,6 +27,10 @@
     activeCategory: {
       type: String,
       default: ''
+    },
+    activeTags: {
+      type: Object,
+      default: () => ({})
     }
   })
 
@@ -31,6 +40,11 @@
 
   const isActive = computed(() => {
     return props.name.toLowerCase() === props.activeCategory.toLowerCase()
+  })
+
+  const hasSelectedTags = computed(() => {
+    const tags = props.activeTags[props.name]
+    return Array.isArray(tags) && tags.length > 0
   })
 
   const showName = () => {

@@ -85,6 +85,68 @@
         ref="ruleFormRef"
       >
         <el-row :gutter="20" class="mt-[16px]">
+          <el-col
+            :xs="24"
+            :sm="24"
+            :md="12"
+            :lg="12"
+            :xl="12"
+            v-if="typeVal !== 'File'"
+          >
+            <el-form-item prop="name" class="mt-[12px]">
+              <template #label>
+                <p class="text-gray-500 text-xs">
+                  {{ t("dataPipelines.collectionSourceName") }}
+                </p>
+              </template>
+              <el-input
+                v-model="formInline.name"
+                :placeholder="`${t('dataPipelines.toInput')}${t(
+                  'dataPipelines.collectionSourceName'
+                )}`"
+                clearable
+              >
+                <template #prefix>
+                  <SvgIcon
+                    class="w-5 h-5 mx-2 text-gray-500"
+                    name="CollectionSourceName"
+                  />
+                </template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+
+          <el-col
+            v-if="typeVal !== 'File'"
+            :xs="24"
+            :sm="24"
+            :md="12"
+            :lg="12"
+            :xl="12"
+          >
+            <el-form-item prop="des" class="mt-[12px]">
+              <template #label>
+                <p class="text-gray-500 text-xs">
+                  {{ t("dataPipelines.collectionSourceDesc") }}
+                </p>
+              </template>
+              <el-input
+                v-model="formInline.des"
+                :placeholder="`${t('dataPipelines.toInput')}${t(
+                  'dataPipelines.collectionSourceDesc'
+                )}`"
+                clearable
+              >
+                <template #prefix>
+                  <SvgIcon
+                    class="w-5 h-5 mx-2 text-gray-500"
+                    name="description"
+                  />
+                </template>
+              </el-input>
+            </el-form-item>
+          </el-col>
+          
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item prop="database" class="mt-[12px]">
               <template #label>
@@ -268,68 +330,6 @@
           <el-col
             :xs="24"
             :sm="24"
-            :md="12"
-            :lg="12"
-            :xl="12"
-            v-if="typeVal !== 'File'"
-          >
-            <el-form-item prop="name" class="mt-[12px]">
-              <template #label>
-                <p class="text-gray-500 text-xs">
-                  {{ t("dataPipelines.collectionSourceName") }}
-                </p>
-              </template>
-              <el-input
-                v-model="formInline.name"
-                :placeholder="`${t('dataPipelines.toInput')}${t(
-                  'dataPipelines.collectionSourceName'
-                )}`"
-                clearable
-              >
-                <template #prefix>
-                  <SvgIcon
-                    class="w-5 h-5 mx-2 text-gray-500"
-                    name="CollectionSourceName"
-                  />
-                </template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-
-          <el-col
-            v-if="typeVal !== 'File'"
-            :xs="24"
-            :sm="24"
-            :md="12"
-            :lg="12"
-            :xl="12"
-          >
-            <el-form-item prop="des" class="mt-[12px]">
-              <template #label>
-                <p class="text-gray-500 text-xs">
-                  {{ t("dataPipelines.collectionSourceDesc") }}
-                </p>
-              </template>
-              <el-input
-                v-model="formInline.des"
-                :placeholder="`${t('dataPipelines.toInput')}${t(
-                  'dataPipelines.collectionSourceDesc'
-                )}`"
-                clearable
-              >
-                <template #prefix>
-                  <SvgIcon
-                    class="w-5 h-5 mx-2 text-gray-500"
-                    name="description"
-                  />
-                </template>
-              </el-input>
-            </el-form-item>
-          </el-col>
-
-          <el-col
-            :xs="24"
-            :sm="24"
             :md="24"
             :lg="24"
             :xl="24"
@@ -499,11 +499,11 @@
               class="mt-[12px]"
             >
               <template #label>
-                <p class="text-gray-500 text-xs">数据流向分支</p>
+                <p class="text-gray-500 text-xs">{{ t("dataPipelines.dataFlowBranch") }}</p>
               </template>
               <el-input
                 v-model="formInline.extra_config.csg_hub_dataset_name"
-                :placeholder="`请输入数据流向分支`"
+                :placeholder="`${t('dataPipelines.toInput')}${t('dataPipelines.dataFlowBranch')}`"
                 clearable
               >
                 <!-- <template #prefix>
@@ -638,7 +638,7 @@
       />
 
       <template #footer>
-        <div class="dialog-footer">
+        <div class="flex justify-end gap-2">
           <CsgButton
             class="btn btn-secondary-gray btn-md whitespace-nowrap"
             @click="centerDialogVisible = false"
@@ -980,7 +980,6 @@ const testLink = async (formEl) => {
         .json();
       loading.close();
       if (data.value.code === 200) {
-        ElMessage.success(t("dataPipelines.linkSuccess"));
         // MongoDB
         if (typeId.value === 2) {
           getDatasourceTables(options);
@@ -1039,6 +1038,7 @@ const getDatasourceTables = async (params) => {
   if (data.value.code === 200) {
     tableStructure.value = data.value.data;
     allTables.value = data.value.data;
+    ElMessage.success(t("dataPipelines.linkSuccess"));
   } else {
     ElMessage.error(data.value.msg);
   }
@@ -1059,6 +1059,7 @@ const getDatasourceTableAndColumns = async (params) => {
   if (data.value.code === 200) {
     tableStructure.value = data.value.data;
     allTables.value = data.value.data.map((table) => table.table_name);
+    ElMessage.success(t("dataPipelines.linkSuccess"));
   } else {
     ElMessage.error(data.value.msg);
   }
@@ -1195,7 +1196,7 @@ const submit = (type) => {
               }
               // Mongodb
               if (typeId.value === 2) {
-                params.extra_config.hive = getSelectedData().map(
+                params.extra_config.mongo = getSelectedData().map(
                   (item) => item.table_name
                 );
 

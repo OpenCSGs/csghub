@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-gray-200 rounded-md my-8 md:my-0 md:border-none px-6 py-6">
+  class="flex flex-col gap-6 my-8 md:my-0 md:border-none py-6">
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -22,7 +22,6 @@
       </div>
     </div>
 
-    <el-divider />
 
     <!-- 更新别名 -->
     <div class="flex xl:flex-col gap-8">
@@ -41,6 +40,7 @@
           size="large"
           class="!w-[512px] sm:!w-full" />
         <CsgButton
+          v-if="hasNicknameChanged"
           @click="updateNickname"
           class="btn btn-secondary-gray btn-sm w-fit"
           data-test="update-nickname"
@@ -48,7 +48,6 @@
       </div>
     </div>
 
-    <el-divider />
 
     <!-- 更新简介 -->
     <div class="flex xl:flex-col gap-[32px]">
@@ -68,6 +67,7 @@
           type="textarea"
           class="!w-[512px] sm:!w-full" />
         <CsgButton
+          v-if="hasDescChanged"
           @click="updateCodeDesc"
           class="btn btn-secondary-gray btn-sm w-fit"
           :name="$t('all.update')" />
@@ -115,7 +115,6 @@
       </div>
     </div>
 
-    <el-divider />
 
     <!-- 删除 -->
     <div class="flex xl:flex-col gap-8">
@@ -178,6 +177,8 @@
         theCodeNickname: this.codeNickname || '',
         theCodeDesc: this.codeDesc || '',
         codePath: this.path,
+        originalCodeNickname: this.codeNickname || '',
+        originalCodeDesc: this.codeDesc || '',
         options: [
           { value: 'Private', label: this.$t('all.private') },
           { value: 'Public', label: this.$t('all.public') }
@@ -187,6 +188,12 @@
     computed: {
       ...mapState(useRepoDetailStore, ['isPrivate']),
       ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
+      hasNicknameChanged() {
+        return this.theCodeNickname.trim() !== this.originalCodeNickname.trim()
+      },
+      hasDescChanged() {
+        return this.theCodeDesc.trim() !== this.originalCodeDesc.trim()
+      },
       visibilityName: {
         get() {
           return !!this.privateVisibility ? 'Private' : 'Public'
@@ -301,7 +308,7 @@
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
-          this.fetchRepoDetail()
+          this.fetchRepoDetail(true)
         }
       },
 

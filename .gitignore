@@ -46,5 +46,7 @@ cmd/csghub-portal/__debug_*
 app.log
 
 frontend/coverage
+coverage.html
+junit-report.xml
 
 .idea/

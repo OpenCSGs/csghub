@@ -147,14 +147,6 @@
     // return true
   }
 
-  watch(activeName, (newTab) => {
-    if (repoTab.tab !== newTab) {
-      if(newTab === 'settings') {
-        fetchRepoDetail()
-      }
-    }
-  })
-
   const validTabs = computed(() => {
     const baseTabs = ['summary', 'files', 'billing', 'community', 'settings']
     
@@ -179,13 +171,158 @@
     return validTabs.value.includes(tab)
   }
 
+  // 抽离URL参数验证和重置逻辑
+  const validateAndResetUrlParams = () => {
+    const params = new URLSearchParams(window.location.search)
+    const urlTab = params.get('tab')
+    const validatedTab = validateTab(urlTab)
+    const urlActionName = params.get('actionName')
+    const urlPath = params.get('path')
+    const urlBranch = params.get('branch')
+    const urlDiscussionId = params.get('discussionId')
+
+    let needUpdateUrl = false
+    let hasExtraKeys = false
+    const query = {}
+
+    // tab 校验
+    if (urlTab && validatedTab === 'summary' && urlTab !== 'summary') {
+      query.tab = 'summary'
+      needUpdateUrl = true
+    } else if (validatedTab && isValidTab(validatedTab)) {
+      query.tab = validatedTab
+    }
+
+    // actionName 校验
+    if (validatedTab === 'files') {
+      const validatedAction = validateActionName(urlActionName)
+      if (urlActionName && validatedAction === 'files' && urlActionName !== 'files') {
+        query.actionName = 'files'
+        needUpdateUrl = true
+      } else if (urlActionName) {
+        query.actionName = validatedAction
+      }
+    } else if (validatedTab === 'community') {
+      const validatedAction = validateCommunityActionName(urlActionName)
+      if (urlActionName && validatedAction === 'list' && urlActionName !== 'list') {
+        query.actionName = 'list'
+        needUpdateUrl = true
+      } else if (urlActionName) {
+        query.actionName = validatedAction
+      }
+      // detail 必须带合法 discussionId；否则退回 list 并移除 discussionId
+      const discussionIdValid = /^\d+$/.test(urlDiscussionId || '')
+      if ((query.actionName || validatedAction) === 'detail') {
+        if (!discussionIdValid) {
+          query.actionName = 'list'
+          needUpdateUrl = true
+        }
+      } else {
+        // 非 detail 时不应携带 discussionId
+        if (urlDiscussionId) {
+          needUpdateUrl = true
+        }
+      }
+    }
+
+    // files 且 actionName=commit 时：从 URL 移除 branch（仅动 URL）
+    const isCommitDropBranch =
+      validatedTab === 'files' && query.actionName === 'commit' && !!urlBranch
+    if (isCommitDropBranch) {
+      needUpdateUrl = true
+    }
+
+    // 根据当前 tab 计算白名单
+    const allowedKeys = new Set(['tab'])
+    if (validatedTab === 'files') {
+      allowedKeys.add('actionName')
+      allowedKeys.add('path')
+      if (query.actionName !== 'commit') {
+        allowedKeys.add('branch')
+      }
+    } else if (validatedTab === 'community') {
+      allowedKeys.add('actionName')
+      if ((query.actionName || urlActionName) === 'detail') {
+        allowedKeys.add('discussionId')
+      }
+    }
+
+    // 发现非白名单 key → 需要清理
+    for (const k of params.keys()) {
+      if (!allowedKeys.has(k)) {
+        hasExtraKeys = true
+        needUpdateUrl = true
+        break
+      }
+    }
+
+    // 如需更新 URL，按白名单重建 query
+    if (needUpdateUrl) {
+      // tab
+      if (!query.tab) {
+        if (validatedTab && isValidTab(validatedTab)) {
+          query.tab = validatedTab
+        } else {
+          query.tab = getDefaultTab()
+        }
+      }
+
+      // files/community 附加参数
+      if (query.tab === 'files') {
+        if (!query.actionName && urlActionName) {
+          query.actionName = validateActionName(urlActionName)
+        }
+        if (urlPath) query.path = urlPath
+        if (urlBranch && query.actionName !== 'commit') query.branch = urlBranch
+      } else if (query.tab === 'community') {
+        if (!query.actionName && urlActionName) {
+          query.actionName = validateCommunityActionName(urlActionName)
+        }
+        const discussionIdValid = /^\d+$/.test(urlDiscussionId || '')
+        if (query.actionName === 'detail' && discussionIdValid) {
+          query.discussionId = urlDiscussionId
+        }
+      }
+
+      // 仅做 URL 清理：commit 去 branch 或存在多余 key 时，不动 store
+      if (isCommitDropBranch || hasExtraKeys) {
+        router.replace({
+          path: props.repoType === 'mcp' ? `/${props.repoType}/servers/${props.path}` : `/${props.repoType}s/${props.path}`,
+          query
+        })
+        return true
+      }
+
+      // 其它情形维持原处理（同时更新状态）
+      router.replace({
+        path: props.repoType === 'mcp' ? `/${props.repoType}/servers/${props.path}` : `/${props.repoType}s/${props.path}`,
+        query
+      })
+      setRepoTab({
+        tab: query.tab || getDefaultTab(),
+        actionName: query.actionName || 'files',
+        lastPath: '',
+        currentBranch: urlBranch || repoTab.currentBranch
+      })
+      activeName.value = query.tab || getDefaultTab()
+      return true
+    }
+
+    return false
+  }
+
   // 监听路由变化，当用户使用浏览器前进/后退按钮时更新tab
   watch(() => route.query, (newQuery) => {
+    if (validateAndResetUrlParams()) {
+      return 
+    }
+    
     const newTab = validateTab(newQuery.tab)
+    
+    // 处理tab切换的情况
     if (newTab && newTab !== activeName.value) {
-      activeName.value = newTab // 立即更新 activeName
+      activeName.value = newTab
       
-      // 如果是 files tab，处理 actionName 相关参数
       if (newTab === 'files') {
         setRepoTab({
           tab: newTab,
@@ -207,10 +344,43 @@
         })
       }
     }
+    
+    // 处理同一个tab内部参数变化的情况（继承自RepoTabs的逻辑）
+    else if (newTab === activeName.value) {
+      if (newTab === 'files') {
+        const actionName = validateActionName(newQuery.actionName)
+        const newPath = newQuery.path || ''
+        const newBranch = newQuery.branch || repoTab.currentBranch
+        
+        // 只有当参数发生变化时才更新，避免不必要的更新
+        if (actionName !== repoTab.actionName || 
+            newPath !== repoTab.lastPath || 
+            newBranch !== repoTab.currentBranch) {
+          setRepoTab({
+            tab: newTab,
+            actionName: actionName,
+            lastPath: newPath,
+            currentBranch: newBranch
+          })
+        }
+      } else if (newTab === 'community') {
+        const actionName = validateCommunityActionName(newQuery.actionName)
+        const discussionId = newQuery.discussionId || ''
+        
+        // 只有当参数发生变化时才更新
+        if (actionName !== repoTab.communityActionName || 
+            discussionId !== repoTab.discussionId) {
+          setRepoTab({
+            tab: newTab,
+            communityActionName: actionName,
+            discussionId: discussionId,
+          })
+        }
+      }
+    }
   }, { deep: true })
 
   const handleTabChange = (tab, type) => {
-    // 验证tab参数
     const validatedTab = validateTab(tab)
     if (validatedTab !== tab) {
       router.push({
@@ -237,6 +407,7 @@
     if (tab === 'files') {
       // 当切换到files tab时，需要确保有正确的actionName
       const urlActionName = params.get('actionName')
+      const validatedActionName = validateActionName(urlActionName)
       const currentTab = params.get('tab')
       
       // 如果当前在community tab，切换到files时重置为默认的files状态
@@ -247,7 +418,7 @@
         query.branch = repoTab.currentBranch || ''
       } else {
         // 保留URL中的actionName参数，如果没有则默认为'files'
-        query.actionName = validateActionName(urlActionName)
+        query.actionName = validatedActionName
         
         const currentUrlPath = params.get('path')
         const urlBranch = params.get('branch')
@@ -274,7 +445,7 @@
 
     setRepoTab({
       tab,
-      actionName: tab === 'files' ? (query.actionName || 'files') : 'files',
+      actionName: tab === 'files' ? (query.actionName || 'files') : (tab === 'community' ? (query.actionName || 'list') : 'files'),
       lastPath: tab === 'files' ? (query.path || '') : '',
       communityActionName: tab === 'community' ? (query.actionName || 'list') : 'list',
       discussionId: tab === 'community' ? (query.discussionId || '') : ''
@@ -287,6 +458,11 @@
   }
 
   onMounted(() => {
+    // 先验证和重置URL参数
+    if (validateAndResetUrlParams()) {
+      return
+    }
+    
     const params = new URLSearchParams(window.location.search)
     const urlTab = validateTab(params.get('tab'))
     const urlActionName = params.get('actionName')
@@ -294,8 +470,8 @@
     const urlBranch = params.get('branch')
     const urlDiscussionId = params.get('discussionId')
     
+    // 正常处理有效参数
     if (urlTab && isValidTab(urlTab)) {
-      // 如果有URL参数，直接设置状态
       if (urlTab === 'files' && urlActionName) {
         setRepoTab({
           tab: urlTab,

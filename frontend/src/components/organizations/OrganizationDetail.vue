@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!isDataLoading">
+  <div v-show="!isDataLoading">
     <div class="py-[16px] bg-gray-25">
       <div class="page-responsive-width m-auto flex md:flex-col md:gap-4 items-center justify-between py-[16px] xl:px-[16px]">
         <div class="flex gap-[10px]">
@@ -24,41 +24,46 @@
               </div>
             </template>
             <div>
-              <a :href="`/models/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
-
-                <div class="px-2 py-2 bg-gray-50">
-                  <SvgIcon name="models" />
-                </div>
+              <a :href="`/models/new?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
                 <div class="text-sm leading-[20px] text-gray-700">
-                  <div>{{ $t('models.title') }}</div>
-                  <div class="font-light">{{ $t('models.tips') }}</div>
+                  <div>{{ $t('organization.new.model') }}</div>
                 </div>
               </a>
-              <a :href="`/datasets/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
-                <div class="px-2 py-2 bg-gray-50">
-                  <SvgIcon name="datasets" />
-                </div>
+              <a :href="`/datasets/new?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
                 <div class="text-sm leading-[20px] text-gray-700">
-                  <div>{{ $t('datasets.title') }}</div>
-                  <div class="font-light">{{ $t('datasets.tips') }}</div>
+                  <div>{{ $t('organization.new.dataset') }}</div>
                 </div>
               </a>
-              <a :href="`/spaces/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
-                <div class="px-2 py-2 bg-gray-50">
-                  <SvgIcon name="spaces" />
-                </div>
+              <a :href="`/spaces/new?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
                 <div class="text-sm leading-[20px] text-gray-700">
-                  <div>{{ $t('spaces.title') }}</div>
-                  <div class="font-light">{{ $t('spaces.tips') }}</div>
+                  <div>{{ $t('organization.new.space') }}</div>
                 </div>
               </a>
-              <a  :href="`/codes/new?orgName=${organizationData.name}`" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-[9px] px-[10px]">
-                <div class="px-2 py-2 bg-gray-50">
-                  <SvgIcon name="codes" />
-                </div>
+              <a  :href="`/codes/new?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
                 <div class="text-sm leading-[20px] text-gray-700">
-                  <div>{{ $t('codes.title') }}</div>
-                  <div class="font-light">{{ $t('codes.tips')}}</div>
+                  <div>{{ $t('organization.new.code') }}</div>
+                </div>
+              </a>
+              <a :href="`/collections/new?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
+                <div class="text-sm leading-[20px] text-gray-700">
+                  <div>{{ $t('organization.new.collection') }}</div>
+                </div>
+              </a>
+              <a :href="`/prompts/library?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
+                <div class="text-sm leading-[20px] text-gray-700">
+                  <div>{{ $t('organization.new.prompt') }}</div>
+                </div>
+              </a>
+              <a :href="`/mcp/servers/new?orgName=${organizationData.name}`" target="_blank" class="hover:bg-gray-50 cursor-pointer flex gap-2 items-center py-3 px-2 rounded-md">
+                <SvgIcon name="navbar-new" />
+                <div class="text-sm leading-[20px] text-gray-700">
+                  <div>{{ $t('organization.new.mcp') }}</div>
                 </div>
               </a>
             </div>
@@ -98,24 +103,23 @@
           </div>
         </div>
         <div class="grow px-[20px] py-[36px] sm:py-0">
-          <ProfileRepoList :name="name" />
+          <ProfileRepoList :name="name" initiator="organization" />
         </div>
       </div>
     </div>
   </div>
   
-  <div v-if="isDataLoading" class="flex items-center justify-center min-h-[400px]">
-    <div class="text-center">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-600 mx-auto mb-4"></div>
-      <p class="text-gray-600">{{ $t('organization.loading') }}</p>
-    </div>
-  </div>
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('organization.loading')" 
+  />
 </template>
 
 <script setup>
   import { ref, onMounted, watch } from 'vue'
   import InviteMember from './InviteMember.vue'
   import ProfileRepoList from '../shared/ProfileRepoList.vue'
+  import LoadingSpinner from '../shared/LoadingSpinner.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import useUserStore from '../../stores/UserStore'
@@ -134,13 +138,17 @@
   const membersList = ref([])
   const verifiedStatus = ref('')
   const verifiedReason = ref('')
-  const isDataLoading = ref(true)
+  const isDataLoading = ref(false)
 
   const userStore = useUserStore()
 
   const role = ref('')
 
   const fetchOrgDetail = async () => {
+    if (isDataLoading.value) {
+      return false
+    }
+    isDataLoading.value = true
     const orgDetailEndpoint = `/organization/${props.name}`
     const { response, data, error } = await useFetchApi(orgDetailEndpoint).json()
     

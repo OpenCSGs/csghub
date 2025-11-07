@@ -17,5 +17,11 @@ export const errors_page = {
   },
   serverError: {
     title: '伺服器錯誤 {errorCode}'
+  },
+  conflict:{
+    title: '資源衝突',
+    decName: '用戶名 {username} 已經存在',
+    dec: '電子郵件 {username} 已經存在',
+    contact: '請嘗試其他登錄方式或聯繫 '
   }
 }

@@ -1,5 +1,6 @@
 export const collections = {
   collectionName: '合集名稱',
+  loading: '正在載入合集資訊...',
   placeholder: '搜尋合集',
   noData: '搜尋無結果',
   noDataDesc: '沒有找到與您的搜尋條件匹配的內容您也可以創建對應的合集',
@@ -7,6 +8,8 @@ export const collections = {
   collection: '合集',
   title: '探索社群中的精選熱門合集',
   hot: '本週熱門合集',
+  remarkTitle: '備註',
+  remark: '備註資訊',
   color: {
     lPurple: '淡紫色',
     lGreen: '淡綠色',

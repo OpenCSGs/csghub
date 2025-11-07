@@ -9,7 +9,7 @@
     <h3 class="text-gray-700 text-xl font-medium mt-6 mb-3">
       {{ t('finetune.new.title') }}
     </h3>
-    <div class="flex items-center sm:flex-col sm:text-center">
+    <div class="flex items-end sm:flex-col sm:items-center sm:text-center">
       <p class="text-gray-500 text-md font-regular">
         {{ t('finetune.new.desc') }}
       </p>
@@ -17,6 +17,14 @@
         :name="t('finetune.new.guide')"
         class="btn-link-color"
         @click="handleGuideClick"
+      />
+      <Vue3Lottie
+        :animationData="animationData"
+        :width="36"
+        :height="36"
+        :loop="1"
+        :autoPlay="true"
+        style="display: inline-block"
       />
     </div>
     <div class="mt-9 w-full">
@@ -77,57 +85,49 @@
           :label="t('finetune.new.cluster')"
           class="w-full"
           prop="cluster_id">
-          <el-select
-            v-model="dataForm.cluster_id"
-            :placeholder="
-              t('all.pleaseSelect', { value: t('finetune.new.cluster') })
-            "
-            size="large"
-            style="width: 100%"
-            @change="fetchResources">
-            <el-option
-              v-for="item in finetuneClusters"
-              :key="item.cluster_id"
-              :label="item.region"
-              :value="item.cluster_id" />
-          </el-select>
-          <div class="flex flex-col">
-            <p class="text-gray-600 mt-2 font-light">
-              {{ $t('finetune.new.clusterDec1') }}
+          <div class="w-full flex items-center justify-start gap-[36px]">
+            <div v-if="Array.isArray(typeList)&&typeList.length>0" class="flex items-center justify-start gap-1">
+              <p v-for="item in typeList" :key="item" class="px-3 py-2 cursor-pointer text-md font-medium rounded-sm" :class="activeType==item?'bg-gray-50 text-gray-700':'bg-white text-gray-500'" @click="setActiveType(item)">{{item}}</p>
+            </div>
+            <el-select
+              v-model="dataForm.cluster_id"
+              :placeholder="
+                t('all.pleaseSelect', { value: t('finetune.new.cluster') })
+              "
+              size="large"
+              style="width:320px"
+              @change="fetchResources">
+              <el-option
+                v-for="item in finetuneClusters"
+                :key="item.cluster_id"
+                :label="item.region"
+                :value="item.cluster_id" />
+            </el-select>
+          </div>
+          <div class="flex flex-col mb-8">
+              <p class="text-gray-600 mt-2 font-light">
+                {{ $t('finetune.new.clusterDec1') }}
+              </p>
+              <p class="text-gray-600 font-light">
+                {{ $t('finetune.new.clusterDec2') }}
+              </p>
+          </div>
+          <div class="grid grid-cols-4 items-center gap-6 mb-6 md:grid-cols-2">
+            <div v-for="item in selResourceList" :key="item.id" class="flex flex-col items-center gap-2 text-center p-4 rounded-2xl border bg-white relative overflow-hidden shadow-lg" :class="[item.is_available?'cursor-pointer':'cursor-not-allowed',dataForm.resource_id==`${item.id}/${item.order_detail_id}`?'border-brand-500':(item.is_available?'border-gray-500':'border-gray-300')]" @click="changeCloudResource(item)">
+              <i class="block w-[24px] h-[4px] rounded-xs bg-gray-400 shadow-sm"/>
+              <p class="text-md font-medium" :class="item.is_available?'text-gray-700':'text-gray-500'">{{item.resources[activeType.toLowerCase()]?.type}}</p>
+              <p class="text-md" :class="item.is_available?'text-gray-700':'text-gray-500'">{{item.name}}</p>
+              <p class="text-gray-500 text-md">{{item.priceValue}}</p>
+            </div>
+          </div>
+          <div class="flex flex-col mt-2">
+            <p
+              v-if="minGpuMemory"
+              class="text-gray-600 font-light w-full"
+            >
+              {{ t('endpoints.gpuMemoryRecommendation') }}{{ minGpuMemory }}GB
             </p>
             <p class="text-gray-600 font-light">
-              {{ $t('finetune.new.clusterDec2') }}
-            </p>
-          </div>
-        </el-form-item>
-
-        <el-form-item
-          :label="t('finetune.new.resource')"
-          class="w-full"
-          prop="resource_id">
-          <el-select
-            v-model="dataForm.resource_id"
-            :placeholder="
-              t('all.pleaseSelect', { value: t('finetune.new.resource') })
-            "
-            size="large"
-            @change="resetCurrentRuntimeFramework"
-            style="width: 100%">
-            <el-option-group
-              v-for="group in finetuneResources"
-              :key="group.label"
-              :label="group.label"
-            >
-              <el-option
-                v-for="item in group.options"
-                :key="item.name"
-                :label="item.label"
-                :value="`${item.id}/${item.order_detail_id}`"
-                :disabled="!item.is_available" />
-            </el-option-group>
-          </el-select>
-          <div class="flex flex-col">
-            <p class="text-gray-600 mt-2 font-light">
               {{ t('finetune.new.resourceDec1') }}
             </p>
             <p class="text-gray-600 font-light">
@@ -206,7 +206,9 @@
   import { ElMessage } from 'element-plus'
   import useFetchApi from '@/packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
-  import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory'
+  import { fetchResourcesInType } from '../shared/deploy_instance/fetchResourceInCategory'
+  import { Vue3Lottie } from 'vue3-lottie'
+  import lightAnimation from '../../assets/animations/light.json'
 
   const props = defineProps({
     namespace: String
@@ -235,7 +237,13 @@
   const finetuneFrameworks = ref([])
   const finetuneClusters = ref([])
   const loading = ref(false)
-
+  const apiErrorMsg = ref('')
+  const animationData = ref(lightAnimation)
+  const lottieRef = ref(null)
+  const isPlaying = ref(false)
+  const typeList = ref([])
+  const activeType = ref('')
+  const selResourceList = ref([])
   const rules = ref({
     deploy_name: [
       {
@@ -294,9 +302,12 @@
 
   const fetchResources = async () => {
     // finetune can only use none cpu resources, so passing deploy type 2, means resoruces fit for finetune
-    const categoryResources = await fetchResourcesInCategory(dataForm.value.cluster_id, 2)
+    const categoryResources = await fetchResourcesInType(dataForm.value.cluster_id, 2)
     const firstAvailableResource = categoryResources.flatMap(item => item.options).find((item) => item.is_available)
     finetuneResources.value = categoryResources
+    typeList.value = categoryResources.map(item=>item.label)
+    activeType.value = typeList.value[0]||''
+    selResourceList.value = categoryResources.find(item=>item.label == activeType.value)?.options||[]
     if (firstAvailableResource) {
       dataForm.value.resource_id = `${firstAvailableResource.id}/${firstAvailableResource.order_detail_id}`
       resetCurrentRuntimeFramework()
@@ -304,6 +315,16 @@
       dataForm.value.resource_id = ''
       dataForm.value.runtime_framework_id = ''
     }
+  }
+
+  const setActiveType = (type)=>{
+    activeType.value = type
+    selResourceList.value = finetuneResources.value.find(item=>item.label == activeType.value)?.options||[]
+  }
+
+  const changeCloudResource = (item)=>{
+    dataForm.value.resource_id = `${item.id}/${item.order_detail_id}`
+    resetCurrentRuntimeFramework()
   }
 
   const resetCurrentRuntimeFramework = async () => {

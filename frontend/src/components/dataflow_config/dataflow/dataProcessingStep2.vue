@@ -63,7 +63,7 @@
       />
 
       <template #footer>
-        <div class="dialog-footer">
+        <div class="flex justify-end gap-2">
           <CsgButton
             class="btn btn-secondary-gray btn-md whitespace-nowrap"
             @click="centerDialogVisible = false"
@@ -209,7 +209,7 @@ const handleWorkflowSave = async (result) => {
         body: JSON.stringify(combinedData)
       }
       
-      const url = type.value === 'edit' ? `/dataflow/algo_templates/${templateId.value}` : '/dataflow/algo_templates/'
+      const url = type.value === 'edit' ? `/dataflow/algo_templates/${templateId.value}` : '/dataflow/algo_templates'
       const { data, error } = await useFetchApi(url, options)[type.value === 'edit' ? 'put' : 'post']().json()
       console.log(data.value, error.value, "dataerror");
       if (error.value || data.value.code !== 200) {

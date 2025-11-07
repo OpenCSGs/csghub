@@ -1,5 +1,6 @@
 export const prompts = {
   source:"來源",
+  loading: "加載中...",
     relationModel: "關聯模型：",
     relationPrompts: "關聯提示詞庫",
     openUp: "展開",

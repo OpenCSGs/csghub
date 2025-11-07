@@ -17,6 +17,8 @@ export const all = {
   programLanguage: "程式語言",
   runmode: "執行模式",
   scene: "場景",
+  sdk: "SDK",
+  hardware: "雲資源",
   others: "其他",
   contributors: "貢獻者",
   historyCommits: "歷史提交",
@@ -38,9 +40,9 @@ export const all = {
   sureDel: "以確認刪除",
   canNot: "無法",
   role: "角色",
-  userName: "使用者名稱",
-  updateUserName: "更新 使用者名稱",
-  nickName: "使用者暱稱",
+  userName: "使用者ID",
+  updateUserName: "更新 使用者ID",
+  nickName: "使用者名稱",
   homepage:"主頁",
   bio:"個人簡介",
   phone: "手機號碼",
@@ -144,5 +146,9 @@ export const all = {
   show: "顯示",
   hide: "隱藏",
   copy:"複製",
-  copySuccess: "複製成功"
+  copySuccess: "複製成功",
+  allTab:'全部產品',
+  unknown: "未知",
+  inBranch: "在分支",
+  notExist: "中不存在"
 }

@@ -1,5 +1,6 @@
 export const application_spaces = {
   title: "Application Space",
+  loading: 'Loading application space information...',
   placeholder: "Application Space Name",
   name: "Space name",
   nameTips: "Applied to the space path, cannot be changed after creation",
@@ -19,6 +20,7 @@ export const application_spaces = {
   sendRequest: 'API Call Example',
   endpointUrl: 'SSE Server URL',
   mcpSpaceType: 'Space type: MCP',
+  applicationSpaceTag: "Application space tag",
   gradioGuide: {
     notice: 'Get started with your grario app space!',
     noticeDesc: 'The space is created successfully! Space operation requires program files. Please refer to the following case to create the app.py file.',
@@ -69,8 +71,8 @@ export const application_spaces = {
     sdk: 'Select App Space SDK',
     sdkDesc: 'You can use Gradio, Streamlit as your space. In the future, Static, Docker, etc. will be opened to host applications',
     cloudResource: 'Cloud resources',
-    cloudResourceDesc1: 'You can switch to different space cloud resources at any time in space settings.',
-    cloudResourceDesc2: 'After switching to paid resources, you will be charged based on the length of use.',
+    cloudResourceDesc1: 'You can switch to different compute resources at any time in space settings.',
+    cloudResourceDesc2: 'Once you switch to a paid resource, you will be charged based on your usage duration.',
     public: 'Public',
     publicDesc: 'Anyone on the internet can see this model. Only you (personal model) or members of your organization can commit.',
     private: 'Private',
@@ -100,6 +102,7 @@ export const application_spaces = {
     runningStatusDesc: 'Switch running or stop application space',
     tips: "Will be displayed on the spaces list page, optional",
     tips2: "An introduction about spaces, optional",
+    tips3: "Select the category tag corresponding to the application, which makes it easier for users to find your application when filtering.",
     changeVisibility: "Space visibility",
     statusText: "The current Space is now",
     status: "Status.",

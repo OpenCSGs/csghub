@@ -15,6 +15,11 @@ export const useRepoTabStore = defineStore('repoTab', () => {
     lastPath: '',
     communityActionName: 'list', // list, new, detail
     discussionId: '',
+    fileNotFound: {
+      show: false,
+      fileName: '',
+      branchName: ''
+    }
   })
 
   function setRepoTab(obj) {
@@ -25,5 +30,11 @@ export const useRepoTabStore = defineStore('repoTab', () => {
     localStorage.removeItem(persistKey)
   }
 
-  return { repoTab, setRepoTab, clearStore }
+  function resetFileNotFound() {
+    repoTab.fileNotFound.show = false
+    repoTab.fileNotFound.fileName = ''
+    repoTab.fileNotFound.branchName = ''
+  }
+
+  return { repoTab, setRepoTab, clearStore, resetFileNotFound }
 })

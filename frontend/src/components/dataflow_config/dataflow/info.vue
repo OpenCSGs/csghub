@@ -150,7 +150,7 @@
           >
             <template #reference>
               <CsgButton
-                v-if="jobInfo.status !== 'Failed' && jobInfo.status !== 'Timeout' && jobInfo.status !== 'Finished'"
+                v-if="jobInfo.status !== 'Failed' && jobInfo.status !== 'Timeout' && jobInfo.status !== 'Finished' && jobInfo.status !== 'Canceled'"
                 class="btn btn-secondary-gray btn-sm whitespace-nowrap"
                 :name="t('dataPipelines.cancelExecute')"
               />
@@ -165,6 +165,7 @@
       @tab-click="handleClick"
     >
       <el-tab-pane
+      v-if="taskType == 'pipeline'"
         :label="t('dataPipelines.graphicDemonstration')"
         name="0"
       >
@@ -465,7 +466,12 @@
             :name="t('dataPipelines.downloadLog')"
           />
         </div>
-        <div class="resultBox">
+        <div v-if="jobType === 'Internal'" class="resultBox">
+          <pre class="text-gray-50 text-base font-normal"
+            >{{ logData }}
+          </pre>
+        </div>
+        <div v-else class="resultBox">
           <pre v-for="(log, index) in logData" :key="index" class="text-gray-50 text-base font-normal"
             >{{ log }}
           </pre>
@@ -509,11 +515,24 @@
   const taskType = computed(() => {
     return route.query.type
   })
+  const jobType = computed(() => {
+    return route.query.jobType
+  })
   const toDatasetPage = (path,branch) => {
     if(path&&branch){
       window.location.href=`/datasets/${path}/files/${branch}`
     }
   }
+  /**
+   * 查看资源占用
+   * @param task_id 任务id
+   */
+  const getResourceOccupation = async () => {
+    let url = `/dataflow/jobs/resource/${infoId.value}`;
+    const { data } = await useFetchApi(url).get().json();
+    console.log("资源占用：", data);
+  };
+
   const getInfoData = async () => {
     const url = `/dataflow/jobs/${infoId.value}`
 
@@ -553,6 +572,9 @@
             key: item.name
           }
         })
+      }
+
+      if (data.value.job) {
         // job状态
         const jobOperatorsStatus = await getJobOperatorsStatus()
         jobInfo.value = { ...data.value?.job, jobOperatorsStatus }
@@ -584,8 +606,15 @@
     }
   }
   const getAllLogData = async () => {
-    const url = `dataflow/jobs/pipline_job_log/${infoId.value}?page=1&page_size=1000000`
+    let url = `dataflow/jobs/pipline_job_log/${infoId.value}?page=1&page_size=1000000`
+    if(jobType.value === 'Internal') {
+      url = `dataflow/jobs/log/${infoId.value}?page=1&page_size=1000000`
+    }
     const { data } = await useFetchApi(url).get().json()
+    if(jobType.value === 'Internal') {
+      logData.value = data.value.session_log || ''
+      return
+    }
     if (data.value.code == 200) {
       logData.value = data.value.data.data.map((item) => {
         return `${formatTimestamp(item.create_at)} | ${item.level} | ${
@@ -633,14 +662,6 @@
   }
 
   const cancelExecute = async (job_id, status) => {
-    if (status === 'Processing') {
-      return ElMessage({
-          message: t("dataPipelines.cannotCancel"),
-          type: "warning",
-          plain: true,
-          grouping: true,
-        });
-    }
     const url = `/dataflow/jobs/stop_pipline_job?job_id=${job_id}`;
     const { data } = await useFetchApi(url).post().json();
     if (data.value.code === 200) {
@@ -664,6 +685,7 @@
 
   onMounted(() => {
     getInfoData()
+    getResourceOccupation()
     // getLogData()
     getAllLogData()
     if(taskType.value!='pipeline'){

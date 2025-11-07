@@ -1,9 +1,9 @@
 <template>
   <div
-    class="my-8 md:my-0 md:border-none py-6">
+    class="flex flex-col gap-6 my-8 md:my-0 md:border-none py-6">
     <!-- 展示英文名 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelName') }}
         </div>
@@ -22,11 +22,9 @@
       </div>
     </div>
 
-    <el-divider />
-
     <!-- 更新模型别名 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelNickName') }}
         </div>
@@ -41,6 +39,7 @@
           size="large"
           class="!w-[512px] sm:!w-full" />
         <CsgButton
+          v-if="hasNicknameChanged"
           @click="updateNickname"
           class="btn btn-secondary-gray btn-sm w-fit"
           :name="$t('all.update')"
@@ -48,11 +47,9 @@
       </div>
     </div>
 
-    <el-divider />
-
     <!-- 更新模型简介 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelDesc') }}
         </div>
@@ -68,6 +65,7 @@
           type="textarea"
           class="!w-[512px] sm:!w-full" />
         <CsgButton
+          v-if="hasDescChanged"
           @click="updateModelDesc"
           class="btn btn-secondary-gray btn-sm w-fit"
           :name="$t('all.update')"
@@ -78,8 +76,8 @@
     <el-divider />
 
     <!-- 模型标签 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelTag') }}
         </div>
@@ -104,7 +102,7 @@
                     ? tag.zh_name || tag.show_name || tag.name
                     : tag.name
                 }}
-                <el-icon><Close @click="removeTag(tag.name)" /></el-icon>
+                <el-icon v-if="!['runtime_framework','language'].includes(tag.category)"><Close @click="removeTag(tag.uid)" /></el-icon>
               </span>
             </div>
             <input
@@ -125,19 +123,20 @@
             </p>
           </div>
           <CsgButton
+            v-if="hasTagsChanged"
             @click="updateTags"
             class="btn btn-secondary-gray btn-sm w-fit"
             :name="$t('all.update')"
+            :loading="isUpdatingTags"
+            :disabled="isUpdatingTags"
           />
         </div>
       </div>
     </div>
 
-    <el-divider />
-
     <!-- 行业标签 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.modelIndustryTag') }}
         </div>
@@ -164,9 +163,7 @@
                     ? tag.zh_name || tag.show_name || tag.name
                     : tag.name
                 }}
-                <el-icon
-                  ><Close @click="removeIndustryTag(tag.name)"
-                /></el-icon>
+                <el-icon><Close @click="removeIndustryTag(tag.uid)" /></el-icon>
               </span>
             </div>
             <input
@@ -189,9 +186,12 @@
             </p>
           </div>
           <CsgButton
+            v-if="hasIndustryTagsChanged"
             @click="updateIndustryTags"
             class="btn btn-secondary-gray btn-sm w-fit"
             :name="$t('all.update')"
+            :loading="isUpdatingIndustryTags"
+            :disabled="isUpdatingIndustryTags"
           />
         </div>
       </div>
@@ -200,8 +200,8 @@
     <el-divider />
 
     <!-- 修改可见性 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.edit.changeVisibility') }}
         </div>
@@ -238,11 +238,10 @@
       </div>
     </div>
 
-    <el-divider />
 
     <!-- 删除模型 -->
-    <div class="flex xl:flex-col gap-8">
-      <div class="w-[380px] sm:w-full flex flex-col gap-1.5">
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col gap-1.5">
         <div class="text-sm text-gray-700 leading-5 font-medium">
           {{ $t('models.edit.delModel') }}
         </div>
@@ -319,12 +318,36 @@
         options: [
           { value: 'Private', label: this.$t('all.private') },
           { value: 'Public', label: this.$t('all.public') }
-        ]
+        ],
+        isUpdatingTags: false,
+        isUpdatingIndustryTags: false,
+        originalModelNickname: this.modelNickname || '',
+        originalModelDesc: this.modelDesc || '',
+        originalTags: [],
+        originalIndustryTags: [],
       }
     },
     computed: {
       ...mapState(useRepoDetailStore, ['isPrivate']),
       ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
+      hasNicknameChanged() {
+        return this.theModelNickname.trim() !== this.originalModelNickname.trim()
+      },
+      hasDescChanged() {
+        return this.theModelDesc.trim() !== this.originalModelDesc.trim()
+      },
+      hasTagsChanged() {
+        if (this.originalTags.length !== this.selectedTags.length) return true
+        const originalTagIds = this.originalTags.map(tag => tag.uid).sort()
+        const currentTagIds = this.selectedTags.map(tag => tag.uid).sort()
+        return JSON.stringify(originalTagIds) !== JSON.stringify(currentTagIds)
+      },
+      hasIndustryTagsChanged() {
+        if (this.originalIndustryTags.length !== this.selectedIndustryTags.length) return true
+        const originalTagIds = this.originalIndustryTags.map(tag => tag.uid).sort()
+        const currentTagIds = this.selectedIndustryTags.map(tag => tag.uid).sort()
+        return JSON.stringify(originalTagIds) !== JSON.stringify(currentTagIds)
+      },
       visibilityName: {
         get() {
           return !!this.privateVisibility ? 'Private' : 'Public'
@@ -335,7 +358,6 @@
       }
     },
     mounted() {
-      // 监听全局点击事件
       if (Object.keys(this.tags).length > 0) {
         this.getSelectTags()
       }
@@ -358,7 +380,6 @@
       }
     },
     beforeDestroy() {
-      // 组件销毁前移除事件监听
       document.removeEventListener('click', this.collapseTagList)
     },
     inject: ['fetchRepoDetail'],
@@ -385,12 +406,34 @@
       },
       getSelectTags() {
         this.selectedTags = [
-          ...this.tags.task_tags.map((tag) => tag),
-          ...this.tags.other_tags.map((tag) => tag)
+          ...this.tags.task_tags.map((tag) => {
+            Object.assign(tag, {
+              uid: tag.category + tag.name,
+            })
+            return tag
+          }),
+          ...this.tags.other_tags.map((tag) => {
+            Object.assign(tag, {
+              uid: tag.category + tag.name,
+            })
+            return tag
+          })
         ]
         this.selectedIndustryTags = [
-          ...this.tags.industry_tags.map((tag) => tag)
+          ...this.tags.industry_tags.map((tag) => {
+            Object.assign(tag, {
+              uid: tag.category + tag.name,
+            })
+            return tag
+          })
         ]
+        // Store original values for comparison
+        if (this.originalTags.length === 0) {
+          this.originalTags = JSON.parse(JSON.stringify(this.selectedTags))
+        }
+        if (this.originalIndustryTags.length === 0) {
+          this.originalIndustryTags = JSON.parse(JSON.stringify(this.selectedIndustryTags))
+        }
       },
       clickDelete() {
         if (this.delDesc === this.modelPath) {
@@ -404,12 +447,14 @@
       },
       showTagList(e) {
         if (this.tagInput != '') {
-          const userTriggerTagList = this.tagList.filter((tag) => {
-            return (
-              tag.show_name.includes(this.tagInput) ||
-              tag.name.includes(this.tagInput)
-            )
-          })
+          const userTriggerTagList = this.tagList
+            .filter((tag) => !['runtime_framework', 'language'].includes(tag.category))
+            .filter((tag) => {
+              return (
+                tag.show_name.includes(this.tagInput) ||
+                tag.name.includes(this.tagInput)
+              )
+            })
           if (userTriggerTagList.length > 0) {
             this.theTagList = userTriggerTagList
             this.shouldShowTagList = true
@@ -439,11 +484,18 @@
       },
 
       selectTag(newTag) {
+        // 不允许选择 runtime_framework 与 language 类别
+        if (['runtime_framework', 'language'].includes(newTag.category)) return
         const findTag = this.selectedTags.find(
-          (tag) => tag.name === newTag.name
+          (tag) => tag.uid === (newTag.category + newTag.name)
         )
         if (!findTag) {
-          this.selectedTags.push({ name: newTag.name, zh_name: newTag.show_name })
+          this.selectedTags.push({ 
+            name: newTag.name, 
+            zh_name: newTag.show_name, 
+            category: newTag.category,
+            uid: newTag.category + newTag.name 
+          })
           this.tagInput = ''
           this.shouldShowTagList = false
         }
@@ -451,27 +503,31 @@
 
       selectIndustryTag(newTag) {
         const findIndustryTag = this.selectedIndustryTags.find(
-          (tag) => tag.name === newTag.name
+          (tag) => tag.uid === (newTag.category + newTag.name)
         )
         if (!findIndustryTag) {
           this.selectedIndustryTags.push({
             name: newTag.name,
-            zh_name: newTag.show_name
+            zh_name: newTag.show_name,
+            category: newTag.category,
+            uid: newTag.category + newTag.name
           })
           this.industryTagInput = ''
           this.shouldShowIndustryTagList = false
         }
       },
 
-      removeTag(tagName) {
-        this.selectedTags = this.selectedTags.filter(
-          (item) => item.name !== tagName
-        )
+      removeTag(tagUid) {
+        const target = this.selectedTags.find((item) => item.uid === tagUid)
+        if (target && ['runtime_framework','language'].includes(target.category)) {
+          return
+        }
+        this.selectedTags = this.selectedTags.filter((item) => item.uid !== tagUid)
       },
 
-      removeIndustryTag(tagName) {
+      removeIndustryTag(tagUid) {
         this.selectedIndustryTags = this.selectedIndustryTags.filter(
-          (item) => item.name !== tagName
+          (item) => item.uid !== tagUid
         )
       },
 
@@ -530,10 +586,23 @@
         const payload = { private: isprivateSelected }
         this.updateModel(payload)
       },
-      updateTags() {
+      async updateTags() {
+        if (this.isUpdatingTags) return
+        
         if (this.selectedTags.length !== 0) {
-          const newSelectedTags = this.selectedTags.map((tag) => tag.name)
-          this.updateTagsInReadme(newSelectedTags)
+          this.isUpdatingTags = true
+          try {
+            const newSelectedTags = this.selectedTags.map((tag) => {
+              return {
+                category: tag.category,
+                name: tag.name
+              }
+            })
+            await this.updateTagsInReadme(newSelectedTags)
+          } catch (error) {
+          } finally {
+            this.isUpdatingTags = false
+          }
         } else {
           ElMessage({
             message: this.$t('models.edit.needModelTag'),
@@ -542,12 +611,20 @@
         }
       },
 
-      updateIndustryTags() {
+      async updateIndustryTags() {
+        if (this.isUpdatingIndustryTags) return
+        
         if (this.selectedIndustryTags.length !== 0) {
-          const newSelectedIndustryTags = this.selectedIndustryTags.map(
-            (tag) => tag.name
-          )
-          this.updateIndustryTagsAPI(newSelectedIndustryTags)
+          this.isUpdatingIndustryTags = true
+          try {
+            const newSelectedIndustryTags = this.selectedIndustryTags.map(
+              (tag) => tag.name
+            )
+            await this.updateIndustryTagsAPI(newSelectedIndustryTags)
+          } catch (error) {
+          } finally {
+            this.isUpdatingIndustryTags = false
+          }
         } else {
           ElMessage({
             message: this.$t('models.edit.needModelTag'),
@@ -568,13 +645,20 @@
       async updateTagsInReadme(newTags) {
         if (this.readmeContent) {
           const { metadata, content } = parseMD(this.readmeContent)
+          const tags = newTags
+            .filter((tag) => tag.category !== 'license')
+            .filter((tag) => !['runtime_framework','language'].includes(tag.category))
+            .map((tag) => tag.name)
+          const license = newTags.filter((tag) => tag.category==='license').map((tag) => tag.name)
           const newMetadata = {
             ...metadata,
-            tags: newTags
+            tags,
+            license
           }
+          console.log(111, newMetadata)
           const newMetadataString = yaml.dump(newMetadata)
           const newContent = `---\n${newMetadataString}\n---\n\n${content}`
-          this.updateReadme(newContent)
+          await this.updateReadme(newContent)
         }
       },
       async updateReadme(newContent) {
@@ -594,7 +678,7 @@
         }
         const { data, error } = await useFetchApi(updateReadmeEndpoint, option).put().json()
         if (data.value) {
-          this.fetchRepoDetail()
+          this.fetchRepoDetail(true)
           ElMessage({ message: this.$t('all.updateSuccess'), type: 'success' })
         } else {
           ElMessage({ message: error.value.msg, type: 'warning' })
@@ -612,7 +696,7 @@
         if (error.value) {
           ElMessage({ message: error.value.msg, type: 'warning' })
         } else {
-          this.fetchRepoDetail()
+          this.fetchRepoDetail(true)
           ElMessage({ message: this.$t('all.addSuccess'), type: 'success' })
         }
       },
@@ -654,7 +738,7 @@
           if (payload.hasOwnProperty('private')) {
             this.updateVisibility(payload.private)
           }
-          this.fetchRepoDetail()
+          this.fetchRepoDetail(true)
           ElMessage({ message: 'Success', type: 'success' })
         }
       }

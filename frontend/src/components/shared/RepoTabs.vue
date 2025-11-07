@@ -243,6 +243,8 @@
           :coverImage="repoDetail.coverImageUrl"
           @showSpaceLogs="showSpaceLogs"
           :sdk="sdk"
+          :tag-list="tagList"
+          :tags="tags"
           :variables="repoDetail.variables ? JSON.parse(repoDetail.variables) : {}"
         />
         <code-settings
@@ -271,7 +273,7 @@
           :mcpNickname="repoDetail.nickname"
           :mcpDesc="repoDetail.description"
           :defaultBranch="repoDetail.defaultBranch"
-          :tagList="tagList"
+          :tag-list="tagList"
           :tags="tags"
         />
       </template>
@@ -467,27 +469,6 @@
     }
   }
 
-  // 监听路由变化，确保 actionName 状态正确
-  watch(() => route.query, (newQuery) => {
-    if (newQuery.tab === 'files') {
-      const actionName = validateActionName(newQuery.actionName)
-      if (actionName !== repoTab.actionName) {
-        setRepoTab({
-          actionName: actionName,
-          lastPath: newQuery.path || '',
-          currentBranch: newQuery.branch || repoTab.currentBranch
-        })
-      }
-    } else if (newQuery.tab === 'community') {
-      const actionName = validateCommunityActionName(newQuery.actionName)
-      if (actionName !== repoTab.communityActionName) {
-        setRepoTab({
-          communityActionName: actionName,
-          discussionId: newQuery.discussionId || '',
-        })
-      }
-    }
-  }, { deep: true })
 </script>
 
 <style>

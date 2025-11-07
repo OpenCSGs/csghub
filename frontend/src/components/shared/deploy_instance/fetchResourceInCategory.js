@@ -59,3 +59,48 @@ export const fetchResourcesInCategory = async (clusterId, depployType = 1) => {
     return options
   }
 }
+
+export const fetchResourcesInType = async (clusterId, depployType = 1) => {
+  const { data, error } = await useFetchApi(
+    `/space_resources?cluster_id=${clusterId}&deploy_type=${depployType}`
+  ).json()
+  if (error.value) {
+    ElMessage({ message: error.value.msg, type: 'warning' })
+  } else {
+    const body = data.value
+    const allGPUResources = body.data
+    if (!Array.isArray(allGPUResources)) {
+      return [];
+    }
+
+    const result = [];
+
+    allGPUResources.forEach(item => {
+      const type = item.type.toUpperCase();
+
+      let typeEntry = result.find(entry => entry.label === type);
+
+      if (!typeEntry) {
+        typeEntry = { label: type, options: [] };
+        result.push(typeEntry);
+      }
+      let priceValue = ''
+      if (item.pay_mode == 'minute') {
+        priceValue = `${(item.price / 100).toFixed(2)}${allLocale.hourUnit}`
+      } else if (item.pay_mode == 'month') {
+        priceValue = `${(item.price / 100).toFixed(2)}${allLocale.monthUnit}`
+      } else if (item.pay_mode == 'year') {
+        priceValue = `${(item.price / 100).toFixed(2)}${allLocale.yearUnit}`
+      } else {
+        priceValue = `${allLocale.free}`
+      }
+      typeEntry.options.push({
+        ...item,
+        resources:item.resources?JSON.parse(item.resources):{},
+        priceValue:priceValue
+      });
+    });
+
+    return result;
+  }
+}

@@ -17,6 +17,8 @@ export const all = {
   programLanguage: "编程语言",
   runmode: "运行模式",
   scene: "场景",
+  sdk: "SDK",
+  hardware: "云资源",
   others: "其他",
   contributors: "贡献者",
   historyCommits: "历史提交",
@@ -37,9 +39,9 @@ export const all = {
   sureDel: "以确认删除",
   canNot: "无法",
   role: "角色",
-  userName: "用户名",
-  updateUserName: "更新 用户名",
-  nickName: "用户昵称",
+  userName: "用户ID",
+  updateUserName: "更新 用户ID",
+  nickName: "用户名称",
   homepage:"主页",
   bio:"个人简介",
   phone: "手机号码",
@@ -135,5 +137,10 @@ export const all = {
   },
   show: "显示",
   hide: "隐藏",
-  copySuccess: "复制成功"
+  copy:"复制",
+  copySuccess: "复制成功",
+  allTab:'全部产品',
+  unknown: "未知",
+  inBranch: "在分支",
+  notExist: "中不存在"
 }

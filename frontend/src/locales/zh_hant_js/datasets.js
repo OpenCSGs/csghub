@@ -1,6 +1,6 @@
 export const datasets = {
   title: "數據集",
-  placeholder: "數據集名字",
+  placeholder: "搜索數據集名稱",
   newTips:'近兩週新增數據集',
   downloadDataset: "下載數據集",
   datasetName: "數據集名稱",

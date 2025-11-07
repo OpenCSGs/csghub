@@ -1,6 +1,7 @@
 <template>
   <div
     class="w-full bg-gray-25 border-b border-gray-100 pt-9 pb-[60px] xl:px-10 md:px-0 md:pb-6 md:h-auto"
+    v-show="isInitialized"
   >
     <div class="mx-auto page-responsive-width">
       <RepoHeader
@@ -15,9 +16,10 @@
       />
     </div>
   </div>
+  <!-- v-loading="dataLoading" -->
   <div
     class="mx-auto page-responsive-width mt-[-40px] md:px-0 relative"
-    v-loading="dataLoading"
+    v-show="!isDataLoading && isInitialized"
   >
     <CsgButton
       v-show="activeName == 'page' && repoDetailStore.endpoint"
@@ -115,6 +117,11 @@
       </el-tab-pane>
     </el-tabs>
   </div>
+  
+  <LoadingSpinner 
+    :loading="isDataLoading" 
+    :text="$t('finetune.loading')" 
+  />
 </template>
 
 <script setup>
@@ -125,6 +132,7 @@
   import refreshJWT from '../../packs/refreshJWT.js'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import FinetuneSettings from './FinetuneSettings.vue'
+  import LoadingSpinner from '../shared/LoadingSpinner.vue'
   import useFetchApi from '@/packs/useFetchApi'
   import BillingDetail from '../shared/BillingDetail.vue'
   import { ElMessage } from 'element-plus'
@@ -133,7 +141,7 @@
   import { storeToRefs } from 'pinia'
   import { useRepoTabStore } from '@/stores/RepoTabStore'
   import { useRoute, useRouter } from 'vue-router'
-  import { validateTab } from '@/packs/utils'
+  import { validateTab, ToNotFoundPage } from '@/packs/utils'
   import CsgButton from '../shared/CsgButton.vue'
 
   const props = defineProps({
@@ -152,10 +160,12 @@
   const route = useRoute()
   
   const activeName = ref('page')
-  const dataLoading = ref(false)
   const finetuneResources = ref([])
   const finetuneResource = ref('')
-  const iframeHeight = ref(700) // Default height
+  const iframeHeight = ref(700)
+  
+  const isDataLoading = ref(false)
+  
   const allStatus = [
     'Building',
     'Deploying',
@@ -229,7 +239,7 @@
   }
 
   // Listen for route changes, update tab when user uses browser forward/back buttons
-  watch(() => route.query.tab, (newTab) => {
+  watch(() => route.query.tab, async (newTab) => {
     const validatedTab = validateTab(newTab)
     if (validatedTab && isValidTab(validatedTab) && validatedTab !== activeName.value) {
       activeName.value = validatedTab
@@ -238,11 +248,11 @@
         actionName: 'files',
         lastPath: ''
       })
-      tabChange({ paneName: validatedTab })
+      await tabChange({ paneName: validatedTab })
     }
   })
 
-  const tabChange = (tab) => {
+  const tabChange = async (tab) => {
     let tabName = validateTab(tab.paneName)
     
     if (!isValidTab(tabName)) {
@@ -271,7 +281,7 @@
       }
     })
 
-    fetchRepoDetail()
+    await fetchRepoDetail()
   }
 
   const toNotebookPage = () => {
@@ -279,22 +289,32 @@
   }
 
   const fetchRepoDetail = async () => {
-    dataLoading.value = true
+    if (isDataLoading.value) {
+      return false
+    }
+    isDataLoading.value = true
 
     try {
-      const { data } = await useFetchApi(
+      const { response, data } = await useFetchApi(
         `/models/${props.namespace}/${props.modelName}/run/${props.finetuneId}`
       ).json()
-      if (data.value) {
-        const body = data.value
-        if (body.data) {
-          repoDetailStore.initialize(body.data, 'finetune')
-        }
+      
+      if (response.value.status === 404) {
+        ToNotFoundPage()
+        return false
       }
+      
+      if (data.value?.data) {
+        repoDetailStore.initialize(data.value.data, 'finetune')
+        return true
+      }
+      
+      return false
     } catch (err) {
-      console.log(err)
+      console.error('Failed to fetch repo detail:', err)
+      return false
     } finally {
-      dataLoading.value = false
+      isDataLoading.value = false
     }
   }
 
@@ -352,9 +372,7 @@
           )
           if (repoDetailStore.status !== eventResponse.status) {
             repoDetailStore.status = eventResponse.status
-            if (repoDetailStore.status == 'Running') {
-              fetchRepoDetail()
-            }
+            fetchRepoDetail() 
           }
           repoDetailStore.failedReason = eventResponse.reason
         },
@@ -366,7 +384,7 @@
     )
   }
 
-  onBeforeMount(() => {
+  onBeforeMount(async () => {
     if (props.path) {
       activeName.value = props.path
     }
@@ -375,15 +393,9 @@
     const params = new URLSearchParams(window.location.search)
     const urlTab = validateTab(params.get('tab'))
     if (urlTab && isValidTab(urlTab)) {
-      tabChange({ paneName: urlTab })
+      await tabChange({ paneName: urlTab })
     } else {
-      tabChange({ paneName: getDefaultTab() })
-    }
-
-    fetchRepoDetail()
-
-    if (repoDetailStore.clusterId) {
-      fetchResources()
+      await tabChange({ paneName: getDefaultTab() })
     }
 
     if (

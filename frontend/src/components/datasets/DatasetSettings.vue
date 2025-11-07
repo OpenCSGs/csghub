@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-gray-200 rounded-md my-8 md:my-0 md:border-none px-6 py-6">
+  class="flex flex-col gap-6 my-8 md:my-0 md:border-none py-6">
     <!-- 展示英文名 -->
     <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -22,7 +22,6 @@
       </div>
     </div>
 
-    <el-divider />
 
     <!-- 更新数据集别名 -->
     <div class="flex xl:flex-col gap-8">
@@ -41,6 +40,7 @@
           size="large"
           class="!w-[512px] sm:!w-full" />
         <CsgButton
+          v-if="hasNicknameChanged"
           @click="updateNickname"
           class="btn btn-secondary-gray btn-sm w-fit"
           :name="$t('all.update')"
@@ -48,7 +48,6 @@
       </div>
     </div>
 
-    <el-divider />
 
     <!-- 更新数据集简介 -->
     <div class="flex xl:flex-col gap-8">
@@ -68,6 +67,7 @@
           type="textarea"
           class="!w-[512px] sm:!w-full" />
         <CsgButton
+          v-if="hasDescChanged"
           @click="updateDatasetDesc"
           class="btn btn-secondary-gray btn-sm w-fit"
           :name="$t('all.update')"
@@ -106,7 +106,7 @@
                     ? tag.zh_name || tag.show_name || tag.name
                     : tag.name
                 }}
-                <el-icon><Close @click="removeTag(tag.name)" /></el-icon>
+                <el-icon v-if="!['runtime_framework','language'].includes(tag.category)"><Close @click="removeTag(tag.uid)" /></el-icon>
               </span>
             </div>
             <input
@@ -127,15 +127,16 @@
             </p>
           </div>
           <CsgButton
+            v-if="hasTagsChanged"
             @click="updateTags"
             class="btn btn-secondary-gray btn-sm w-fit"
             :name="$t('all.update')"
+            :loading="isUpdatingTags"
+            :disabled="isUpdatingTags"
           />
         </div>
       </div>
     </div>
-
-    <el-divider />
 
     <!-- 行业标签 -->
     <div class="flex xl:flex-col gap-8">
@@ -167,7 +168,7 @@
                     : tag.name
                 }}
                 <el-icon
-                  ><Close @click="removeIndustryTag(tag.name)"
+                  ><Close @click="removeIndustryTag(tag.uid)"
                 /></el-icon>
               </span>
             </div>
@@ -191,9 +192,12 @@
             </p>
           </div>
           <CsgButton
+            v-if="hasIndustryTagsChanged"
             @click="updateIndustryTags"
             class="btn btn-secondary-gray btn-sm w-fit"
             :name="$t('all.update')"
+            :loading="isUpdatingIndustryTags"
+            :disabled="isUpdatingIndustryTags"
           />
         </div>
       </div>
@@ -239,8 +243,6 @@
         </el-select>
       </div>
     </div>
-
-    <el-divider />
 
     <!-- 数据集删除 -->
     <div class="flex xl:flex-col gap-8">
@@ -324,6 +326,12 @@
         datasetPath: this.path,
         readmeContent: '',
         readmeSha: '',
+        isUpdatingTags: false,
+        isUpdatingIndustryTags: false,
+        originalDatasetNickname: this.datasetNickname || '',
+        originalDatasetDesc: this.datasetDesc || '',
+        originalTags: [],
+        originalIndustryTags: [],
         options: [
           { value: 'Private', label: this.$t('all.private') },
           { value: 'Public', label: this.$t('all.public') }
@@ -333,6 +341,24 @@
     computed: {
       ...mapState(useRepoDetailStore, ['isPrivate']),
       ...mapWritableState(useRepoDetailStore, ['privateVisibility']),
+      hasNicknameChanged() {
+        return this.theDatasetNickname.trim() !== this.originalDatasetNickname.trim()
+      },
+      hasDescChanged() {
+        return this.theDatasetDesc.trim() !== this.originalDatasetDesc.trim()
+      },
+      hasTagsChanged() {
+        if (this.originalTags.length !== this.selectedTags.length) return true
+        const originalTagIds = this.originalTags.map(tag => tag.uid).sort()
+        const currentTagIds = this.selectedTags.map(tag => tag.uid).sort()
+        return JSON.stringify(originalTagIds) !== JSON.stringify(currentTagIds)
+      },
+      hasIndustryTagsChanged() {
+        if (this.originalIndustryTags.length !== this.selectedIndustryTags.length) return true
+        const originalTagIds = this.originalIndustryTags.map(tag => tag.uid).sort()
+        const currentTagIds = this.selectedIndustryTags.map(tag => tag.uid).sort()
+        return JSON.stringify(originalTagIds) !== JSON.stringify(currentTagIds)
+      },
       visibilityName: {
         get() {
           return !!this.privateVisibility ? 'Private' : 'Public'
@@ -392,12 +418,34 @@
       },
       getSelectTags() {
         this.selectedTags = [
-          ...this.tags.task_tags.map((tag) => tag),
-          ...this.tags.other_tags.map((tag) => tag)
+          ...this.tags.task_tags.map((tag) => {
+            Object.assign(tag, {
+              uid: tag.category + tag.name,
+            })
+            return tag
+          }),
+          ...this.tags.other_tags.map((tag) => {
+            Object.assign(tag, {
+              uid: tag.category + tag.name,
+            })
+            return tag
+          })
         ]
         this.selectedIndustryTags = [
-          ...this.tags.industry_tags.map((tag) => tag)
+          ...this.tags.industry_tags.map((tag) => {
+            Object.assign(tag, {
+              uid: tag.category + tag.name,
+            })
+            return tag
+          })
         ]
+        // Store original values for comparison
+        if (this.originalTags.length === 0) {
+          this.originalTags = JSON.parse(JSON.stringify(this.selectedTags))
+        }
+        if (this.originalIndustryTags.length === 0) {
+          this.originalIndustryTags = JSON.parse(JSON.stringify(this.selectedIndustryTags))
+        }
       },
       clickDelete() {
         if (this.delDesc === this.datasetPath) {
@@ -412,12 +460,14 @@
 
       showTagList(e) {
         if (this.tagInput != '') {
-          const userTriggerTagList = this.tagList.filter((tag) => {
-            return (
-              tag.show_name.includes(this.tagInput) ||
-              tag.name.includes(this.tagInput)
-            )
-          })
+          const userTriggerTagList = this.tagList
+            .filter((tag) => !['runtime_framework','language'].includes(tag.category))
+            .filter((tag) => {
+              return (
+                tag.show_name.includes(this.tagInput) ||
+                tag.name.includes(this.tagInput)
+              )
+            })
           if (userTriggerTagList.length > 0) {
             this.theTagList = userTriggerTagList
             this.shouldShowTagList = true
@@ -447,11 +497,17 @@
       },
 
       selectTag(newTag) {
+        if (['runtime_framework','language'].includes(newTag.category)) return
         const findTag = this.selectedTags.find(
-          (tag) => tag.name === newTag.name
+          (tag) => tag.uid === (newTag.category + newTag.name)
         )
         if (!findTag) {
-          this.selectedTags.push({ name: newTag.name, zh_name: newTag.show_name })
+          this.selectedTags.push({ 
+            name: newTag.name, 
+            zh_name: newTag.show_name, 
+            category: newTag.category, 
+            uid: newTag.category + newTag.name 
+          })
           this.tagInput = ''
           this.shouldShowTagList = false
         }
@@ -459,27 +515,30 @@
 
       selectIndustryTag(newTag) {
         const findIndustryTag = this.selectedIndustryTags.find(
-          (tag) => tag.name === newTag.name
+          (tag) => tag.uid === (newTag.category + newTag.name)
         )
         if (!findIndustryTag) {
           this.selectedIndustryTags.push({
             name: newTag.name,
-            zh_name: newTag.show_name
+            zh_name: newTag.show_name,
+            uid: newTag.category + newTag.name
           })
           this.industryTagInput = ''
           this.shouldShowIndustryTagList = false
         }
       },
 
-      removeTag(tagName) {
-        this.selectedTags = this.selectedTags.filter(
-          (item) => item.name !== tagName
-        )
+      removeTag(tagUid) {
+        const target = this.selectedTags.find((item) => item.uid === tagUid)
+        if (target && ['runtime_framework','language'].includes(target.category)) {
+          return
+        }
+        this.selectedTags = this.selectedTags.filter((item) => item.uid !== tagUid)
       },
 
-      removeIndustryTag(tagName) {
+      removeIndustryTag(tagUid) {
         this.selectedIndustryTags = this.selectedIndustryTags.filter(
-          (item) => item.name !== tagName
+          (item) => item.uid !== tagUid
         )
       },
 
@@ -538,10 +597,24 @@
         const payload = { private: isprivateSelected }
         this.updateDataset(payload)
       },
-      updateTags() {
+      async updateTags() {
+        if (this.isUpdatingTags) return
+        
         if (this.selectedTags.length !== 0) {
-          const newSelectedTags = this.selectedTags.map((tag) => tag.name)
-          this.updateTagsInReadme(newSelectedTags)
+          this.isUpdatingTags = true
+          try {
+            const newSelectedTags = this.selectedTags.map((tag) => {
+              return {
+                category: tag.category,
+                name: tag.name
+              }
+            })
+            await this.updateTagsInReadme(newSelectedTags)
+          } catch (error) {
+            // 
+          } finally {
+            this.isUpdatingTags = false
+          }
         } else {
           ElMessage({
             message: this.$t('datasets.edit.needDatasetTag'),
@@ -550,12 +623,21 @@
         }
       },
 
-      updateIndustryTags() {
+      async updateIndustryTags() {
+        if (this.isUpdatingIndustryTags) return
+        
         if (this.selectedIndustryTags.length !== 0) {
-          const newSelectedIndustryTags = this.selectedIndustryTags.map(
-            (tag) => tag.name
-          )
-          this.updateIndustryTagsAPI(newSelectedIndustryTags)
+          this.isUpdatingIndustryTags = true
+          try {
+            const newSelectedIndustryTags = this.selectedIndustryTags.map(
+              (tag) => tag.name
+            )
+            await this.updateIndustryTagsAPI(newSelectedIndustryTags)
+          } catch (error) {
+            //
+          } finally {
+            this.isUpdatingIndustryTags = false
+          }
         } else {
           ElMessage({
             message: this.$t('datasets.edit.needDatasetTag'),
@@ -578,13 +660,19 @@
       async updateTagsInReadme(newTags) {
         if (this.readmeContent) {
           const { metadata, content } = parseMD(this.readmeContent)
+          const tags = newTags
+            .filter((tag) => tag.category !== 'license')
+            .filter((tag) => !['runtime_framework','language'].includes(tag.category))
+            .map((tag) => tag.name)
+          const license = newTags.filter((tag) => tag.category==='license').map((tag) => tag.name)
           const newMetadata = {
             ...metadata,
-            tags: newTags
+            tags,
+            license
           }
           const newMetadataString = yaml.dump(newMetadata)
           const newContent = `---\n${newMetadataString}\n---\n\n${content}`
-          this.updateReadme(newContent)
+          await this.updateReadme(newContent)
         }
       },
       async updateReadme(newContent) {
@@ -604,10 +692,11 @@
         }
         const { error } = await useFetchApi(updateReadmeEndpoint, option).put().json()
         if (!error.value) {
-          this.fetchRepoDetail()
+          this.fetchRepoDetail(true)
           ElMessage({ message: this.$t('all.updateSuccess'), type: 'success' })
         } else {
           ElMessage({ message: error.value.msg, type: 'warning' })
+          throw new Error(error.value.msg)
         }
       },
 
@@ -622,9 +711,10 @@
         ).post().json()
         if (error.value) {
           ElMessage({ message: error.value.msg, type: 'warning' })
+          throw new Error(error.value.msg)
         } else {
-          this.fetchRepoDetail()
-          ElMessage({ message: this.$t('all.addSuccess'), type: 'success' })
+          this.fetchRepoDetail(true)
+          ElMessage({ message: this.$t('all.updateSuccess'), type: 'success' })
         }
       },
 
@@ -662,7 +752,7 @@
         if (error.value) {
           ElMessage.warning(error.value.msg)
         } else {
-          this.fetchRepoDetail()
+          this.fetchRepoDetail(true)
           ElMessage.success(this.$t('datasets.edit.updateSuccess'))
         }
       },

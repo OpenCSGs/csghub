@@ -1,5 +1,6 @@
 export const finetune = {
   title: '微调实例',
+  loading: '正在加载微调实例信息...',
   new: {
     title: '新建微调实例',
     desc: '在专属算力实例上部署您的模型，',

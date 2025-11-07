@@ -8,7 +8,7 @@
       </p>
     </div>
     <p class="text-gray-900 text-2xl font-medium">
-      数据源
+      {{ t("dataPipelines.data_source") }}
     </p>
 
     <div>
@@ -18,7 +18,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">等待中</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.waiting") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-blue-500 rounded-full"
             >
@@ -34,7 +34,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行中</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.inProgress") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-yellow-500 rounded-full"
             >
@@ -49,7 +49,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行结束（正常）</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.execution_completed_normally") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-green-500 rounded-full"
             >
@@ -64,7 +64,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行结束（错误）</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.execution_end_error") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center bg-purple-100 text-purple-500 rounded-full"
             >
@@ -77,7 +77,7 @@
     </div>
 
     <p class="text-gray-900 text-2xl font-medium mt-[16px]">
-      格式转换
+      {{ t("dataPipelines.formatConversion") }}
     </p>
 
     <div>
@@ -87,7 +87,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">等待中</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.waiting") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-blue-500 rounded-full"
             >
@@ -102,7 +102,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行中</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.inProgress") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-yellow-500 rounded-full"
             >
@@ -117,7 +117,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">已停止</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.stopped") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-yellow-500 rounded-full"
             >
@@ -132,7 +132,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行结束（正常）</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.execution_completed_normally") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-green-500 rounded-full"
             >
@@ -147,7 +147,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行结束（错误）</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.execution_end_error") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center bg-purple-100 text-purple-500 rounded-full"
             >
@@ -160,7 +160,7 @@
     </div>
 
     <p class="text-gray-900 text-2xl font-medium mt-[16px]">
-      数据处理
+      {{ t("dataPipelines.dataProcessing") }}
     </p>
 
     <div>
@@ -170,7 +170,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">等待中</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.waiting") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-blue-500 rounded-full"
             >
@@ -186,7 +186,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行中</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.inProgress") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-yellow-500 rounded-full"
             >
@@ -201,7 +201,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行结束（正常）</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.execution_completed_normally") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center text-green-500 rounded-full"
             >
@@ -216,7 +216,7 @@
           class="bg-white rounded-lg border p-4 flex flex-col justify-between"
         >
           <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-600">执行结束（错误）</span>
+            <span class="text-sm text-gray-600">{{ t("dataPipelines.execution_end_error") }}</span>
             <div
               class="w-7 h-7 flex items-center justify-center bg-purple-100 text-purple-500 rounded-full"
             >
@@ -260,7 +260,7 @@
     <div class="borderBox mt-8">
       <div class="py-5 px-6">
         <p class="text-lg text-gray-900 font-medium">
-          Celery 节点服务列表
+          {{ t("dataPipelines.celery_node_service_list") }}
         </p>
       </div>
       <div class="flex flex-col">
@@ -278,18 +278,18 @@
           />
           <el-table-column
             prop="current_ip"
-            label="IP地址"
+            :label="t('dataPipelines.ip_address')"
             min-width="180"
           />
           <el-table-column
             prop="task_count"
-            label="当前任务数"
-            min-width="160"
+            :label="t('dataPipelines.current_number_tasks')"
+            min-width="200"
           />
 
           <el-table-column
             prop="status"
-            label="节点状态"
+            :label="t('dataPipelines.node_status')"
             min-width="160"
           >
             <template #default="scope">
@@ -306,7 +306,7 @@
           
           <el-table-column
             prop="ack_time"
-            label="心跳时间"
+            :label="t('dataPipelines.heartbeat_time')"
             min-width="280"
           >
             <template #default="scope">
@@ -316,28 +316,26 @@
             </template>
           </el-table-column>
           
-          <!-- <el-table-column
+          <el-table-column
             prop="token"
             :label="t('dataPipelines.operations')"
             min-width="120"
             fixed="right"
+            v-if="userStore.isAdmin"
           >
             <template #default="scope">
               <div class="settingsTableBtn flex items-center justify-start">
                 <el-button
                   class="flex items-center justify-start cursor-pointer"
                   type="text"
-                  @click="
-                    goToNewTask(
-                      `/datapipelines/dataflowInfo?id=${scope.row.job_id}&type=${scope.row.job_source}`
-                    )
-                  "
-                  >
-                  {{ t("dataPipelines.details") }}
+                  @click="delCeleryNode(scope.row.worker_name)"
+                  :disabled="scope.row.status === 'online'"
+                >
+                  {{ t('prompts.del') }}
                 </el-button>
               </div>
             </template>
-          </el-table-column> -->
+          </el-table-column>
         </el-table>
 
         <div class="flex justify-end mt-4 mr-4 mb-4">
@@ -359,13 +357,15 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
-import { ElMessage } from "element-plus";
+import { ElMessage, ElMessageBox } from "element-plus";
 import useFetchApi from "../../../packs/useFetchApi";
 import { convertUtcToLocalTime } from "../../../packs/datetimeUtils";
+import useUserStore from '../../../stores/UserStore'
 import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
 const tableLoading = ref(false);
+const userStore = useUserStore();
 
 const form = ref({
   searchStr: "",
@@ -514,6 +514,34 @@ const toDatasetPage = (path, branch) => {
     window.location.href = `/datasets/${path}/files/${branch}`;
   }
 };
+
+const delCeleryNode = (worker_name) => {
+  ElMessageBox.confirm(
+    t('dataPipelines.delCeleryNodeTips', { worker_name }),
+    t("dataPipelines.delCeleryNodeTitle"),
+    {
+      confirmButtonText: t("dataPipelines.confirm"),
+      cancelButtonText: t("dataPipelines.cancel"),
+      type: 'warning',
+    }
+  )
+    .then(async () => {
+      const url = `/dataflow/celery/delete_celery_worker/${worker_name}`;
+      const { data, error } = await useFetchApi(url).delete().json();
+      if (data.value.code === 200) {
+        ElMessage({
+          message: t('dataPipelines.delSuccess'),
+          type: "success",
+        });
+        getDataFlowListFun();
+      } else {
+        ElMessage({
+          message: `${t('dataPipelines.delFailed')}: ${error.value.msg}`,
+          type: "error",
+        });
+      }
+    })
+}
 
 const router = useRouter();
 

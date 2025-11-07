@@ -2,6 +2,13 @@ import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import NewFinetune from '@/components/finetune/NewFinetune.vue'
 
+vi.mock('vue3-lottie', () => ({
+  Vue3Lottie: {
+    name: 'Vue3Lottie',
+    template: '<div class="mock-lottie"></div>'
+  }
+}))
+
 vi.mock('@/packs/useFetchApi', () => ({
   default: (url) => {
     return {
@@ -89,16 +96,17 @@ vi.mock('@/packs/useFetchApi', () => ({
 }))
 
 vi.mock('@/components/shared/deploy_instance/fetchResourceInCategory', () => ({
-  fetchResourcesInCategory: vi.fn(() => {
+  fetchResourcesInType: vi.fn(() => {
     return Promise.resolve([
       {
-        label: 'Others',
+        label: 'CPU',
         options: [
           {
             name: 'Resource 1',
             label: 'Resource 1',
             is_available: true,
-            resources: 'res1',
+            resources: {"cpu":{"type":"Intel","num":"1"},"memory":"2Gi"},
+            priceValue:'120',
             order_detail_id: 1,
             type: 'cpu',
             id: 1
