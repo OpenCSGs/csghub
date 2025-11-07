@@ -18,18 +18,17 @@
         :class="[item.is_available ? 'cursor-pointer' : 'cursor-not-allowed', getCardBorderClass(item)]"
         @click="onSelect(item)"
       >
-        <i v-if="showIndicator" class="block w-6 h-1 rounded-xs shadow-sm" :class="getIndicatorClass(item)" />
-        <i v-else class="block w-6 h-1 rounded-xs bg-gray-400 shadow-sm" />
+        <i class="block w-6 h-1 rounded-xs shadow-sm" :class="getIndicatorClass(item)" />
 
-        <div v-if="showIndicator && isResourceInsufficient(item)" class="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div class="opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out text-sm text-warning-700 px-2.5 py-0.5 bg-warning-50 border border-warning-700 rounded-xl">
-            {{ t('endpoints.lowMemory') }}
-          </div>
-        </div>
-
+        <!-- Tooltip 优先级：资源不可用 > 显存不足 -->
         <div v-if="!item.is_available" class="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div class="opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out text-sm text-gray-500 px-2.5 py-0.5 bg-gray-50 border border-gray-300 rounded-xl">
             {{ t('endpoints.resourceUnavailable') }}
+          </div>
+        </div>
+        <div v-else-if="showIndicator && isResourceInsufficient(item)" class="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div class="opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out text-sm text-warning-700 px-2.5 py-0.5 bg-warning-50 border border-warning-700 rounded-xl">
+            {{ t('endpoints.lowMemory') }}
           </div>
         </div>
 
@@ -172,7 +171,14 @@ const getIndicatorClass = (item) => {
 const getCardBorderClass = (item) => {
   if (!item?.is_available) return 'border-gray-300'
   const insuff = isResourceInsufficient(item)
-  const isSelected = props.selected === `${item.id}/${item.order_detail_id}`
+  let isSelected = false
+  if (props.valueFormat === 'id') {
+    isSelected = String(props.selected) === String(item?.[props.idField])
+  } else {
+    const id = item?.[props.idField]
+    const orderId = item?.[props.orderDetailField]
+    isSelected = String(props.selected) === `${id}/${orderId}`
+  }
   if (isSelected && insuff) return 'border border-[2px] border-warning-700'
   if (isSelected) return 'border border-[2px] border-brand-500 bg-brand-25'
   return 'border-gray-400'
