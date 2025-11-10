@@ -22,6 +22,8 @@ export const navbar = {
   loginRegister: "Login/Register",
   login: "Login",
   newCollection: "New Collection",
+  newNotebook: "New Notebook",
+  newAgent: "New Agent",
   emailMissing: 'Please provide your email address before proceeding',
   usernameNeedChange: 'Please update your username before proceeding',
   emailAndUsernameMissing: 'Please update your email and username before proceeding',

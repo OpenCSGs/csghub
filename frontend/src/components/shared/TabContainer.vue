@@ -7,6 +7,7 @@
     >
       <!-- repo/endpoint summary -->
       <el-tab-pane
+        v-if="repoType !== 'notebook'"
         :label="summaryLabel"
         name="summary"
         lazy
@@ -48,7 +49,7 @@
 
       <!-- repo community -->
       <el-tab-pane
-        v-if="repoType !== 'endpoint'"
+        v-if="repoType !== 'endpoint' && repoType !== 'notebook'"
         :label="$t('all.community')"
         name="community"
         class="min-h-[300px]"
@@ -57,9 +58,9 @@
         <slot name="community"></slot>
       </el-tab-pane>
 
-      <!-- endpoint logs -->
+      <!-- endpoint/notebook logs -->
       <el-tab-pane
-        v-if="repoType === 'endpoint'"
+        v-if="repoType === 'endpoint' || repoType === 'notebook'"
         :label="$t('all.logs')"
         name="logs"
         class="min-h-[300px]"
@@ -70,7 +71,7 @@
 
        <!-- billing -->
        <el-tab-pane
-        v-if="(repoType === 'endpoint' || repoType === 'space') && settingsVisibility"
+        v-if="(repoType === 'endpoint' || repoType === 'space' || repoType === 'notebook') && settingsVisibility"
         :label="$t('billing.billing')"
         name="billing"
         class="min-h-[300px]"
@@ -129,7 +130,8 @@
   })
 
   const showFiles = computed(() => {
-    if (props.repoType === 'endpoint') return false
+    if (props.repoType === 'endpoint' || props.repoType === 'notebook') return false
+    if (props.repoType === 'dataset' && !isLoggedIn.value) return false
     if (props.repoType === 'space' && props.sdk === 'nginx') return props.settingsVisibility
 
     return true
@@ -148,6 +150,11 @@
   }
 
   const validTabs = computed(() => {
+    if (props.repoType === 'notebook') {
+      // notebook 仅有 logs/billing/settings 三个 tab
+      return ['logs', 'billing', 'settings']
+    }
+    
     const baseTabs = ['summary', 'files', 'billing', 'community', 'settings']
     
     if(props.repoType === 'endpoint') {
@@ -164,6 +171,10 @@
   })
 
   const getDefaultTab = () => {
+    if (props.repoType === 'notebook') {
+      // notebook 类型默认显示 logs tab
+      return 'logs'
+    }
     return props.defaultTab || 'summary'
   }
 
@@ -185,11 +196,18 @@
     let hasExtraKeys = false
     const query = {}
 
-    // tab 校验
-    if (urlTab && validatedTab === 'summary' && urlTab !== 'summary') {
+    // 处理空 tab 参数的情况
+    if (!urlTab) {
+      query.tab = getDefaultTab()
+      needUpdateUrl = true
+    }
+    // 处理无效 tab 参数的情况
+    else if (urlTab && validatedTab === 'summary' && urlTab !== 'summary') {
       query.tab = 'summary'
       needUpdateUrl = true
-    } else if (validatedTab && isValidTab(validatedTab)) {
+    }
+    // 处理有效 tab 参数的情况
+    else if (validatedTab && isValidTab(validatedTab)) {
       query.tab = validatedTab
     }
 

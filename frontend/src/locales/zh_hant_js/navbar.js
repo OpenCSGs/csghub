@@ -82,6 +82,7 @@ export const navbar = {
   "login": "登錄",
   "source": "資源控制台",
   newCollection: "新建合集",
+  newNotebook: "新建Notebook",
   emailMissing: '體驗完整功能，請提供您的電子郵件',
   dataflow: 'Dataflow 智能數據平台',
   dataflowText: '開啟數據集Agentic新範式',
