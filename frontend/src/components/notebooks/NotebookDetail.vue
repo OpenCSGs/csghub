@@ -22,7 +22,7 @@
   <div 
     class="mx-auto page-responsive-width mt-[-40px] md:px-0 relative"
     v-show="!isDataLoading && isInitialized">
-    <div class="absolute top-0 right-0 pr-4 z-10">
+    <div class="absolute top-0 right-0 right-0 z-10">
       <div
         v-if="repoDetailStore.status === 'Sleeping' || isWakingUp"
         @click="wakeupNotebook"
