@@ -10,6 +10,14 @@
         @showDiscussionDetail="showDiscussionDetail"
         @showNewDiscussion="showNewDiscussion">
       </DiscussionCards>
+      <CsgPagination
+        v-if="communityActionName === 'list' && cards.length > 0"
+        class="mt-6"
+        :perPage="perPage"
+        :currentPage="currentPage"
+        :total="totalDiscussions"
+        @currentChange="getDiscussion"
+      />
       
       <NewCommunityDiscussion
         v-if="communityActionName === 'new'"
@@ -52,6 +60,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
   import { validateCommunityActionName, ToNotFoundPage } from '../../packs/utils'
+  import CsgPagination from '../shared/CsgPagination.vue'
 
   const props = defineProps({
     repoType: String,
@@ -71,10 +80,20 @@
   const currentDiscussionCreateUserId = ref('')
   const currentDiscussionTime = ref('')
   const currentDiscussionData = ref(null)
+  
+  const perPage = ref(10)
+  const currentPage = ref(1)
+  const totalDiscussions = ref(0)
 
   const isDataLoading = ref(false)
 
-  const getDiscussion = async () => {
+  const getDiscussion = async (childCurrent) => {
+    if (childCurrent) {
+      currentPage.value = childCurrent
+    }
+    const params = new URLSearchParams()
+    params.append('per', perPage.value)
+    params.append('page', currentPage.value)
     isDataLoading.value = true
     if (!props.repoPath || props.repoPath === '') {
       isDataLoading.value = false
@@ -87,9 +106,10 @@
     }
     
     try {
-      const { data, error } = await useFetchApi(discussionCreateEndpoint).json()
+      const { data, error } = await useFetchApi(`${discussionCreateEndpoint}?${params.toString()}`).json()
       if (data.value) {
         const discussions = data.value.data.discussions || []
+        totalDiscussions.value = data.value.total || 0
         cards.value = discussions.sort((a, b) => b.id - a.id)
       } else {
         ElMessage({
