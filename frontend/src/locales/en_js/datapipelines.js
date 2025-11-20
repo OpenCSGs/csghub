@@ -13,7 +13,6 @@ export const dataPipelines = {
   "targetFormat": "Target Format",
   "dataFlowBranch": "Data Flow Branch",
   "startExecution": "Start Execution",
-  "inProgress": "In Progress",
   "searchTaskName": "Search Task Name",
   "confirmTermination": "Confirm Termination",
   "terminate": "Terminate",
@@ -40,7 +39,6 @@ export const dataPipelines = {
     }
   },
   "testingConnection": "Testing connection",
-  "submitting": "Submitting",
   "pleaseSelectAnExecutionTime": "Please select an execution time",
   "deletingTask": "Deleting task",
   "terminatingTask": "Terminating task",
@@ -201,11 +199,11 @@ export const dataPipelines = {
   "delCeleryNodeTitle": "Delete Celery node",
   "delCeleryNodeTips": "Are you sure to delete the {worker_name} Celery node?",
 
-
   "taskType": "Task Type",
   "dataCleaning": "Data Cleaning",
   "processingStatus": "Processing Status",
   "processingText": "Processing Text",
+  "inProgress": "In Progress",
   "completed": "Completed",
   "dataSource": "Data Source",
   "dataSourceBranch": "Data Source Branch",
@@ -258,6 +256,7 @@ export const dataPipelines = {
   "uploadFailedTips2": "The icon size cannot exceed 10MB.",
   "uploadFailedTips3": "Upload failed, please try again",
   "networkError": "Network error, please check the connection and try again",
+  "submitting": "Submitting",
   "algorithmTemplateDescription": "The algorithm template allows users to build workflows using various model operators, enabling tasks such as data cleaning, automated data augmentation, and analysis.",
   "taskTemplate": "Task Template",
   "searchTemplate": "Search Template",
@@ -383,6 +382,7 @@ export const dataPipelines = {
   "fineweb_edu_chinese_common_internal": "fineweb edu chinese common",
   "smoltalk_chinese_common_internal": "smoltalk chinese common",
   "cosmopedia_chinese_preprocess_internal": "cosmopedia chinese preprocess",
+  "md_to_jsonl_preprocess_internal": "md to jsonl tool",
 
 
   "analysis_common_internal_dec": "This analyzer class is used to analyze specific datasets. It calculates statistics for all filtering operations in the configuration file, applies various analyses (such as overall analysis, column-by-column analysis, etc.) to these statistics, and generates analysis results (statistical tables, distribution charts, etc.) to help users better understand the input dataset.",

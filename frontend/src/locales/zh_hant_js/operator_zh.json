@@ -174,6 +174,7 @@
     "extract_qa_mapper": {
         "name": "问答对提取",
         "description": "\n    用于从文本样本中提取问答对。\n    推荐的模型列表： [\n        'alibaba-pai/pai-llama3-8b-doc2qa',\n        'alibaba-pai/pai-baichuan2-7b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-4b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-7b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-1b8-doc2qa',\n        'alibaba-pai/pai-qwen1_5-0b5-doc2qa'\n    ]\n    这些推荐的模型均使用中文数据进行训练，适用于中文场景。\n    ",
+        "operator_description": "将一段文字转换成json格式的问答对，如：[\r\n    {\r\n      \"messages\": [\r\n        {\"role\": \"user\", \"content\": \"问题1\"},\r\n        {\"role\": \"assistant\", \"content\": \"答案1\"}\r\n      ]\r\n    }\r\n  ]",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -191,6 +192,18 @@
                     }
                 ],
                 "value": "alibaba-pai/pai-qwen1_5-7b-doc2qa"
+            },
+            {
+                "name": "模型地址",
+                "type": "LIST",
+                "option_values": null,
+                "value": "https://api.deepseek.com/chat/completions"
+            },
+            {
+                "name": "授权令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -357,6 +370,18 @@
                     }
                 ],
                 "value": "alibaba-pai/Qwen2-7B-Instruct-Refine"
+            },
+            {
+                "name": "模型地址",
+                "type": "LIST",
+                "option_values": null,
+                "value": "https://api.deepseek.com/chat/completions"
+            },
+            {
+                "name": "授权令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -624,6 +649,7 @@
     "sentence_split_mapper": {
         "name": "句子分割",
         "description": "用于将文本样本拆分为句子。",
+        "operator_description": "将一段文字拆成多段句子",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -856,6 +882,7 @@
     "perplexity_filter": {
         "name": "困惑度范围过滤",
         "description": "用于保留困惑度评分小于指定最大值的样本。",
+        "operator_description": "删除质量差的文本",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -913,6 +940,7 @@
     "specified_field_filter": {
         "name": "字段信息过滤",
         "description": "\n    基于指定字段信息进行过滤。如果样本中的指定字段信息不在设定的目标值范围内，该样本将被过滤。\n    ",
+        "operator_description": "根据数据的某个字段值来筛选",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -1266,6 +1294,7 @@
     "document_deduplicator": {
         "name": "文档去重（MD5）",
         "description": "\n    用于通过精确匹配在文档级别对样本去重。使用MD5哈希值进行样本去重。\n    ",
+        "operator_description": "\n    基于MD5计算并删除相同的文档。\n    ",
         "type": "Deduplicator",
         "group": "",
         "samples": {
@@ -1277,19 +1306,22 @@
                 "name": "小写",
                 "type": "BOOLEAN",
                 "option_values": null,
-                "value": true
+                "value": true,
+                "config_description": "是否忽略字母大小写"
             },
             {
                 "name": "忽略非字符",
                 "type": "BOOLEAN",
                 "option_values": null,
-                "value": true
+                "value": true,
+                "config_description": "是否忽略空格、数字、标点符号"
             }
         ]
     },
     "document_minhash_deduplicator": {
         "name": "文档去重（MinHashLSH）",
         "description": "\n    用于通过MinHashLSH在文档级对样本去重。与SimHash不同，MinHash以字节形式存储，因此不会保留在最终数据集中。\n    ",
+        "operator_description": "擅长删除多语言混合的相似文档",
         "type": "Deduplicator",
         "group": "",
         "samples": {
@@ -1373,6 +1405,7 @@
     "document_simhash_deduplicator": {
         "name": "文档去重（SimHash）",
         "description": "用于在文档级别使用SimHash对样本进行去重。",
+        "operator_description": "删除内容相似但不完全相同的文档",
         "type": "Deduplicator",
         "group": "",
         "samples": {
@@ -1470,6 +1503,7 @@
     "random_selector": {
         "name": "随机样本选择器",
         "description": "用于随机对样本进行选择。",
+        "operator_description": "从数据中随机挑选一部分",
         "type": "Selector",
         "group": "",
         "samples": {
@@ -1726,6 +1760,7 @@
     "dedup_and_save_deduplicator": {
         "name": "多轮对话生成",
         "description": "基于图连接性的去重器。它通过连接相似度得分高于阈值的样本来构建相似度图，然后从每个连接的组件中只保留一个样本（具有最小索引）。适用于具有预先计算的最近邻相似性信息的数据集。",
+        "operator_description": "基于已经计算相似度的数据去重，并将一些大字段（比如向量、文本）移到统计信息里，节省空间",
         "type": "Deduplicator",
         "group": "",
         "samples": {
@@ -1768,6 +1803,30 @@
                 "type": "LIST",
                 "option_values": null,
                 "value": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+            }
+        ]
+    },
+    "multi_keyword_filter": {
+        "name": "关键字过滤",
+        "description": "",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "关键字",
+                "type": "LIST",
+                "option_values": null,
+                "value": "危险,help,Text"
+            },
+            {
+                "name": "区分大小写",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
             }
         ]
     }

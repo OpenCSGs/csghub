@@ -175,6 +175,7 @@
     "extract_qa_mapper": {
         "name": "QA pair extractor",
         "description": "\n    Mapper to extract question and answer pair from text samples.\n    Recommended model list: [\n        'alibaba-pai/pai-llama3-8b-doc2qa',\n        'alibaba-pai/pai-baichuan2-7b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-4b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-7b-doc2qa',\n        'alibaba-pai/pai-qwen1_5-1b8-doc2qa',\n        'alibaba-pai/pai-qwen1_5-0b5-doc2qa'\n    ]\n    These recommended models are all trained with Chinese data\n    and are suitable for Chinese.\n    ",
+        "operator_description": "Convert a text into a JSON format Q&A pair, such as:[\r\n    {\r\n      \"messages\": [\r\n        {\"role\": \"user\", \"content\": \"Question 1\"},\r\n        {\"role\": \"assistant\", \"content\": \"Answer 1\"}\r\n      ]\r\n    }\r\n  ]",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -192,6 +193,18 @@
                     }
                 ],
                 "value": "alibaba-pai/pai-qwen1_5-7b-doc2qa"
+            },
+            {
+                "name": "model_url",
+                "type": "LIST",
+                "option_values": null,
+                "value": "https://api.deepseek.com/chat/completions"
+            },
+            {
+                "name": "auth_token",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -358,6 +371,18 @@
                     }
                 ],
                 "value": "alibaba-pai/Qwen2-7B-Instruct-Refine"
+            },
+            {
+                "name": "model_url",
+                "type": "LIST",
+                "option_values": null,
+                "value": "https://api.deepseek.com/chat/completions"
+            },
+            {
+                "name": "auth_token",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -625,6 +650,7 @@
     "sentence_split_mapper": {
         "name": "Sentence Spliter",
         "description": "Mapper to split text samples to sentences.",
+        "operator_description": "Split a paragraph of text into multiple sentences",
         "type": "Mapper",
         "group": "",
         "samples": {
@@ -857,6 +883,7 @@
     "perplexity_filter": {
         "name": "Perplexity Score Filter",
         "description": "Filter to keep samples with perplexity score less than a specific max\n    value.",
+        "operator_description": "Delete low-quality text",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -914,6 +941,7 @@
     "specified_field_filter": {
         "name": "Specified Field Information Filter",
         "description": "\n    Filter based on specified field information.\n\n    If the specified field information in the sample is not within the\n    specified target value, the sample will be filtered.\n    ",
+        "operator_description": "Filter based on a certain field value of the data",
         "type": "Filter",
         "group": "",
         "samples": {
@@ -1267,6 +1295,7 @@
     "document_deduplicator": {
         "name": "Document Deduplicator(MD5 Hash)",
         "description": "\n    Deduplicator to deduplicate samples at document-level using exact matching.\n\n    Using md5 hash to deduplicate samples.\n    ",
+        "operator_description": "\n    Calculate and delete identical documents based on MD5.\n    ",
         "type": "Deduplicator",
         "group": "",
         "samples": {
@@ -1278,19 +1307,22 @@
                 "name": "lowercase",
                 "type": "BOOLEAN",
                 "option_values": null,
-                "value": true
+                "value": true,
+                "config_description": "Do you ignore uppercase and lowercase letters"
             },
             {
                 "name": "ignore_non_character",
                 "type": "BOOLEAN",
                 "option_values": null,
-                "value": true
+                "value": true,
+                "config_description": "Do you ignore spaces, numbers, punctuation marks"
             }
         ]
     },
     "document_minhash_deduplicator": {
         "name": "Document Deduplicator(MinHashLSH)",
         "description": "\n    Deduplicator to deduplicate samples at document-level using MinHashLSH.\n\n    Different from simhash, minhash is stored as bytes, so they won't be\n    kept in the final dataset.\n    ",
+        "operator_description": "Proficient in deleting similar documents mixed with multiple languages",
         "type": "Deduplicator",
         "group": "",
         "samples": {
@@ -1374,6 +1406,7 @@
     "document_simhash_deduplicator": {
         "name": "Document Deduplicator(SimHash)",
         "description": "Deduplicator to deduplicate samples at document-level using SimHash.",
+        "operator_description": "Delete documents with similar but not identical content",
         "type": "Deduplicator",
         "group": "",
         "samples": {
@@ -1471,6 +1504,7 @@
     "random_selector": {
         "name": "Random Selector",
         "description": "Selector to random select samples. ",
+        "operator_description": "Randomly select a portion from the data",
         "type": "Selector",
         "group": "",
         "samples": {
@@ -1727,6 +1761,7 @@
     "dedup_and_save_deduplicator": {
         "name": "dedup_and_save_deduplicator",
         "description": "A deduplicator based on graph connectivity. It constructs a similarity graph by connecting samples with similarity scores above the threshold, then keeps only one sample (with minimum index) from each connected component. Suitable for datasets with pre-computed nearest neighbor similarity information.",
+        "operator_description": "Based on the similarity calculated data, deduplication is performed and some large fields (such as vectors and text) are moved to the statistical information to save space",
         "type": "Deduplicator",
         "group": "",
         "samples": {
@@ -1769,6 +1804,30 @@
                 "type": "LIST",
                 "option_values": null,
                 "value": "https://dashscope.aliyuncs.com/compatible-mode/v1"
+            }
+        ]
+    },
+    "multi_keyword_filter": {
+        "name": "multi_keyword_filter",
+        "description": "",
+        "type": "Filter",
+        "group": "",
+        "samples": {
+            "before": "",
+            "after": ""
+        },
+        "params": [
+            {
+                "name": "keywords",
+                "type": "LIST",
+                "option_values": null,
+                "value": "危险,help,Text"
+            },
+            {
+                "name": "case_sensitive",
+                "type": "BOOLEAN",
+                "option_values": null,
+                "value": false
             }
         ]
     }
