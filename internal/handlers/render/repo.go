@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"opencsg.com/portal/pkg/utils/jwt"
 )
 
 var (
@@ -58,7 +59,9 @@ type BaseHandler interface {
 }
 
 type BaseHandlerImpl struct {
-	resourceType string
+	resourceType  string
+	isSmallFooter bool
+	jwtUtils      jwt.JwtUtils
 }
 
 func init() {
@@ -181,6 +184,8 @@ func (b *BaseHandlerImpl) addResourceSpecificData(ctx *gin.Context, data map[str
 	case "endpoints":
 		data["modelName"] = ctx.Param("model_name")
 		data["endpointId"] = ctx.Param("endpoint_id")
+	case "notebooks":
+		data["notebookId"] = ctx.Param("notebook_id")
 	case "finetunes":
 		data["modelName"] = ctx.Param("model_name")
 		data["finetuneId"] = ctx.Param("finetune_id")

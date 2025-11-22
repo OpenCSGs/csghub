@@ -156,6 +156,8 @@ func createRender() multitemplate.Renderer {
 		"collections_index":              "collections/index.html",
 		"collections_show":               "collections/show.html",
 		"collections_new":                "collections/new.html",
+		"notebooks_show":                 "notebooks/show.html",
+		"notebooks_new":                  "notebooks/new.html",
 		"profile":                        "profile/profile.html",
 		"profile_likes":                  "profile/likes.html",
 		"settings_profile":               "settings/profile.html",
@@ -248,6 +250,7 @@ func setupViewsRouter(engine *gin.Engine, handlersRegistry *HandlersRegistry) {
 	registerCodeRoutes(engine, handlersRegistry)
 	registerSpaceRoutes(engine, handlersRegistry)
 	registerEndpointRoutes(engine, handlersRegistry)
+	registerNotebookRoutes(engine, handlersRegistry)
 	registerFinetuneRoutes(engine, handlersRegistry)
 	registerMcpServerRoutes(engine, handlersRegistry)
 	registerSessionsRoutes(engine, handlersRegistry)

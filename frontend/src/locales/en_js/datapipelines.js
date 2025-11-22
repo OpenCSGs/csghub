@@ -199,6 +199,7 @@ export const dataPipelines = {
   "delCeleryNodeTitle": "Delete Celery node",
   "delCeleryNodeTips": "Are you sure to delete the {worker_name} Celery node?",
 
+
   "taskType": "Task Type",
   "dataCleaning": "Data Cleaning",
   "processingStatus": "Processing Status",

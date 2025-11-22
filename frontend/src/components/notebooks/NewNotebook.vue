@@ -356,6 +356,7 @@ const fetchRuntimeFrameworks = async () => {
     const { data, error } = await useFetchApi(`/runtime_framework?deploy_type=5`).json()
     if (error?.value) {
       runtimeFrameworkOptions.value = []
+      // groupedRuntimeFrameworks.value = {}
       dataForm.value.runtime_framework_id = ''
       return
     }

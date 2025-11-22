@@ -38,7 +38,7 @@ To help users get up to speed with CSGHub, we have created a demo video that hig
 
 - For those looking to quickly explore, experiment with CSGHub's free SaaS version on the [OpenCSG website](https://opencsg.com). Refer to this [brief quick start guide](./docs/csghub_saas_en.md) to handle LLMs/datasets and deploy LLM applications with CSGHub SaaS interface.
 
-- **For users seeking further practice:** Please refer to the [CSGHub official documentation](https://opencsg.com/docs/csghub/101/introduction). The documentation currently provides installation methods using [Docker Compose](https://opencsg.com/docs/csghub/101/install/install_csghub_by_docker) and [Helm Chart](https://opencsg.com/docs/csghub/101/install/install_csghub_by_helm).
+- **For users seeking further practice:** Please refer to the [CSGHub official documentation](https://opencsg.com/docs/csghub/101/introduction). The documentation currently provides installation methods using [Docker Compose](https://opencsg.com/docs/en/csghub/101/install/docker/overview) and [Helm Chart](https://opencsg.com/docs/en/csghub/101/install/kubernetes/overview).
 
     _For more information and advanced tutorials, please refer to the [OpenCSG Documentation Center](https://opencsg.com/docs/intro)._
 
