@@ -141,7 +141,7 @@ onMounted(() => {
 
 const getDataFlow = (extra_config = '{}') => {
   const dataFlow = JSON.parse(extra_config);
-  return `${dataFlow.csg_hub_dataset_id || ''}${dataFlow.csg_hub_dataset_default_branch ? ` > ${dataFlow.csg_hub_dataset_default_branch}` : ''}`;
+  return `${dataFlow.csg_hub_dataset_id || ''}${dataFlow.csg_hub_dataset_branch ? ` > ${dataFlow.csg_hub_dataset_branch}` : ''}`;
 }
 
 /**

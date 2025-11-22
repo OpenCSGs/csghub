@@ -255,7 +255,47 @@
           </el-col>
 
           <el-col
-            v-if="typeVal === 'Mysql' || typeVal === 'Hive'"
+            :xs="24"
+            :sm="24"
+            :md="12"
+            :lg="12"
+            :xl="12"
+            v-if="typeVal === 'Hive'"
+          >
+            <el-form-item prop="auth_type" class="mt-[12px]">
+              <template #label>
+                <p class="text-gray-500 text-xs">
+                  {{ t("dataPipelines.authType") }}
+                </p>
+              </template>
+              <el-select
+                v-model="formInline.auth_type"
+                :placeholder="`${t('dataPipelines.toSel')}${t(
+                  'dataPipelines.authType'
+                )}`"
+                clearable
+              >
+                <el-option
+                  :label="t('dataPipelines.authType_option_NONE')"
+                  value="NOSASL"
+                ></el-option>
+                <el-option
+                  :label="t('dataPipelines.authType_option_LDAP')"
+                  value="LDAP"
+                ></el-option>
+                <!-- <el-option
+                  :label="t('dataPipelines.authType_option_KERBEROS')"
+                  value="KERBEROS"
+                ></el-option> -->
+              </el-select>
+              <!-- <span class="text-gray-400 text-xs font-light mt-[10px]">{{
+                t("dataPipelines.authType_placeholder")
+              }}</span> -->
+            </el-form-item>
+          </el-col>
+
+          <el-col
+            v-if="typeVal === 'Mysql' || (typeVal === 'Hive' && formInline.auth_type !== 'NOSASL')"
             :xs="24"
             :sm="24"
             :md="12"
@@ -284,46 +324,6 @@
                   />
                 </template>
               </el-input>
-            </el-form-item>
-          </el-col>
-
-          <el-col
-            :xs="24"
-            :sm="24"
-            :md="12"
-            :lg="12"
-            :xl="12"
-            v-if="typeVal === 'Hive'"
-          >
-            <el-form-item prop="auth_type" class="mt-[12px]">
-              <template #label>
-                <p class="text-gray-500 text-xs">
-                  {{ t("dataPipelines.authType") }}
-                </p>
-              </template>
-              <el-select
-                v-model="formInline.auth_type"
-                :placeholder="`${t('dataPipelines.toSel')}${t(
-                  'dataPipelines.authType'
-                )}`"
-                clearable
-              >
-                <el-option
-                  :label="t('dataPipelines.authType_option_NONE')"
-                  value="NONE"
-                ></el-option>
-                <el-option
-                  :label="t('dataPipelines.authType_option_LDAP')"
-                  value="LDAP"
-                ></el-option>
-                <el-option
-                  :label="t('dataPipelines.authType_option_KERBEROS')"
-                  value="KERBEROS"
-                ></el-option>
-              </el-select>
-              <span class="text-gray-400 text-xs font-light mt-[10px]">{{
-                t("dataPipelines.authType_placeholder")
-              }}</span>
             </el-form-item>
           </el-col>
 
