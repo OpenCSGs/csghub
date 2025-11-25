@@ -142,6 +142,31 @@
           />
         </el-form-item>
 
+        <!-- min replica -->
+        <el-form-item
+          class="w-full"
+          :label="$t('endpoints.settings.minReplica')"
+          prop="min_replica"
+        >
+          <el-select
+            v-model="dataForm.min_replica"
+            :placeholder="$t('all.select')"
+            size="large"
+            style="width: 100%"
+          >
+            <el-option
+              :key="0"
+              :label="0"
+              :value="0"
+            />
+            <el-option
+              :key="1"
+              :label="1"
+              :value="1"
+            />
+          </el-select>
+        </el-form-item>
+
         <!-- Cover image upload feature temporarily disabled
         <el-form-item
           class="w-full !mb-0"
@@ -474,7 +499,8 @@
     visibility: 'public',
     sdk: 'gradio',
     dockerTemplate: '',
-    driver_version: '11.8.0'
+    driver_version: '11.8.0',
+    min_replica: 0
   })
   const loading = ref(false)
 
@@ -695,6 +721,7 @@
     if (shouldShowDriverVersion.value) {
       params.driver_version = dataForm.value.driver_version
     }
+    params.min_replica = dataForm.value.min_replica
 
     const options = {
       headers: { 'Content-Type': 'application/json' },
