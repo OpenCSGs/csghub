@@ -79,10 +79,16 @@
             {{ t("dataPipelines.settings") }}
           </div>
           <div
-            class="text-brand-600 hover:underline cursor-pointer flex-1"
+            class="text-brand-600 hover:underline cursor-pointer flex-1 border-r-[1px]"
             @click="authorize(item.id)"
           >
             {{ t("dataPipelines.authorize") }}
+          </div>
+          <div
+            class="text-brand-600 hover:underline cursor-pointer flex-1"
+            @click="openDocumentDialog(item)"
+          >
+            {{ t("dataPipelines.document") }}
           </div>
         </div>
       </div>
@@ -267,6 +273,95 @@
       </template>
     </el-dialog>
 
+    <!-- 文档上传弹窗 -->
+    <el-dialog
+      :title="t('dataPipelines.uploadDocument')"
+      v-model="documentDialogVisible"
+      width="800px"
+      :before-close="handleDocumentDialogClose"
+      class="document-upload-dialog"
+      align-center
+    >
+      <div class="document-upload-content">
+        <!-- 上方：上传操作区 -->
+        <div class="document-upload-panel">
+          <div class="document-upload-container">
+            <el-upload
+              class="document-uploader"
+              :http-request="handleDocumentUploadRequest"
+              :on-success="handleDocumentUploadSuccess"
+              :on-error="handleDocumentUploadError"
+              :before-upload="beforeDocumentUpload"
+              :show-file-list="false"
+              drag
+            >
+              <template v-if="documentUploadState === 'ready'">
+                <el-icon class="upload-icon"><UploadFilled /></el-icon>
+                <div class="upload-text">
+                  <p class="main-text">{{ t("dataPipelines.uploadStatusTips1") }}</p>
+                  <p class="sub-text">{{ t("dataPipelines.documentUploadTips3") }}</p>
+                </div>
+              </template>
+
+              <template v-if="documentUploadState === 'uploading'">
+                <div class="uploading-progress">
+                  <el-icon class="upload-icon"><UploadFilled /></el-icon>
+                  <p class="progress-text">{{ t("dataPipelines.uploading") }}</p>
+                </div>
+              </template>
+
+              <template v-if="documentUploadState === 'success'">
+                <div class="upload-success-state">
+                  <el-icon class="success-icon"><CircleCheckFilled /></el-icon>
+                  <p class="success-text">{{ t("dataPipelines.uploadSuccess") }}</p>
+                  <p class="success-subtext">{{ t("dataPipelines.uploadSuccessTips1") }}</p>
+                </div>
+              </template>
+
+              <template v-if="documentUploadState === 'error'">
+                <div class="upload-error-state">
+                  <el-icon class="error-icon"><CircleCloseFilled /></el-icon>
+                  <p class="error-text">{{ t("dataPipelines.uploadFailed") }}</p>
+                  <p class="error-subtext">
+                    {{ documentUploadErrorMsg || t("dataPipelines.please") + t("dataPipelines.retry") }}
+                  </p>
+                </div>
+              </template>
+            </el-upload>
+          </div>
+        </div>
+
+        <!-- 下方：文档预览区 -->
+        <div class="document-preview-panel">
+          <div class="document-preview-header">
+            <h3 class="panel-title">{{ t("dataPipelines.documentPreview") }}</h3>
+            <el-icon 
+              v-if="documentContent || currentDocumentUrl"
+              class="delete-icon" 
+              @click="handleDeleteDocument"
+            >
+              <Delete />
+            </el-icon>
+          </div>
+          <div class="document-preview-container">
+            <div v-if="documentContent" class="document-content-wrapper">
+              <div class="markdown-content" v-html="renderedMarkdown"></div>
+            </div>
+            <div v-else-if="currentDocumentUrl" class="document-wrapper">
+              <iframe
+                :src="currentDocumentUrl"
+                class="document-preview"
+                frameborder="0"
+              ></iframe>
+            </div>
+            <div v-else class="document-empty-state">
+              <p>{{ t("dataPipelines.noData") }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </el-dialog>
+
     <!-- 左右布局的图标上传弹窗 -->
     <el-dialog
       :title="t('dataPipelines.editIcon')"
@@ -328,13 +423,11 @@
           <div class="upload-container">
             <el-upload
               class="image-uploader"
-              :action="uploadUrl"
-              :headers="uploadHeaders"
+              :http-request="handleImageUploadRequest"
               :on-success="handleUploadSuccess"
               :on-error="handleUploadError"
               :before-upload="beforeUpload"
               :show-file-list="false"
-              :on-progress="handleUploadProgress"
               drag
             >
               <!-- 上传状态显示 -->
@@ -348,12 +441,8 @@
 
               <template v-if="uploadState === 'uploading'">
                 <div class="uploading-progress">
-                  <el-progress
-                    :percentage="uploadProgress"
-                    stroke-width="8"
-                    class="progress-bar"
-                  />
-                  <p class="progress-text">{{ t("dataPipelines.uploading") }}: {{ uploadProgress }}%</p>
+                  <el-icon class="upload-icon"><UploadFilled /></el-icon>
+                  <p class="progress-text">{{ t("dataPipelines.uploading") }}</p>
                 </div>
               </template>
 
@@ -365,7 +454,6 @@
                   <el-button
                     type="primary"
                     size="small"
-                    class="reupload-btn"
                     @click="resetUploadState"
                   >
                     <el-icon><Refresh /></el-icon>
@@ -417,15 +505,21 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { ref, onMounted, computed, reactive, watch } from "vue";
-import { ElMessage, ElLoading } from "element-plus";
+import { ElMessage, ElLoading, ElMessageBox } from "element-plus";
 import useFetchApi from "@/packs/useFetchApi";
 import { useI18n } from "vue-i18n";
+import MarkdownIt from "markdown-it";
 import {
   Search,
   UploadFilled,
   Picture,
   InfoFilled,
   WarningFilled,
+  Document,
+  CircleCheckFilled,
+  CircleCloseFilled,
+  Delete,
+  Refresh,
 } from "@element-plus/icons-vue";
 
 // 引入国际化文件
@@ -473,24 +567,63 @@ const orgSelectAll = ref(false);
 // 图标上传核心状态
 const uploadDialogVisible = ref(false);
 const currentTemplate = ref(null);
-const uploadUrl = ref(
-  `${CSGHUB_SERVER}/api/v1/dataflow/internal_api/internal_api/upload`
-);
-const uploadHeaders = reactive({
-  // 如需认证请添加token
-  // 'Authorization': `Bearer ${yourToken}`
-});
 
 // 上传状态管理
 const uploadState = ref("ready");
-const uploadProgress = ref(0);
 const uploadErrorMsg = ref("");
-const newImageUrl = ref("");
+const newImageUrl = ref(""); // 用于预览的 base64
+const newImageUrlForSave = ref(""); // 用于保存的原始 URL
 const isNewImageUploaded = ref(false);
+
+// 文档上传核心状态
+const documentDialogVisible = ref(false);
+const currentDocumentTemplate = ref(null);
+
+// 文档上传状态管理
+const documentUploadState = ref("ready");
+const documentUploadErrorMsg = ref("");
+const newDocumentUrl = ref("");
+const documentContent = ref("");
+const isNewDocumentUploaded = ref(false);
 
 // 计算属性 - 始终显示最新图标
 const currentPreviewImage = computed(() => {
-  return newImageUrl.value || currentTemplate.value?.icon || "";
+  if (newImageUrl.value) {
+    // 如果 newImageUrl 已经是 base64 字符串，添加前缀
+    if (typeof newImageUrl.value === 'string' && !newImageUrl.value.startsWith('data:') && !newImageUrl.value.startsWith('http')) {
+      return `data:image/png;base64,${newImageUrl.value}`;
+    }
+    return newImageUrl.value;
+  }
+  // 如果原图标是 base64，也需要添加前缀
+  if (currentTemplate.value?.icon) {
+    const icon = currentTemplate.value.icon;
+    if (typeof icon === 'string' && !icon.startsWith('data:') && !icon.startsWith('http')) {
+      return `data:image/png;base64,${icon}`;
+    }
+    return icon;
+  }
+  return "";
+});
+
+// 计算属性 - 始终显示最新文档
+const currentDocumentUrl = computed(() => {
+  return newDocumentUrl.value || currentDocumentTemplate.value?.document_url || "";
+});
+
+// 初始化 Markdown 解析器
+const md = new MarkdownIt({
+  html: true,        // 启用 HTML 标签
+  linkify: true,     // 自动识别链接
+  typographer: true, // 启用一些语言中性的替换 + 引号美化
+  breaks: true,      // 转换 '\n' 为 <br>
+});
+
+// 计算属性 - 渲染 Markdown
+const renderedMarkdown = computed(() => {
+  if (!documentContent.value) return "";
+  // 使用 markdown-it 解析 Markdown
+  return md.render(documentContent.value);
 });
 
 // 设置
@@ -512,7 +645,7 @@ const seetingsSubmit = async () => {
       is_public: is_public.value,
     };
     const { data } = await useFetchApi(
-      `${CSGHUB_SERVER}/api/v1/dataflow/operator/${operator_id.value}`,
+      `/dataflow/operator/${operator_id.value}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -746,11 +879,290 @@ const handleConfirm = async () => {
   }
 };
 
+// 文档上传相关方法
+const openDocumentDialog = async (item) => {
+  currentDocumentTemplate.value = item;
+  resetDocumentUploadState(true);
+  documentDialogVisible.value = true;
+  
+  // 查询算子文档
+  await loadOperatorDocument(item.id);
+};
+
+// 查询算子文档
+const loadOperatorDocument = async (operatorId) => {
+  if (!operatorId) return;
+  
+  try {
+    const { data } = await useFetchApi(
+      `/dataflow/operator/${operatorId}/document`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .get()
+      .json();
+
+    if (data.value?.code === 200 && data.value?.data?.content) {
+      // 如果有文档内容，直接展示
+      documentContent.value = data.value.data.content;
+    } else {
+      // 如果没有文档，清空内容
+      documentContent.value = "";
+    }
+  } catch (error) {
+    console.error("Failed to load operator document:", error);
+    documentContent.value = "";
+  }
+};
+
+const loadDocumentContent = async (url) => {
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      documentContent.value = await response.text();
+    }
+  } catch (error) {
+    console.error("Failed to load document content:", error);
+  }
+};
+
+const handleDocumentDialogClose = () => {
+  documentDialogVisible.value = false;
+  currentDocumentTemplate.value = null;
+  resetDocumentUploadState(true);
+};
+
+const resetDocumentUploadState = (fullReset = false) => {
+  documentUploadState.value = "ready";
+  documentUploadErrorMsg.value = "";
+
+  if (fullReset) {
+    newDocumentUrl.value = "";
+    documentContent.value = "";
+    isNewDocumentUploaded.value = false;
+  }
+};
+
+const beforeDocumentUpload = (file) => {
+  documentUploadErrorMsg.value = "";
+
+  // 只允许上传 .md 文件
+  const isMarkdown = file.name.endsWith(".md");
+  if (!isMarkdown) {
+    documentUploadErrorMsg.value = t("dataPipelines.documentUploadError1");
+    return false;
+  }
+
+  const isLt10M = file.size / 1024 / 1024 < 10;
+  if (!isLt10M) {
+    documentUploadErrorMsg.value = t("dataPipelines.documentUploadError2");
+    return false;
+  }
+
+  documentUploadState.value = "uploading";
+  return true;
+};
+
+// 文档上传请求
+const handleDocumentUploadRequest = async (options) => {
+  const { file } = options;
+  
+  if (!currentDocumentTemplate.value?.id) {
+    documentUploadErrorMsg.value = t("dataPipelines.operationFailed");
+    documentUploadState.value = "error";
+    return;
+  }
+
+  try {
+    // 创建 FormData
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const { data, error } = await useFetchApi(
+      `/dataflow/operator/${currentDocumentTemplate.value.id}/document`,
+      {
+        body: formData
+      }
+    )
+      .post()
+      .json();
+
+    // 处理错误
+    if (error.value) {
+      const errorMsg = error.value?.msg || error.value?.message || t("dataPipelines.operationFailed");
+      throw { msg: errorMsg };
+    }
+
+    // 处理响应
+    if (data.value) {
+      return data.value;
+    } else {
+      throw { msg: t("dataPipelines.operationFailed") };
+    }
+  } catch (err) {
+    // 统一错误格式
+    if (err && typeof err === 'object' && err.msg) {
+      throw err;
+    } else if (err && typeof err === 'object' && err.message) {
+      throw { msg: err.message };
+    } else {
+      throw { msg: t("dataPipelines.networkError") };
+    }
+  }
+};
+
+const handleDocumentUploadSuccess = async (response) => {
+  if (response.code === 200 && response.data) {
+    // 新接口返回的是 content 字段，直接使用
+    if (response.data.content) {
+      documentContent.value = response.data.content;
+    }
+    // 如果有 url 字段（兼容旧接口），也支持
+    if (response.data.url) {
+      newDocumentUrl.value = response.data.url;
+    } else {
+      // 新接口没有 url，标记为已上传，后续提交时会使用 content
+      newDocumentUrl.value = 'uploaded';
+    }
+    isNewDocumentUploaded.value = true;
+    documentUploadState.value = "success";
+    
+    ElMessage.success(response.msg || t("dataPipelines.uploadSuccessTips2"));
+    
+    // 上传成功后刷新列表
+    getOperatorList();
+  } else {
+    documentUploadErrorMsg.value = response.msg || t("dataPipelines.uploadFailedTips3");
+    documentUploadState.value = "error";
+  }
+};
+
+const handleDocumentUploadError = (error) => {
+  let errorMsg = t("dataPipelines.networkError");
+  if (error && error.msg) {
+    errorMsg = error.msg;
+  } else if (error && error.message) {
+    errorMsg = error.message;
+  }
+  documentUploadErrorMsg.value = errorMsg;
+  documentUploadState.value = "error";
+};
+
+// 删除文档
+const handleDeleteDocument = async () => {
+  if (!currentDocumentTemplate.value?.id) return;
+  
+  try {
+    await ElMessageBox.confirm(
+      t("dataPipelines.confirmDeleteDocument"),
+      t("dataPipelines.tips"),
+      {
+        confirmButtonText: t("dataPipelines.confirm"),
+        cancelButtonText: t("dataPipelines.cancel"),
+        type: "warning",
+      }
+    );
+
+    const loading = ElLoading.service({
+      lock: true,
+      text: t("dataPipelines.deleting"),
+      background: "rgba(0, 0, 0, 0.7)",
+    });
+
+    const { data } = await useFetchApi(
+      `/dataflow/operator/${currentDocumentTemplate.value.id}/document`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    )
+      .delete()
+      .json();
+
+    loading.close();
+
+    if (data.value?.code === 200) {
+      ElMessage.success(t("dataPipelines.operationSuccessful"));
+      // 清空文档内容
+      documentContent.value = "";
+      newDocumentUrl.value = "";
+      isNewDocumentUploaded.value = false;
+      // 刷新列表
+      getOperatorList();
+    } else {
+      ElMessage.error(data.value?.msg || t("dataPipelines.operationFailed"));
+    }
+  } catch (error) {
+    if (error !== "cancel") {
+      ElMessage.error(error.message || t("dataPipelines.operationFailed"));
+    }
+  }
+};
+
+const submitDocumentChange = async () => {
+  // 新接口上传时已经保存了文档，这里只需要关闭对话框并刷新列表
+  if (!currentDocumentTemplate.value || !isNewDocumentUploaded.value) return;
+
+  try {
+    const loading = ElLoading.service({
+      lock: true,
+      text: t("dataPipelines.submitting"),
+      background: "rgba(0, 0, 0, 0.7)",
+    });
+
+    // 新接口上传时已经保存了文档，直接刷新列表即可
+    loading.close();
+    ElMessage.success(t("dataPipelines.operationSuccessful"));
+    getOperatorList();
+    handleDocumentDialogClose();
+  } catch (error) {
+    ElMessage.error(error.message);
+  }
+};
+
 // 图标上传相关方法
-const openUploadDialog = (item) => {
+const openUploadDialog = async (item) => {
   currentTemplate.value = item;
   resetUploadState(true);
   uploadDialogVisible.value = true;
+  
+  // 如果图标是接口地址，需要调用接口获取 base64 用于预览
+  if (item.icon && (item.icon.startsWith('http') || item.icon.startsWith('/') || item.icon.startsWith('api/v1'))) {
+    try {
+      let imageUrl = item.icon;
+      
+      // 删除 URL 最前面的 api/v1
+      if (imageUrl.startsWith('api/v1/')) {
+        imageUrl = imageUrl.substring('api/v1/'.length);
+      } else if (imageUrl.startsWith('/api/v1/')) {
+        imageUrl = imageUrl.substring('/api/v1/'.length);
+      }
+      
+      // 调用接口获取 base64
+      const { data: base64Data, error: base64Error } = await useFetchApi(imageUrl)
+        .get()
+        .json();
+      
+      if (!base64Error.value && base64Data.value?.code === 200 && base64Data.value?.data) {
+        // 如果返回的是数组，取第一个元素
+        const base64 = Array.isArray(base64Data.value.data) 
+          ? base64Data.value.data[0] 
+          : base64Data.value.data;
+        
+        // 存储 base64 用于预览
+        newImageUrl.value = base64;
+      }
+    } catch (error) {
+      console.error("Failed to load icon base64:", error);
+    }
+  } else if (item.icon) {
+    // 如果已经是 base64，直接使用
+    newImageUrl.value = item.icon;
+  }
 };
 
 const handleUploadDialogClose = () => {
@@ -761,17 +1173,13 @@ const handleUploadDialogClose = () => {
 
 const resetUploadState = (fullReset = false) => {
   uploadState.value = "ready";
-  uploadProgress.value = 0;
   uploadErrorMsg.value = "";
 
   if (fullReset) {
     newImageUrl.value = "";
+    newImageUrlForSave.value = "";
     isNewImageUploaded.value = false;
   }
-};
-
-const handleUploadProgress = (event) => {
-  uploadProgress.value = Math.floor(event.percent * 100);
 };
 
 const beforeUpload = (file) => {
@@ -793,12 +1201,94 @@ const beforeUpload = (file) => {
   return true;
 };
 
-const handleUploadSuccess = (response) => {
+// 图标上传请求
+const handleImageUploadRequest = async (options) => {
+  const { file } = options;
+
+  try {
+    // 创建 FormData
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // 使用 useFetchApi 发送请求（会自动添加认证头）
+    const { data, error } = await useFetchApi(
+      `/dataflow/internal_api/internal_api/upload`,
+      {
+        body: formData
+      }
+    )
+      .post()
+      .json();
+
+    // 处理错误
+    if (error.value) {
+      const errorMsg = error.value?.msg || error.value?.message || t("dataPipelines.operationFailed");
+      throw { msg: errorMsg };
+    }
+
+    // 处理响应
+    if (data.value) {
+      return data.value;
+    } else {
+      throw { msg: t("dataPipelines.operationFailed") };
+    }
+  } catch (err) {
+    // 统一错误格式
+    if (err && typeof err === 'object' && err.msg) {
+      throw err;
+    } else if (err && typeof err === 'object' && err.message) {
+      throw { msg: err.message };
+    } else {
+      throw { msg: t("dataPipelines.networkError") };
+    }
+  }
+};
+
+const handleUploadSuccess = async (response) => {
   if (response.code === 200 && response.data?.url) {
-    newImageUrl.value = response.data.url;
-    isNewImageUploaded.value = true;
-    uploadState.value = "success";
-    ElMessage.success(t("dataPipelines.uploadSuccessTips2"));
+    // 保存原始的 URL（用于提交保存）
+    newImageUrlForSave.value = response.data.url;
+    
+    // 返回的 url 是一个接口地址，需要继续调用获取 base64（用于预览）
+    try {
+      let imageUrl = response.data.url;
+
+      // 删除 URL 最前面的 api/v1
+      if (imageUrl.startsWith('api/v1/')) {
+        imageUrl = imageUrl.substring('api/v1/'.length);
+      } else if (imageUrl.startsWith('/api/v1/')) {
+        imageUrl = imageUrl.substring('/api/v1/'.length);
+      }
+
+      // 直接调用接口获取 base64
+      const { data: base64Data, error: base64Error } = await useFetchApi(imageUrl)
+        .get()
+        .json();
+
+      if (base64Error.value) {
+        throw base64Error.value;
+      }
+
+      // 处理 base64 数据
+      if (base64Data.value?.code === 200 && base64Data.value?.data) {
+        // 如果返回的是数组，取第一个元素
+        const base64 = Array.isArray(base64Data.value.data) 
+          ? base64Data.value.data[0] 
+          : base64Data.value.data;
+        
+        // 存储 base64 地址（用于预览）
+        newImageUrl.value = base64;
+        isNewImageUploaded.value = true;
+        uploadState.value = "success";
+        ElMessage.success(t("dataPipelines.uploadSuccessTips2"));
+      } else {
+        throw new Error(t("dataPipelines.operationFailed"));
+      }
+    } catch (error) {
+      console.error("Failed to fetch base64:", error);
+      uploadErrorMsg.value = error?.msg || error?.message || t("dataPipelines.operationFailed");
+      uploadState.value = "error";
+    }
   } else {
     uploadErrorMsg.value = response.msg || t("dataPipelines.uploadFailedTips3");
     uploadState.value = "error";
@@ -806,12 +1296,18 @@ const handleUploadSuccess = (response) => {
 };
 
 const handleUploadError = (error) => {
-  uploadErrorMsg.value = t("dataPipelines.networkError");
+  let errorMsg = t("dataPipelines.networkError");
+  if (error && error.msg) {
+    errorMsg = error.msg;
+  } else if (error && error.message) {
+    errorMsg = error.message;
+  }
+  uploadErrorMsg.value = errorMsg;
   uploadState.value = "error";
 };
 
 const submitImageChange = async () => {
-  if (!currentTemplate.value || !newImageUrl.value) return;
+  if (!currentTemplate.value || !newImageUrlForSave.value) return;
 
   try {
     const loading = ElLoading.service({
@@ -821,11 +1317,11 @@ const submitImageChange = async () => {
     });
 
     const updateData = {
-      icon: newImageUrl.value,
+      icon: newImageUrlForSave.value,
     };
 
     const { data } = await useFetchApi(
-      `${CSGHUB_SERVER}/api/v1/dataflow/operator/${currentTemplate.value.id}`,
+      `/dataflow/operator/${currentTemplate.value.id}`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -978,8 +1474,26 @@ watch(locale, () => {
   font-size: 16px;
   font-weight: 600;
   color: #333;
-  margin-bottom: 16px;
   padding-left: 4px;
+}
+
+// 文档预览标题容器
+.document-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  
+  .delete-icon {
+    font-size: 18px;
+    color: #909399;
+    cursor: pointer;
+    transition: color 0.2s;
+    
+    &:hover {
+      color: #f56c6c;
+    }
+  }
 }
 
 // 预览区域
@@ -1115,12 +1629,16 @@ watch(locale, () => {
 .upload-icon {
   font-size: 56px;
   color: #3b82f6;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 // 上传文字
 .upload-text {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   .main-text {
     font-size: 16px;
@@ -1139,6 +1657,11 @@ watch(locale, () => {
 .uploading-progress {
   text-align: center;
   width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 
   .progress-bar {
     margin-bottom: 16px;
@@ -1153,12 +1676,16 @@ watch(locale, () => {
 // 上传成功状态
 .upload-success-state {
   text-align: center;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
 
   .success-icon {
     font-size: 56px;
     color: #10b981;
-    margin-bottom: 16px;
   }
 
   .success-text {
@@ -1169,14 +1696,11 @@ watch(locale, () => {
   }
 
   .success-subtext {
-    font-size: 14px;
+    font-size: 12px;
     color: #6b7280;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
 
-  .reupload-btn {
-    margin-top: 8px;
-  }
 
   .reload-icon {
     margin-right: 4px;
@@ -1187,7 +1711,12 @@ watch(locale, () => {
 // 上传错误状态
 .upload-error-state {
   text-align: center;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
 
   .error-icon {
     font-size: 56px;
@@ -1296,6 +1825,7 @@ watch(locale, () => {
 .multi-line-text {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1324,5 +1854,334 @@ watch(locale, () => {
   z-index: 1;
   color: #999999;
   font-size: 14px;
+}
+
+// 文档上传弹窗样式
+.document-upload-dialog {
+  :deep(.el-dialog__header) {
+    padding: 20px 24px;
+    border-bottom: 1px solid #f0f0f0;
+    .el-dialog__title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #333;
+    }
+  }
+
+  :deep(.el-dialog__body) {
+    padding: 20px 24px;
+    margin: 0;
+  }
+
+  :deep(.el-dialog__footer) {
+    display: none;
+  }
+}
+
+// 文档上传上下布局容器
+.document-upload-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  height: 600px;
+}
+
+// 文档上传面板（上方）
+.document-upload-panel {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+// 文档预览面板（下方）
+.document-preview-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+// 文档预览区域
+.document-preview-container {
+  flex: 1;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #e5e7eb;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+// 文档容器
+.document-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+// 文档预览 iframe
+.document-preview {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  border-radius: 6px;
+  background-color: #fff;
+}
+
+// Markdown 内容容器
+.document-content-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+// 文档空状态
+.document-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  
+  p {
+    color: #909399;
+    font-size: 14px;
+    margin: 0;
+  }
+}
+
+.markdown-content {
+  max-width: 100%;
+  line-height: 1.6;
+  color: #333;
+  word-wrap: break-word;
+  
+  // 标题样式
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    line-height: 1.25;
+  }
+  
+  h1 {
+    font-size: 24px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 10px;
+  }
+  
+  h2 {
+    font-size: 20px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 8px;
+  }
+  
+  h3 {
+    font-size: 18px;
+  }
+  
+  h4 {
+    font-size: 16px;
+  }
+  
+  // 段落样式
+  p {
+    margin-bottom: 16px;
+  }
+  
+  // 列表样式
+  ul, ol {
+    margin-bottom: 16px;
+    padding-left: 30px;
+  }
+  
+  li {
+    margin-bottom: 8px;
+  }
+  
+  // 代码块样式
+  pre {
+    background-color: #f6f8fa;
+    border-radius: 6px;
+    padding: 16px;
+    overflow-x: auto;
+    margin-bottom: 16px;
+    border: 1px solid #e1e4e8;
+  }
+  
+  code {
+    background-color: #f6f8fa;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+    font-size: 85%;
+  }
+  
+  pre code {
+    background-color: transparent;
+    padding: 0;
+    font-size: 14px;
+  }
+  
+  // 表格样式
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-bottom: 16px;
+    border: 1px solid #e1e4e8;
+  }
+  
+  th, td {
+    border: 1px solid #e1e4e8;
+    padding: 8px 12px;
+    text-align: left;
+  }
+  
+  th {
+    background-color: #f6f8fa;
+    font-weight: 600;
+  }
+  
+  // 引用样式
+  blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding-left: 16px;
+    margin: 16px 0;
+    color: #6a737d;
+  }
+  
+  // 链接样式
+  a {
+    color: #0366d6;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  // 分割线样式
+  hr {
+    border: none;
+    border-top: 1px solid #e1e4e8;
+    margin: 24px 0;
+  }
+  
+  // 强调样式
+  strong {
+    font-weight: 600;
+  }
+  
+  em {
+    font-style: italic;
+  }
+  
+  h2 {
+    font-size: 20px;
+  }
+  
+  h3 {
+    font-size: 18px;
+  }
+  
+  p {
+    margin-bottom: 12px;
+  }
+  
+  strong {
+    font-weight: 600;
+  }
+  
+  em {
+    font-style: italic;
+  }
+}
+
+// 无文档状态
+.no-document-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #9ca3af;
+}
+
+.no-document-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+  color: #d1d5db;
+}
+
+.no-document-text {
+  font-size: 16px;
+}
+
+// 文档预览面板底部
+.document-preview-footer {
+  margin-top: 12px;
+}
+
+// 文档上传容器
+.document-upload-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+}
+
+// 文档上传组件样式
+.document-uploader {
+  width: 100%;
+  :deep(.el-upload--drag) {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    border: 2px dashed #d1d5db;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    padding: 20px;
+
+    &:hover {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
+  }
+}
+
+// 提示信息和操作按钮容器
+.document-preview-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #f0f0f0;
+  
+  .help-text {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #909399;
+    font-size: 14px;
+  }
+}
+
+// 文档上传操作按钮
+.document-upload-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
 }
 </style>

@@ -109,11 +109,30 @@
           </el-table-column>
           <!-- <el-table-column prop="jd" label="进度" width="180" /> -->
           <el-table-column
+            prop="from_csg_hub_dataset_name"
+            align="center"
+            :label="t('dataPipelines.dataSource')"
+            width="280"
+          >
+            <template #default="scope">
+              <div>
+                {{ scope.row.from_csg_hub_dataset_name }}{{ scope.row.from_csg_hub_dataset_branch ? ' > ' + scope.row.from_csg_hub_dataset_branch : '' }}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column
             prop="to_csg_hub_dataset_name"
             align="center"
             :label="t('dataPipelines.dataFlow')"
-            width="180"
-          />
+            width="280"
+          >
+            <template #default="scope">
+              <div>
+                {{ scope.row.to_csg_hub_dataset_name }}{{ scope.row.to_csg_hub_dataset_default_branch ? ' > ' + scope.row.to_csg_hub_dataset_default_branch : '' }}
+              </div>
+            </template>
+          </el-table-column>
+          
           <el-table-column
             prop="created_at"
             align="center"
@@ -302,6 +321,10 @@ const formatVal = ref([
   {
     value: 6,
     label: "Parquet",
+  },
+  {
+    value: 7,
+    label: "PDF",
   },
 ]);
 // 总数

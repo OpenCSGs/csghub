@@ -9,10 +9,26 @@
         <!-- Select 下拉选择器 -->
         <el-form-item 
             v-if="config.config_type === 'select'" 
-            :label="config.display_name"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-select 
                 v-model="formData[config.id].final_value" 
                 :placeholder="`${t('dataPipelines.toSel')}${config.display_name}`"
@@ -30,10 +46,26 @@
         <!-- SelectV2 虚拟化下拉选择器（大数据量优化） -->
         <el-form-item 
             v-else-if="config.config_type === 'select-v2'" 
-            :label="config.display_name"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-select-v2
                 v-model="formData[config.id].final_value"
                 :options="getSelectOptions(config.select_options)"
@@ -51,10 +83,26 @@
         <!-- Checkbox 复选框 -->
         <el-form-item 
             v-else-if="config.config_type === 'checkbox'" 
-            :label="config.display_name"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-checkbox 
                 v-model="formData[config.id].final_value" 
                 :disabled="config.is_disabled"
@@ -66,10 +114,26 @@
         <!-- Slider 滑块 -->
         <el-form-item 
             v-else-if="config.config_type === 'slider'" 
-            :label="config.display_name"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-slider
                 v-model="formData[config.id].final_value"
                 :min="Number(config.min_value)"
@@ -83,10 +147,26 @@
         <!-- Input 输入框 -->
         <el-form-item 
             v-else-if="config.config_type === 'input'" 
-            :label="config.display_name"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-input
                 v-model="formData[config.id].final_value"
                 :placeholder="`${t('dataPipelines.toInput')}${config.display_name}`"
@@ -97,10 +177,26 @@
         <!-- Radio 单选框 -->
         <el-form-item 
             v-else-if="config.config_type === 'radio'" 
-            :label="config.display_name"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-radio-group 
                 v-model="formData[config.id].final_value"
                 :disabled="config.is_disabled"
@@ -118,10 +214,26 @@
         <!-- Switch 开关 -->
         <el-form-item 
             v-else-if="config.config_type === 'switch'" 
-            :label="config.display_name"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-switch
                 v-model="formData[config.id].final_value"
                 :disabled="config.is_disabled"
@@ -131,10 +243,26 @@
         <!-- TimePicker 时间选择器 -->
         <el-form-item 
             v-else-if="config.config_type === 'time'" 
-            :label="config.display_name"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-time-picker
                 v-model="formData[config.id].final_value"
                 :disabled="config.is_disabled"
@@ -145,10 +273,26 @@
         <!-- DatePicker 日期选择器 -->
         <el-form-item 
             v-else-if="config.config_type === 'date'" 
-            :label="config.display_name"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-date-picker
                 v-model="formData[config.id].final_value"
                 type="date"
@@ -160,10 +304,26 @@
         <!-- DateTimePicker 日期时间选择器 -->
         <el-form-item 
             v-else-if="config.config_type === 'datetime'" 
-            :label="config.display_name"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-date-picker
                 v-model="formData[config.id].final_value"
                 type="datetime"
@@ -175,10 +335,26 @@
         <!-- InputNumber 数字输入框 -->
         <el-form-item 
             v-else-if="config.config_type === 'number'" 
-            :label="config.display_name"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-input-number
                 v-model="formData[config.id].final_value"
                 :min="Number(config.min_value)"
@@ -192,10 +368,26 @@
         <!-- ColorPicker 颜色选择器 -->
         <el-form-item 
             v-else-if="config.config_type === 'color'" 
-            :label="config.display_name"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-color-picker
                 v-model="formData[config.id].final_value"
                 :disabled="config.is_disabled"
@@ -205,10 +397,26 @@
         <!-- Rate 评分 -->
         <el-form-item 
             v-else-if="config.config_type === 'rate'" 
-            :label="config.display_name"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-rate
                 v-model="formData[config.id].final_value"
                 :max="Number(config.max_value || 5)"
@@ -216,13 +424,60 @@
             />
         </el-form-item>
         
-        <!-- 默认情况 - 文本输入框 -->
+        <!-- InputTag 标签输入框 -->
         <el-form-item 
-            v-else
-            :label="config.display_name"
+            v-else-if="config.config_type === 'input-tag'"
             :prop="`${config.id}.final_value`"
             :rules="getRules(config)"
         >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
+            <el-input-tag
+                v-model="formData[config.id].final_value"
+                :placeholder="`${t('dataPipelines.toInput')}${config.display_name}`"
+                :disabled="config.is_disabled"
+            />
+            <div class="input-tag-hint">{{ t('dataPipelines.inputTagHint') }}</div>
+        </el-form-item>
+        
+        <!-- 默认情况 - 文本输入框 -->
+        <el-form-item 
+            v-else
+            :prop="`${config.id}.final_value`"
+            :rules="getRules(config)"
+        >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
             <el-input
                 v-model="formData[config.id].final_value"
                 :placeholder="`${t('dataPipelines.toInput')}${config.display_name}`"
@@ -247,6 +502,7 @@
 <script setup>
   import { ref, watch, defineExpose } from 'vue'
   import { useI18n } from "vue-i18n";
+  import { QuestionFilled } from '@element-plus/icons-vue'
   const { t } = useI18n();
   
   const props = defineProps({
@@ -267,6 +523,22 @@
   const formRef = ref(null)
   const remoteLoading = ref(false)
   
+  // 获取配置描述
+  const getConfigDescription = (config) => {
+    // 优先使用 display_description（国际化后的描述）
+    if (config.display_description) {
+      return config.display_description;
+    }
+    
+    // 其次使用 config_description（原始描述）
+    if (config.config_description) {
+      return config.config_description;
+    }
+    
+    // 如果都没有，返回空
+    return '';
+  }
+
   // 获取验证规则
   const getRules = (config) => {
     if (!config.is_required) return []
@@ -280,7 +552,7 @@
     ]
   }
 
-  // 处理字符串形式的数组默认值
+  // 处理字符串形式的数组默认值（用于 select-v2 等组件）
   const parseArrayDefaultValue = (value) => {
     if (Array.isArray(value)) return value;
     if (typeof value !== 'string') return [];
@@ -294,7 +566,7 @@
         const cleanedValue = value
           .trim()
           // 替换各种引号类型为标准的双引号
-          .replace(/[‘’]/g, '"')
+          .replace(/[''']/g, '"')
           .replace(/['`]/g, '"')
           // 确保方括号存在
           .replace(/^([^[]*)(.*)([^]]*)$/, '$2')
@@ -308,7 +580,7 @@
         // 最后尝试手动分割字符串
         if (value.includes(',')) {
           return value
-            .replace(/[\[\]'"‘’`]/g, '') // 移除所有括号和引号
+            .replace(/[\[\]'"''`]/g, '') // 移除所有括号和引号
             .split(',')
             .map(item => item.trim())
             .filter(item => item !== '');
@@ -317,6 +589,54 @@
         return [];
       }
     }
+  }
+
+  // 处理 input-tag 组件的字符串数组解析（支持包含逗号等特殊字符的元素）
+  const parseInputTagArrayValue = (value) => {
+    if (Array.isArray(value)) return value;
+    if (typeof value !== 'string') return [];
+    
+    const trimmed = value.trim();
+    
+    // 如果不是数组格式，返回空数组
+    if (!trimmed.startsWith('[') || !trimmed.endsWith(']')) {
+      return [];
+    }
+    
+    try {
+      // 先尝试直接解析JSON（处理双引号格式）
+      return JSON.parse(trimmed);
+    } catch (e) {
+      try {
+        // 处理单引号格式：将单引号替换为双引号
+        const cleanedValue = trimmed.replace(/'/g, '"');
+        return JSON.parse(cleanedValue);
+      } catch (e2) {
+        try {
+          // 使用正则表达式匹配引号内的内容（支持单引号和双引号）
+          // 匹配模式：引号内的内容，包括空字符串
+          const matches = [];
+          const regex = /(['"])((?:\\.|(?!\1).)*?)\1/g;
+          let match;
+          
+          while ((match = regex.exec(trimmed)) !== null) {
+            // match[2] 是引号内的内容，需要处理转义字符
+            let content = match[2];
+            // 处理转义字符
+            content = content.replace(/\\'/g, "'").replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+            matches.push(content);
+          }
+          
+          if (matches.length > 0) {
+            return matches;
+          }
+        } catch (e3) {
+          console.warn('Failed to parse input-tag array value:', value, e3);
+        }
+      }
+    }
+    
+    return [];
   }
   
   // 初始化表单数据
@@ -414,6 +734,25 @@
             case 'input-password':
                 formData.value[config.id] = { final_value: defaultValue || '' }
                 break
+            // 标签输入组件
+            case 'input-tag':
+                if (defaultValue === null || defaultValue === undefined) {
+                    formData.value[config.id] = { final_value: [] }
+                } 
+                else if (Array.isArray(defaultValue)) {
+                    // 如果是数组，直接使用，保持原样（包括包含逗号的值）
+                    formData.value[config.id] = { final_value: [...defaultValue] }
+                }
+                else if (typeof defaultValue === 'string') {
+                    // 使用专门的解析函数，支持包含逗号等特殊字符的元素
+                    const parsed = parseInputTagArrayValue(defaultValue)
+                    formData.value[config.id] = { final_value: parsed }
+                }
+                else {
+                    // 其他类型转换为字符串后作为单个元素
+                    formData.value[config.id] = { final_value: [String(defaultValue)] }
+                }
+                break
             // 默认情况
             default:
                 formData.value[config.id] = { final_value: defaultValue !== undefined 
@@ -467,7 +806,6 @@
 </script>
 
 <style lang="scss" scoped>
-  /* 原有的样式代码 */
   :deep(.el-input-number .el-input__inner) {
     text-align: left;
   }
@@ -487,5 +825,98 @@
   :deep(.el-select__wrapper) {
     height: auto;
     min-height: 40px;
+  }
+
+  :deep(.el-form-item__label) {
+    width: 100% !important;
+    padding: 0 0 8px 0 !important;
+  }
+
+  :deep(.form-item-label) {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 100%;
+    
+    .label-text {
+      font-weight: 500;
+      color: #606266;
+      flex-shrink: 0;
+    }
+  }
+
+  :deep(.help-icon) {
+    color: #c0c4cc;
+    font-size: 14px;
+    transition: color 0.2s;
+    flex-shrink: 0;
+    margin-left: auto;
+    
+    &:hover {
+      color: #409eff;
+    }
+  }
+
+  .input-tag-hint {
+    font-size: 12px;
+    color: #909399;
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  // 让 el-input-tag 样式与 el-input 保持一致
+  :deep(.el-input-tag) {
+    padding: 4px 8px;
+
+    .el-input-tag__wrapper {
+      border: 1px solid transparent;
+      border-radius: var(--border-radius-md);
+      background-color: #fff;
+      transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 0.2s;
+      min-height: 32px;
+      
+      &:hover {
+        border-color: transparent;
+      }
+      
+      &.is-focus {
+        border: 1px solid var(--Brand-300);
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(77, 106, 214, 0.24);
+      }
+    }
+    
+    .el-input-tag__input {
+      height: auto;
+      min-height: 32px;
+      line-height: 1.5;
+      padding: 0 8px;
+      font-size: 14px;
+      color: #606266;
+      
+      &::placeholder {
+        color: #c0c4cc;
+      }
+    }
+
+    .el-input-tag__inner.is-right-space {
+      margin: 0;
+    }
+    .el-input-tag__inner.is-left-space {
+      margin: 0;
+    }
+  }
+  
+  // 错误状态样式
+  :deep(.el-form-item.is-error .el-input-tag) {
+    .el-input-tag__wrapper {
+      border: 1px solid var(--Error-300);
+      box-shadow: unset;
+      
+      &.is-focus {
+        border: 1px solid var(--Error-300);
+        box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(240, 68, 56, 0.24);
+      }
+    }
   }
 </style>

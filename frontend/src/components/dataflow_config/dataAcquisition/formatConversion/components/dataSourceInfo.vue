@@ -54,10 +54,20 @@
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
         <div class="mb-[15px]">
           <div class="text-gray-400 text-xs mb-1 mt-1">
+            {{ t("dataPipelines.dataSource") }}：
+          </div>
+          <div>
+            {{ dataSource.from_csg_hub_dataset_name }}{{ dataSource.from_csg_hub_dataset_branch ? ' > ' + dataSource.from_csg_hub_dataset_branch : '' }}
+          </div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+        <div class="mb-[15px]">
+          <div class="text-gray-400 text-xs mb-1 mt-1">
             {{ t("dataPipelines.dataFlow") }}：
           </div>
           <div>
-            {{ dataSource.to_csg_hub_dataset_name || "-" }}
+            {{ dataSource.to_csg_hub_dataset_name }}{{ dataSource.to_csg_hub_dataset_default_branch ? ' > ' + dataSource.to_csg_hub_dataset_default_branch : '' }}
           </div>
         </div>
       </el-col>
@@ -74,9 +84,41 @@
         </div>
       </el-col>
     </el-row>
+    
+    <div v-if="dataSource.progress">
+      <div class="text-gray-400 text-xs mb-2">
+        {{ t("dataPipelines.progress") }}：
+      </div>
+      <div class="progress-section">
+        <div class="progress-content">
+          <div class="progress-bar-wrapper">
+            <el-progress
+              :percentage="dataSource.progress.progress || 0"
+              :stroke-width="8"
+            />
+          </div>
+          <div class="progress-stats">
+            <div class="stat-item">
+              <span class="stat-label">{{ t("dataPipelines.total") }}：</span>
+              <span class="stat-value">{{ dataSource.progress.total || 0 }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">{{ t("dataPipelines.success") }}：</span>
+              <span class="stat-value success">{{ dataSource.progress.success || 0 }}</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">{{ t("dataPipelines.failure") }}：</span>
+              <span class="stat-value failure">{{ dataSource.progress.failure || 0 }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- 描述信息 -->
     <div class="description">
-      <h3>{{ t("dataPipelines.description") }}</h3>
+      <div class="text-gray-400 text-xs mb-2">
+        {{ t("dataPipelines.description") }}：
+      </div>
       <p>{{ dataSource.des || "-" }}</p>
     </div>
   </div>
@@ -107,6 +149,7 @@ onMounted(() => {
 <style scoped>
 .data-source-card {
   /* width: 600px; */
+  display: block;
 }
 .info-group h3 {
   margin-bottom: 10px;
@@ -120,6 +163,45 @@ onMounted(() => {
   margin-bottom: 10px;
   font-size: 16px;
   color: #333;
+}
+.progress-section {
+  margin: 10px 0 20px 0;
+  padding: 16px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+.progress-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.progress-bar-wrapper {
+  width: 100%;
+}
+.progress-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.stat-label {
+  font-size: 14px;
+  color: #666;
+}
+.stat-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+}
+.stat-value.success {
+  color: #67c23a;
+}
+.stat-value.failure {
+  color: #f56c6c;
 }
 .usage-record h3 {
   margin-bottom: 10px;

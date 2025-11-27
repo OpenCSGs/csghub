@@ -134,6 +134,22 @@
               </el-radio>
             </el-radio-group>
           </el-form-item>
+          <!-- PDF 输入框 -->
+          <el-form-item
+            v-if="isPdfSelected(groupKey)"
+            prop="mineru_api_url"
+            class="mt-[12px]"
+          >
+            <template #label>
+              <p class="text-gray-500 text-xs">MinerU API URL</p>
+            </template>
+            <el-input
+              v-model="form.mineru_api_url"
+              :placeholder="mineru_api_url_placeholder"
+              clearable
+            >
+            </el-input>
+          </el-form-item>
         </el-col>
 
         <!-- 目标格式 -->
@@ -337,12 +353,44 @@ const to_branchList = ref([]);
 
 const activeGroup = ref(null);
 
+// 判断当前选中的格式是否是 PDF
+const isPdfSelected = (groupKey) => {
+  if (!form.value.from_data_type) return false;
+  const group = dataObj.value[groupKey];
+  if (!group || !group.from_format_types) return false;
+  const selectedFormat = group.from_format_types.find(
+    (format) => format.value === form.value.from_data_type
+  );
+  return selectedFormat && (selectedFormat.label === "PDF" || selectedFormat.label === "pdf");
+};
+
+const mineru_api_url_placeholder = ref("请输入 MinerU API URL");
+// 获取 MinerU API URL 默认值
+const fetchMineruApiUrl = async () => {
+  try {
+    const { data } = await useFetchApi("/dataflow/formatify/get_mineru_api_url").get().json();
+    if (data.value?.code === 200 && data.value?.data?.mineru_api_url) {
+      mineru_api_url_placeholder.value = data.value.data.mineru_api_url;
+    }
+  } catch (error) {
+    console.error("获取 MinerU API URL 失败:", error);
+  }
+};
+
 // 处理源格式变化
 const handleSourceChange = (groupKey) => {
   console.log(form.value.from_data_type, "-------------------");
   console.log(groupKey, "groupKeygroupKeygroupKey");
   activeGroup.value = groupKey;
   form.value.to_data_type = null; // 重置目标格式选择
+  
+  // 如果选中的是 PDF，获取默认的 mineru_api_url
+  if (isPdfSelected(groupKey)) {
+    fetchMineruApiUrl();
+  } else {
+    // 如果不是 PDF，清空 mineru_api_url
+    form.value.mineru_api_url = "";
+  }
 };
 
 onMounted(() => {

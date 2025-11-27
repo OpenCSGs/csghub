@@ -196,12 +196,12 @@ import { ElMessage, ElLoading } from "element-plus";
 import { useI18n } from "vue-i18n";
 import useFetchApi from "@/packs/useFetchApi";
 import { useCookies } from "vue3-cookies";
-import useUserStore from '@/stores/UserStore'
-const userStore = useUserStore()
+import useUserStore from "@/stores/UserStore";
+const userStore = useUserStore();
 
 const { cookies } = useCookies();
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
 const routes = router.getRoutes();
@@ -275,11 +275,9 @@ const jump = async () => {
   loading.close();
   console.log(data, "datadatadata");
   if (data.value?.code === 200) {
-    window.open(
-      `${data.value.data}`,
-      "_blank"
-    );
-  }else {
+    const origin = window.location.origin;
+    window.open(`${data.value.data}&origin=${origin}&language=${locale.value}`, "_blank");
+  } else {
     ElMessage.error(data.value.msg);
   }
 
