@@ -62,7 +62,8 @@ export const beiJingTimeParser = (utcTimeStr) => {
 }
 
 export const ToLoginPage = () => {
-  cookies.set('previous_path', window.location.pathname)
+  const currentURL = window.location.pathname + window.location.search + window.location.hash;
+  cookies.set('previous_path', currentURL, '7d', '/', '', false, false);
   window.location.href = '/login'
 }
 
