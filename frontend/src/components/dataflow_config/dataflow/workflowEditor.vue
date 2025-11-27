@@ -133,6 +133,26 @@
       :size="drawerWidth"
       style="height: calc(100% - 81px);"
     >
+      <template #header>
+        <div class="drawer-header">
+          <el-text truncated style="width: 315px">
+            {{ selectedNode ? selectedNode.display_name : t('dataPipelines.nodeConfig') }}
+          </el-text>
+          <el-popover
+            :title="selectedNode ? selectedNode.display_name : t('dataPipelines.nodeConfig')"
+            :content="getOperatorDescription(selectedNode)"
+            v-if="getOperatorDescription(selectedNode)"
+            placement="left-start"
+            :width="260"
+            popper-style="padding: 15px;"
+          >
+            <template #reference>
+              <el-icon class="help-icon"><QuestionFilled /></el-icon>
+            </template>
+          </el-popover>
+        </div>
+      </template>
+      
       <div v-if="props.viewMode === 'view'" class="mb-[16px] flex justify-between items-center">
         <el-segmented v-model="tabsValue" :options="options" size="large" />
         <!-- <el-select
@@ -154,7 +174,12 @@
           <div class="config-section">
             <el-form label-position="top">
               <el-form-item :label="t('dataPipelines.nodeName')">
-                <el-input v-model="selectedNode.display_name" disabled />
+                <el-input
+                  v-model="selectedNode.display_name"
+                  :maxlength="50"
+                  show-word-limit
+                  :disabled="props.viewMode === 'view'"
+                  @input="handleNodeNameInput" />
               </el-form-item>
               <el-form-item :label="t('dataPipelines.nodeType')">
                 <el-input v-model="selectedNode.operator_type" disabled />
@@ -168,6 +193,14 @@
             :viewMode="props.viewMode"
             @save="(data, formRef) => handleSave(data, formRef)"
           />
+          
+          <!-- 算子文档描述 -->
+          <div v-if="operatorDocumentContent" class="operator-document-section">
+            <div class="document-title">{{ t('dataPipelines.operatorIntroduction') }}</div>
+            <div class="document-content-wrapper">
+              <div class="markdown-content" v-html="renderedOperatorDocument"></div>
+            </div>
+          </div>
         </div>
         <div v-else>
           {{ t('dataPipelines.nodeNotSelected') }}
@@ -207,6 +240,7 @@
   import enOps from "../../../locales/en_js/operator_en.json";
   import zhHantOps from '../../../locales/zh_hant_js/operator_zhHant.json'
   import { useI18n } from "vue-i18n";
+  import MarkdownIt from "markdown-it";
   const { t, locale } = useI18n();
   const operatorI18n = {
     zh: zhOps,
@@ -348,6 +382,7 @@
               const newItem = {
                 ...item,
                 display_name: i18nData?.name || item.operator_name,
+                operator_description: i18nData?.operator_description || item.operator_description,
                 configs: item.configs.map((config, index) => {
                   const i18nParam = i18nData?.params?.[index];
                   
@@ -369,7 +404,7 @@
                   return {
                     ...config,
                     display_name: i18nParam?.name || config.config_name,
-                    display_description: i18nParam?.description,
+                    display_description: i18nParam?.config_description || config.config_description,
                     select_options: selectOptions
                   };
                 })
@@ -458,6 +493,57 @@
 
   // 添加一个标志位跟踪图是否已初始化
   const isGraphInitialized = ref(false)
+  
+  // 算子文档相关
+  const operatorDocumentContent = ref('')
+  
+  // 初始化 Markdown 解析器
+  const md = new MarkdownIt({
+    html: true,        // 启用 HTML 标签
+    linkify: true,     // 自动识别链接
+    typographer: true, // 启用一些语言中性的替换 + 引号美化
+    breaks: true,      // 转换 '\n' 为 <br>
+  });
+  
+  // 计算属性 - 渲染 Markdown
+  const renderedOperatorDocument = computed(() => {
+    if (!operatorDocumentContent.value) return "";
+    return md.render(operatorDocumentContent.value);
+  });
+  
+  // 加载算子文档
+  const loadOperatorDocument = async (operatorId) => {
+    if (!operatorId) {
+      operatorDocumentContent.value = '';
+      return;
+    }
+    
+    try {
+      const { data } = await useFetchApi(
+        `/dataflow/operator/${operatorId}/document`
+      )
+        .get()
+        .json();
+
+      if (data.value?.code === 200 && data.value?.data?.content) {
+        operatorDocumentContent.value = data.value.data.content;
+      } else {
+        operatorDocumentContent.value = '';
+      }
+    } catch (error) {
+      console.error("Failed to load operator document:", error);
+      operatorDocumentContent.value = '';
+    }
+  };
+  
+  // 监听 selectedNode 变化，加载文档
+  watch(() => selectedNode.value?.operatorId, (newOperatorId) => {
+    if (newOperatorId) {
+      loadOperatorDocument(newOperatorId);
+    } else {
+      operatorDocumentContent.value = '';
+    }
+  }, { immediate: true });
   
   // 初始化G6图
   const initGraph = async () => {
@@ -1334,6 +1420,7 @@
             operator_type: node.operator_type,
             operator_name: node.operator_name,
             display_name: i18nData?.name || node.display_name || node.operator_name,
+            operator_description: i18nData?.operator_description || node.operator_description,
             configs: configs,
             icon: node.icon,
             color: node.color || '#ccc',
@@ -1362,6 +1449,25 @@
     return data
   };
 
+  // 获取算子描述（支持国际化）
+  const getOperatorDescription = (node) => {
+    if (!node) return '';
+    
+    // 优先使用节点本身的 operator_description
+    if (node.operator_description) {
+      return node.operator_description;
+    }
+    
+    // 如果没有，从国际化文件中查找
+    const i18nData = operatorI18n[locale.value]?.[node.operator_name];
+    if (i18nData?.operator_description) {
+      return i18nData.operator_description;
+    }
+    
+    // 如果都没有，返回空字符串
+    return '';
+  }
+
   // 配置抽屉关闭
   const configsDrawerClose = () => {
     configsDrawer.value = false
@@ -1376,6 +1482,11 @@
     configsDrawer.value = false;
     tabsValue.value = 'config';
     logLevelval.value = 'all';
+  }
+
+  // 处理节点名称输入
+  const handleNodeNameInput = () => {
+    updateCanvasNodeName()
   }
   
   // 处理键盘事件
@@ -1417,6 +1528,7 @@
       operator_type: node.operator_type,
       operator_name: node.operator_name,
       display_name: node.display_name,
+      operator_description: node.operator_description,
       configs: node.configs,
       icon: node.pic_base64,
       color: node.color || "#ccc"
@@ -1435,6 +1547,9 @@
     try {
       const data = JSON.parse(event.dataTransfer.getData('text/plain'))
       const point = graph.value.getPointByClient(event.clientX, event.clientY)
+
+      // 获取国际化数据
+      const i18nData = operatorI18n[locale.value]?.[data.operator_name];
       
       // 生成唯一ID（时间戳+随机数）
       const uniqueId = `node_${Date.now()}_${Math.floor(Math.random() * 1000)}`
@@ -1446,6 +1561,7 @@
         configs: data.configs,
         operator_name: data.operator_name,
         display_name: data.display_name,
+        operator_description: i18nData?.operator_description || data.operator_description, // 添加算子描述
         icon: `data:image/png;base64,${data.icon}`,
         color: data.color,
         x: point.x,
@@ -1697,6 +1813,15 @@
               final_value: `[${arrayStr}]`
             }
           }
+          if (config.config_type === 'input-tag' && Array.isArray(config.final_value)) {
+            const arrayStr = config.final_value
+              .map(item => `'${item}'`)
+              .join(', ')
+            return {
+              ...config,
+              final_value: `[${arrayStr}]`
+            }
+          }
           return config
         })
 
@@ -1708,6 +1833,7 @@
           operator_type: node.operator_type,
           operator_name: node.operator_name,
           display_name: node.display_name,
+          operator_description: node.operator_description,
           icon: node.icon.includes('data:image/png;base64,') ? node.icon : `data:image/png;base64,${node.icon}`,
           position: { x: node.x, y: node.y },
           configs: processedConfigs
@@ -1741,6 +1867,7 @@
           operator_type: nodeConfig.operator_type,
           operator_name: nodeConfig.operator_name,
           display_name: nodeConfig.display_name,
+          operator_description: nodeConfig.operator_description,
           configs: nodeConfig.configs,
           icon: nodeConfig.icon,
           x: nodeConfig.position.x,
@@ -1805,7 +1932,28 @@
         dynamicFormRefs.value[selectedNode.value.id] = formRef;
       }
       console.log('更新后的节点配置:', selectedNode.value)
+      
+      // 更新画布中节点的显示名称
+      updateCanvasNodeName()
+      
       configsDrawer.value = false
+    }
+  }
+
+  // 更新画布节点名称
+  const updateCanvasNodeName = () => {
+    if (selectedNode.value && graph.value && selectedNode.value.id) {
+      const nodeItem = graph.value.findById(selectedNode.value.id)
+      if (nodeItem) {
+        const displayName = selectedNode.value.display_name || ''
+        // 更新节点的 model 数据
+        graph.value.updateItem(nodeItem, {
+          display_name: displayName,
+          label: displayName // 确保 label 也更新
+        })
+        // 强制刷新节点
+        nodeItem.refresh()
+      }
     }
   }
 
@@ -2184,6 +2332,164 @@
       background: #0c111d;
     }
   }
+
+  :deep(.help-icon) {
+    color: #c0c4cc;
+    font-size: 14px;
+    transition: color 0.2s;
+    
+    &:hover {
+      color: #409eff;
+    }
+  }
+
+  // 算子文档区域样式
+  .operator-document-section {
+    margin: 24px 0;
+  }
+
+  .document-title {
+    font-size: 14px;
+    color: #344054;
+    margin-bottom: 10px;
+  }
+
+  .document-content-wrapper {
+    background-color: #fafafa;
+    border-radius: 8px;
+    padding: 16px;
+    max-height: 340px;
+    overflow-y: auto;
+    border: 1px solid #e5e7eb;
+  }
+
+  .markdown-content {
+    max-width: 100%;
+    line-height: 1.6;
+    color: #333;
+    word-wrap: break-word;
+    font-size: 14px;
+    
+    // 标题样式
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 16px;
+      margin-bottom: 8px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+    
+    h1 {
+      font-size: 20px;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 8px;
+    }
+    
+    h2 {
+      font-size: 18px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 6px;
+    }
+    
+    h3 {
+      font-size: 16px;
+    }
+    
+    h4 {
+      font-size: 14px;
+    }
+    
+    // 段落样式
+    p {
+      margin-bottom: 12px;
+    }
+    
+    // 列表样式
+    ul, ol {
+      margin-bottom: 12px;
+      padding-left: 24px;
+    }
+    
+    li {
+      margin-bottom: 6px;
+    }
+    
+    // 代码块样式
+    pre {
+      background-color: #f6f8fa;
+      border-radius: 6px;
+      padding: 12px;
+      overflow-x: auto;
+      margin-bottom: 12px;
+      border: 1px solid #e1e4e8;
+    }
+    
+    code {
+      background-color: #f6f8fa;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 85%;
+    }
+    
+    pre code {
+      background-color: transparent;
+      padding: 0;
+      font-size: 13px;
+    }
+    
+    // 表格样式
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 12px;
+      border: 1px solid #e1e4e8;
+    }
+    
+    th, td {
+      border: 1px solid #e1e4e8;
+      padding: 6px 10px;
+      text-align: left;
+    }
+    
+    th {
+      background-color: #f6f8fa;
+      font-weight: 600;
+    }
+    
+    // 引用样式
+    blockquote {
+      border-left: 4px solid #dfe2e5;
+      padding-left: 12px;
+      margin: 12px 0;
+      color: #6a737d;
+    }
+    
+    // 链接样式
+    a {
+      color: #0366d6;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    
+    // 分割线样式
+    hr {
+      border: none;
+      border-top: 1px solid #e1e4e8;
+      margin: 16px 0;
+    }
+    
+    // 强调样式
+    strong {
+      font-weight: 600;
+    }
+    
+    em {
+      font-style: italic;
+    }
+  }
 </style>
 
 <style>
@@ -2222,5 +2528,11 @@
 .operator-status .status-item .status-time {
   font-size: 10px;
   color: #999999;
+}
+
+.drawer-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 </style>

@@ -228,6 +228,30 @@
                 :value="selItem.key"
               />
             </el-select>
+            <div v-if="item.type == 'search-select'" class="w-full">
+              <el-select
+                v-model="item.value"
+                class="w-full"
+                :placeholder="item.name"
+                filterable
+                allow-create
+                default-first-option
+                @change="handleSearchSelectChange($event, item)"
+              >
+                <el-option
+                  v-for="selItem in getSearchSelectOptions(item)"
+                  :key="selItem.key"
+                  :label="selItem.label"
+                  :value="selItem.key"
+                />
+              </el-select>
+              <p v-if="isSearchingModel(item)" class="text-gray-400 text-xs mt-1">
+                {{ t('dataPipelines.searchingModel') }}
+              </p>
+              <p class="text-gray-400 text-xs mt-1">
+                {{ t('dataPipelines.searchSelectHint') }}
+              </p>
+            </div>
             <el-input
               v-if="item.type == 'STRING' && !Array.isArray(item.option_values)"
               :placeholder="`${item.name}`"
@@ -401,7 +425,8 @@
                         'INTEGER',
                         'PositiveFloat',
                         'ClosedUnitInterval',
-                        'LIST'
+                        'LIST',
+                        'search-select'
                       ].includes(item.type)
                     "
                   >
@@ -421,6 +446,30 @@
                         :value="selItem.key"
                       />
                     </el-select>
+                    <div v-if="item.type == 'search-select'" class="w-full">
+                      <el-select
+                        v-model="item.value"
+                        class="w-full"
+                        :placeholder="item.name"
+                        filterable
+                        allow-create
+                        default-first-option
+                        @change="handleSearchSelectChange($event, item)"
+                      >
+                        <el-option
+                          v-for="selItem in getSearchSelectOptions(item)"
+                          :key="selItem.key"
+                          :label="selItem.label"
+                          :value="selItem.key"
+                        />
+                      </el-select>
+                      <p v-if="isSearchingModel(item)" class="text-gray-500 text-xs mt-1">
+                        {{ t('dataPipelines.searchingModel') }}
+                      </p>
+                      <p class="text-gray-400 text-xs mt-1">
+                        {{ t('dataPipelines.searchSelectHint') }}
+                      </p>
+                    </div>
                     <el-input
                       v-if="
                         item.type == 'STRING' &&
@@ -678,6 +727,102 @@
   }
   const removeTag = (tag, item) => {
     item.value.splice(item.value.indexOf(tag), 1)
+  }
+
+  // 跟踪每个 search-select 的搜索状态
+  const searchSelectLoadingMap = ref(new Map())
+
+  // 获取 search-select 的选项列表
+  const getSearchSelectOptions = (item) => {
+    const defaultOptions = Array.isArray(item.option_values) ? item.option_values : []
+    // 如果当前值不在默认选项中，也添加到选项中（用于显示用户输入的值）
+    if (item.value && !defaultOptions.find(opt => opt.key === item.value)) {
+      return [
+        ...defaultOptions,
+        { key: item.value, label: item.value }
+      ]
+    }
+    return defaultOptions
+  }
+
+  // 获取搜索状态
+  const isSearchingModel = (item) => {
+    const key = item.name || item.key || JSON.stringify(item)
+    return searchSelectLoadingMap.value.get(key) || false
+  }
+
+  // 处理 search-select 的值变化
+  const handleSearchSelectChange = async (value, item) => {
+    if (!value) {
+      item.value = ''
+      return
+    }
+
+    const defaultOptions = Array.isArray(item.option_values) ? item.option_values : []
+    const isInDefaultOptions = defaultOptions.some(opt => opt.key === value)
+
+    // 如果值在默认选项中，直接使用
+    if (isInDefaultOptions) {
+      item.value = value
+      return
+    }
+
+    // 如果值不在默认选项中，调用远程搜索接口验证
+    // 设置搜索状态
+    const key = item.name || item.key || JSON.stringify(item)
+    searchSelectLoadingMap.value.set(key, true)
+    
+    try {
+      const { data } = await useFetchApi(
+        `/dataflow/model/check-model?model_name=${encodeURIComponent(value)}`
+      )
+        .get()
+        .json()
+
+      // 关闭搜索状态
+      searchSelectLoadingMap.value.set(key, false)
+
+      // 接口返回匹配到的模型名称，可能直接返回字符串，也可能是 { code: 200, data: "model_name" } 格式
+      let matchedModelName = null
+      if (typeof data.value === 'string') {
+        matchedModelName = data.value
+      } else if (data.value?.code === 200 && data.value?.data) {
+        matchedModelName = data.value.data
+      } else if (data.value?.data) {
+        matchedModelName = data.value.data
+      }
+
+      if (matchedModelName && matchedModelName !== null) {
+        // 验证通过，使用返回的模型全名称
+        item.value = matchedModelName
+        // 将新值添加到 option_values 中，以便下次可以直接选择
+        if (!defaultOptions.find(opt => opt.key === matchedModelName)) {
+          if (!Array.isArray(item.option_values)) {
+            item.option_values = []
+          }
+          item.option_values.push({
+            key: matchedModelName,
+            label: matchedModelName
+          })
+        }
+      } else {
+        // 验证失败，提示用户并清空值
+        ElMessage({
+          message: t('dataPipelines.modelNotAvailable'),
+          type: 'error'
+        })
+        item.value = ''
+      }
+    } catch (error) {
+      // 关闭搜索状态
+      searchSelectLoadingMap.value.set(key, false)
+      console.error('Failed to check model:', error)
+      ElMessage({
+        message: t('dataPipelines.modelNotAvailable'),
+        type: 'error'
+      })
+      item.value = ''
+    }
   }
 
   const getSelListData = async (type) => {
