@@ -131,7 +131,7 @@
 
   const showFiles = computed(() => {
     if (props.repoType === 'endpoint' || props.repoType === 'notebook') return false
-    if (props.repoType === 'dataset' && !isLoggedIn.value) return false
+    // if (props.repoType === 'dataset' && !isLoggedIn.value) return false
     if (props.repoType === 'space' && props.sdk === 'nginx') return props.settingsVisibility
 
     return true
