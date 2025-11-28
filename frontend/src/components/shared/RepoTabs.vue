@@ -62,7 +62,7 @@
           :appEndpoint="appEndpoint"
           :appStatus="appStatus"
           :modelId="modelId"
-          :private="private"
+          :private="isPrivate"
           :endpointReplica="endpointReplica"
           :clusterId="repoDetail.clusterId"
           :sku="sku"
@@ -160,7 +160,7 @@
       <!-- analysis -->
       <template
         #analysis
-        v-if="(repoType === 'endpoint' || repoType === 'space') && repoTab.tab === 'analysis'"
+        v-if="(repoType === 'endpoint' || repoType === 'space') && currentTab === 'analysis'"
       >
         <InstanceAnalysis
           :repoType="repoType"
@@ -174,7 +174,7 @@
       <!-- logs -->
       <template
         #logs
-        v-if="(repoType === 'endpoint' || repoType === 'notebook') && repoTab.tab === 'logs'"
+        v-if="(repoType === 'endpoint' || repoType === 'notebook') && currentTab === 'logs'"
       >
         <EndpointLogs
           v-if="repoType === 'endpoint'"
@@ -370,6 +370,12 @@
   const { repoTab, setRepoTab } = useRepoTabStore()
   const router = useRouter()
   const route = useRoute()
+  
+  // 计算当前激活的 tab，优先使用 route.query，确保与 Vue Router 状态同步
+  const currentTab = computed(() => {
+    return route.query.tab || repoTab.tab || props.defaultTab || 'summary'
+  })
+  
   const framework = computed(() => {
     const tags = props.repoDetail.tags || []
     const frameworkTag = tags.find((tag) => tag.category === 'framework')
