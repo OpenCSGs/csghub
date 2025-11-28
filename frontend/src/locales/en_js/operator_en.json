@@ -1809,7 +1809,7 @@
     },
     "multi_keyword_filter": {
         "name": "multi_keyword_filter",
-        "description": "",
+        "description": "Support deleting data records when matching any keyword.",
         "type": "Filter",
         "group": "",
         "samples": {

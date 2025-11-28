@@ -1814,7 +1814,7 @@
     },
     "multi_keyword_filter": {
         "name": "关键字过滤",
-        "description": "",
+        "description": "支持在匹配任何关键字时删除数据记录。",
         "type": "Filter",
         "group": "",
         "samples": {
