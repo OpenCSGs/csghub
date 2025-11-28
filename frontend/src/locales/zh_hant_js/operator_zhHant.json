@@ -1808,7 +1808,7 @@
     },
     "multi_keyword_filter": {
         "name": "關鍵字過濾",
-        "description": "",
+        "description": "支持在匹配任何關鍵字時刪除數據記錄。",
         "type": "Filter",
         "group": "",
         "samples": {

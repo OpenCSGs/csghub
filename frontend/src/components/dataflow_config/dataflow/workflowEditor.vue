@@ -592,10 +592,14 @@
           draggable: true
         })
 
-        // 节点标签
+        // 节点标签（主标题）
+        const displayName = cfg.display_name || cfg.operator_name
+        const i18nName = cfg.i18n_name || cfg.operator_name
+        const showSubtitle = displayName && i18nName && displayName !== i18nName
+        
         group.addShape('text', {
           attrs: {
-            text: cfg.display_name || cfg.operator_name,
+            text: displayName,
             x: 0,
             y: 40,
             fontSize: 12,
@@ -612,6 +616,29 @@
           name: 'node-label',
           draggable: true
         })
+
+        // 副标题（国际化名称，仅在用户自定义名称与国际化名称不同时显示）
+        if (showSubtitle) {
+          group.addShape('text', {
+            attrs: {
+              text: i18nName,
+              x: 0,
+              y: 56, // 主标题下方
+              fontSize: 10,
+              textAlign: 'center',
+              textBaseline: 'top',
+              fill: '#999',
+              width: 60,
+              wordWrap: true,
+              wordWrapWidth: 60,
+              lineHeight: 14,
+              ellipsis: true,
+              cursor: 'move'
+            },
+            name: 'node-subtitle',
+            draggable: true
+          })
+        }
 
         // 节点状态
         // group.addShape('text', {
@@ -805,10 +832,48 @@
       // 更新
       update(cfg, node) {
         const group = node.getContainer();
-        // 更新节点内容
-        const label = group.find(ele => ele.get('name') === 'node-label' || ele.get('name') === 'node-status')
+        // 更新节点主标题
+        const label = group.find(ele => ele.get('name') === 'node-label')
         if (label) {
-          label.attr('text', cfg.label)
+          label.attr('text', cfg.display_name || cfg.label || cfg.operator_name)
+        }
+        
+        // 更新副标题
+        const subtitle = group.find(ele => ele.get('name') === 'node-subtitle')
+        const displayName = cfg.display_name || cfg.operator_name
+        const i18nName = cfg.i18n_name || cfg.operator_name
+        const showSubtitle = displayName && i18nName && displayName !== i18nName
+        
+        if (showSubtitle) {
+          if (subtitle) {
+            subtitle.attr('text', i18nName)
+          } else {
+            // 如果副标题不存在但需要显示，创建它
+            group.addShape('text', {
+              attrs: {
+                text: i18nName,
+                x: 0,
+                y: 56,
+                fontSize: 10,
+                textAlign: 'center',
+                textBaseline: 'top',
+                fill: '#999',
+                width: 60,
+                wordWrap: true,
+                wordWrapWidth: 60,
+                lineHeight: 14,
+                ellipsis: true,
+                cursor: 'move'
+              },
+              name: 'node-subtitle',
+              draggable: true
+            })
+          }
+        } else {
+          // 如果不需要显示副标题，删除它
+          if (subtitle) {
+            subtitle.remove()
+          }
         }
         
         const image = group.find(ele => ele.get('name') === 'node-image')
@@ -1413,20 +1478,49 @@
             }
           })
           
+          // 如果 display_name 和国际化的不一样，使用用户自己的 display_name
+          // 如果一样，使用国际化的（支持语言切换）
+          const i18nName = i18nData?.name || node.operator_name
+          
+          // 检查 node.display_name 是否等于任何语言的国际化名称
+          // 如果等于，说明用户没有修改过，应该直接使用当前语言的国际化名称
+          let isUserModified = false
+          if (node.display_name && i18nName && node.display_name !== i18nName) {
+            // 检查是否等于其他语言的国际化名称
+            const isI18nName = Object.values(operatorI18n).some(langData => {
+              const otherI18nName = langData?.[node.operator_name]?.name
+              return otherI18nName && node.display_name === otherI18nName
+            })
+            
+            // 如果等于某个语言的国际化名称，说明用户没有修改过
+            // 如果不等于任何语言的国际化名称，说明用户修改过
+            isUserModified = !isI18nName
+          }
+          
+          let displayName
+          if (isUserModified) {
+            // 用户修改过的名称，使用用户的
+            displayName = node.display_name
+          } else {
+            // 使用国际化名称（如果存在），否则使用 display_name 或 operator_name
+            displayName = i18nName || node.display_name || node.operator_name
+          }
+          
           return {
             id: node.id || `node_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
             operatorId: node.operator_id || node.operatorId,
             type: 'image-node',
             operator_type: node.operator_type,
             operator_name: node.operator_name,
-            display_name: i18nData?.name || node.display_name || node.operator_name,
+            display_name: displayName,
+            i18n_name: i18nName, // 保存国际化名称，用于显示副标题
             operator_description: i18nData?.operator_description || node.operator_description,
             configs: configs,
             icon: node.icon,
             color: node.color || '#ccc',
             x: node.position?.x || Math.random() * 300,
             y: node.position?.y || Math.random() * 300,
-            label: i18nData?.name || node.display_name || node.operator_name // G6 需要label属性
+            label: displayName // G6 需要label属性
           }
         })
         
@@ -1550,6 +1644,7 @@
 
       // 获取国际化数据
       const i18nData = operatorI18n[locale.value]?.[data.operator_name];
+      const i18nName = i18nData?.name || data.operator_name
       
       // 生成唯一ID（时间戳+随机数）
       const uniqueId = `node_${Date.now()}_${Math.floor(Math.random() * 1000)}`
@@ -1561,6 +1656,7 @@
         configs: data.configs,
         operator_name: data.operator_name,
         display_name: data.display_name,
+        i18n_name: i18nName, // 保存国际化名称，用于显示副标题
         operator_description: i18nData?.operator_description || data.operator_description, // 添加算子描述
         icon: `data:image/png;base64,${data.icon}`,
         color: data.color,
@@ -1951,6 +2047,12 @@
           display_name: displayName,
           label: displayName // 确保 label 也更新
         })
+        // 同时更新 nodes.value 中的数据，确保数据一致性
+        const nodeIndex = nodes.value.findIndex(n => n.id === selectedNode.value.id)
+        if (nodeIndex !== -1) {
+          nodes.value[nodeIndex].display_name = displayName
+          nodes.value[nodeIndex].label = displayName
+        }
         // 强制刷新节点
         nodeItem.refresh()
       }
@@ -2363,133 +2465,6 @@
     border: 1px solid #e5e7eb;
   }
 
-  .markdown-content {
-    max-width: 100%;
-    line-height: 1.6;
-    color: #333;
-    word-wrap: break-word;
-    font-size: 14px;
-    
-    // 标题样式
-    h1, h2, h3, h4, h5, h6 {
-      margin-top: 16px;
-      margin-bottom: 8px;
-      font-weight: 600;
-      line-height: 1.25;
-    }
-    
-    h1 {
-      font-size: 20px;
-      border-bottom: 2px solid #e5e7eb;
-      padding-bottom: 8px;
-    }
-    
-    h2 {
-      font-size: 18px;
-      border-bottom: 1px solid #e5e7eb;
-      padding-bottom: 6px;
-    }
-    
-    h3 {
-      font-size: 16px;
-    }
-    
-    h4 {
-      font-size: 14px;
-    }
-    
-    // 段落样式
-    p {
-      margin-bottom: 12px;
-    }
-    
-    // 列表样式
-    ul, ol {
-      margin-bottom: 12px;
-      padding-left: 24px;
-    }
-    
-    li {
-      margin-bottom: 6px;
-    }
-    
-    // 代码块样式
-    pre {
-      background-color: #f6f8fa;
-      border-radius: 6px;
-      padding: 12px;
-      overflow-x: auto;
-      margin-bottom: 12px;
-      border: 1px solid #e1e4e8;
-    }
-    
-    code {
-      background-color: #f6f8fa;
-      padding: 2px 6px;
-      border-radius: 3px;
-      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
-      font-size: 85%;
-    }
-    
-    pre code {
-      background-color: transparent;
-      padding: 0;
-      font-size: 13px;
-    }
-    
-    // 表格样式
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-bottom: 12px;
-      border: 1px solid #e1e4e8;
-    }
-    
-    th, td {
-      border: 1px solid #e1e4e8;
-      padding: 6px 10px;
-      text-align: left;
-    }
-    
-    th {
-      background-color: #f6f8fa;
-      font-weight: 600;
-    }
-    
-    // 引用样式
-    blockquote {
-      border-left: 4px solid #dfe2e5;
-      padding-left: 12px;
-      margin: 12px 0;
-      color: #6a737d;
-    }
-    
-    // 链接样式
-    a {
-      color: #0366d6;
-      text-decoration: none;
-      
-      &:hover {
-        text-decoration: underline;
-      }
-    }
-    
-    // 分割线样式
-    hr {
-      border: none;
-      border-top: 1px solid #e1e4e8;
-      margin: 16px 0;
-    }
-    
-    // 强调样式
-    strong {
-      font-weight: 600;
-    }
-    
-    em {
-      font-style: italic;
-    }
-  }
 </style>
 
 <style>
@@ -2534,5 +2509,132 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+/* 算子文档 Markdown 样式 */
+.markdown-content {
+  max-width: 100%;
+  line-height: 1.6;
+  color: #333;
+  word-wrap: break-word;
+  font-size: 14px;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3,
+.markdown-content h4,
+.markdown-content h5,
+.markdown-content h6 {
+  margin-top: 16px;
+  margin-bottom: 8px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-content h1 {
+  font-size: 20px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 8px;
+}
+
+.markdown-content h2 {
+  font-size: 18px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 6px;
+}
+
+.markdown-content h3 {
+  font-size: 16px;
+}
+
+.markdown-content h4 {
+  font-size: 14px;
+}
+
+.markdown-content p {
+  margin-bottom: 12px;
+}
+
+.markdown-content ul,
+.markdown-content ol {
+  margin-bottom: 12px;
+  padding-left: 24px;
+}
+
+.markdown-content li {
+  margin-bottom: 6px;
+}
+
+.markdown-content pre {
+  background-color: #f3f3f3;
+  border-radius: 6px;
+  padding: 12px;
+  overflow-x: auto;
+  margin-bottom: 12px;
+  border: 1px solid #e1e4e8;
+}
+
+.markdown-content code {
+  background-color: #f3f3f3;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 85%;
+}
+
+.markdown-content pre code {
+  background-color: transparent;
+  padding: 0;
+  font-size: 13px;
+}
+
+.markdown-content table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 12px;
+  border: 1px solid #e1e4e8;
+}
+
+.markdown-content th,
+.markdown-content td {
+  border: 1px solid #e1e4e8;
+  padding: 6px 10px;
+  text-align: left;
+}
+
+.markdown-content th {
+  background-color: #f6f8fa;
+  font-weight: 600;
+}
+
+.markdown-content blockquote {
+  border-left: 4px solid #dfe2e5;
+  padding-left: 12px;
+  margin: 12px 0;
+  color: #6a737d;
+}
+
+.markdown-content a {
+  color: #0366d6;
+  text-decoration: none;
+}
+
+.markdown-content a:hover {
+  text-decoration: underline;
+}
+
+.markdown-content hr {
+  border: none;
+  border-top: 1px solid #e1e4e8;
+  margin: 16px 0;
+}
+
+.markdown-content strong {
+  font-weight: 600;
+}
+
+.markdown-content em {
+  font-style: italic;
 }
 </style>
