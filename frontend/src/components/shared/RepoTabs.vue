@@ -249,6 +249,7 @@
           :cloudResource="repoDetail.sku || repoDetail.hardware"
           :coverImage="repoDetail.coverImageUrl"
           @showSpaceLogs="showSpaceLogs"
+          :minReplica="repoDetail.minReplica"
           :sdk="sdk"
           :tag-list="tagList"
           :tags="tags"
