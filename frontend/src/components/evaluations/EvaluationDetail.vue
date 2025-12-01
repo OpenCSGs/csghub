@@ -432,9 +432,13 @@
   const fetchEvaluation = async () => {
     try {
       loading.value = true
-      const { data } = await useFetchApi(
+      const { data, response } = await useFetchApi(
         `/evaluations/${props.evaluationId}`
       ).json()
+
+      if (response?.status === 403 || data.value?.code === 'AUTH-ERR-2') {
+        return (window.location.href = '/errors/unauthorized')
+      }
 
       if (!data.value) {
         throw new Error(data.value?.msg || 'Failed to fetch evaluation')
