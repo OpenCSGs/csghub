@@ -3,6 +3,7 @@
     :current-path="currentPath"
     :namespace-path="namespacePath"
     :can-write="canWrite"
+    :default-branch="defaultBranch"
     @change-branch="changeBranch"
   />
 </template>
@@ -17,7 +18,8 @@
     currentPath: String,
     namespacePath: String,
     canWrite: Boolean,
-    repoType: String
+    repoType: String,
+    defaultBranch: String
   })
 
   const changeBranch = (branch) => {
