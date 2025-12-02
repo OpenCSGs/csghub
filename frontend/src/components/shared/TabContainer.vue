@@ -21,7 +21,6 @@
         :label="$t('all.analysis')"
         name="analysis"
         class="min-h-[300px]"
-        lazy
       >
         <slot name="analysis"></slot>
       </el-tab-pane>
@@ -64,7 +63,6 @@
         :label="$t('all.logs')"
         name="logs"
         class="min-h-[300px]"
-        lazy
       >
         <slot name="logs"></slot>
       </el-tab-pane>
@@ -75,7 +73,6 @@
         :label="$t('billing.billing')"
         name="billing"
         class="min-h-[300px]"
-        lazy
       >
         <slot name="billing"></slot>
       </el-tab-pane>
