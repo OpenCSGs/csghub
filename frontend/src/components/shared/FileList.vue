@@ -154,7 +154,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, watch } from 'vue'
+  import { ref, onMounted, watch, nextTick } from 'vue'
   import { useRouter, useRoute } from 'vue-router'
 
   import { format } from 'timeago.js';
@@ -166,10 +166,9 @@
   import { createAndClickAnchor, beiJingTimeParser, ToNotFoundPage, ToUnauthorizedPage } from '../../packs/utils';
 
   const props = defineProps({
-    // currentBranch: String,
-    // currentPath: String,
     namespacePath: String,
-    canWrite: Boolean
+    canWrite: Boolean,
+    defaultBranch: String
   })
 
   const router = useRouter()
@@ -199,38 +198,75 @@
 
   const isInitializing = ref(false)
 
-  watch(() => route.query, (newQuery) => {
-    if (newQuery.tab === 'files' && (newQuery.actionName === 'files' || !newQuery.actionName)) {
-      if (newQuery.actionName && newQuery.actionName !== repoTab.actionName) {
-        setRepoTab({
-          actionName: newQuery.actionName,
-          lastPath: newQuery.path || '',
-          currentBranch: newQuery.branch || repoTab.currentBranch
-        })
+  // 监听路由变化，处理 tab 切换和状态同步
+  watch(() => route.query, (newQuery, oldQuery) => {
+    // 检查是否应该显示 FileList
+    const shouldShow = checkShouldShow(newQuery)
+    const wasShowing = oldQuery ? checkShouldShow(oldQuery) : false
+    
+    if (!shouldShow) {
+      // 如果不应该显示，停止 loading
+      if (wasShowing) {
+        loading.value = false
       }
-      
-      if (newQuery.path !== currentPath.value) {
-        currentPath.value = newQuery.path || ''
-      }
-      if (newQuery.branch && newQuery.branch !== currentBranch.value) {
-        currentBranch.value = newQuery.branch
-      }
-      
-      if (!isInitializing.value) {
-        init()
-      }
+      return
+    }
+    
+    // 如果从其他 tab 切换到 files tab，需要重新初始化
+    if (!wasShowing && shouldShow) {
+      resetInitialization()
+      setupInitialState(newQuery)
+      ensureInitialized()
+      return
+    }
+    
+    // 在 files tab 内的变化，同步状态
+    let shouldReinit = false
+    
+    // 同步路径
+    const newPath = newQuery.path || ''
+    if (newPath !== currentPath.value) {
+      currentPath.value = newPath
+      shouldReinit = true
+    }
+    
+    // 同步分支
+    if (newQuery.branch && newQuery.branch !== currentBranch.value) {
+      currentBranch.value = newQuery.branch
+      shouldReinit = true
+    }
+    
+    // 同步 repoTab 状态
+    if (newQuery.actionName !== repoTab.actionName || newQuery.path !== repoTab.lastPath) {
+      setRepoTab({
+        actionName: newQuery.actionName || 'files',
+        lastPath: newQuery.path || '',
+        currentBranch: newQuery.branch || repoTab.currentBranch
+      })
+    }
+    
+    // 如果有变化且不在初始化中，重新初始化
+    if (shouldReinit && !isInitializing.value) {
+      resetInitialization() // 重置初始化标志
+      ensureInitialized()
     }
   }, { deep: true })
 
   const changeBranch = (branch) => {
+    // 重置初始化标志，因为需要重新初始化
+    resetInitialization()
+    
+    // 更新状态
     currentBranch.value = branch
+    currentPath.value = ''
+    
     setRepoTab({
       currentBranch: branch,
       actionName: 'files',
       lastPath: ''
     })
-    currentPath.value = ''
 
+    // 更新 URL
     const query = {
       tab: 'files',
       actionName: 'files',
@@ -242,62 +278,71 @@
       query
     })
 
-    init()
+    // 使用统一的初始化入口
+    ensureInitialized()
   }
 
   const goToNamespace = () => {
-    if (!isInitializing.value) {
-      resetFileNotFound()
-      
-      currentPath.value = ''
-      setRepoTab({
-        actionName: 'files',
-        lastPath: ''
-      })
-
-      const query = {
-        tab: 'files',
-        actionName: 'files'
-      }
-      if (currentBranch.value) {
-        query.branch = currentBranch.value
-      }
+    if (isInitializing.value) return
     
-      router.push({
-        path: router.currentRoute.value.path,
-        query
-      })
+    resetFileNotFound()
+    resetInitialization() // 重置初始化标志
+    
+    // 更新状态
+    currentPath.value = ''
+    setRepoTab({
+      actionName: 'files',
+      lastPath: ''
+    })
 
-      init()
+    // 更新 URL
+    const query = {
+      tab: 'files',
+      actionName: 'files'
     }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+  
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
+
+    // 使用统一的初始化入口
+    ensureInitialized()
   }
 
   const goToBreadcrumb = (path) => {
-    if (!isInitializing.value) {
-      resetFileNotFound()
-      
-      currentPath.value = path.includes('/') ? path?.slice(1) : path
-      setRepoTab({
-        actionName: 'files',
-        lastPath: currentPath.value
-      })
-
-      const query = {
-        tab: 'files',
-        actionName: 'files',
-        path: currentPath.value
-      }
-      if (currentBranch.value) {
-        query.branch = currentBranch.value
-      }
+    if (isInitializing.value) return
     
-      router.push({
-        path: router.currentRoute.value.path,
-        query
-      })
+    resetFileNotFound()
+    resetInitialization() // 重置初始化标志
+    
+    // 更新状态
+    currentPath.value = path.includes('/') ? path?.slice(1) : path
+    setRepoTab({
+      actionName: 'files',
+      lastPath: currentPath.value
+    })
 
-      init()
+    // 更新 URL
+    const query = {
+      tab: 'files',
+      actionName: 'files',
+      path: currentPath.value
     }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+  
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
+
+    // 使用统一的初始化入口
+    ensureInitialized()
   }
 
   const goToNewFile = () => {
@@ -388,32 +433,35 @@
   }
 
   const goToDir = (path) => {
-    if (!isInitializing.value) {
-      resetFileNotFound()
-      
-      currentPath.value = path
-      setRepoTab({
-        actionName: 'files',
-        lastPath: path
-      })
-
-      // 更新 URL 参数
-      const query = {
-        tab: 'files',
-        actionName: 'files',
-        path: path
-      }
-      if (currentBranch.value) {
-        query.branch = currentBranch.value
-      }
+    if (isInitializing.value) return
     
-      router.push({
-        path: router.currentRoute.value.path,
-        query
-      })
+    resetFileNotFound()
+    resetInitialization() // 重置初始化标志
+    
+    // 更新状态
+    currentPath.value = path
+    setRepoTab({
+      actionName: 'files',
+      lastPath: path
+    })
 
-      init()
+    // 更新 URL
+    const query = {
+      tab: 'files',
+      actionName: 'files',
+      path: path
     }
+    if (currentBranch.value) {
+      query.branch = currentBranch.value
+    }
+  
+    router.push({
+      path: router.currentRoute.value.path,
+      query
+    })
+
+    // 使用统一的初始化入口
+    ensureInitialized()
   }
 
   const goToBlob = (path) => {
@@ -574,7 +622,15 @@
     }
   }
   const fetchFileListData = async () => {
-    if(!currentBranch.value) return
+    // 确保 currentBranch 有值才能发起请求
+    // 注意：defaultBranch 也可能为空，所以这个检查是必要的
+    if(!currentBranch.value) {
+      console.warn('[FileList] fetchFileListData called without currentBranch, waiting for branch to be set')
+      loading.value = false
+      return
+    }
+    
+    loading.value = true
     
     const url = `/${apiPrefixPath}/${props.namespacePath}/refs/${currentBranch.value}/tree/${currentPath.value}?cursor=${filePageCursor.value}&limit=500`
 
@@ -593,10 +649,10 @@
         ToNotFoundPage()
       } else {
         ElMessage.warning(error.value ? error.value.msg : 'Failed to fetch file list')
+        loading.value = false
       }
     } catch (error) {
       console.log(error)
-    } finally {
       loading.value = false
     }
   }
@@ -618,6 +674,13 @@
   function init() {
     if (isInitializing.value) return // 防止重复初始化
     
+    // 确保 currentBranch 有值才能初始化
+    if (!currentBranch.value) {
+      console.warn('[FileList] init called without currentBranch, waiting for branch to be set')
+      loading.value = false
+      return
+    }
+    
     isInitializing.value = true
     resetFileNotFound()
     
@@ -628,40 +691,86 @@
     fetchFileListData()
     fetchLastCommit()
     
-    setTimeout(() => {
+    nextTick(() => {
       isInitializing.value = false
-    }, 100)
+    })
   }
 
-  onMounted(() => {
-    const params = new URLSearchParams(window.location.search)
-    const urlActionName = params.get('actionName')
-    const urlPath = params.get('path')
-    const urlBranch = params.get('branch')
-    const currentTab = params.get('tab')
+  // 工具函数：检查是否应该显示 FileList
+  const checkShouldShow = (query = route.query) => {
+    const currentTab = query.tab
+    const urlActionName = query.actionName
     
-    if (currentTab === 'files' && (urlActionName === 'files' || !urlActionName)) {
-      if (urlActionName && urlActionName !== 'files') {
-        setRepoTab({
-          actionName: urlActionName,
-          lastPath: urlPath || '',
-          currentBranch: urlBranch || repoTab.currentBranch || ''
-        })
-      }
-      
-      if (urlPath !== undefined && urlPath !== null) {
-        currentPath.value = urlPath
-      } else {
-        currentPath.value = repoTab.lastPath || ''
-      }
-      
-      if (urlBranch) {
-        currentBranch.value = urlBranch
-      } else {
-        currentBranch.value = repoTab.currentBranch || ''
-      }
-      
-      init()
+    return currentTab === 'files' && (!urlActionName || urlActionName === 'files')
+  }
+
+  // 工具函数：设置初始状态
+  const setupInitialState = (query = route.query) => {
+    const urlPath = query.path
+    const urlBranch = query.branch
+    
+    // 设置路径
+    currentPath.value = urlPath || repoTab.lastPath || ''
+    
+    // 设置分支，优先级：URL > repoTab > defaultBranch > 'main'
+    const targetBranch = urlBranch || repoTab.currentBranch || props.defaultBranch || 'main'
+    currentBranch.value = targetBranch
+  }
+
+  // 防止重复初始化的标志
+  const hasInitialized = ref(false)
+
+  // 统一的初始化入口
+  const ensureInitialized = () => {
+    if (!currentBranch.value) {
+      console.warn('[FileList] Cannot initialize without currentBranch')
+      loading.value = false
+      return
     }
+    
+    if (isInitializing.value) {
+      return
+    }
+    
+    if (hasInitialized.value) {
+      return
+    }
+    
+    hasInitialized.value = true
+    init()
+  }
+
+  // 重置初始化标志（用于需要重新初始化的场景）
+  const resetInitialization = () => {
+    hasInitialized.value = false
+  }
+
+  // 监听外部状态变化，只用于响应后续的状态变化（不用于初始化）
+  watch(() => [repoTab.currentBranch, props.defaultBranch], ([newRepoTabBranch, newDefaultBranch]) => {
+    // 只有当前没有分支时才设置（用于后续的状态变化）
+    if (!currentBranch.value) {
+      currentBranch.value = targetBranch
+      ensureInitialized()
+    }
+  }) // 移除 immediate，完全由 onMounted 负责初始化
+
+  onMounted(() => {
+    // 检查是否应该显示 FileList
+    if (!checkShouldShow()) {
+      loading.value = false
+      return
+    }
+    
+    // 设置初始状态 - 这是唯一的初始化入口
+    setupInitialState()
+    
+    // 如果 setupInitialState 没有设置分支，尝试从其他来源获取
+    if (!currentBranch.value) {
+      const targetBranch = props.defaultBranch || 'main'
+      currentBranch.value = targetBranch
+    }
+    
+    // 统一初始化
+    ensureInitialized()
   })
 </script>

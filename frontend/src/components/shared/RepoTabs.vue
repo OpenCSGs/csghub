@@ -154,6 +154,7 @@
           :namespace-path="path"
           :can-write="canWrite"
           :repo-type="repoType"
+          :default-branch="repoDetail.defaultBranch"
         />
       </template>
 
