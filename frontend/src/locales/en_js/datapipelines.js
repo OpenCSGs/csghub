@@ -419,6 +419,10 @@ export const dataPipelines = {
   "cosmopedia_chinese_preprocess_internal_dec": "A detailed tutorial on converting raw text to WikiHow style using the MakeCosmopediaMapper operator. This tool invokes large language models to generate structured tutorial content based on the input seed text.",
   "md_to_jsonl_preprocess_internal_dec": "Convert MD files to JSONL format with chunking support.",
   "modelNotAvailable": "This model is not available",
-  "searchingModel": "Searching model...",
+  "searchingModel": "Validating model...",
   "searchSelectHint": "You can enter a model name for remote search",
+  "selectModel": "Select Model",
+  "moreModels": "More Models",
+  "searchModelName": "Search Model Name",
+  "fetchModelListError": "Failed to fetch model list",
 }

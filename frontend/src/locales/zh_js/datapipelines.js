@@ -417,6 +417,10 @@ export const dataPipelines = {
   "cosmopedia_chinese_preprocess_internal_dec": "使用MakeCosmopediaMapper操作符将原始文本转换为WikiHow样式的详细教程。此工具调用大型语言模型，根据输入的种子文本生成结构化教程内容。",
   "md_to_jsonl_preprocess_internal_dec": "使用分块支持将MD文件转换为JSONL格式。",
   "modelNotAvailable": "此模型不可用",
-  "searchingModel": "正在搜索模型...",
+  "searchingModel": "正在验证模型...",
   "searchSelectHint": "支持输入模型名称进行远程搜索",
+  "selectModel": "选择模型",
+  "moreModels": "更多模型",
+  "searchModelName": "搜索模型名称",
+  "fetchModelListError": "获取模型列表失败",
 }

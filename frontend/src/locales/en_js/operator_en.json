@@ -192,19 +192,22 @@
                         "label": "alibaba-pai/pai-qwen1_5-7b-doc2qa"
                     }
                 ],
-                "value": "alibaba-pai/pai-qwen1_5-7b-doc2qa"
+                "value": "alibaba-pai/pai-qwen1_5-7b-doc2qa",
+                "config_description": "The Name of the Model"
             },
             {
                 "name": "model_url",
                 "type": "LIST",
                 "option_values": null,
-                "value": "https://api.deepseek.com/chat/completions"
+                "value": "https://api.deepseek.com/chat/completions",
+                "config_description": "The Remote Invocation Address of the Model"
             },
             {
                 "name": "auth_token",
                 "type": "LIST",
                 "option_values": null,
-                "value": ""
+                "value": "",
+                "config_description": "The Usage Token of the Model"
             }
         ]
     },
@@ -671,7 +674,8 @@
                         "label": "zh"
                     }
                 ],
-                "value": "en"
+                "value": "en",
+                "config_description": "Language of the Text, Options: 'en' (English), 'zh' (Chinese)"
             }
         ]
     },
@@ -904,13 +908,15 @@
                         "label": "zh"
                     }
                 ],
-                "value": "en"
+                "value": "en",
+                "config_description": "Language for Perplexity Calculation, Options: 'en' (English), 'zh' (Chinese)"
             },
             {
                 "name": "max_ppl",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": 8000
+                "value": 8000,
+                "config_description": "Maximum Perplexity Threshold; Samples exceeding this threshold will be filtered out"
             }
         ]
     },
@@ -953,13 +959,15 @@
                 "name": "field_key",
                 "type": "STRING",
                 "option_values": null,
-                "value": ""
+                "value": "",
+                "config_description": "Field Name to Filter; Multi-level fields are separated by . (e.g., 'meta.suffix')"
             },
             {
                 "name": "target_value",
                 "type": "LIST",
                 "option_values": null,
-                "value": []
+                "value": [],
+                "config_description": "Target Value List; only samples whose field values are in this list are retained"
             }
         ]
     },
@@ -1308,14 +1316,14 @@
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true,
-                "config_description": "Do you ignore uppercase and lowercase letters"
+                "config_description": "Should the sample text be converted to lowercase before calculating the hash value?"
             },
             {
                 "name": "ignore_non_character",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true,
-                "config_description": "Do you ignore spaces, numbers, punctuation marks"
+                "config_description": "Should non-alphabetic characters (including spaces, numbers, and punctuation marks) be ignored?"
             }
         ]
     },
@@ -1351,55 +1359,64 @@
                         "label": "sentencepiece"
                     }
                 ],
-                "value": "character"
+                "value": "character",
+                "config_description": "Word Segmentation Methods, Options: 'space', 'punctuation', 'character', 'sentencepiece'"
             },
             {
                 "name": "window_size",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": 5
+                "value": 5,
+                "config_description": "Sliding Window Size"
             },
             {
                 "name": "lowercase",
                 "type": "BOOLEAN",
                 "option_values": null,
-                "value": true
+                "value": true,
+                "config_description": "Should it be converted to lowercase?"
             },
             {
                 "name": "ignore_pattern",
                 "type": "STRING",
                 "option_values": null,
-                "value": null
+                "value": null,
+                "config_description": "Ignore Substrings of Specific Patterns (Regular Expressions)"
             },
             {
                 "name": "num_permutations",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": 256
+                "value": 256,
+                "config_description": "Number of MinHash Permutations: The larger the number, the higher the accuracy, but the slower the computation"
             },
             {
                 "name": "jaccard_threshold",
                 "type": "ClosedUnitInterval",
                 "option_values": null,
-                "value": 0.7
+                "value": 0.7,
+                "config_description": "Jaccard Similarity Threshold (0-1): Samples with a value greater than or equal to this threshold are considered similar"
             },
             {
                 "name": "num_bands",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": null
+                "value": null,
+                "config_description": "Number of Bands in LSH (Automatically Calculated)"
             },
             {
                 "name": "num_rows_per_band",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": null
+                "value": null,
+                "config_description": "Number of Rows per Band (Automatically Calculated)"
             },
             {
                 "name": "tokenizer_model",
                 "type": "STRING",
                 "option_values": null,
-                "value": null
+                "value": null,
+                "config_description": "SentencePiece Model Path (Required when using sentencepiece for word segmentation)"
             }
         ]
     },
@@ -1431,37 +1448,43 @@
                         "label": "character"
                     }
                 ],
-                "value": "character"
+                "value": "character",
+                "config_description": "Word Segmentation Methods, Optional Values: 'space' (Space Segmentation), 'punctuation' (Punctuation Segmentation), 'character' (Character-level Segmentation)"
             },
             {
                 "name": "window_size",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": 4
+                "value": 4,
+                "config_description": "Sliding Window Size, Used for Generating Shingles"
             },
             {
                 "name": "lowercase",
                 "type": "BOOLEAN",
                 "option_values": null,
-                "value": true
+                "value": true,
+                "config_description": "Should the text be converted to lowercase?"
             },
             {
                 "name": "ignore_pattern",
                 "type": "STRING",
                 "option_values": null,
-                "value": "\\p{P}"
+                "value": "\\p{P}",
+                "config_description": "Ignore substrings of specific patterns (regular expressions)"
             },
             {
                 "name": "num_blocks",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": 10
+                "value": 10,
+                "config_description": "Number of Blocks in SimHash Calculation"
             },
             {
                 "name": "hamming_distance",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": 8
+                "value": 8,
+                "config_description": "Hamming Distance Threshold: Samples with a Hamming distance less than or equal to this value are considered similar (must be less than num_blocks)"
             }
         ]
     },
@@ -1516,13 +1539,15 @@
                 "name": "select_ratio",
                 "type": "ClosedUnitInterval",
                 "option_values": null,
-                "value": null
+                "value": null,
+                "config_description": "Selection Proportion (0-1); for example, 0.1 means selecting 10% of the samples"
             },
             {
                 "name": "select_num",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": null
+                "value": null,
+                "config_description": "Number of Selected Samples"
             }
         ]
     },
@@ -1773,7 +1798,8 @@
                 "name": "similarity_threshold",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": 0.5
+                "value": 0.5,
+                "config_description": "Similarity Threshold (0-1): Samples with a value greater than or equal to this threshold will be connected"
             }
         ]
     },

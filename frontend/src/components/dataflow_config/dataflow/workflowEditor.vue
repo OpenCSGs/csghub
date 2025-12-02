@@ -887,31 +887,157 @@
     G6.registerEdge('custom-edge', {
       draw(cfg, group) {
         const { startPoint, endPoint } = cfg
+        
+        // 计算直角拐弯路径
+        // 从源节点右边水平延伸，然后垂直到目标节点水平位置，最后水平连接到目标节点
+        const offsetX = 30 // 水平偏移距离
+        const path = []
+        
+        // 起点
+        path.push(['M', startPoint.x, startPoint.y])
+        
+        // 判断源节点和目标节点的相对位置
+        const deltaX = endPoint.x - startPoint.x
+        const deltaY = Math.abs(endPoint.y - startPoint.y)
+        
+        // 如果节点在同一水平线上（垂直距离很小），使用直线
+        if (deltaY < 5) {
+          path.push(['L', endPoint.x, endPoint.y])
+          // 删除按钮位置（在路径中点）
+          const midPoint = {
+            x: (startPoint.x + endPoint.x) / 2,
+            y: startPoint.y
+          }
+          
+          const line = group.addShape('path', {
+            attrs: {
+              path: path,
+              stroke: '#8996b1',
+              fill: 'none',
+              lineWidth: 2,
+              cursor: 'pointer'
+            },
+            name: 'edge-path'
+          })
+
+          // 手动绘制实心箭头
+          const arrowSize = 8
+          const angle = Math.atan2(endPoint.y - startPoint.y, endPoint.x - startPoint.x)
+          const arrowX = endPoint.x
+          const arrowY = endPoint.y
+          
+          // 计算箭头三个点的坐标
+          const arrowPoint1 = {
+            x: arrowX - arrowSize * Math.cos(angle) - arrowSize * Math.sin(angle),
+            y: arrowY - arrowSize * Math.sin(angle) + arrowSize * Math.cos(angle)
+          }
+          const arrowPoint2 = {
+            x: arrowX - arrowSize * Math.cos(angle) + arrowSize * Math.sin(angle),
+            y: arrowY - arrowSize * Math.sin(angle) - arrowSize * Math.cos(angle)
+          }
+          
+          // 绘制实心三角形箭头
+          group.addShape('path', {
+            attrs: {
+              path: [
+                ['M', arrowX, arrowY],
+                ['L', arrowPoint1.x, arrowPoint1.y],
+                ['L', arrowPoint2.x, arrowPoint2.y],
+                ['Z']
+              ],
+              fill: '#8996b1',
+              stroke: '#8996b1',
+              lineWidth: 1,
+              cursor: 'pointer'
+            },
+            name: 'arrow-head'
+          })
+
+          if (props.viewMode === 'edit') {
+            group.addShape('text', {
+              attrs: {
+                text: '×',
+                x: midPoint.x,
+                y: midPoint.y,
+                fontSize: 14,
+                textAlign: 'center',
+                textBaseline: 'middle',
+                fill: '#ff4d4f',
+                cursor: 'pointer',
+                opacity: 0
+              },
+              name: 'delete-icon'
+            });
+          }
+          return line
+        }
+        
+        // 使用直角拐弯
+        // 1. 从起点水平向右延伸
+        const midX = startPoint.x + offsetX
+        path.push(['L', midX, startPoint.y])
+        
+        // 2. 垂直移动到目标节点的水平位置
+        path.push(['L', midX, endPoint.y])
+        
+        // 3. 水平连接到终点
+        path.push(['L', endPoint.x, endPoint.y])
+        
+        // 计算删除按钮位置（在中间拐点）
         const midPoint = {
-          x: (startPoint.x + endPoint.x) / 2,
+          x: midX,
           y: (startPoint.y + endPoint.y) / 2
         }
         
         const line = group.addShape('path', {
           attrs: {
-            path: [
-              ['M', startPoint.x, startPoint.y],
-              ['L', endPoint.x, endPoint.y]
-            ],
+            path: path,
             stroke: '#8996b1',
-            fill: '#8996b1',
+            fill: 'none',
             lineWidth: 2,
-            endArrow: {
-              path: 'M 0,0 L -6,3 L -6,-3 Z', // 实心箭头路径
-              d: 0, // 调整箭头位置
-            },
             cursor: 'pointer'
           },
           name: 'edge-path'
         })
 
+        // 手动绘制实心箭头（在路径的最后一段）
+        const arrowSize = 8
+        // 计算最后一段的方向（从水平拐点到终点，最后一段是水平的）
+        const lastSegmentStartX = midX
+        const lastSegmentStartY = endPoint.y
+        const lastSegmentAngle = Math.atan2(endPoint.y - lastSegmentStartY, endPoint.x - lastSegmentStartX)
+        const arrowX = endPoint.x
+        const arrowY = endPoint.y
+        
+        // 计算箭头三个点的坐标
+        const arrowPoint1 = {
+          x: arrowX - arrowSize * Math.cos(lastSegmentAngle) - arrowSize * Math.sin(lastSegmentAngle),
+          y: arrowY - arrowSize * Math.sin(lastSegmentAngle) + arrowSize * Math.cos(lastSegmentAngle)
+        }
+        const arrowPoint2 = {
+          x: arrowX - arrowSize * Math.cos(lastSegmentAngle) + arrowSize * Math.sin(lastSegmentAngle),
+          y: arrowY - arrowSize * Math.sin(lastSegmentAngle) - arrowSize * Math.cos(lastSegmentAngle)
+        }
+        
+        // 绘制实心三角形箭头
+        group.addShape('path', {
+          attrs: {
+            path: [
+              ['M', arrowX, arrowY],
+              ['L', arrowPoint1.x, arrowPoint1.y],
+              ['L', arrowPoint2.x, arrowPoint2.y],
+              ['Z']
+            ],
+            fill: '#8996b1',
+            stroke: '#8996b1',
+            lineWidth: 1,
+            cursor: 'pointer'
+          },
+          name: 'arrow-head'
+        })
+
         if (props.viewMode === 'edit') {
-          // 删除按钮 (默认隐藏)
+          // 删除按钮 (默认隐藏，放在拐点位置)
           group.addShape('text', {
             attrs: {
               text: '×',
@@ -1114,30 +1240,193 @@
     })
 
     graph.value.on('node:drag', (e) => {
-      if (!creatingEdge) return
-      // 更新临时连线
-      const point = graph.value.getPointByClient(e.clientX, e.clientY)
+      if (creatingEdge) {
+        // 更新临时连线
+        const point = graph.value.getPointByClient(e.clientX, e.clientY)
+        
+        // 如果有临时连线，更新它
+        if (!graph.value.findById('temp-edge')) {
+          graph.value.addItem('edge', {
+            id: 'temp-edge',
+            source: edgeStartNode.getModel().id,
+            targetPoint: point,
+            type: 'custom-edge',
+            style: {
+              stroke: '#1890ff',
+              lineDash: [3, 3]
+            }
+          })
+        } else {
+          graph.value.updateItem('temp-edge', {
+            targetPoint: point
+          })
+        }
+        return
+      }
       
-      // 如果有临时连线，更新它
-      if (!graph.value.findById('temp-edge')) {
-        graph.value.addItem('edge', {
-          id: 'temp-edge',
-          source: edgeStartNode.getModel().id,
-          targetPoint: point,
-          type: 'custom-edge',
-          style: {
-            stroke: '#1890ff',
-            lineDash: [3, 3]
+      // 节点拖拽时的水平/垂直吸附辅助线显示
+      if (e.item && e.item.getType() === 'node' && !creatingEdge) {
+        const currentNode = e.item
+        const currentNodeModel = currentNode.getModel()
+        const currentX = currentNodeModel.x
+        const currentY = currentNodeModel.y
+        
+        // 吸附阈值（像素）
+        const snapThreshold = 20
+        
+        // 获取所有其他节点
+        const allNodes = graph.value.getNodes()
+        let snapX = null
+        let snapY = null
+        
+        // 检查水平吸附（Y坐标对齐）
+        for (const node of allNodes) {
+          if (node.getID() === currentNode.getID()) continue
+          
+          const nodeModel = node.getModel()
+          const nodeY = nodeModel.y
+          
+          // 如果当前节点的Y坐标接近其他节点的Y坐标，显示水平辅助线
+          if (Math.abs(currentY - nodeY) < snapThreshold) {
+            snapY = nodeY
+            break
           }
-        })
-      } else {
-        graph.value.updateItem('temp-edge', {
-          targetPoint: point
-        })
+        }
+        
+        // 检查垂直吸附（X坐标对齐）
+        for (const node of allNodes) {
+          if (node.getID() === currentNode.getID()) continue
+          
+          const nodeModel = node.getModel()
+          const nodeX = nodeModel.x
+          
+          // 如果当前节点的X坐标接近其他节点的X坐标，显示垂直辅助线
+          if (Math.abs(currentX - nodeX) < snapThreshold) {
+            snapX = nodeX
+            break
+          }
+        }
+        
+        // 获取图的根组（用于绘制辅助线）
+        const graphGroup = graph.value.get('group')
+        
+        // 清除之前的辅助线
+        const existingSnapLineX = graphGroup.find(element => element.get('name') === 'snap-line-x')
+        const existingSnapLineY = graphGroup.find(element => element.get('name') === 'snap-line-y')
+        if (existingSnapLineX) existingSnapLineX.remove()
+        if (existingSnapLineY) existingSnapLineY.remove()
+        
+        // 使用足够大的范围确保辅助线覆盖整个可见区域
+        const largeValue = 100000
+        
+        // 显示水平辅助线（Y坐标对齐）
+        if (snapY !== null) {
+          graphGroup.addShape('line', {
+            attrs: {
+              x1: -largeValue,
+              y1: snapY,
+              x2: largeValue,
+              y2: snapY,
+              stroke: '#1890ff',
+              lineWidth: 1,
+              lineDash: [4, 4],
+              opacity: 0.6
+            },
+            name: 'snap-line-x',
+            capture: false, // 不捕获鼠标事件
+            zIndex: 1000 // 确保辅助线在最上层
+          })
+        }
+        
+        // 显示垂直辅助线（X坐标对齐）
+        if (snapX !== null) {
+          graphGroup.addShape('line', {
+            attrs: {
+              x1: snapX,
+              y1: -largeValue,
+              x2: snapX,
+              y2: largeValue,
+              stroke: '#1890ff',
+              lineWidth: 1,
+              lineDash: [4, 4],
+              opacity: 0.6
+            },
+            name: 'snap-line-y',
+            capture: false, // 不捕获鼠标事件
+            zIndex: 1000 // 确保辅助线在最上层
+          })
+        }
       }
     })
 
     graph.value.on('node:dragend', (e) => {
+      // 清除辅助线
+      const graphGroup = graph.value.get('group')
+      const existingSnapLineX = graphGroup.find(element => element.get('name') === 'snap-line-x')
+      const existingSnapLineY = graphGroup.find(element => element.get('name') === 'snap-line-y')
+      if (existingSnapLineX) existingSnapLineX.remove()
+      if (existingSnapLineY) existingSnapLineY.remove()
+      
+      // 处理节点拖拽结束时的吸附功能
+      if (e.item && e.item.getType() === 'node' && !creatingEdge) {
+        const currentNode = e.item
+        const currentNodeModel = currentNode.getModel()
+        const currentX = currentNodeModel.x
+        const currentY = currentNodeModel.y
+        
+        // 吸附阈值（像素）
+        const snapThreshold = 20
+        
+        // 获取所有其他节点
+        const allNodes = graph.value.getNodes()
+        let snapX = currentX
+        let snapY = currentY
+        
+        // 检查水平吸附（Y坐标对齐）
+        for (const node of allNodes) {
+          if (node.getID() === currentNode.getID()) continue
+          
+          const nodeModel = node.getModel()
+          const nodeY = nodeModel.y
+          
+          // 如果当前节点的Y坐标接近其他节点的Y坐标，吸附到该Y坐标
+          if (Math.abs(currentY - nodeY) < snapThreshold) {
+            snapY = nodeY
+            break
+          }
+        }
+        
+        // 检查垂直吸附（X坐标对齐）
+        for (const node of allNodes) {
+          if (node.getID() === currentNode.getID()) continue
+          
+          const nodeModel = node.getModel()
+          const nodeX = nodeModel.x
+          
+          // 如果当前节点的X坐标接近其他节点的X坐标，吸附到该X坐标
+          if (Math.abs(currentX - nodeX) < snapThreshold) {
+            snapX = nodeX
+            break
+          }
+        }
+        
+        // 如果检测到吸附，更新节点位置
+        if (snapX !== currentX || snapY !== currentY) {
+          graph.value.updateItem(currentNode, {
+            x: snapX,
+            y: snapY
+          })
+          // 同步更新 nodes.value 中的数据
+          const nodeIndex = nodes.value.findIndex(n => n.id === currentNode.getID())
+          if (nodeIndex !== -1) {
+            nodes.value[nodeIndex].x = snapX
+            nodes.value[nodeIndex].y = snapY
+          }
+        }
+        return
+      }
+      
+      // 处理创建连线的逻辑
       if (!creatingEdge || !edgeStartNode) return
 
       // 移除临时连线
@@ -1179,7 +1468,16 @@
         edge.source === newEdge.source && 
         edge.target === newEdge.target
       )) {
-        graph.value.addItem('edge', newEdge)
+        // 先添加到图实例
+        const addedEdge = graph.value.addItem('edge', newEdge)
+        
+        // 立即同步更新 edges.value，避免时序问题
+        if (addedEdge && !addedEdge.destroyed) {
+          const edgeModel = addedEdge.getModel()
+          if (!edges.value.some(edge => edge.id === edgeModel.id)) {
+            edges.value.push(edgeModel)
+          }
+        }
       }
 
       // 重置状态
@@ -1473,7 +1771,7 @@
             return {
               ...config,
               display_name: i18nParam?.name || config.config_name,
-              display_description: i18nParam?.description,
+              display_description: i18nParam?.config_description || config.config_description,
               select_options: selectOptions
             }
           })
@@ -1718,8 +2016,25 @@
 
       // 检查节点连接性
       if (nodes.value.length > 1) {
+        // 从 G6 图实例中获取实际的边数据，确保数据同步
+        const graphEdges = graph.value.getEdges() || []
+        const actualEdges = graphEdges
+          .filter(edge => !edge.destroyed)
+          .map(edge => {
+            const model = edge.getModel()
+            return {
+              source: model.source,
+              target: model.target,
+              id: model.id
+            }
+          })
+        
+        // 同步更新 edges.value，确保数据一致性
+        edges.value = actualEdges
+        
+        // 1. 检查是否有完全孤立的节点（没有任何连接）
         const unconnectedNodes = nodes.value.filter(node => {
-          return !edges.value.some(edge => 
+          return !actualEdges.some(edge => 
             edge.source === node.id || edge.target === node.id
           )
         })
@@ -1727,6 +2042,51 @@
         if (unconnectedNodes.length > 0) {
           const firstUnconnectedNode = unconnectedNodes[0]
           const nodeName = firstUnconnectedNode.operator_name || t('dataPipelines.unnamedNode', { id: firstUnconnectedNode.id })
+          emit('save', {
+            success: false,
+            error: t('dataPipelines.unconnectedNodeError', { nodeName })
+          })
+          return
+        }
+
+        // 2. 检查图的连通性（所有节点是否在同一个连通图中）
+        // 构建邻接表（无向图，因为需要检查连通性）
+        const adjacencyList = {}
+        nodes.value.forEach(node => {
+          adjacencyList[node.id] = []
+        })
+        
+        actualEdges.forEach(edge => {
+          // 双向连接，因为要检查连通性
+          if (!adjacencyList[edge.source]) adjacencyList[edge.source] = []
+          if (!adjacencyList[edge.target]) adjacencyList[edge.target] = []
+          adjacencyList[edge.source].push(edge.target)
+          adjacencyList[edge.target].push(edge.source)
+        })
+
+        // 使用 DFS 检查连通性
+        const visited = new Set()
+        const dfs = (nodeId) => {
+          if (visited.has(nodeId)) return
+          visited.add(nodeId)
+          const neighbors = adjacencyList[nodeId] || []
+          neighbors.forEach(neighbor => {
+            if (!visited.has(neighbor)) {
+              dfs(neighbor)
+            }
+          })
+        }
+
+        // 从第一个节点开始遍历
+        if (nodes.value.length > 0) {
+          dfs(nodes.value[0].id)
+        }
+
+        // 如果访问的节点数少于总节点数，说明图不连通
+        if (visited.size < nodes.value.length) {
+          const unvisitedNodes = nodes.value.filter(node => !visited.has(node.id))
+          const firstUnvisitedNode = unvisitedNodes[0]
+          const nodeName = firstUnvisitedNode.operator_name || t('dataPipelines.unnamedNode', { id: firstUnvisitedNode.id })
           emit('save', {
             success: false,
             error: t('dataPipelines.unconnectedNodeError', { nodeName })

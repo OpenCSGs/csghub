@@ -318,6 +318,33 @@
               :label="item.name"
               class="block my-2.5"
             />
+            <div v-if="item.type == 'select-model'" class="w-full">
+              <el-select
+                v-model="item.value"
+                class="w-full"
+                :placeholder="item.name"
+                filterable
+              >
+                <el-option
+                  v-for="selItem in getSearchSelectOptions(item)"
+                  :key="selItem.key"
+                  :label="selItem.label"
+                  :value="selItem.key"
+                />
+                <template #footer>
+                  <div @click.stop>
+                    <CsgButton
+                      class="btn btn-primary btn-sm"
+                      :name="t('dataPipelines.moreModels')"
+                      @click.stop="openModelDialog(item)"
+                    />
+                  </div>
+                </template>
+              </el-select>
+              <p v-if="isSearchingModel(item)" class="text-gray-400 text-xs mt-1">
+                {{ t('dataPipelines.searchingModel') }}
+              </p>
+            </div>
           </el-form-item>
         </div>
       </el-form>
@@ -426,7 +453,8 @@
                         'PositiveFloat',
                         'ClosedUnitInterval',
                         'LIST',
-                        'search-select'
+                        'search-select',
+                        'select-model'
                       ].includes(item.type)
                     "
                   >
@@ -543,6 +571,33 @@
                     :label="item.name"
                     class="block my-2.5"
                   />
+                  <div v-if="item.type == 'select-model'" class="w-full">
+                    <el-select
+                      v-model="item.value"
+                      class="w-full"
+                      :placeholder="item.name"
+                      filterable
+                    >
+                      <el-option
+                        v-for="selItem in getSearchSelectOptions(item)"
+                        :key="selItem.key"
+                        :label="selItem.label"
+                        :value="selItem.key"
+                      />
+                      <template #footer>
+                        <div class="p-2 border-t border-gray-200" @click.stop>
+                          <CsgButton
+                            class="btn btn-primary btn-md w-full"
+                            :name="t('dataPipelines.moreModels')"
+                            @click.stop="openModelDialog(item)"
+                          />
+                        </div>
+                      </template>
+                    </el-select>
+                    <p v-if="isSearchingModel(item)" class="text-gray-500 text-xs mt-1">
+                      {{ t('dataPipelines.searchingModel') }}
+                    </p>
+                  </div>
                 </div>
               </div>
             </template>
@@ -590,6 +645,66 @@
         :name="t('dataPipelines.creationCompleted')"
       />
     </div>
+
+    <!-- 模型选择弹框 -->
+    <el-dialog
+      v-model="modelDialogVisible"
+      :title="t('dataPipelines.selectModel')"
+      width="80%"
+      align-center
+    >
+      <div class="flex flex-col gap-4">
+        <!-- 搜索框 -->
+        <el-input
+          v-model="modelSearchKeyword"
+          :placeholder="t('dataPipelines.searchModelName')"
+          :prefix-icon="Search"
+          size="large"
+          @change="searchModels"
+          clearable
+        />
+        <!-- 验证状态提示 -->
+        <div v-if="modelValidating" class="flex items-center justify-center py-3 bg-blue-50 border border-blue-200 rounded-md">
+          <p class="text-blue-600 text-sm">
+            {{ t('dataPipelines.searchingModel') }} {{ validatingModelName }}
+          </p>
+        </div>
+        <!-- 模型列表 -->
+        <div
+          v-loading="modelListLoading"
+          class="grid grid-cols-2 gap-x-[16px] gap-y-[16px] min-h-[400px]"
+        >
+          <div
+            v-for="model in modelList"
+            :key="model.id"
+            @click="selectModel(model)"
+            class="cursor-pointer model-select-item"
+          >
+            <repo-item
+              :repo="model"
+              repo-type="model"
+            />
+          </div>
+        </div>
+        <!-- 分页 -->
+        <CsgPagination
+          :perPage="modelPerPage"
+          :currentPage="modelCurrentPage"
+          @currentChange="handleModelPageChange"
+          :total="modelTotal"
+          style="margin: 0"
+        />
+      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <CsgButton
+            class="btn btn-secondary-gray btn-md whitespace-nowrap"
+            @click="modelDialogVisible = false"
+            :name="t('dataPipelines.cancel')"
+          />
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -604,6 +719,9 @@
   import zhHantOps from '../../../locales/zh_hant_js/operator_zhHant.json'
   import Sortable from 'sortablejs'
   import { useI18n } from 'vue-i18n'
+  import { Search } from '@element-plus/icons-vue'
+  import RepoItem from '../../shared/RepoItem.vue'
+  import CsgPagination from '../../shared/CsgPagination.vue'
 
   const userStore = useUserStore()
   const { t, locale } = useI18n()
@@ -731,6 +849,18 @@
 
   // 跟踪每个 search-select 的搜索状态
   const searchSelectLoadingMap = ref(new Map())
+
+  // 模型选择弹框相关状态
+  const modelDialogVisible = ref(false)
+  const modelList = ref([])
+  const modelListLoading = ref(false)
+  const modelSearchKeyword = ref('')
+  const modelCurrentPage = ref(1)
+  const modelPerPage = ref(10)
+  const modelTotal = ref(0)
+  const currentSelectModelItem = ref(null)
+  const modelValidating = ref(false)
+  const validatingModelName = ref('')
 
   // 获取 search-select 的选项列表
   const getSearchSelectOptions = (item) => {
@@ -942,6 +1072,148 @@
     seltool.value = toolListAll.value[form.value.selToolIndex]
     addTempValToListParams(seltool.value)
   }
+
+  // 打开模型选择弹框
+  const openModelDialog = (item) => {
+    currentSelectModelItem.value = item
+    modelDialogVisible.value = true
+    modelSearchKeyword.value = ''
+    modelCurrentPage.value = 1
+    modelValidating.value = false
+    validatingModelName.value = ''
+    fetchModelList()
+  }
+
+  // 获取模型列表
+  const fetchModelList = async () => {
+    modelListLoading.value = true
+    try {
+      const searchParam = modelSearchKeyword.value ? `&search=${encodeURIComponent(modelSearchKeyword.value)}` : ''
+      const url = `/dataflow/model/list-models?page=${modelCurrentPage.value}&per_page=${modelPerPage.value}${searchParam}`
+      const { data, error } = await useFetchApi(url).get().json()
+      
+      if (error.value) {
+        ElMessage({
+          message: error.value.msg || t('dataPipelines.fetchModelListError'),
+          type: 'error'
+        })
+        modelList.value = []
+        modelTotal.value = 0
+      } else {
+        if (data.value && data.value.data) {
+          modelList.value = data.value.data.models || []
+          modelTotal.value = data.value.data.total || 0
+        } else {
+          modelList.value = []
+          modelTotal.value = 0
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch model list:', error)
+      ElMessage({
+        message: t('dataPipelines.fetchModelListError'),
+        type: 'error'
+      })
+      modelList.value = []
+      modelTotal.value = 0
+    } finally {
+      modelListLoading.value = false
+    }
+  }
+
+  // 搜索模型
+  const searchModels = () => {
+    modelCurrentPage.value = 1
+    fetchModelList()
+  }
+
+  // 分页变化
+  const handleModelPageChange = (page) => {
+    modelCurrentPage.value = page
+    fetchModelList()
+  }
+
+  // 选择模型
+  const selectModel = async (model) => {
+    if (!currentSelectModelItem.value) {
+      return
+    }
+
+    const modelPath = model.path || model.name
+    const modelLabel = model.nickname || model.name || modelPath
+
+    // 设置验证状态（用于下拉框下方显示）
+    const key = currentSelectModelItem.value.name || currentSelectModelItem.value.key || JSON.stringify(currentSelectModelItem.value)
+    searchSelectLoadingMap.value.set(key, true)
+    
+    // 设置弹框中的验证状态
+    modelValidating.value = true
+    validatingModelName.value = modelPath
+
+    try {
+      // 先调用验证接口检查模型是否可用
+      const { data } = await useFetchApi(
+        `/dataflow/model/check-model?model_name=${encodeURIComponent(modelPath)}`
+      )
+        .get()
+        .json()
+
+      // 关闭验证状态
+      searchSelectLoadingMap.value.set(key, false)
+      modelValidating.value = false
+      validatingModelName.value = ''
+
+      // 接口返回匹配到的模型名称，可能直接返回字符串，也可能是 { code: 200, data: "model_name" } 格式
+      let matchedModelName = null
+      if (typeof data.value === 'string') {
+        matchedModelName = data.value
+      } else if (data.value?.code === 200 && data.value?.data) {
+        matchedModelName = data.value.data
+      } else if (data.value?.data) {
+        matchedModelName = data.value.data
+      }
+
+      if (matchedModelName && matchedModelName !== null) {
+        // 验证通过，使用返回的模型全名称
+        currentSelectModelItem.value.value = matchedModelName
+
+        // 将模型添加到 option_values 中（如果不存在）
+        if (!Array.isArray(currentSelectModelItem.value.option_values)) {
+          currentSelectModelItem.value.option_values = []
+        }
+
+        // 检查是否已存在，避免重复添加
+        const exists = currentSelectModelItem.value.option_values.find(
+          opt => opt.key === matchedModelName
+        )
+
+        if (!exists) {
+          currentSelectModelItem.value.option_values.push({
+            key: matchedModelName,
+            label: modelLabel
+          })
+        }
+
+        modelDialogVisible.value = false
+      } else {
+        // 验证失败，提示用户
+        ElMessage({
+          message: t('dataPipelines.modelNotAvailable'),
+          type: 'error'
+        })
+      }
+    } catch (error) {
+      // 关闭验证状态
+      searchSelectLoadingMap.value.set(key, false)
+      modelValidating.value = false
+      validatingModelName.value = ''
+      console.error('Failed to check model:', error)
+      ElMessage({
+        message: t('dataPipelines.modelNotAvailable'),
+        type: 'error'
+      })
+    }
+  }
   function overrideNameByKey(array) {
     return array.map((item) => {
       const newItem = {
@@ -1093,5 +1365,9 @@
 
   .typeItemCont > *:last-child {
     margin-bottom: 0;
+  }
+
+  .model-select-item :deep(a) {
+    pointer-events: none;
   }
 </style>
