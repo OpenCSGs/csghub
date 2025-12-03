@@ -164,10 +164,16 @@
                 "value": "AIWizards/Llama2-Chinese-7b-Chat"
             },
             {
-                "name": "prompt_template",
-                "type": "STRING",
+                "name": "模型地址",
+                "type": "LIST",
                 "option_values": null,
-                "value": null
+                "value": "https://www.sophnet.com/api/open-apis/v1/chat/completions"
+            },
+            {
+                "name": "授权令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -191,19 +197,22 @@
                         "label": "alibaba-pai/pai-qwen1_5-7b-doc2qa"
                     }
                 ],
-                "value": "alibaba-pai/pai-qwen1_5-7b-doc2qa"
+                "value": "alibaba-pai/pai-qwen1_5-7b-doc2qa",
+                "config_description": "模型名称"
             },
             {
                 "name": "模型地址",
                 "type": "LIST",
                 "option_values": null,
-                "value": "https://api.deepseek.com/chat/completions"
+                "value": "https://api.deepseek.com/chat/completions",
+                "config_description": "模型的远程调用地址"
             },
             {
                 "name": "授权令牌",
                 "type": "LIST",
                 "option_values": null,
-                "value": ""
+                "value": "",
+                "config_description": "模型的使用令牌"
             }
         ]
     },
@@ -670,7 +679,8 @@
                         "label": "中文"
                     }
                 ],
-                "value": "en"
+                "value": "en",
+                "config_description": "文本语言，选项：'en'（英文）、'zh'（中文）"
             }
         ]
     },
@@ -903,13 +913,15 @@
                         "label": "中文"
                     }
                 ],
-                "value": "en"
+                "value": "en",
+                "config_description": "困惑度计算的语言，选项：'en'（英文）、'zh'（中文）"
             },
             {
                 "name": "最大困惑度",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": 8000
+                "value": 8000,
+                "config_description": "最大困惑度阈值；超过此阈值的样本将被过滤"
             }
         ]
     },
@@ -952,13 +964,15 @@
                 "name": "字段名称",
                 "type": "STRING",
                 "option_values": null,
-                "value": ""
+                "value": "",
+                "config_description": "要过滤的字段名称；多级字段用点号分隔（例如：'meta.suffix'）"
             },
             {
                 "name": "目标值",
                 "type": "LIST",
                 "option_values": null,
-                "value": []
+                "value": [],
+                "config_description": "目标值列表；只有字段值在此列表中的样本才会被保留"
             }
         ]
     },
@@ -1307,14 +1321,14 @@
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true,
-                "config_description": "是否忽略字母大小写"
+                "config_description": "在计算哈希值之前，是否应该将示例文本转换为小写？"
             },
             {
                 "name": "忽略非字符",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true,
-                "config_description": "是否忽略空格、数字、标点符号"
+                "config_description": "是否应忽略非字母字符（包括空格、数字和标点符号）？"
             }
         ]
     },
@@ -1350,55 +1364,64 @@
                         "label": "句子片段"
                     }
                 ],
-                "value": "character"
+                "value": "character",
+                "config_description": "分词方法，选项：'space'（空格）、'punctuation'（标点符号）、'character'（字符）、'sentencepiece'（句子片段）"
             },
             {
                 "name": "窗口大小",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": 5
+                "value": 5,
+                "config_description": "滑动窗口大小"
             },
             {
                 "name": "小写",
                 "type": "BOOLEAN",
                 "option_values": null,
-                "value": true
+                "value": true,
+                "config_description": "是否应转换为小写？"
             },
             {
                 "name": "忽略模式",
                 "type": "STRING",
                 "option_values": null,
-                "value": null
+                "value": null,
+                "config_description": "忽略特定模式的子字符串（正则表达式）"
             },
             {
                 "name": "排列数量",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": 256
+                "value": 256,
+                "config_description": "MinHash 排列数：数字越大，准确度越高，但计算越慢"
             },
             {
                 "name": "jaccard 阈值",
                 "type": "ClosedUnitInterval",
                 "option_values": null,
-                "value": 0.7
+                "value": 0.7,
+                "config_description": "Jaccard 相似度阈值 (0-1)：值大于或等于此阈值的样本被视为相似"
             },
             {
                 "name": "频带数量",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": null
+                "value": null,
+                "config_description": "LSH 中的波段数（自动计算）"
             },
             {
                 "name": "每个频带的行数",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": null
+                "value": null,
+                "config_description": "每个波段的行数（自动计算）"
             },
             {
                 "name": "分词模型",
                 "type": "STRING",
                 "option_values": null,
-                "value": null
+                "value": null,
+                "config_description": "SentencePiece 模型路径（使用 sentencepiece 进行分词时必需）"
             }
         ]
     },
@@ -1431,42 +1454,42 @@
                     }
                 ],
                 "value": "character",
-                "config_description": "切分文本方式：按空格切分，适合英文、按字符切分，适合中文、按标点切分"
+                "config_description": "分词方法，可选值：'space'（空格分词）、'punctuation'（标点符号分词）、'character'（字符级分词）"
             },
             {
                 "name": "窗口大小",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 4,
-                "config_description": "切分窗口大小，数字越大，识别越严格；数字越小，识别越宽松"
+                "config_description": "滑动窗口大小，用于生成 Shingles"
             },
             {
                 "name": "小写",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true,
-                "config_description": "是否转小写"
+                "config_description": "是否应将文本转换为小写？"
             },
             {
                 "name": "忽略模式",
                 "type": "STRING",
                 "option_values": null,
                 "value": "\\p{P}",
-                "config_description": "要忽略的内容，可以用正则表达式。"
+                "config_description": "忽略特定模式的子字符串（正则表达式）"
             },
             {
                 "name": "块数量",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 10,
-                "config_description": "分块数量，一般不用改，保持默认即可"
+                "config_description": "SimHash 计算中的块数"
             },
             {
                 "name": "汉明距离",
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 8,
-                "config_description": "相似度阈值，数字越大，稍微相似就会被删除；数字越小，极为相似才会被删除"
+                "config_description": "汉明距离阈值：汉明距离小于或等于此值的样本被视为相似（必须小于 num_blocks）"
             }
         ]
     },
@@ -1521,13 +1544,15 @@
                 "name": "选择比率",
                 "type": "ClosedUnitInterval",
                 "option_values": null,
-                "value": null
+                "value": null,
+                "config_description": "选择比例 (0-1)；例如，0.1 表示选择 10% 的样本"
             },
             {
                 "name": "选择数量",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": null
+                "value": null,
+                "config_description": "选择的样本数量"
             }
         ]
     },
@@ -1778,7 +1803,8 @@
                 "name": "相似阈值",
                 "type": "PositiveFloat",
                 "option_values": null,
-                "value": 0.5
+                "value": 0.5,
+                "config_description": "相似度阈值 (0-1)：值大于或等于此阈值的样本将被连接"
             }
         ]
     },

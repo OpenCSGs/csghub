@@ -164,10 +164,16 @@
                 "value": "AIWizards/Llama2-Chinese-7b-Chat"
             },
             {
-                "name": "prompt_template",
-                "type": "STRING",
+                "name": "模型地址",
+                "type": "LIST",
                 "option_values": null,
-                "value": null
+                "value": "https://www.sophnet.com/api/open-apis/v1/chat/completions"
+            },
+            {
+                "name": "授权令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -670,7 +676,8 @@
                         "label": "中文"
                     }
                 ],
-                "value": "en"
+                "value": "en",
+                "config_description": "文本语言，选项：“en”（英语），“zh”（中文）"
             }
         ]
     },
@@ -1307,14 +1314,14 @@
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true,
-                "config_description": "是否忽略字母大小写"
+                "config_description": "在计算哈希值之前，是否应该将示例文本转换为小写？"
             },
             {
                 "name": "忽略非字符",
                 "type": "BOOLEAN",
                 "option_values": null,
                 "value": true,
-                "config_description": "是否忽略空格、数字、标点符号"
+                "config_description": "是否应忽略非字母字符（包括空格、数字和标点符号）？"
             }
         ]
     },

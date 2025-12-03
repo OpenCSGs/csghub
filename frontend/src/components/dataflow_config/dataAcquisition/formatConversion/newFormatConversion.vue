@@ -172,6 +172,21 @@
               </el-radio>
             </el-radio-group>
           </el-form-item>
+          <el-form-item
+            v-if="isPdfSelected(groupKey)"
+            prop="mineru_backend"
+            class="mt-[12px]"
+          >
+            <template #label>
+              <p class="text-gray-500 text-xs">Mineru Backend</p>
+            </template>
+            <el-input
+              v-model="form.mineru_backend"
+              :placeholder="mineru_backend_placeholder"
+              clearable
+            >
+            </el-input>
+          </el-form-item>
         </el-col>
       </el-row>
 
@@ -364,13 +379,15 @@ const isPdfSelected = (groupKey) => {
   return selectedFormat && (selectedFormat.label === "PDF" || selectedFormat.label === "pdf");
 };
 
-const mineru_api_url_placeholder = ref("请输入 MinerU API URL");
+const mineru_api_url_placeholder = ref("MinerU API URL");
+const mineru_backend_placeholder = ref("Mineru Backend");
 // 获取 MinerU API URL 默认值
 const fetchMineruApiUrl = async () => {
   try {
     const { data } = await useFetchApi("/dataflow/formatify/get_mineru_api_url").get().json();
     if (data.value?.code === 200 && data.value?.data?.mineru_api_url) {
       mineru_api_url_placeholder.value = data.value.data.mineru_api_url;
+      mineru_backend_placeholder.value = data.value.data.mineru_backend;
     }
   } catch (error) {
     console.error("获取 MinerU API URL 失败:", error);
