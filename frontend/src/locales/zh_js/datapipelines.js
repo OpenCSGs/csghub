@@ -80,6 +80,7 @@ export const dataPipelines = {
   "configRequiredError": "{nodeName}节点的【{configName}】是必填项，请填写完整",
   "saveError": "保存工作流时出错", // 保存工作流时出错
   "noMatchingNodeFound": "未找到匹配节点",
+  "edgeAlreadyExists": "该连接已存在",
   "searchProcessing": "搜索处理任务",
   "zoomIn": "放大",
   "zoomOut": "缩小",

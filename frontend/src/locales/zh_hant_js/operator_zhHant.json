@@ -164,10 +164,16 @@
                 "value": "AIWizards/Llama2-Chinese-7b-Chat"
             },
             {
-                "name": "prompt_template",
-                "type": "STRING",
+                "name": "模型地址",
+                "type": "LIST",
                 "option_values": null,
-                "value": null
+                "value": "https://www.sophnet.com/api/open-apis/v1/chat/completions"
+            },
+            {
+                "name": "授權令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },

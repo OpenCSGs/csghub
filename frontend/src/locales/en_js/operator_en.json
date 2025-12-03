@@ -165,10 +165,16 @@
                 "value": "AIWizards/Llama2-Chinese-7b-Chat"
             },
             {
-                "name": "prompt_template",
-                "type": "STRING",
+                "name": "model_url",
+                "type": "LIST",
                 "option_values": null,
-                "value": null
+                "value": "https://www.sophnet.com/api/open-apis/v1/chat/completions"
+            },
+            {
+                "name": "auth_token",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },

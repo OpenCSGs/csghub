@@ -80,6 +80,7 @@ export const dataPipelines = {
   "configRequiredError": "{nodeName}節點的【{configName}】是必填項，請填寫完整",
   "saveError": "保存工作流時出錯",
   "noMatchingNodeFound": "未找到匹配的節點",
+  "edgeAlreadyExists": "該連接已存在",
   "searchProcessing": "搜索處理任務",
   "zoomIn": "放大",
   "zoomOut": "缩小",

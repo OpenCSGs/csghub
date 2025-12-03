@@ -81,6 +81,7 @@ export const dataPipelines = {
   "configRequiredError": "The '{configName}' field for node '{nodeName}' is mandatory, please fill it out completely",
   "saveError": "Error saving workflow",
   "noMatchingNodeFound": "No matching node found",
+  "edgeAlreadyExists": "This connection already exists",
   "searchProcessing": "Search processing task",
   "zoomIn": "Zoom in",
   "zoomOut": "Zoom out",

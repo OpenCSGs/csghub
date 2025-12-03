@@ -1127,9 +1127,10 @@
                 let closestNode = null
                 let minDistance = Infinity
                 let closestPoint = null
+                const nodeRadius = 50 // 节点有效半径
                 
                 nodes.forEach(node => {
-                  if (node.getID() !== edgeStartNode.getID()) { // 排除源节点
+                  if (node.getID() !== edgeStartNode.getID() && !node.destroyed) {
                     const model = node.getModel()
                     const nodeX = model.x
                     const nodeY = model.y
@@ -1140,11 +1141,12 @@
                       Math.pow(point.y - nodeY, 2)
                     )
                     
-                    // 如果距离小于阈值（50px），则认为是候选节点
-                    if (distance < 50 && distance < minDistance) {
+                    // 如果距离小于阈值，则认为是候选节点
+                    if (distance < nodeRadius && distance < minDistance) {
                       minDistance = distance;
                       closestNode = node;
-                      closestPoint = { x: nodeX, y: nodeY };
+                      // 使用输入连接点位置作为目标点（节点左侧）
+                      closestPoint = { x: nodeX - 30, y: nodeY };
                     }
                   }
                 })
@@ -1437,17 +1439,67 @@
 
       // 检查目标节点
       const point = graph.value.getPointByClient(e.clientX, e.clientY)
-      const targetNode = graph.value.getNodes().find(node => {
-        return node.getID() !== edgeStartNode.getID() && 
-              !node.destroyed &&
-              Math.sqrt(
-                Math.pow(point.x - node.getModel().x, 2) + 
-                Math.pow(point.y - node.getModel().y, 2)
-              ) < 50
-      })
+      const shape = e.target
+      const shapeName = shape?.get('name')
+      
+      let targetNode = null
+      
+      // 如果直接点击了输入连接点或节点，优先使用该节点
+      if (shapeName === 'input-point' && e.item && e.item.getType() === 'node') {
+        targetNode = e.item
+      } else if (e.item && e.item.getType() === 'node') {
+        // 如果点击的是整个节点，也允许连接
+        targetNode = e.item
+      } else {
+        // 否则，查找最近的节点（放宽条件，允许连接到节点附近）
+        const allNodes = graph.value.getNodes()
+        let closestNode = null
+        let minDistance = Infinity
+        const nodeRadius = 50 // 节点有效半径（放宽到50px）
+        
+        allNodes.forEach(node => {
+          if (node.getID() === edgeStartNode.getID() || node.destroyed) return
+          
+          const nodeModel = node.getModel()
+          const nodeX = nodeModel.x
+          const nodeY = nodeModel.y
+          
+          // 计算鼠标位置到节点中心的距离
+          const distanceToNode = Math.sqrt(
+            Math.pow(point.x - nodeX, 2) + 
+            Math.pow(point.y - nodeY, 2)
+          )
+          
+          // 如果距离小于阈值，则认为是候选节点
+          if (distanceToNode < nodeRadius && distanceToNode < minDistance) {
+            minDistance = distanceToNode
+            closestNode = node
+          }
+        })
+        
+        targetNode = closestNode
+      }
 
       // 阻止无效连接
       if (!targetNode || targetNode.getID() === edgeStartNode.getID()) {
+        if (edgeStartNode) {
+          graph.value.setItemState(edgeStartNode, 'source', false)
+        }
+        creatingEdge = false
+        edgeStartNode = null
+        return
+      }
+      
+      // 检查是否已存在相同的连线（防止重复连接）
+      const sourceId = edgeStartNode.getID()
+      const targetId = targetNode.getID()
+      const existingEdge = edges.value.find(edge => 
+        edge.source === sourceId && edge.target === targetId
+      )
+      
+      if (existingEdge) {
+        // 如果已存在相同的连线，阻止创建
+        ElMessage.warning(t('dataPipelines.edgeAlreadyExists'))
         if (edgeStartNode) {
           graph.value.setItemState(edgeStartNode, 'source', false)
         }
@@ -1622,6 +1674,18 @@
           return
         }
         
+        // 检查是否已存在相同的连线（防止重复连接）
+        const existingEdge = edges.value.find(edge => 
+          edge.source === newEdge.source && edge.target === newEdge.target
+        )
+        
+        if (existingEdge) {
+          // 如果已存在相同的连线，移除刚创建的边
+          graph.value.removeItem(e.edge)
+          ElMessage.warning(t('dataPipelines.edgeAlreadyExists'))
+          return
+        }
+        
         // 添加到 edges 数组
         if (!edges.value.some(edge => edge.id === newEdge.id)) {
           edges.value.push(newEdge)
@@ -1685,6 +1749,17 @@
       // 确保源节点和目标节点都存在，确保不是自连接（不能连接自己）
       if (!e.source || !e.target || e.source === e.target) {
         return false // 阻止连线
+      }
+
+      // 检查是否已存在相同的连线（防止重复连接）
+      const existingEdge = edges.value.find(edge => 
+        edge.source === e.source && edge.target === e.target
+      )
+      
+      if (existingEdge) {
+        // 如果已存在相同的连线，阻止创建
+        ElMessage.warning(t('dataPipelines.edgeAlreadyExists'))
+        return false
       }
 
       // 确保是从 output-point 拖到 input-point
