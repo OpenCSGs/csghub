@@ -677,8 +677,11 @@
           <div
             v-for="model in modelList"
             :key="model.id"
-            @click="selectModel(model)"
-            class="cursor-pointer model-select-item"
+            @click="!modelValidating && selectModel(model)"
+            :class="[
+              'model-select-item',
+              modelValidating ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
+            ]"
           >
             <repo-item
               :repo="model"
@@ -1100,8 +1103,18 @@
         modelList.value = []
         modelTotal.value = 0
       } else {
-        if (data.value && data.value.data) {
-          modelList.value = data.value.data.models || []
+        if (data.value && data.value.data && Array.isArray(data.value.data.models)) {
+          data.value.data.models.forEach((item) => {
+            if (item && typeof item === 'object') {
+              const path = item.path || ''
+              item.hf_path = path
+              item.ms_path = path
+              item.csg_path = path
+              item.name = path
+              item.nickname = path
+            }
+          })
+          modelList.value = data.value.data.models
           modelTotal.value = data.value.data.total || 0
         } else {
           modelList.value = []
@@ -1135,6 +1148,11 @@
 
   // 选择模型
   const selectModel = async (model) => {
+    // 正在验证中
+    if (modelValidating.value) {
+      return
+    }
+    
     if (!currentSelectModelItem.value) {
       return
     }
