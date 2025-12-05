@@ -156,7 +156,7 @@
 
 <script setup>
   import { Container } from '../admin_component'
-  import { ref, onMounted, computed } from 'vue'
+  import { ref, onMounted, computed, nextTick } from 'vue'
   import useFetchApi from '../../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { useRoute, useRouter } from 'vue-router'
@@ -172,6 +172,7 @@
   const resources = ref([])
   const runtimeFrameworks = ref([])
   const availableQuantizations = ref([])
+  const isEditing = computed(() => !!route.params.id)
 
   const breadcrumbsTitle = computed(() =>
     route.params.id
@@ -310,15 +311,20 @@
     ).json()
     if (data.value?.data) {
       const result = data.value.data
-      const currentResource = resources.value.find(
-        (item) => item.id == result.sku
-      )
+      const currentResource = resources.value
+        .flatMap(group => group.options)
+        .find(item => item.id == result.sku)
+      
       const maxReplica = result.max_replica || 0
       const minReplica = result.min_replica || 0
+
+      
+      const resourceId = currentResource ? `${currentResource.id}/${currentResource.order_detail_id}` : `${result.sku}`
+      dataForm.value.resource_id = resourceId
+      await nextTick()
       const runtimeFrameworkId = filterFrameworks.value.find(
         (item) => item.frame_name.toLowerCase() === result.runtime_framework.toLowerCase() && item.compute_type === currentResource?.type
       )?.id
-      const resourceId = currentResource ? `${currentResource.id}/${currentResource.order_detail_id}` : `${result.sku}`
       dataForm.value = {
         ...result,
         max_replica: maxReplica,
@@ -347,6 +353,9 @@
     const categoryResources = await fetchResourcesInCategory(dataForm.value.cluster_id)
     const firstAvailableResource = categoryResources.flatMap(item => item.options).find((item) => item.is_available)
     resources.value = categoryResources
+    if (isEditing.value) {
+      return
+    }
     if (firstAvailableResource) {
       dataForm.value.resource_id = `${firstAvailableResource.id}/${firstAvailableResource.order_detail_id}`
       resetCurrentRuntimeFramework()
