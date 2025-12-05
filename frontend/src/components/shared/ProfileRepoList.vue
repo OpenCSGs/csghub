@@ -1,5 +1,5 @@
 <template>
-  <div class="sm:w-[100%] sm:mt-9">
+  <div class="2xl:max-w-[980px] xl:max-w-[768px] sm:w-[100%] sm:mt-9">
     <!-- title -->
     <div class="mb-6">
       <h1 class="text-lg font-medium text-gray-900 mb-5">
