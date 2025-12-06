@@ -249,6 +249,19 @@
             </el-input>
           </el-form-item>
         </el-col>
+        <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+          <el-form-item prop="skip_meta" class="mt-[12px]">
+            <template #label>
+              <p class="text-gray-500 text-xs">
+                {{ t("dataPipelines.skipMeta") }}
+              </p>
+            </template>
+            <el-radio-group v-model="form.skip_meta">
+              <el-radio :label="true">{{ t("dataPipelines.yes") }}</el-radio>
+              <el-radio :label="false">{{ t("dataPipelines.no") }}</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
       </el-row>
     </el-form>
 
@@ -285,6 +298,7 @@ const formLoading = ref(false);
 const userStore = useUserStore();
 // 表单
 const form = ref({
+  skip_meta: true,
   // from_format_types: null,
   // to_data_type: null,
 });

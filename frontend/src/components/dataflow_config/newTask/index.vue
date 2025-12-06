@@ -683,7 +683,7 @@
               modelValidating ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
             ]"
           >
-            <repo-item
+            <ModelSelectItem
               :repo="model"
               repo-type="model"
             />
@@ -723,7 +723,7 @@
   import Sortable from 'sortablejs'
   import { useI18n } from 'vue-i18n'
   import { Search } from '@element-plus/icons-vue'
-  import RepoItem from '../../shared/RepoItem.vue'
+  import ModelSelectItem from './ModelSelectItem.vue'
   import CsgPagination from '../../shared/CsgPagination.vue'
 
   const userStore = useUserStore()
@@ -1103,18 +1103,8 @@
         modelList.value = []
         modelTotal.value = 0
       } else {
-        if (data.value && data.value.data && Array.isArray(data.value.data.models)) {
-          data.value.data.models.forEach((item) => {
-            if (item && typeof item === 'object') {
-              const path = item.path || ''
-              item.hf_path = path
-              item.ms_path = path
-              item.csg_path = path
-              item.name = path
-              item.nickname = path
-            }
-          })
-          modelList.value = data.value.data.models
+        if (data.value && data.value.data) {
+          modelList.value = data.value.data.models || []
           modelTotal.value = data.value.data.total || 0
         } else {
           modelList.value = []
