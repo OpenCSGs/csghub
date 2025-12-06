@@ -683,7 +683,7 @@
               modelValidating ? 'cursor-not-allowed opacity-60' : 'cursor-pointer'
             ]"
           >
-            <repo-item
+            <ModelSelectItem
               :repo="model"
               repo-type="model"
             />
@@ -723,7 +723,7 @@
   import Sortable from 'sortablejs'
   import { useI18n } from 'vue-i18n'
   import { Search } from '@element-plus/icons-vue'
-  import RepoItem from '../../shared/RepoItem.vue'
+  import ModelSelectItem from './ModelSelectItem.vue'
   import CsgPagination from '../../shared/CsgPagination.vue'
 
   const userStore = useUserStore()
