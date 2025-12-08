@@ -151,10 +151,7 @@
 
                 <el-popconfirm
                   :title="
-                    scope.row.status === 'Failed' ||
-                    scope.row.status === 'Timeout' ||
-                    scope.row.status === 'Finished' ||
-                    scope.row.status === 'Canceled' ? `${t('dataPipelines.executeConfirm')}?` : `${t('dataPipelines.cancelExecute')}?`
+                    scope.row.status === 'Processing' ? `${t('dataPipelines.cancelExecute')}?` : `${t('dataPipelines.executeConfirm')}?`
                     "
                   :confirm-button-text="t('dataPipelines.confirm')"
                   :cancel-button-text="t('dataPipelines.cancel')"
@@ -164,12 +161,14 @@
                   <template #reference>
                     <el-button
                       type="text"
-                      class="flex items-center justify-start cursor-pointer"
+                      :class="[
+                        'flex items-center justify-start cursor-pointer',
+                        scope.row.status === 'Finished' ? 'text-gray-400' : ''
+                      ]"
+                      :disabled="scope.row.status === 'Finished'"
                     >
                       {{
-                        scope.row.status === 'Failed' ||
-                        scope.row.status === 'Timeout' ||
-                        scope.row.status === 'Finished' ? t("dataPipelines.execute") : t("dataPipelines.cancel")
+                        scope.row.status === 'Processing' ? t("dataPipelines.cancel") : t("dataPipelines.execute")
                       }}
                     </el-button>
                   </template>
@@ -275,8 +274,7 @@ const handleSearch = () => {
 };
 
 const openExecuteDialog = async (job_id, status) => {
-  if (status === 'Failed' || status === 'Timeout' || status === 'Finished') {
-    console.log('执行', job_id)
+  if (status === 'Failed' || status === 'Timeout' || status === 'Finished' || status === 'Queued') {
     const url = `/dataflow/jobs/job/execute/${job_id}`;
     const { data } = await useFetchApi(url).post().json();
     if (data.value.code === 200) {
@@ -394,6 +392,9 @@ onMounted(() => {
 :deep(.tableCont) {
   .el-button--text {
     border: none;
+  }
+  .el-button--text.is-disabled {
+    color: #9ca3af !important;
   }
   .el-table__cell {
     font-size: 14px;
