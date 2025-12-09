@@ -236,11 +236,18 @@
       shouldReinit = true
     }
     
+    // 辅助函数：规范化路径，确保不带开头的 /
+    const normalizePath = (path) => {
+      if (!path) return ''
+      return path.startsWith('/') ? path.slice(1) : path
+    }
+    
     // 同步 repoTab 状态
-    if (newQuery.actionName !== repoTab.actionName || newQuery.path !== repoTab.lastPath) {
+    const normalizedPath = normalizePath(newQuery.path || '')
+    if (newQuery.actionName !== repoTab.actionName || normalizedPath !== repoTab.lastPath) {
       setRepoTab({
         actionName: newQuery.actionName || 'files',
-        lastPath: newQuery.path || '',
+        lastPath: normalizedPath,
         currentBranch: newQuery.branch || repoTab.currentBranch
       })
     }
@@ -359,7 +366,7 @@
     
     setRepoTab({
       actionName: 'new_file',
-      lastPath: currentPath.value && currentPath.value.length > 0 ? '/' + currentPath.value : ''
+      lastPath: currentPath.value || ''
     })
     
     router.push({
@@ -382,7 +389,7 @@
     
     setRepoTab({
       actionName: 'upload_file',
-      lastPath: currentPath.value && currentPath.value.length > 0 ? '/' + currentPath.value : ''
+      lastPath: currentPath.value || ''
     })
     
     router.push({

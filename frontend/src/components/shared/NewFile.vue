@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-4 my-[30px] md:px-5">
     <div class="flex items-center gap-[10px]">
-      <div class="whitespace-nowrap">{{ repoName }}</div>
+      <div class="whitespace-nowrap">{{ repoName + (repoTab.lastPath ? '/' + repoTab.lastPath : '') }}</div>
       <div class="text-gray-500">/</div>
       <el-input
         v-model="fileName"
@@ -57,6 +57,7 @@
 </template>
 <script setup>
   import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
   import CodeEditor from '../shared/CodeEditor.vue'
   import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
   import useFetchApi from '../../packs/useFetchApi'
@@ -71,6 +72,7 @@
   })
 
   const { repoTab, setRepoTab } = useRepoTabStore()
+  const router = useRouter()
 
   const codeContent = ref(props.originalCodeContent)
   const commitTitle = ref('')
@@ -117,7 +119,8 @@
   const createFile = async () => {
     submiting.value = true
     // TODO: main branch for now; should support different branches
-    const createFileEndpoint = `/${apiPrefixPath}/${props.namespacePath}/raw/${fileName.value}`
+    const pathPrefix = repoTab.lastPath ? `${repoTab.lastPath}/` : ''
+    const createFileEndpoint = `/${apiPrefixPath}/${props.namespacePath}/raw/${pathPrefix}${fileName.value}`
     const bodyData = {
       content: btoa_utf8(codeContent.value),
       message: buildCommitMessage(),
@@ -142,17 +145,44 @@
 
   const redirectToFilePreview = () => {
     // window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${props.currentBranch}/${fileName.value}`
+    const newPath = repoTab.lastPath ? `${repoTab.lastPath}/${fileName.value}` : fileName.value
+    
+    const query = {
+      tab: 'files',
+      actionName: 'blob',
+      path: newPath,
+      branch: router.currentRoute.value.query.branch || props.currentBranch
+    }
+    
     setRepoTab({
       actionName: 'blob',
-      lastPath: fileName.value
+      lastPath: newPath
+    })
+
+    router.push({
+      query
     })
   }
 
   const cancel = () => {
     // window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
+    // 确保路径不带开头的 /
+    const normalizedPath = repoTab.lastPath.startsWith('/') ? repoTab.lastPath.slice(1) : repoTab.lastPath
+    
+    const query = {
+      tab: 'files',
+      actionName: 'files',
+      branch: router.currentRoute.value.query.branch || props.currentBranch
+    }
+    
+    // 只有当路径不为空时才添加到 query
+    if (normalizedPath) {
+      query.path = normalizedPath
+    }
+    
     setRepoTab({
       actionName: 'files',
-      lastPath: ''
+      lastPath: normalizedPath
     })
   }
 </script>
