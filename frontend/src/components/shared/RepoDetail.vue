@@ -135,6 +135,7 @@
       const urlParams = getUrlParams();
       setRepoTab({
         currentBranch: urlParams.branch || props.currentBranch || repoDetailStore.defaultBranch,
+        lastPath: normalizePath(urlParams.path || '')
       });
       return true
     } catch (error) {
@@ -195,6 +196,12 @@
     fetchLastCommit()
   }
 
+  // 辅助函数：规范化路径，确保不带开头的 /
+  const normalizePath = (path) => {
+    if (!path) return ''
+    return path.startsWith('/') ? path.slice(1) : path
+  }
+
   onMounted(async () => {
     resetFileNotFound()
     const urlParams = getUrlParams()
@@ -205,7 +212,7 @@
       repoName: props.repoName,
       tab: urlParams.tab || props.defaultTab || 'summary',
       actionName: urlParams.actionName || props.actionName || 'files',
-      lastPath: urlParams.path || props.currentPath || '',
+      lastPath: normalizePath(urlParams.path || props.currentPath || ''),
       currentBranch: urlParams.branch || props.currentBranch || ''
     }
     

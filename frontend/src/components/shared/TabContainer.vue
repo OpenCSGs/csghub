@@ -339,10 +339,16 @@
       activeName.value = newTab
       
       if (newTab === 'files') {
+        // 辅助函数：规范化路径，确保不带开头的 /
+        const normalizePath = (path) => {
+          if (!path) return ''
+          return path.startsWith('/') ? path.slice(1) : path
+        }
+        
         setRepoTab({
           tab: newTab,
           actionName: validateActionName(newQuery.actionName),
-          lastPath: newQuery.path || '',
+          lastPath: normalizePath(newQuery.path || ''),
           currentBranch: newQuery.branch || repoTab.currentBranch
         })
       } else if (newTab === 'community') {
@@ -458,10 +464,16 @@
       if (urlDiscussionId) query.discussionId = urlDiscussionId
     }
 
+    // 辅助函数：规范化路径，确保不带开头的 /
+    const normalizePath = (path) => {
+      if (!path) return ''
+      return path.startsWith('/') ? path.slice(1) : path
+    }
+    
     setRepoTab({
       tab,
       actionName: tab === 'files' ? (query.actionName || 'files') : (tab === 'community' ? (query.actionName || 'list') : 'files'),
-      lastPath: tab === 'files' ? (query.path || '') : '',
+      lastPath: tab === 'files' ? normalizePath(query.path || '') : '',
       communityActionName: tab === 'community' ? (query.actionName || 'list') : 'list',
       discussionId: tab === 'community' ? (query.discussionId || '') : ''
     })

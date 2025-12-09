@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col gap-[16px] min-h-[300px] py-[32px] md:px-5">
-    <div class="test-[14px]"><p>{{ repoName + repoTab.lastPath }}/</p></div>
+    <div class="text-[14px]"><p>{{ repoName + (repoTab.lastPath ? '/' + repoTab.lastPath : '') }}/</p></div>
     <div class="border border-gray-200 rounded-xs bg-gray-100">
       <div class="flex text-sm text-brand-500 leading-[22px]">
         <div class="px-[20px] py-[9px] border-r bg-white w-[140px]">
@@ -59,6 +59,7 @@
 <script setup>
 import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
 import { ref } from 'vue'
+  import { useRouter } from 'vue-router'
 import {ElMessage} from "element-plus"
 import { useI18n } from 'vue-i18n'
 import useFetchApi from '../../packs/useFetchApi'
@@ -71,6 +72,7 @@ const props = defineProps({
 })
 
 const { repoTab, setRepoTab } = useRepoTabStore()
+  const router = useRouter()
 
 const { t } = useI18n();
 const uploadRef = ref();
@@ -117,10 +119,26 @@ const handleRemove = (file, fileList) => {
 
 const cancel = () => {
   // window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
-  const toPath = repoTab.lastPath && repoTab.lastPath.startsWith('/') ? repoTab.lastPath.slice(1) : repoTab.lastPath || ''
+  const normalizedPath = repoTab.lastPath || ''
+  
+  const query = {
+    tab: 'files',
+    actionName: 'files',
+    branch: router.currentRoute.value.query.branch || props.currentBranch
+  }
+  
+  // 只有当路径不为空时才添加到 query
+  if (normalizedPath) {
+    query.path = normalizedPath
+  }
+  
   setRepoTab({
     actionName: 'files',
-    lastPath: toPath
+    lastPath: normalizedPath
+  })
+
+  router.push({
+    query
   })
 }
 
@@ -134,7 +152,8 @@ const buildCommitMessage = () => {
 const appendFilesToFormData = (formData, files) => {
   files.forEach((file) => {
     formData.append('file', file.raw)
-    formData.append('file_path', (repoTab.lastPath || '') + '/' + file.name)
+    const filePath = repoTab.lastPath ? `${repoTab.lastPath}/${file.name}` : file.name
+    formData.append('file_path', filePath)
   })
 }
 
@@ -159,10 +178,26 @@ const syncUploadFile = async () => {
     } else {
       filesList.value = []
       // window.location.href = `/${prefixPath}/${props.namespacePath}/files/${props.currentBranch}`
-      const toPath = repoTab.lastPath && repoTab.lastPath.startsWith('/') ? repoTab.lastPath.slice(1) : repoTab.lastPath || ''
+      const normalizedPath = repoTab.lastPath || ''
+      
+      const query = {
+        tab: 'files',
+        actionName: 'files',
+        branch: router.currentRoute.value.query.branch || props.currentBranch
+      }
+      
+      // 只有当路径不为空时才添加到 query
+      if (normalizedPath) {
+        query.path = normalizedPath
+      }
+      
       setRepoTab({
         actionName: 'files',
-        lastPath: toPath
+        lastPath: normalizedPath
+      })
+
+      router.push({
+        query
       })
     }
   } catch (error) {
