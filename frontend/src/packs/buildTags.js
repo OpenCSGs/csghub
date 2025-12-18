@@ -30,6 +30,12 @@ const handleTag = (tag, tagCategories) => {
     case 'sdk':
       tagCategories.sdk_tags.push(tag)
       break
+    case 'lwftest':
+      tagCategories.lwftest_tags.push(tag)
+      break
+    case 'hhcate01':
+      tagCategories.hhcate01_tags.push(tag)
+      break
     default:
       tagCategories.other_tags.push(tag)
       break
@@ -114,6 +120,8 @@ export const buildTags = (repoData) => {
     scene_tags: [],
     hardware_tags: [],
     sdk_tags: [],
+    lwftest_tags: [],
+    hhcate01_tags: [],
     other_tags: []
   }
 

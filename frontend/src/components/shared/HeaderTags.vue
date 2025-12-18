@@ -28,7 +28,7 @@
     </div>
     <a
       v-for="tag in theFrameworkTags.theTags"
-      :href="`/${prefix}?tag=${tag.name}&tag_type=Framework`"
+      :href="getTagUrl('framework', tag.name)"
       class="text-sm font-normal text-gray-700 rounded-sm cursor-pointer flex items-center gap-1"
     >
       <PyTorch v-if="tag.name.toLowerCase() === 'pytorch'" />
@@ -55,7 +55,7 @@
     </div>
     <a
       v-for="tag in theLanguageTags.theTags"
-      :href="`/${prefix}?tag=${tag.label}&tag_type=Language`"
+      :href="getTagUrl('language', tag.label || tag.name)"
       :style="`color: ${tag.color}`"
       class="text-sm text-success-700 px-2 py-1 rounded-sm cursor-pointer flex items-center gap-1 bg-success-50"
     >
@@ -77,7 +77,7 @@
     </div>
     <a
       v-for="tag in theProgramLanguageTags.theTags"
-      :href="`/${prefix}?tag=${tag.name}&tag_type=ProgramLanguage`"
+      :href="getTagUrl('program_language', tag.name)"
       class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     >
       {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
@@ -85,7 +85,7 @@
     <MoreTags
       v-if="theProgramLanguageTags.moreTags"
       :num="programLanguageTags.length - 3"
-      target="programLanguageTags"
+      target="program_language"
       @view-more-targets="viewMoreTargets"
     />
     <!-- Runmode Tags -->
@@ -95,12 +95,13 @@
     >
       {{ $t('all.runmode') }}:
     </div>
-    <div
+    <a
       v-for="tag in theRunmodeTags.theTags"
+      :href="getTagUrl('runmode', tag.name)"
       class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     >
       {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
-    </div>
+    </a>
     <MoreTags
       v-if="theRunmodeTags.moreTags"
       :num="runmodeTags.length - 3"
@@ -114,12 +115,13 @@
     >
       {{ $t('all.scene') }}:
     </div>
-    <div
+    <a
       v-for="tag in theSceneTags.theTags"
+      :href="getTagUrl('scene', tag.name)"
       class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     >
       {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
-    </div>
+    </a>
     <MoreTags
       v-if="theSceneTags.moreTags"
       :num="sceneTags.length - 3"
@@ -133,12 +135,13 @@
     >
       {{ $t('all.industry') }}:
     </div>
-    <div
+    <a
       v-for="tag in theIndustryTags.theTags"
+      :href="getTagUrl('industry', tag.name)"
       class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     >
       {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
-    </div>
+    </a>
     <MoreTags
       v-if="theIndustryTags.moreTags"
       :num="industryTags.length - 3"
@@ -154,7 +157,7 @@
     </div>
     <div
       v-for="tag in theOtherTags.theTags"
-      class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
+      class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm flex items-center border border-gray-300 gap-1"
     >
       {{ tag.name }}
     </div>
@@ -171,13 +174,14 @@
     >
       {{ $t('all.hardware') }}:
     </div>
-    <div
+    <a
       v-for="tag in theHardwareTags.theTags"
+      :href="getTagUrl('hardware', tag.name)"
       class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     >
       <SvgIcon name="hardware_icon" />
       {{ tag.name }}
-    </div>
+    </a>
     <MoreTags
       v-if="theHardwareTags.moreTags"
       :num="hardwareTags.length - 3"
@@ -191,17 +195,58 @@
     >
       {{ $t('all.sdk') }}:
     </div>
-    <div
+    <a
       v-for="tag in theSdkTags.theTags"
+      :href="getTagUrl('sdk', tag.name)"
       class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     >
       <SvgIcon name="space_mcp" v-if="tag.name === 'mcp_server'" />
       {{ tag.name }}
-    </div>
+    </a>
     <MoreTags
       v-if="theSdkTags.moreTags"
       :num="sdkTags.length - 3"
       target="sdk"
+      @view-more-targets="viewMoreTargets"
+    />
+    <!-- Lwftest -->
+    <div
+      v-if="lwftestTags?.length"
+      class="text-sm font-normal text-gray-700"
+    >
+      lwftest:
+    </div>
+    <a
+      v-for="tag in theLwftestTags.theTags"
+      :href="getTagUrl('lwftest', tag.name)"
+      class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
+    >
+      {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
+    </a>
+    <MoreTags
+      v-if="theLwftestTags.moreTags"
+      :num="lwftestTags.length - 3"
+      target="lwftest"
+      @view-more-targets="viewMoreTargets"
+    />
+    <!-- Hhcate01 -->
+    <div
+      v-if="hhcate01Tags?.length"
+      class="text-sm font-normal text-gray-700"
+    >
+      hhcate01:
+    </div>
+    <a
+      v-for="tag in theHhcate01Tags.theTags"
+      :href="getTagUrl('hhcate01', tag.name)"
+      class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-sm cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
+    >
+      {{ locale === 'zh' ? tag.show_name || tag.name : tag.name }}
+    </a>
+    <MoreTags
+      v-if="theHhcate01Tags.moreTags"
+      :num="hhcate01Tags.length - 3"
+      target="hhcate01"
       @view-more-targets="viewMoreTargets"
     />
     <!-- License -->
@@ -213,7 +258,7 @@
     </div>
     <a
       v-for="tag in theLicenseTags.theTags"
-      :href="`/${prefix}?tag=${tag.name}&tag_type=License`"
+      :href="getTagUrl('license', tag.name)"
       class="bg-white text-sm font-normal text-gray-700 px-2 py-1 rounded-2xl cursor-pointer flex items-center border border-gray-300 gap-1 hover:bg-gray-50"
     >
       <SvgIcon name="repo_header_license_icon" />
@@ -297,6 +342,14 @@
     return props.tags.hardware_tags
   })
 
+  const lwftestTags = computed(() => {
+    return props.tags.lwftest_tags
+  })
+
+  const hhcate01Tags = computed(() => {
+    return props.tags.hhcate01_tags
+  })
+
     //先定义一个生产参数的方法
   const createTagRefs = (tagType) => {
     const moreTags = ref(tagType.value?.length > 3)
@@ -315,6 +368,8 @@
   const theSceneTags = ref(createTagRefs(sceneTags))
   const theSdkTags = ref(createTagRefs(sdkTags))
   const theHardwareTags = ref(createTagRefs(hardwareTags))
+  const theLwftestTags = ref(createTagRefs(lwftestTags))
+  const theHhcate01Tags = ref(createTagRefs(hhcate01Tags))
 
   watch(() => props.tags, () => {
     theTaskTags.value = createTagRefs(taskTags)
@@ -328,6 +383,8 @@
     theSceneTags.value = createTagRefs(sceneTags)
     theSdkTags.value = createTagRefs(sdkTags)
     theHardwareTags.value = createTagRefs(hardwareTags)
+    theLwftestTags.value = createTagRefs(lwftestTags)
+    theHhcate01Tags.value = createTagRefs(hhcate01Tags)
   })
 
   const tagGroups = {
@@ -374,6 +431,14 @@
     hardware: {
       source: hardwareTags,
       target: theHardwareTags
+    },
+    lwftest: {
+      source: lwftestTags,
+      target: theLwftestTags
+    },
+    hhcate01: {
+      source: hhcate01Tags,
+      target: theHhcate01Tags
     }
   }
 
@@ -385,11 +450,27 @@
     }
   }
 
-  const searchByTag = (tag) => {
-    if (props.prefix === 'mcps/') {
-      window.location.href = `/mcp/servers?tag=${tag.name}&tag_type=Task`
-    } else {
-      window.location.href = `/${props.prefix}?tag=${tag.name}&tag_type=Task`
+  const getTagUrl = (tagCategory, tagName) => {
+    if (!tagName || !tagCategory) {
+      return '#'
     }
+    
+    const url = new URL(window.location.origin)
+    
+    if (props.prefix === 'mcps/') {
+      url.pathname = '/mcp/servers'
+    } else {
+      url.pathname = `/${props.prefix}`
+    }
+    
+    // Use the same parameter structure as RepoCards.vue
+    url.searchParams.set(tagCategory, tagName.toLowerCase())
+    url.searchParams.set('page', '1')
+    
+    return url.toString()
+  }
+
+  const searchByTag = (tag) => {
+    window.location.href = getTagUrl('task', tag.name)
   }
 </script>
