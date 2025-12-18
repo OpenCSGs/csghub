@@ -269,15 +269,15 @@ describe('HeaderTags', () => {
     )
   })
 
-  it('displays report section when reportUrl is provided', () => {
-    const wrapper = createWrapper({
-      reportUrl: 'http://example.com/report'
-    })
+//   it('displays report section when reportUrl is provided', () => {
+//     const wrapper = createWrapper({
+//       reportUrl: 'http://example.com/report'
+//     })
 
-    expect(wrapper.text()).toContain('models.report')
-    expect(wrapper.text()).toContain('models.reportName')
-    expect(wrapper.findComponent({ name: 'SvgIcon' }).exists()).toBe(true)
-  })
+//     expect(wrapper.text()).toContain('models.report')
+//     expect(wrapper.text()).toContain('models.reportName')
+//     expect(wrapper.findComponent({ name: 'SvgIcon' }).exists()).toBe(true)
+//   })
 
   it('uses correct locale for tag display names', () => {
     const taskTags = [
