@@ -65,5 +65,13 @@ export const organization = {
     prompt: "New Prompt",
     collection: "New Collection",
     mcp: "New MCP",
-  }
+  },
+  leaveOrg: "Leave Organization",
+  leaveOrgTitle: "Leave this Organization?",
+  leaveOrgContent: "After leaving, you will lose access to all resources, projects, and permissions under this organization. To rejoin, please contact an organization admin to invite you again.",
+  leaveOrgButton: "Leave Organization",
+  cancel: "Cancel",
+  leaveOrgSuccess: "You have successfully left the organization.",
+  leaveOrgFailure: "Failed to leave organization, please try again later.",
+  leaveOrgNetworkError: "Network error, failed to leave, please try again later."
 }

@@ -90,16 +90,31 @@
           />
 
           <div class="mt-[16px] flex flex-wrap gap-[8px]">
-            <a v-for="user in membersList" :href="`/profile/${user.username}`">
-              <el-tooltip placement="bottom" effect="light">
-                <div class="flex flex-col items-center">
-                  <img :src="user.avatar || 'https://cdn.casbin.org/img/casbin.svg'" class="h-[52px] w-[52px] rounded-[50%] border p-[2px]" />
-                </div>
-                <template #content>
-                  <span class="text-xs py-[8px] px-[12px]">{{ user.nickname || user.name }} ( {{ user.role }} )</span>
-                </template>
-              </el-tooltip>
-            </a>
+            <div v-for="user in membersList" class="flex flex-col items-center gap-2">
+              <a :href="`/profile/${user.username}`">
+                <el-tooltip placement="bottom" effect="light">
+                  <div class="flex flex-col items-center">
+                    <img :src="user.avatar || 'https://cdn.casbin.org/img/casbin.svg'" class="h-[52px] w-[52px] rounded-[50%] border p-[2px]" />
+                  </div>
+                  <template #content>
+                    <span class="text-xs py-[8px] px-[12px]">{{ user.nickname || user.name }} ( {{ user.role }} )</span>
+                  </template>
+                </el-tooltip>
+              </a>
+            </div>
+          </div>
+
+          <!-- Leave Organization Button - only show for current user if they are a member and not admin/super_admin -->
+          <div v-if="userStore.isLoggedIn && role && role !== 'admin' && role !== 'super_admin'" class="mt-4">
+            <button 
+              @click="showLeaveOrgDialog = true"
+              class="px-2 py-1.5 text-sm text-black bg-white hover:bg-gray-200 rounded-md border border-gray-300 transition-colors duration-200 flex items-center gap-2"
+            >
+              <svg width="14" height="14" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8.25 8L10.75 10.5M10.75 8L8.25 10.5M7.75 1.64538C8.48296 1.94207 9 2.66066 9 3.5C9 4.33934 8.48296 5.05793 7.75 5.35462M6 7.5H4C3.06812 7.5 2.60218 7.5 2.23463 7.65224C1.74458 7.85523 1.35523 8.24458 1.15224 8.73463C1 9.10218 1 9.56812 1 10.5M6.75 3.5C6.75 4.60457 5.85457 5.5 4.75 5.5C3.64543 5.5 2.75 4.60457 2.75 3.5C2.75 2.39543 3.64543 1.5 4.75 1.5C5.85457 1.5 6.75 2.39543 6.75 3.5Z" stroke="#344054" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              {{ $t('organization.leaveOrg') }}
+            </button>
           </div>
         </div>
         <div class="grow px-[20px] py-[36px] sm:py-0">
@@ -113,13 +128,22 @@
     :loading="isDataLoading" 
     :text="$t('organization.loading')" 
   />
+
+  <!-- Leave Organization Dialog -->
+  <LeaveOrganizationDialog
+    v-model="showLeaveOrgDialog"
+    :organization-name="organizationData.name"
+    :user-role="currentUserRoleFromMembers"
+    @success="handleLeaveSuccess"
+  />
 </template>
 
 <script setup>
-  import { ref, onMounted, watch } from 'vue'
+  import { ref, onMounted, watch, computed } from 'vue'
   import InviteMember from './InviteMember.vue'
   import ProfileRepoList from '../shared/ProfileRepoList.vue'
   import LoadingSpinner from '../shared/LoadingSpinner.vue'
+  import LeaveOrganizationDialog from './LeaveOrganizationDialog.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import useUserStore from '../../stores/UserStore'
@@ -139,10 +163,18 @@
   const verifiedStatus = ref('')
   const verifiedReason = ref('')
   const isDataLoading = ref(false)
+  const showLeaveOrgDialog = ref(false)
 
   const userStore = useUserStore()
 
   const role = ref('')
+
+  // 计算当前用户在成员列表中的角色
+  const currentUserRoleFromMembers = computed(() => {
+    if (!userStore.username || !membersList.value.length) return ''
+    const currentUser = membersList.value.find(user => user.username === userStore.username)
+    return currentUser?.role || ''
+  })
 
   const fetchOrgDetail = async () => {
     if (isDataLoading.value) {
@@ -196,6 +228,25 @@
       const body = data.value
       role.value = body.data
     }
+  }
+
+  const getOrganizationVerify = async () => {
+    try {
+      const { data, error } = await useFetchApi(`/organization/verify/${props.name}`).get().json()
+      if (error.value) {
+        ElMessage.warning(error.value.msg)
+      }
+      
+      verifiedStatus.value = data.value?.data?.status
+      verifiedReason.value = data.value?.data?.reason
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleLeaveSuccess = () => {
+    // Refresh member list after successful leave
+    fetchOrgMemberList()
   }
 
   watch(
