@@ -298,7 +298,7 @@ const formLoading = ref(false);
 const userStore = useUserStore();
 // 表单
 const form = ref({
-  skip_meta: true,
+  skip_meta: false,
   // from_format_types: null,
   // to_data_type: null,
 });
