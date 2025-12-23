@@ -63,6 +63,14 @@ const useUserStore = defineStore('User', () => {
     initialized.value = initializedData
   }
 
+  async function fetchOrgs() {
+    if (!username.value) return
+    const { data } = await useFetchApi(`/user/${username.value}`).json()
+    if (data.value) {
+      orgs.value = data.value.data?.orgs ? data.value.data?.orgs : []
+    }
+  }
+
   async function fetchUserInfo() {
     if (!uuid.value) return
     const { data, error } = await useFetchApi(`/user/${uuid.value}?type=uuid`).json()
@@ -99,6 +107,7 @@ const useUserStore = defineStore('User', () => {
     clearStore,
     updateInitalized,
     fetchUserInfo,
+    fetchOrgs,
     timestamp
   }
 }, {

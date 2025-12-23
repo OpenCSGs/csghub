@@ -65,5 +65,13 @@ export const organization = {
     prompt: "新建提示词库",
     collection: "新建合集",
     mcp: "新建MCP",
-  }
+  },
+  leaveOrg: "退出组织",
+  leaveOrgTitle: "确认退出组织?",
+  leaveOrgContent: "离开后，你将无法再访问该组织的资源和协作内容。如果未来需要回到组织，请联系管理员重新添加。",
+  leaveOrgButton: "退出组织",
+  cancel: "取消",
+  leaveOrgSuccess: "你已成功退出该组织。",
+  leaveOrgFailure: "退出组织失败，请稍后重试。",
+  leaveOrgNetworkError: "网络异常，退出失败，请稍后重试。"
 }

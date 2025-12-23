@@ -1103,8 +1103,18 @@
         modelList.value = []
         modelTotal.value = 0
       } else {
-        if (data.value && data.value.data) {
-          modelList.value = data.value.data.models || []
+        if (data.value && data.value.data && Array.isArray(data.value.data.models)) {
+          data.value.data.models.forEach((item) => {
+            if (item && typeof item === 'object') {
+              const path = item.path || ''
+              item.hf_path = path
+              item.ms_path = path
+              item.csg_path = path
+              item.name = path
+              item.nickname = path
+            }
+          })
+          modelList.value = data.value.data.models
           modelTotal.value = data.value.data.total || 0
         } else {
           modelList.value = []

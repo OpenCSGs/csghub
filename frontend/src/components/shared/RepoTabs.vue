@@ -154,6 +154,7 @@
           :namespace-path="path"
           :can-write="canWrite"
           :repo-type="repoType"
+          :default-branch="repoDetail.defaultBranch"
         />
       </template>
 
@@ -249,6 +250,7 @@
           :cloudResource="repoDetail.sku || repoDetail.hardware"
           :coverImage="repoDetail.coverImageUrl"
           @showSpaceLogs="showSpaceLogs"
+          :minReplica="repoDetail.minReplica"
           :sdk="sdk"
           :tag-list="tagList"
           :tags="tags"

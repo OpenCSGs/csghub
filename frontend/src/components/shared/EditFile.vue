@@ -63,12 +63,14 @@
 </template>
 <script setup>
   import { ref, onMounted } from 'vue'
+  import { useRouter } from 'vue-router'
   import CodeEditor from '../shared/CodeEditor.vue'
   import CommunityMDTextarea from '../community/CommunityMDTextarea.vue'
   import useFetchApi from '../../packs/useFetchApi'
   import { ElMessage } from 'element-plus'
   import { atob_utf8 } from '../../packs/utils'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
+  
   const props = defineProps({
     repoName: String,
     namespacePath: String,
@@ -78,6 +80,7 @@
 
   const originalCodeContent = ref('')
   const { repoTab, setRepoTab } = useRepoTabStore()
+  const router = useRouter()
 
   const codeContent = ref('')
   const sha = ref('')
@@ -155,17 +158,45 @@
 
   const redirectToFilePreview = () => {
     // window.location.href = `/${prefixPath}/${props.namespacePath}/blob/${props.currentBranch}/${fileName.value}`
+    // 确保路径不带开头的 /
+    const normalizedPath = fileName.value.startsWith('/') ? fileName.value.slice(1) : fileName.value
+    
+    const query = {
+      tab: 'files',
+      actionName: 'blob',
+      path: normalizedPath,
+      branch: props.currentBranch
+    }
+    
     setRepoTab({
       actionName: 'blob',
-      lastPath: fileName.value
+      lastPath: normalizedPath
+    })
+    
+    router.push({
+      query
     })
   }
 
   const cancel = () => {
     // redirectToFilePreview()
+    // 确保路径不带开头的 /
+    const normalizedPath = fileName.value.startsWith('/') ? fileName.value.slice(1) : fileName.value
+    
+    const query = {
+      tab: 'files',
+      actionName: 'blob',
+      path: normalizedPath,
+      branch: props.currentBranch
+    }
+    
     setRepoTab({
       actionName: 'blob',
-      lastPath: fileName.value
+      lastPath: normalizedPath
+    })
+    
+    router.push({
+      query
     })
   }
 

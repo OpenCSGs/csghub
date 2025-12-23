@@ -1,6 +1,7 @@
 export const repo = {
   loading: 'Loading repository information...',
   loadingCommunity: 'Loading discussion list...',
+  loadingComments: 'Loading comments...',
   edit: {
     fileName: "File Name",
     main: "Directly submit to the main branch",
