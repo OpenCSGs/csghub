@@ -211,8 +211,8 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
-import { ref, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { ElMessage } from "element-plus";
 import useFetchApi from "../../../packs/useFetchApi";
 import { convertUtcToLocalTime } from "../../../packs/datetimeUtils";
@@ -220,6 +220,8 @@ import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
 const tableLoading = ref(false);
+const refreshTimer = ref(null);
+const route = useRoute();
 
 const form = ref({
   searchStr: "",
@@ -244,11 +246,15 @@ const pagination = ref({
   pageSize: 10,
   total: 0,
   handleSizeChange: (size) => {
+    // 切换分页时先停止定时任务
+    stopRefreshTimer();
     pagination.value.pageSize = size;
     pagination.value.currentPage = 1; // 切换每页大小时回到第一页
     getDataFlowListFun();
   },
   handleCurrentChange: (page) => {
+    // 切换分页时先停止定时任务
+    stopRefreshTimer();
     pagination.value.currentPage = page;
     getDataFlowListFun();
   }
@@ -266,9 +272,51 @@ const getDataFlowListFun = async () => {
     pagination.value.total = data.value.total || 0;
   }
   tableLoading.value = false;
+  
+  // 数据更新后检查是否需要启动/停止定时任务
+  checkAndManageTimer();
+};
+
+// 检查当前页是否存在 Processing 状态的任务
+const hasProcessingTask = () => {
+  return tableData.value.some(item => item.status === 'Processing');
+};
+
+// 启动定时任务
+const startRefreshTimer = () => {
+  // 如果定时器已存在，先清除，避免创建多个定时器
+  if (refreshTimer.value) {
+    stopRefreshTimer();
+  }
+  
+  // 确保定时器不存在后再创建新的
+  if (!refreshTimer.value) {
+    refreshTimer.value = setInterval(() => {
+      getDataFlowListFun();
+    }, 3000); // 3秒刷新一次
+  }
+};
+
+// 停止定时任务
+const stopRefreshTimer = () => {
+  if (refreshTimer.value) {
+    clearInterval(refreshTimer.value);
+    refreshTimer.value = null;
+  }
+};
+
+// 检查并管理定时任务
+const checkAndManageTimer = () => {
+  if (hasProcessingTask()) {
+    startRefreshTimer();
+  } else {
+    stopRefreshTimer();
+  }
 };
 
 const handleSearch = () => {
+  // 搜索时先停止定时任务
+  stopRefreshTimer();
   pagination.value.currentPage = 1;
   getDataFlowListFun();
 };
@@ -345,8 +393,21 @@ const goToNewTask = (path) => {
   router.push(path);
 };
 
+// 监听路由变化，停止定时任务
+watch(
+  () => route.path,
+  () => {
+    stopRefreshTimer();
+  }
+);
+
 onMounted(() => {
   getDataFlowListFun();
+});
+
+// 组件卸载时清理定时器
+onBeforeUnmount(() => {
+  stopRefreshTimer();
 });
 </script>
 <style lang="less" scoped>
