@@ -8,6 +8,7 @@ export const endpoints = {
   gpuMemoryRequired: 'GPU Memory Required: ',
   gpuMemoryRecommendation: 'Recommended Minimum GPU Memory: ',
   lowMemory: 'Low Memory',
+  resourceUnavailable: 'Insufficient Resources',
   detail: {
     endpointUrl: 'Inference Endpoint URL',
     modelId: 'Model ID',
