@@ -2,9 +2,19 @@
   <div class="2xl:max-w-[980px] xl:max-w-[768px] sm:w-[100%] sm:mt-9">
     <!-- title -->
     <div class="mb-6">
-      <h1 class="text-lg font-medium text-gray-900 mb-5">
-        {{ initiator === 'likes' ? $t('profile.likes') : $t('profile.title') }}
-      </h1>
+      <div class="flex items-center justify-between mb-5">
+        <h1 class="text-lg font-medium text-gray-900">
+          {{ initiator === 'likes' ? $t('profile.likes') : $t('profile.title') }}
+        </h1>
+        <CsgButton
+          v-if="initiator === 'profile'"
+          class="btn btn-secondary-gray btn-md"
+          :name="$t('navbar.console')"
+          :svgName="'arrow-narrow-up-right'"
+          :svgPosition="'right'"
+          @click="goResourceConsole"
+        />
+      </div>
       <div class="h-[1px] bg-gray-200"></div>
     </div>
 
@@ -45,6 +55,27 @@
       <el-tab-pane
         name="mcps"
         :label="`&nbsp;${$t('profile.tabs.mcps')}&nbsp;`"
+      ></el-tab-pane>
+      <!-- notebooks / finetunes / endpoints / evaluations -->
+      <el-tab-pane
+        v-if="isSelfProfile"
+        name="notebooks"
+        :label="`&nbsp;${$t('notebooks.title')}&nbsp;`"
+      ></el-tab-pane>
+      <el-tab-pane
+        v-if="isSelfProfile"
+        name="finetunes"
+        :label="`&nbsp;${$t('finetune.title')}&nbsp;`"
+      ></el-tab-pane>
+      <el-tab-pane
+        v-if="isSelfProfile"
+        name="endpoints"
+        :label="`&nbsp;${$t('endpoints.title')}&nbsp;`"
+      ></el-tab-pane>
+      <el-tab-pane
+        v-if="isSelfProfile"
+        name="evaluations"
+        :label="`&nbsp;${$t('evaluation.list.title')}&nbsp;`"
       ></el-tab-pane>
     </el-tabs>
 
@@ -166,11 +197,70 @@
       <view-more v-if="mcps.more && !expandedSections.mcps" target="mcps" @view-more-targets="viewMoreTargets"></view-more>
       <el-skeleton class="pr-6" v-if="mcpsLoading" :rows="2" animated />
     </div>
+
+    <!-- notebooks -->
+    <div v-if="isSelfProfile && (activeTab === '' || activeTab === 'notebooks')" class="mt-8">
+      <h3 class="text-xl text-gray-700 flex items-center gap-2">
+        <SvgIcon name="spaces" width="18" height="18" />
+        <span>{{ $t('notebooks.title') }}</span>
+      </h3>
+      <div v-if="hasNotebooks" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-4">
+        <NotebookItem v-for="notebook in displayedNotebooks" :notebook="notebook" repo-type="notebook" />
+      </div>
+      <div v-else class="flex flex-wrap gap-4 mb-4 mt-4">
+        {{ $t('all.noData') }}
+      </div>
+      <view-more v-if="notebooks.more && !expandedSections.notebooks" target="notebooks" @view-more-targets="viewMoreTargets"></view-more>
+      <el-skeleton class="pr-6" v-if="notebooksLoading" :rows="2" animated />
+    </div>
+
+    <!-- finetunes -->
+    <div v-if="isSelfProfile && (activeTab === '' || activeTab === 'finetunes')" class="mt-8">
+      <h3 class="text-xl text-gray-700 flex items-center gap-2">
+        <SvgIcon name="spaces" width="18" height="18" />
+        <span>{{ $t('finetune.title') }}</span>
+      </h3>
+      <div v-if="hasFinetunes" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-4">
+        <FinetuneItem v-for="finetune in displayedFinetunes" :repo="finetune" repo-type="finetune" />
+      </div>
+      <div v-else class="flex flex-wrap gap-4 mb-4 mt-4">
+        {{ $t('all.noData') }}
+      </div>
+      <view-more v-if="finetunes.more && !expandedSections.finetunes" target="finetunes" @view-more-targets="viewMoreTargets"></view-more>
+      <el-skeleton class="pr-6" v-if="finetunesLoading" :rows="2" animated />
+    </div>
+
+    <!-- endpoints -->
+    <div v-if="isSelfProfile && (activeTab === '' || activeTab === 'endpoints')" class="mt-8">
+      <h3 class="text-xl text-gray-700 flex items-center gap-2">
+        <SvgIcon name="spaces" width="18" height="18" />
+        <span>{{ $t('endpoints.title') }}</span>
+      </h3>
+      <div v-if="hasEndpoints" class="grid grid-cols-2 xl:grid-cols-1 gap-4 mb-4 mt-4">
+        <EndpointItem v-for="endpoint in displayedEndpoints" :endpoint="endpoint" :namespace="name" />
+      </div>
+      <div v-else class="flex flex-wrap gap-4 mb-4 mt-4">
+        {{ $t('all.noData') }}
+      </div>
+      <view-more v-if="endpoints.more && !expandedSections.endpoints" target="endpoints" @view-more-targets="viewMoreTargets"></view-more>
+      <el-skeleton class="pr-6" v-if="endpointsLoading" :rows="2" animated />
+    </div>
+
+    <!-- evaluations -->
+    <div v-if="isSelfProfile && (activeTab === '' || activeTab === 'evaluations')" class="mt-8">
+      <h3 class="text-xl text-gray-700 flex items-center gap-2">
+        <SvgIcon name="spaces" width="18" height="18" />
+        <span>{{ $t('evaluation.list.title') }}</span>
+      </h3>
+      <div class="mt-4 w-full">
+        <EvaluationTable />
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-  import { computed, ref, onMounted, onUnmounted } from "vue"
+  import { computed, ref, onMounted, onUnmounted, inject } from "vue"
   import { useRoute } from 'vue-router'
   import RepoItem from "./RepoItem.vue"
   import CollectionCards from "../collections/CollectionCards.vue"
@@ -179,6 +269,12 @@
   import useFetchApi from "../../packs/useFetchApi"
   import { ElMessage } from "element-plus"
   import McpItem from "../mcp/McpItem.vue"
+  import CsgButton from "../shared/CsgButton.vue"
+  import NotebookItem from "../notebooks/NotebookItem.vue"
+  import FinetuneItem from "./FinetuneItem.vue"
+  import EndpointItem from "../endpoints/EndpointItem.vue"
+  import EvaluationTable from "../resource_console/EvaluationTable.vue"
+  import useUserStore from '../../stores/UserStore.js'
 
   const props = defineProps({
     name: String,
@@ -186,6 +282,9 @@
   })
 
   const route = useRoute()
+  const goResourceConsole = () => {
+    window.location.href = '/resource-console'
+  }
   const activeTab = ref('')
   const collections = ref({})
   const models = ref({})
@@ -194,6 +293,9 @@
   const prompts = ref({})
   const spaces = ref({})
   const mcps = ref({})
+  const notebooks = ref({})
+  const finetunes = ref({})
+  const endpoints = ref({})
   const collectionsLoading = ref(false)
   const modelsLoading = ref(false)
   const datasetsLoading = ref(false)
@@ -201,6 +303,9 @@
   const promptsLoading = ref(false)
   const spacesLoading = ref(false)
   const mcpsLoading = ref(false)
+  const notebooksLoading = ref(false)
+  const finetunesLoading = ref(false)
+  const endpointsLoading = ref(false)
 
   const collectionsPage = ref(1)
   const modelsPage = ref(1)
@@ -209,6 +314,9 @@
   const promptsPage = ref(1)
   const spacesPage = ref(1)
   const mcpsPage = ref(1)
+  const notebooksPage = ref(1)
+  const finetunesPage = ref(1)
+  const endpointsPage = ref(1)
 
   const PER_PAGE = 50
   const INITIAL_PER_PAGE = 6
@@ -221,7 +329,10 @@
     codes: false,
     prompts: false,
     spaces: false,
-    mcps: false
+    mcps: false,
+    notebooks: false,
+    finetunes: false,
+    endpoints: false
   })
 
   const hasCollections = computed(() => collections.value?.data?.length > 0)
@@ -231,6 +342,9 @@
   const hasPrompts = computed(() => prompts.value?.data?.length > 0)
   const hasSpaces = computed(() => spaces.value?.data?.length > 0)
   const hasMcps = computed(() => mcps.value?.data?.length > 0)
+  const hasNotebooks = computed(() => (notebooks.value?.data?.data || []).length > 0)
+  const hasFinetunes = computed(() => (finetunes.value?.data || []).length > 0)
+  const hasEndpoints = computed(() => (endpoints.value?.data || []).length > 0)
 
   const displayedCollections = computed(() => {
     const data = collections.value?.data || []
@@ -288,6 +402,33 @@
     return data.slice(0, INITIAL_PER_PAGE)
   })
 
+  const displayedNotebooks = computed(() => {
+    const data = notebooks.value?.data?.data || []
+    if (data.length > INITIAL_PER_PAGE) {
+      return data
+    }
+    return data.slice(0, INITIAL_PER_PAGE)
+  })
+
+  const displayedFinetunes = computed(() => {
+    const data = finetunes.value?.data || []
+    if (data.length > INITIAL_PER_PAGE) {
+      return data
+    }
+    return data.slice(0, INITIAL_PER_PAGE)
+  })
+
+  const displayedEndpoints = computed(() => {
+    const data = endpoints.value?.data || []
+    if (data.length > INITIAL_PER_PAGE) {
+      return data
+    }
+    return data.slice(0, INITIAL_PER_PAGE)
+  })
+  const userStore = useUserStore()
+  const csghubServer = inject("csghubServer")
+  const isSelfProfile = computed(() => props.initiator === 'profile' && userStore.username === props.name)
+
   const prefixPath =
     document.location.pathname.split("/")[1] === "organizations" ? "organization" : "user"
 
@@ -311,6 +452,9 @@
       const codesUrl = `${reposUrl("codes")}`
       const promptsUrl = `${reposUrl("prompts")}`
       const mcpsUrl = `${reposUrl("mcps")}`
+      const endpointsUrl = `${reposUrl("endpoints")}`
+      const finetunesUrl = `${reposUrl("finetunes")}`
+      const notebooksUrl = `${reposUrl("notebooks")}`
 
       const promises = [
         fetchData(collectionsUrl, collections, INITIAL_PER_PAGE, 1),
@@ -322,6 +466,11 @@
       ]
       if (props.initiator === "profile" || props.initiator === "organization") {
         promises.push(fetchData(promptsUrl, prompts, INITIAL_PER_PAGE, 1))
+      }
+      if (isSelfProfile.value && userStore.initialized) {
+        promises.push(fetchData(endpointsUrl, endpoints, INITIAL_PER_PAGE, 1, { deploy_type: 1 }))
+        promises.push(fetchData(finetunesUrl, finetunes, INITIAL_PER_PAGE, 1))
+        promises.push(fetchData(notebooksUrl, notebooks, INITIAL_PER_PAGE, 1))
       }
       await Promise.all(promises)
     } finally {
@@ -388,15 +537,53 @@
           expandedSections.value.mcps = true
         }
         break
+      case "notebooks":
+        notebooksLoading.value = true
+        await fetchMoreNotebooks()
+        notebooksLoading.value = false
+        if (!notebooks.value.more) {
+          expandedSections.value.notebooks = true
+        }
+        break
+      case "finetunes":
+        finetunesLoading.value = true
+        await fetchMoreFinetunes()
+        finetunesLoading.value = false
+        if (!finetunes.value.more) {
+          expandedSections.value.finetunes = true
+        }
+        break
+      case "endpoints":
+        endpointsLoading.value = true
+        await fetchMoreEndpoints()
+        endpointsLoading.value = false
+        if (!endpoints.value.more) {
+          expandedSections.value.endpoints = true
+        }
+        break
     }
   }
 
   const reposUrl = (type) => {
     switch (props.initiator) {
       case "likes":
+        if (type === 'endpoints') {
+          return `${csghubServer}/api/v1/user/${userStore.username}/run/model`
+        } else if (type === 'finetunes') {
+          return `${csghubServer}/api/v1/user/${userStore.username}/finetune/instances`
+        } else if (type === 'notebooks') {
+          return `${csghubServer}/api/v1/user/${userStore.username}/notebooks`
+        }
         return `/${prefixPath}/${props.name}/likes/${type}`
       case "profile":
       default:
+        if (type === 'endpoints') {
+          return `${csghubServer}/api/v1/user/${userStore.username}/run/model`
+        } else if (type === 'finetunes') {
+          return `${csghubServer}/api/v1/user/${userStore.username}/finetune/instances`
+        } else if (type === 'notebooks') {
+          return `${csghubServer}/api/v1/user/${userStore.username}/notebooks`
+        }
         return `/${prefixPath}/${props.name}/${type}`
     }
   }
@@ -422,10 +609,17 @@
     }
   }
 
-  const fetchData = async (url, targetRef, perPage, page) => {
+  const fetchData = async (url, targetRef, perPage, page, extraParams = null) => {
     const params = new URLSearchParams()
     params.append("per", perPage)
     params.append("page", page)
+    if (extraParams) {
+      Object.keys(extraParams).forEach((key) => {
+        if (extraParams[key] !== undefined && extraParams[key] !== null) {
+          params.append(key, extraParams[key])
+        }
+      })
+    }
 
     const timestamp = Date.now()
 
@@ -471,6 +665,9 @@
     if (targetRef === prompts) return promptsPage
     if (targetRef === spaces) return spacesPage
     if (targetRef === mcps) return mcpsPage
+    if (targetRef === notebooks) return notebooksPage
+    if (targetRef === finetunes) return finetunesPage
+    if (targetRef === endpoints) return endpointsPage
   }
 
   const fetchMore = async (targetRef, type) => {
@@ -492,6 +689,39 @@
   const fetchMoreCodes = () => fetchMore(codes, "codes")
   const fetchMorePrompts = () => fetchMore(prompts, "prompts")
   const fetchMoreMcp = () => fetchMore(mcps, "mcps")
+
+  const fetchMoreNotebooks = async () => {
+    const pageRef = getPageRef(notebooks)
+    const url = reposUrl("notebooks")
+    const currentLoadedCount = notebooks.value.data?.data?.length || 0
+    if (currentLoadedCount <= INITIAL_PER_PAGE) {
+      await fetchData(url, notebooks, PER_PAGE, 1)
+    } else {
+      await fetchData(url, notebooks, PER_PAGE, pageRef.value)
+    }
+  }
+
+  const fetchMoreFinetunes = async () => {
+    const pageRef = getPageRef(finetunes)
+    const url = reposUrl("finetunes")
+    const currentLoadedCount = finetunes.value.data?.length || 0
+    if (currentLoadedCount <= INITIAL_PER_PAGE) {
+      await fetchData(url, finetunes, PER_PAGE, 1)
+    } else {
+      await fetchData(url, finetunes, PER_PAGE, pageRef.value)
+    }
+  }
+
+  const fetchMoreEndpoints = async () => {
+    const pageRef = getPageRef(endpoints)
+    const url = reposUrl("endpoints")
+    const currentLoadedCount = endpoints.value.data?.length || 0
+    if (currentLoadedCount <= INITIAL_PER_PAGE) {
+      await fetchData(url, endpoints, PER_PAGE, 1, { deploy_type: 1 })
+    } else {
+      await fetchData(url, endpoints, PER_PAGE, pageRef.value, { deploy_type: 1 })
+    }
+  }
 
 
   const handlePopState = () => {
