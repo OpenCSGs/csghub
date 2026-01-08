@@ -1031,7 +1031,7 @@
           this.selectedItems = []
           this.selectAll = false
         } else {
-          ElMessage.warning(error.value.msg)
+          ElMessage.warning(error.value?.msg)
         }
       },
       async allClear() {
@@ -1058,7 +1058,7 @@
           this.selectedItems = []
           this.selectAll = false
         } else {
-          ElMessage.warning(error.value.msg)
+          ElMessage.warning(error.value?.msg)
         }
       },
       handleLocaleChange(locale) {
@@ -1071,7 +1071,6 @@
         if (data.value) {
           this.userStore.initialize(data.value.data)
         } else {
-          console.log(error.value.msg)
           this.clearCookies()
         }
       },
@@ -1143,7 +1142,7 @@
         if (data.value) {
           ElMessage.success(this.$t('navbar.settingsSuccess'))
         } else {
-          ElMessage.warning(error.value.msg)
+          ElMessage.warning(error.value?.msg)
         }
       },
       async subForm() {
@@ -1171,7 +1170,7 @@
             ElMessage.success(this.$t('navbar.settingsSuccess'))
             this.showUserSet = false
           } else {
-            ElMessage.warning(error.value.msg)
+            ElMessage.warning(error.value?.msg)
           }
         } catch (error) {
           console.log('表单验证失败:', error)
@@ -1193,7 +1192,7 @@
           this.msgList[index].is_read = true
           this.getMsgNum()
         } else {
-          ElMessage.warning(error.value.msg)
+          ElMessage.warning(error.value?.msg)
         }
       },
       async getMsgNum() {
