@@ -235,3 +235,32 @@ make run-backend
 [http://localhost:8090](http://localhost:8090)
 
 您可以查看应用程序进行并进行交互。
+
+## 常见问题
+
+### Endpoint 格式错误
+
+如果启动时出现以下错误：
+
+```
+Error: initializing routes: Endpoint: does not follow ip address or domain name standards.
+```
+
+这通常是因为 `CSGHUB_PORTAL_S3_ENDPOINT` 环境变量配置格式不正确。请确保：
+
+1. **Endpoint 必须包含协议前缀**：
+   - ❌ 错误示例：`127.0.0.1:9000` 或 `localhost:9000`
+   - ✅ 正确示例：`http://127.0.0.1:9000` 或 `http://localhost:9000`
+
+2. **检查 `.envrc` 或 `.env` 文件中的配置**：
+   ```shell
+   export CSGHUB_PORTAL_S3_ENDPOINT=http://127.0.0.1:9000
+   ```
+
+3. **如果使用的是 MinIO 或其他 S3 兼容服务**，确保 Endpoint 地址格式完整，包含协议（http:// 或 https://）
+
+4. **修改配置后**，如果使用 direnv，运行以下命令重新加载环境变量：
+   ```shell
+   direnv allow .
+   ```
+   或重新启动终端。
