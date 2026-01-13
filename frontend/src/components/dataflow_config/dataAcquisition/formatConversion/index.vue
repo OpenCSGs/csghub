@@ -4,11 +4,11 @@
       <SvgIcon class="w-5 h-5" name="dataflow_homeIcon" />
       <SvgIcon class="w-5 h-5 mx-2" name="dataflow_homeIcon_divider" />
       <p class="text-brand-700 text-sm font-medium">
-        {{ t("dataPipelines.formatConversion") }}
+        {{ t("dataPipelines.dataFormatConversion") }}
       </p>
     </div>
     <p class="text-gray-900 text-3xl font-medium data-source-title">
-      {{ t("dataPipelines.formatConversion") }}
+      {{ t("dataPipelines.dataFormatConversion") }}
 
       <CsgButton
         class="btn btn-primary btn-sm whitespace-nowrap"

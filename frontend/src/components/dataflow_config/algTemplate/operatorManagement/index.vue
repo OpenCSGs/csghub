@@ -4,11 +4,11 @@
       <SvgIcon class="w-5 h-5" name="dataflow_homeIcon" />
       <SvgIcon class="w-5 h-5 mx-2" name="dataflow_homeIcon_divider" />
       <p class="text-brand-600 text-sm font-medium">
-        {{ t("dataPipelines.algorithmTemplate") }}
+        {{ t("dataPipelines.operatorPool") }}
       </p>
     </div>
     <p class="text-gray-900 text-3xl font-medium">
-      {{ t("dataPipelines.algorithmTemplate") }}
+      {{ t("dataPipelines.operatorPool") }}
     </p>
 
     <div class="mainOption mt-8">

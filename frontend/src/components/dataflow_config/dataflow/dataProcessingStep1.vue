@@ -8,7 +8,7 @@
       style="padding: 0;"
     >
       <p class="text-gray-900 text-2xl font-medium">
-        {{ t("dataPipelines.dataProcessingConfiguration") }}
+        {{ pageMainTitle }}
       </p>
       <div class="p-[12px]">
         <el-row :gutter="20" class="border rounded-md p-[10px]">
@@ -112,7 +112,7 @@
       </div>
       
       <p class="text-gray-900 text-2xl font-medium my-2">
-        {{ t("dataPipelines.dataProcessingConfiguration") }}
+        {{ pageMainTitle }}
       </p>
       <div class="p-[12px]">
         <el-row :gutter="20" class="border rounded-md p-[10px]">
@@ -197,6 +197,16 @@ const formLoading = ref(false);
 const userStore = useUserStore()
 
 const templateId = computed(() => route.query.templateId)
+const templateName = computed(() => route.query.templateName)
+
+// 模板名称到国际化key的映射
+const templateNameMap = {
+  "数据过滤": "dataFilter",
+  "数据筛选": "dataSelection",
+  "数据脱敏": "dataDesensitization",
+  "语义去重": "semanticDeduplication",
+  "质量评测": "qualityEvaluation",
+};
 
 const ruleFormRef = ref(null);
 const subForm = inject("subForm", ref({ 
@@ -207,12 +217,37 @@ const subForm = inject("subForm", ref({
   owner: '',
   repo_id: route.query.datasetPath || '',
   branch: '',
-  name: route.query.templateId ? route.query.templateId * 1 : 0,
+  name: route.query.templateId ? route.query.templateId * 1 : '',
   type: '',
   // selToolIndex: 0,
   process: [],
   dslText: ""
 }))
+
+// 动态页面大标题 - 根据选择的模板动态变化
+const pageMainTitle = computed(() => {
+  // 如果表单中已选择了模板
+  const selectedTemplateName = subForm.value?.name;
+  if (selectedTemplateName) {
+    // 如果有对应的国际化key，使用国际化名称
+    if (templateNameMap[selectedTemplateName]) {
+      return t(`dataPipelines.${templateNameMap[selectedTemplateName]}`);
+    }
+    // 否则直接显示模板名称
+    return selectedTemplateName;
+  }
+  
+  // 使用URL参数中的模板名称
+  if (templateName.value) {
+    if (templateNameMap[templateName.value]) {
+      return t(`dataPipelines.${templateNameMap[templateName.value]}`);
+    }
+    return templateName.value;
+  }
+  
+  // 默认显示数据处理配置
+  return t("dataPipelines.dataProcessingConfiguration");
+});
 
 const step = inject("step");
 const rules = ref({
@@ -291,6 +326,19 @@ watch([() => userStore.username, () => route.query.datasetPath], () => {
   updateOwner()
 })
 
+// 监听路由参数 templateName 变化，更新模板选择
+watch(() => route.query.templateName, (newTemplateName) => {
+  if (newTemplateName && templateList.value.length > 0 && !templateId.value) {
+    const matchedTemplate = templateList.value.find(
+      (item) => item.name === newTemplateName
+    )
+    if (matchedTemplate) {
+      subForm.value.name = matchedTemplate.name
+      changeTemplate(matchedTemplate.name)
+    }
+  }
+}, { immediate: false })
+
 // 获取模版详情
 const getTemplatesDetalis = async () => {
   const url = `/dataflow/algo_templates/${templateId.value}`
@@ -321,7 +369,17 @@ const getTemplateData = async () => {
   const { data } = await useFetchApi(url).get().json()
   if (data.value) {
     templateList.value = data.value.data.templates
-    // changeTemplate()
+    
+    // 如果有 templateName 参数，自动选择对应的模板（带校验）
+    if (templateName.value && !templateId.value) {
+      const matchedTemplate = templateList.value.find(
+        (item) => item.name === templateName.value
+      )
+      if (matchedTemplate) {
+        subForm.value.name = matchedTemplate.name
+        changeTemplate(matchedTemplate.name)
+      }
+    }
   }
 }
 

@@ -4,7 +4,7 @@
       <SvgIcon class="w-5 h-5" name="dataflow_homeIcon" />
       <SvgIcon class="w-5 h-5 mx-2" name="dataflow_homeIcon_divider" />
       <p class="text-brand-700 text-sm font-medium cursor-pointer" @click="navigateToPage">
-        {{ url === 'customize' ? t("dataPipelines.customTemplate") : t("dataPipelines.builtInTemplate") }}
+        {{ url === 'customize' ? t("dataPipelines.customTaskTemplate") : t("dataPipelines.builtInTaskTemplate") }}
       </p>
       <SvgIcon class="w-5 h-5 mx-2" name="dataflow_homeIcon_divider" />
       <p class="text-brand-700 text-sm font-medium">
@@ -36,10 +36,10 @@ const url = route.query.url
 
 const title = computed(() => {
   return route.query.type === 'add'
-    ? `${t('dataPipelines.create')}${t('dataPipelines.algorithmTemplate')}`
+    ? `${t('dataPipelines.create')}${t('dataPipelines.taskTemplate')}`
     : route.query.type === 'copy'
-    ? `${t('dataPipelines.copy')}${t('dataPipelines.algorithmTemplate')}`
-    : `${t('dataPipelines.edit')}${t('dataPipelines.algorithmTemplate')}`
+    ? `${t('dataPipelines.copy')}${t('dataPipelines.taskTemplate')}`
+    : `${t('dataPipelines.edit')}${t('dataPipelines.taskTemplate')}`
 })
 
 const form = ref({

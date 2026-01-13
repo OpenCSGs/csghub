@@ -67,6 +67,20 @@
   --Success-900: #074D31;
   --Success-950: #053321;
 
+  /* Theme 主题色 - 金色系，用于菜单、导航和按钮 */
+  --Theme-25: #FFFCF0;
+  --Theme-50: #FFFAE3;
+  --Theme-100: #FAF3D4;
+  --Theme-200: #F4E9B8;
+  --Theme-300: #E9D58C;
+  --Theme-400: #DDBF63;
+  --Theme-500: #D2A83E;
+  --Theme-600: #C7921C;
+  --Theme-700: #A87412;
+  --Theme-800: #8A590A;
+  --Theme-900: #6B4004;
+  --Theme-950: #4D2A00;
+
   /* add shadow variable */
   --shadow-xs: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
   --shadow-sm: 0px 1px 3px 0px rgba(16, 24, 40, 0.1), 0px  1px 2px 0px rgba(16, 24, 40, 0.06)  ;
@@ -90,6 +104,6 @@
   --border-radius-full: 9999px;
 
   --el-border-radius-base: var(--border-radius-md);
-  --el-color-primary: var(--Brand-600);
-  --el-checkbox-checked-bg-color: var(--Brand-600);
+  --el-color-primary: var(--Theme-600);
+  --el-checkbox-checked-bg-color: var(--Theme-600);
 }

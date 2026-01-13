@@ -10,14 +10,14 @@
         name="dataflow_homeIcon_divider"
       />
       <p class="text-brand-600 text-sm font-medium">
-        {{ t('dataPipelines.algorithmTemplate') }}
+        {{ t('dataPipelines.taskManagement') }}
       </p>
     </div>
     <p class="text-gray-900 text-3xl font-medium">
-      {{ t('dataPipelines.algorithmTemplate') }}
+      {{ t('dataPipelines.taskManagement') }}
     </p>
     <p class="text-gray-600 text-md font-light mt-[2px]">
-      {{ t('dataPipelines.algorithmTemplateDescription') }}
+      {{ t('dataPipelines.taskManagementDescription') }}
     </p>
     <div class="mainOption mt-8">
       <p class="text-gray-700 text-sm mb-1.5">
