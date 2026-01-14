@@ -4,7 +4,7 @@
       <SvgIcon class="w-5 h-5" name="dataflow_homeIcon" />
       <SvgIcon class="w-5 h-5 mx-2" name="dataflow_homeIcon_divider" />
       <p class="text-brand-700 text-sm font-medium cursor-pointer" @click="geback">
-        {{ t("dataPipelines.dataProcessing") }}
+        {{ pageTitle }}
       </p>
       <SvgIcon class="w-5 h-5 mx-2" name="dataflow_homeIcon_divider" />
       <p class="text-brand-700 text-sm font-medium">
@@ -17,8 +17,8 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
-import { ref, onMounted, provide, computed } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { ref, onMounted, provide, computed, watch } from "vue";
 import { ElMessage } from "element-plus";
 import useFetchApi from "../../../packs/useFetchApi";
 import { convertUtcToLocalTime } from "../../../packs/datetimeUtils";
@@ -26,9 +26,19 @@ import { useI18n } from "vue-i18n";
 import dataProcessingStep1 from "./dataProcessingStep1.vue";
 import dataProcessingStep2 from "./dataProcessingStep2.vue";
 const router = useRouter();
+const route = useRoute();
 
 const { t, locale } = useI18n();
 const tableLoading = ref(false);
+
+// 模板名称到国际化key的映射
+const templateNameMap = {
+  "数据过滤": "dataFilter",
+  "数据筛选": "dataSelection",
+  "数据脱敏": "dataDesensitization",
+  "语义去重": "semanticDeduplication",
+  "质量评测": "qualityEvaluation",
+};
 
 const form = ref({
   name: '',
@@ -37,6 +47,31 @@ const form = ref({
   dslText: '',
 }); // 表单数据
 const step = ref(1); // 表单步骤
+
+// 动态页面标题 - 优先使用表单中选择的模板名称，否则使用URL参数
+const pageTitle = computed(() => {
+  // 如果表单中已选择了模板
+  const selectedTemplateName = form.value.name;
+  if (selectedTemplateName) {
+    // 如果有对应的国际化key，使用国际化名称
+    if (templateNameMap[selectedTemplateName]) {
+      return t(`dataPipelines.${templateNameMap[selectedTemplateName]}`);
+    }
+    // 否则直接显示模板名称
+    return selectedTemplateName;
+  }
+  
+  // 使用URL参数中的模板名称
+  const templateName = route.query?.templateName;
+  if (templateName) {
+    if (templateNameMap[templateName]) {
+      return t(`dataPipelines.${templateNameMap[templateName]}`);
+    }
+    return templateName;
+  }
+  
+  return t("dataPipelines.taskList");
+});
 
 provide("subForm", form);
 provide("step", step);

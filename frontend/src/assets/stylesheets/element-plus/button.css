@@ -12,24 +12,24 @@
 
 /* btn-primary */
 .btn-primary {
-  background-color: var(--Brand-600);
-  border: 1px solid var(--Brand-600);
+  background-color: var(--Gold-600);
+  border: 1px solid var(--Gold-600);
   color: var(--Base-White);
   box-shadow: var(--shadow-xs);
 }
 
 .btn-primary:hover {
-  background-color: var(--Brand-700);
-  border: 1px solid var(--Brand-700);
+  background-color: var(--Gold-700);
+  border: 1px solid var(--Gold-700);
   color: var(--Base-White);
   box-shadow: var(--shadow-xs);
 }
 
 .btn-primary:focus {
-  background-color: var(--Brand-600);
-  border: 1px solid var(--Brand-600);
+  background-color: var(--Gold-600);
+  border: 1px solid var(--Gold-600);
   color: var(--Base-White);
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(77, 106, 214, 0.24);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(199, 146, 28, 0.24);
 }
 
 .btn-primary[disabled] {
@@ -94,23 +94,23 @@
 /* btn-secondary-color */
 .btn-secondary-color {
   background-color: var(--Base-White);
-  border: 1px solid var(--Brand-300);
-  color: var(--Brand-700);
+  border: 1px solid var(--Gold-300);
+  color: var(--Gold-700);
   box-shadow: var(--shadow-xs);
 }
 
 .btn-secondary-color:hover {
-  background-color: var(--Brand-50);
-  border: 1px solid var(--Brand-300);
-  color: var(--Brand-800);
+  background-color: var(--Gold-50);
+  border: 1px solid var(--Gold-300);
+  color: var(--Gold-800);
   box-shadow: var(--shadow-xs);
 }
 
 .btn-secondary-color:focus {
   background-color: var(--Base-White);
-  border: 1px solid var(--Brand-300);
-  color: var(--Brand-700);
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(77, 106, 214, 0.24);
+  border: 1px solid var(--Gold-300);
+  color: var(--Gold-700);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(199, 146, 28, 0.24);
 }
 
 .btn-secondary-color[disabled] {
@@ -146,18 +146,18 @@
 /* btn-outline-primary */
 .btn-outline-primary {
   background-color: var(--Base-White);
-  border: 1px solid var(--Brand-300);
-  color: var(--Brand-700);
+  border: 1px solid var(--Gold-300);
+  color: var(--Gold-700);
 }
 
 .btn-outline-primary:hover {
-  background-color: var(--Brand-50);
-  border: 1px solid var(--Brand-300);
-  color: var(--Brand-800);
+  background-color: var(--Gold-50);
+  border: 1px solid var(--Gold-300);
+  color: var(--Gold-800);
 }
 
 .btn-outline-primary:focus {
-  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(77, 106, 214, 0.24);
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(199, 146, 28, 0.24);
 }
 
 .btn-outline-primary[disabled] {
@@ -211,13 +211,13 @@
 .btn-ghost-primary {
   background-color: transparent;
   border: 1px solid transparent;
-  color: var(--Brand-700);
+  color: var(--Gold-700);
 }
 
 .btn-ghost-primary:hover {
-  background-color: var(--Brand-50);
+  background-color: var(--Gold-50);
   border: 1px solid transparent;
-  color: var(--Brand-800);
+  color: var(--Gold-800);
 }
 
 .btn-ghost-primary[disabled] {
@@ -261,16 +261,16 @@
 
 /* btn-tertiary-color */
 .btn-tertiary-color {
-  color: var(--Brand-700);
+  color: var(--Gold-700);
 }
 
 .btn-tertiary-color:hover {
-  background-color: var(--Brand-50);
-  color: var(--Brand-800);
+  background-color: var(--Gold-50);
+  color: var(--Gold-800);
 }
 
 .btn-tertiary-color:focus {
-  color: var(--Brand-700);
+  color: var(--Gold-700);
 }
 
 .btn-tertiary-color[disabled] {
@@ -296,15 +296,15 @@
 
 /* btn-link-color */
 .btn-link-color {
-  color: var(--Brand-700);
+  color: var(--Gold-700);
 }
 
 .btn-link-color:hover {
-  color: var(--Brand-800);
+  color: var(--Gold-800);
 }
 
 .btn-link-color:focus {
-  color: var(--Brand-700);
+  color: var(--Gold-700);
 }
 
 .btn-link-color[disabled] {

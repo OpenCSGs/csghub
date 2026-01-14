@@ -118,10 +118,10 @@ const templateId = computed(() => route.query.templateId)
 const type = computed(() => route.query.type)
 const title = computed(() => {
   return route.query.type === 'add'
-    ? `${t('dataPipelines.create')}${t('dataPipelines.algorithmTemplate')}`
+    ? `${t('dataPipelines.create')}${t('dataPipelines.taskTemplate')}`
     : route.query.type === 'copy'
-    ? `${t('dataPipelines.copy')}${t('dataPipelines.algorithmTemplate')}`
-    : `${t('dataPipelines.edit')}${t('dataPipelines.algorithmTemplate')}`
+    ? `${t('dataPipelines.copy')}${t('dataPipelines.taskTemplate')}`
+    : `${t('dataPipelines.edit')}${t('dataPipelines.taskTemplate')}`
 })
 const existingTemplates = ref([])
 

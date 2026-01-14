@@ -13,7 +13,7 @@
         class="text-gray-700 text-sm font-medium cursor-pointer hover:text-brand-700"
         @click="navigateToPage"
       >
-        {{ t('dataPipelines.algorithmTemplate') }}
+        {{ t('dataPipelines.taskManagement') }}
       </p>
       <SvgIcon
         class="w-5 h-5 mx-2"
@@ -426,8 +426,8 @@
   const isAdd = computed(() => route.query.type === 'add')
   const title = computed(() => {
     return route.query.type === 'add'
-      ? `${t('dataPipelines.create')}${t('dataPipelines.algorithmTemplate')}`
-      : `${t('dataPipelines.edit')}${t('dataPipelines.algorithmTemplate')}`
+      ? `${t('dataPipelines.create')}${t('dataPipelines.taskTemplate')}`
+      : `${t('dataPipelines.edit')}${t('dataPipelines.taskTemplate')}`
   })
 
   const navigateToPage = () => {

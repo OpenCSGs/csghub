@@ -49,6 +49,7 @@
         <el-dropdown @command="handleLocaleChange">
           <span class="flex items-center text-base outline-none">
             <SvgIcon name="navbar-language" />
+            <span class="ml-1 text-sm">{{ currentLangName }}</span>
             <el-icon class="el-icon--right">
               <arrow-down />
             </el-icon>
@@ -942,6 +943,15 @@
         'hasEmail',
         'canChangeUsername'
       ]),
+      currentLangName() {
+        const locale = this.$i18n?.locale || 'zh'
+        const langMap = {
+          'zh': '简体中文',
+          'zhHant': '繁體中文',
+          'en': 'English'
+        }
+        return langMap[locale] || '简体中文'
+      },
       showBroadcast() {
         return !window.location.pathname.includes('/lead_forms')
       },

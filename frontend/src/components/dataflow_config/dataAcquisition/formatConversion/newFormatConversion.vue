@@ -7,7 +7,7 @@
         class="text-gray-700 text-sm font-medium cursor-pointer hover:text-brand-700"
         @click="router.back()"
       >
-        {{ t("dataPipelines.formatConversion") }}
+        {{ t("dataPipelines.dataFormatConversion") }}
       </p>
       <SvgIcon class="w-5 h-5 mx-2" name="dataflow_homeIcon_divider" />
       <p class="text-brand-700 text-sm font-medium">

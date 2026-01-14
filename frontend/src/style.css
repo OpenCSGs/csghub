@@ -20,7 +20,7 @@ body {
 
 .is-active {
   font-weight: bold !important;
-  color: var(--Brand-600) !important;
+  color: var(--Gold-600) !important;
 }
 
 .el-button {
@@ -59,12 +59,12 @@ body {
 
 /* 修改选中的文字颜色 */
 .el-tabs__item.is-active {
-  color: #223B99 !important;
+  color: var(--Gold-600) !important;
 }
 
 /* 修改选中标签的颜色 */
 .el-tabs__active-bar {
-  background-color: #223B99 !important;
+  background-color: var(--Gold-600) !important;
   transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
   will-change: transform !important;
 }
@@ -81,11 +81,11 @@ body {
 }
 
 .el-tabs__item.is-top.is-active {
-  color: #223B99 !important;
+  color: var(--Gold-600) !important;
 }
 
 .el-tabs__item.is-top:hover {
-  color: #223B99 !important;
+  color: var(--Gold-600) !important;
 }
 
 .el-tabs {
@@ -125,7 +125,7 @@ body {
 
 .el-select-dropdown__item.is-selected {
   background-color: #F9FAFB !important;
-  color: #3250BD !important;
+  color: var(--Gold-600) !important;
   font-weight: 400 !important;
 }
 
@@ -277,7 +277,7 @@ img, video {
   }
 
   .el-menu-item:hover {
-    color: #3250BD !important;
+    color: var(--Gold-600) !important;
   }
 
   .el-menu--horizontal > .el-sub-menu .el-sub-menu__title {
@@ -287,6 +287,6 @@ img, video {
   .el-sub-menu__title:hover,
   .el-tooltip__trigger:hover,
   .el-sub-menu__title.el-tooltip__trigger:hover {
-    color: #3250BD !important;
+    color: var(--Gold-600) !important;
   }
 }
