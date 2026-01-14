@@ -107,24 +107,24 @@ body .el-message-box {
 
 /* 确认按钮样式 */
 .el-message-box__btns .el-button--primary {
-  background-color: var(--Theme-600) !important;
-  border: 1px solid var(--Theme-600) !important;
+  background-color: var(--Gold-600) !important;
+  border: 1px solid var(--Gold-600) !important;
   color: var(--Base-White) !important;
   box-shadow: var(--shadow-xs) !important;
   outline: none !important;
 }
 
 .el-message-box__btns .el-button--primary:hover {
-  background-color: var(--Theme-700) !important;
-  border: 1px solid var(--Theme-700) !important;
+  background-color: var(--Gold-700) !important;
+  border: 1px solid var(--Gold-700) !important;
   color: var(--Base-White) !important;
   box-shadow: var(--shadow-xs) !important;
 }
 
 /* 移除focus时的特殊样式，使其保持与默认状态一致 */
 .el-message-box__btns .el-button--primary:focus {
-  background-color: var(--Theme-600) !important;
-  border: 1px solid var(--Theme-600) !important;
+  background-color: var(--Gold-600) !important;
+  border: 1px solid var(--Gold-600) !important;
   color: var(--Base-White) !important;
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(199, 146, 28, 0.24) !important;
   outline: none !important;

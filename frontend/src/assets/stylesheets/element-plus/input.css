@@ -8,12 +8,12 @@
   /* default focus style */
   .el-textarea__inner:focus, .el-input__wrapper.is-focus, .el-select__wrapper.is-focused, .el-cascader.is-focused {
     box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(199, 146, 28, 0.24);
-    border: 1px solid var(--Theme-300);
+    border: 1px solid var(--Gold-300);
   }
 
   /* default focus input icon style */
   .el-select__wrapper.is-focused .el-icon, .el-input__wrapper.is-focus .el-icon{
-    color: var(--Theme-300);
+    color: var(--Gold-300);
   }
 
   /* default input icon style */
@@ -23,7 +23,7 @@
 
   /* when hover input icon style */
   .el-select__wrapper .el-icon:hover, .el-input__wrapper .el-icon:hover {
-    color: var(--Theme-300);
+    color: var(--Gold-300);
   }
 
   /* error input icon style */

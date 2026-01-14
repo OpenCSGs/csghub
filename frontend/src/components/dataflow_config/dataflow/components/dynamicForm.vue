@@ -881,7 +881,7 @@
       }
       
       &.is-focus {
-        border: 1px solid var(--Theme-300);
+        border: 1px solid var(--Gold-300);
         box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px rgba(199, 146, 28, 0.24);
       }
     }

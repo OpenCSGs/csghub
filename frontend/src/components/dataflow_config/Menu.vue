@@ -13,6 +13,7 @@
         :collapse="isCollapse"
         :collapse-transition="false"
         @select="handleSelect"
+        style="--el-menu-active-bg-color: var(--Gold-100); --el-menu-active-color: var(--Gold-600);"
       >
         <!-- 1. 系统仪表盘 -->
         <el-menu-item
@@ -25,7 +26,7 @@
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
           <div class="innerBox w-full px-3 py-2">
-            <el-icon class="w-5 h-5"><Odometer /></el-icon>
+            <SvgIcon name="dataflow_system_dashboard" class="w-4 h-4" />
             <span class="sle ml-2">{{
               t("dataPipelines.systemDashboard")
             }}</span>
@@ -43,7 +44,7 @@
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
           <div class="innerBox w-full px-3 py-2">
-            <el-icon class="w-5 h-5"><Coin /></el-icon>
+            <SvgIcon name="dataflow_data_source" class="w-4 h-4" />
             <span class="sle ml-2">{{
               t("dataPipelines.dataSourceManagement")
             }}</span>
@@ -61,7 +62,7 @@
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
           <div class="innerBox w-full px-3 py-2">
-            <el-icon class="w-5 h-5"><Switch /></el-icon>
+            <SvgIcon name="dataflow_data_format_conversion" class="w-4 h-4" />
             <span class="sle ml-2">{{
               t("dataPipelines.dataFormatConversion")
             }}</span>
@@ -79,7 +80,7 @@
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
           <div class="innerBox w-full px-3 py-2">
-            <el-icon class="w-5 h-5"><Filter /></el-icon>
+            <SvgIcon name="dataflow_data_filtering" class="w-4 h-4" />
             <span class="sle ml-2">{{ t("dataPipelines.dataFilter") }}</span>
           </div>
         </el-menu-item>
@@ -95,7 +96,7 @@
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
           <div class="innerBox w-full px-3 py-2">
-            <el-icon class="w-5 h-5"><Finished /></el-icon>
+            <SvgIcon name="dataflow_data_filter" class="w-4 h-4" />
             <span class="sle ml-2">{{ t("dataPipelines.dataSelection") }}</span>
           </div>
         </el-menu-item>
@@ -111,7 +112,7 @@
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
           <div class="innerBox w-full px-3 py-2">
-            <el-icon class="w-5 h-5"><Hide /></el-icon>
+            <SvgIcon name="dataflow_data_desensitization" class="w-4 h-4" />
             <span class="sle ml-2">{{ t("dataPipelines.dataDesensitization") }}</span>
           </div>
         </el-menu-item>
@@ -127,7 +128,7 @@
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
           <div class="innerBox w-full px-3 py-2">
-            <el-icon class="w-5 h-5"><DocumentCopy /></el-icon>
+            <SvgIcon name="dataflow_semantic_deduplication" class="w-4 h-4" />
             <span class="sle ml-2">{{ t("dataPipelines.semanticDeduplication") }}</span>
           </div>
         </el-menu-item>
@@ -143,7 +144,7 @@
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
           <div class="innerBox w-full px-3 py-2">
-            <el-icon class="w-5 h-5"><Medal /></el-icon>
+            <SvgIcon name="dataflow_quality_evaluation" class="w-4 h-4" />
             <span class="sle ml-2">{{ t("dataPipelines.qualityEvaluation") }}</span>
           </div>
         </el-menu-item>
@@ -156,7 +157,7 @@
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
           <div class="innerBox w-full px-3 py-2">
-            <el-icon class="w-5 h-5"><EditPen /></el-icon>
+            <SvgIcon name="dataflow_data_labeling" class="w-4 h-4" />
             <span class="sle ml-2">{{ t("dataPipelines.labelStudio") }}</span>
           </div>
         </el-menu-item>
@@ -169,7 +170,7 @@
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
           <div class="innerBox w-full px-3 py-2">
-            <el-icon class="w-5 h-5"><Lock /></el-icon>
+            <SvgIcon name="dataflow_security_scanning" class="w-4 h-4" />
             <span class="sle ml-2">{{ t("dataPipelines.securityScan") }}</span>
           </div>
         </el-menu-item>
@@ -178,7 +179,7 @@
         <el-sub-menu index="11">
           <template #title>
             <div class="innerBox w-full px-3 py-2">
-              <el-icon class="w-5 h-5"><Setting /></el-icon>
+              <SvgIcon name="dataflow_task_management" class="w-4 h-4" />
               <span class="sle ml-2">{{
                 t("dataPipelines.taskManagement")
               }}</span>
@@ -264,23 +265,11 @@ import { onMounted, onBeforeUnmount, computed, watch, ref } from "vue";
 import { useGlobalStore } from "../../stores/useGlobalStore";
 import { useRouter, useRoute } from "vue-router";
 import { ElMessage, ElLoading } from "element-plus";
-import { 
-  Filter, 
-  Finished, 
-  Hide, 
-  DocumentCopy, 
-  Medal, 
-  Lock, 
-  Odometer, 
-  Coin, 
-  Switch, 
-  EditPen, 
-  Setting 
-} from "@element-plus/icons-vue";
 import { useI18n } from "vue-i18n";
 import useFetchApi from "@/packs/useFetchApi";
 import { useCookies } from "vue3-cookies";
 import useUserStore from "@/stores/UserStore";
+import SvgIcon from "@/components/shared/SvgIcon.vue";
 const userStore = useUserStore();
 
 const { cookies } = useCookies();
@@ -456,7 +445,22 @@ onBeforeUnmount(() => {
 defineExpose();
 </script>
 
+<style lang="less">
+/* 定义 CSS 变量（非 scoped，确保全局可用） */
+:root {
+  --Gold-100: #FAF3D4;
+  --Gold-600: #C7921C;
+}
+</style>
+
 <style scoped lang="less">
+.el-menu-vertical {
+  --el-menu-active-bg-color: var(--Gold-100) !important;
+  --el-menu-active-color: var(--Gold-600) !important;
+  --el-menu-hover-bg-color: transparent !important;
+  --el-menu-item-active-color: var(--Gold-600) !important;
+  --el-menu-item-active-fill: var(--Gold-100) !important;
+}
 .sle {
   font-weight: 500 !important;
 }
@@ -488,17 +492,44 @@ defineExpose();
 }
 .el-menu-vertical {
   border: none !important;
+  --el-menu-active-bg-color: var(--Gold-100) !important;
+  --el-menu-active-color: var(--Gold-600) !important;
 }
 .innerBox {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
+/* 确保子菜单标题的 innerBox 左侧对齐 */
+:deep(.el-sub-menu__title) .innerBox {
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
 :deep(.el-menu-item) {
-  padding: 0 20px;
+  padding: 0 20px !important;
+  margin-left: 12px;
+  margin-right: 12px;
+  height: auto !important;
+  min-height: auto !important;
   span {
     line-height: 24px;
     font-weight: 500;
+  }
+  &.is-active {
+    background-color: var(--Gold-100) !important;
+    background: var(--Gold-100) !important;
+    color: var(--Gold-600) !important;
+    span,
+    .sle,
+    .innerBox,
+    .innerBox * {
+      color: var(--Gold-600) !important;
+    }
+    svg,
+    .el-icon {
+      color: var(--Gold-600) !important;
+      fill: var(--Gold-600) !important;
+    }
   }
 }
 .menuline {
@@ -510,30 +541,122 @@ defineExpose();
 }
 :deep(.el-menu-item-group) {
   .el-menu-item {
-    padding-left: 60px !important;
+    padding: 8px 20px 8px 60px !important;
+    margin-left: 12px !important;
+    margin-right: 12px !important;
+    height: auto !important;
+    min-height: auto !important;
+    line-height: 24px !important;
+    &:not(.is-active) {
+      color: var(--Gray-600) !important;
+      background-color: transparent !important;
+      span {
+        color: var(--Gray-600) !important;
+      }
+    }
+    &.is-active {
+      border-radius: 8px !important;
+      background-color: var(--Gold-100) !important;
+      background: var(--Gold-100) !important;
+      color: var(--Gold-600) !important;
+      span {
+        color: var(--Gold-600) !important;
+      }
+    }
   }
 }
 :deep(.el-sub-menu.is-active) {
   .menuline {
     display: block;
+    left: -12px !important;
+  }
+  .el-sub-menu__title {
+    margin-left: 12px !important;
+    margin-right: 12px !important;
+    border-radius: 8px !important;
+    background-color: var(--Gold-100) !important;
+    background: var(--Gold-100) !important;
+    color: var(--Gold-600) !important;
+  }
+  .el-sub-menu__title .innerBox {
+    background: transparent !important;
+    background-color: transparent !important;
+    color: var(--Gold-600) !important;
+    img {
+      filter: brightness(0) saturate(100%) invert(67%) sepia(89%) saturate(1352%) hue-rotate(10deg) brightness(98%) contrast(85%) !important;
+    }
+  }
+  .el-sub-menu__title span {
+    color: var(--Gold-600) !important;
+  }
+  .el-sub-menu__title svg,
+  .el-sub-menu__title .el-icon {
+    color: var(--Gold-600) !important;
+    fill: var(--Gold-600) !important;
+  }
+  /* 子菜单项不应该全部变金色，只有选中的才变 */
+  .el-menu-item-group .el-menu-item:not(.is-active) {
+    color: var(--Gray-600) !important;
+    background-color: transparent !important;
+    span {
+      color: var(--Gray-600) !important;
+    }
   }
 }
-:deep(.el-menu-item.is-active) {
+:deep(.el-menu-item.is-active),
+:deep(.el-menu-item.is-active:hover),
+.el-menu-vertical :deep(.el-menu-item.is-active),
+.el-menu-vertical :deep(.el-menu-item.is-active:hover) {
+  position: relative;
+  margin-left: 12px !important;
+  margin-right: 12px !important;
+  border-radius: 8px !important;
+  /* 确保 menuline 在最左侧对齐 */
+  color: var(--Gold-600) !important;
+  background-color: var(--Gold-100) !important;
+  background: var(--Gold-100) !important;
+  &::before {
+    background-color: var(--Gold-100) !important;
+  }
   .menuline {
     display: block;
+    left: -12px !important;
   }
-  color: var(--Theme-600) !important;
   .innerBox {
-    border-radius: var(--radius-8, 8px);
-    background: var(--Theme-200);
-    color: var(--Theme-600) !important;
+    border-radius: 8px;
+    background: transparent !important;
+    background-color: transparent !important;
+    color: var(--Gold-600) !important;
+    img {
+      filter: brightness(0) saturate(100%) invert(67%) sepia(89%) saturate(1352%) hue-rotate(10deg) brightness(98%) contrast(85%);
+    }
   }
-  .el-icon {
-    color: var(--Theme-600) !important;
+  .el-icon,
+  i,
+  svg {
+    color: var(--Gold-600) !important;
+    fill: var(--Gold-600) !important;
   }
-  span {
-    color: var(--Theme-600) !important;
+  span,
+  .sle {
+    color: var(--Gold-600) !important;
   }
+  *:not(.menuline):not(img) {
+    color: var(--Gold-600) !important;
+  }
+}
+
+/* 更具体的选择器确保激活状态颜色生效 */
+.el-menu-vertical :deep(.el-menu-item.is-active),
+.el-menu-vertical :deep(.el-menu-item.is-active *) {
+  color: var(--Gold-600) !important;
+}
+
+.el-menu-vertical :deep(.el-menu-item.is-active) span,
+.el-menu-vertical :deep(.el-menu-item.is-active) .sle,
+.el-menu-vertical :deep(.el-menu-item.is-active) .innerBox,
+.el-menu-vertical :deep(.el-menu-item.is-active) .innerBox * {
+  color: var(--Gold-600) !important;
 }
 :deep(.el-menu--collapse) {
   width: 100% !important;
@@ -556,7 +679,12 @@ defineExpose();
   }
 }
 :deep(.el-sub-menu__title) {
-  padding: 0 10px 0 17px;
+  padding: 0 20px !important;
+  margin-left: 12px;
+  margin-right: 12px;
+  height: auto !important;
+  min-height: auto !important;
+  line-height: normal !important;
   .subItemIco {
     margin-left: 12px;
   }
@@ -570,31 +698,36 @@ defineExpose();
 :deep(.el-menu-item) {
   &:hover {
     background: transparent;
-    color: var(--Theme-600) !important;
+    color: var(--Gold-600) !important;
+    .innerBox {
+      img {
+        filter: brightness(0) saturate(100%) invert(67%) sepia(89%) saturate(1352%) hue-rotate(10deg) brightness(98%) contrast(85%);
+      }
+    }
     .el-icon {
-      color: var(--Theme-600) !important;
+      color: var(--Gold-600) !important;
     }
     span {
-      color: var(--Theme-600) !important;
+      color: var(--Gold-600) !important;
     }
   }
 }
 :deep(.el-sub-menu__title) {
   &:hover {
     background: transparent;
-    color: var(--Theme-600) !important;
+    color: var(--Gold-600) !important;
     .el-icon {
-      color: var(--Theme-600) !important;
+      color: var(--Gold-600) !important;
     }
     span {
-      color: var(--Theme-600) !important;
+      color: var(--Gold-600) !important;
     }
   }
 }
 :deep(.el-menu--collapse .el-sub-menu.is-active .el-sub-menu__title) {
-  color: var(--Theme-600) !important;
+  color: var(--Gold-600) !important;
   .el-icon {
-    color: var(--Theme-600) !important;
+    color: var(--Gold-600) !important;
   }
 }
 :deep(.el-menu) {
