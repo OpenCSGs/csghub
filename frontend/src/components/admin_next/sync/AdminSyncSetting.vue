@@ -36,6 +36,23 @@
           </template>
         </el-table-column>
         <el-table-column prop="sync_status" label="Status"></el-table-column>
+        <el-table-column
+          label="options">
+          <template #default="scope">
+            <div class="flex items-center justify-start gap-[8px]">
+              <CsgButton
+                v-if="scope.row.sync_status === 'failed'"
+                class="btn btn-link-color btn-md"
+                @click="retry(scope.row)"
+                :name="$t('endpoints.playground.retry')" />
+              <CsgButton
+                v-if="scope.row.sync_status === 'inprogress'"
+                class="btn btn-link-color btn-md"
+                @click="cancelSync(scope.row)"
+                :name="$t('all.cancel')" />
+            </div>
+          </template>
+        </el-table-column>
       </el-table>
 
       <el-pagination v-model:current-page="page" :page-size="per" layout="prev, pager, next" :total="total"
@@ -74,6 +91,39 @@ const onSubmit = () => {
     return false
   }
   createSyncSetting()
+}
+
+const retry = async (item) => { 
+  useFetchApi(`/${item.repo_type}s/${item.path}/mirror/sync`, {
+    method: 'POST',
+  }).then(({ data, error }) => {
+    if (data.value) {
+      ElMessage.success('Sync started successfully')
+    } else {
+      ElMessage.error(error.value?.msg || 'Failed to start sync')
+    }
+  }).catch(error => {
+    ElMessage.error(error.message || 'Failed to start sync')
+  })
+}
+
+const cancelSync = async (item) => {
+  const cancelEndpoint = `/lfs_sync/cancel`
+  const { data, error } = await useFetchApi(cancelEndpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      mirror_id: item.id
+    })
+  }).json()
+  if (data.value) {
+    ElMessage.success('Sync cancelled successfully')
+    fetchSyncRecords();
+  } else {
+    ElMessage.warning(error.value.msg)
+  }
 }
 
 const createSyncSetting = async () => {
