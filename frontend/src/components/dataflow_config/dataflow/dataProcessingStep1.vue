@@ -183,7 +183,7 @@
 
 <script setup>
 import { useRouter, useRoute } from "vue-router";
-import { ref, onMounted, inject, computed, watch } from "vue";
+import { ref, onMounted, inject, computed, watch, nextTick } from "vue";
 import useFetchApi from "../../../packs/useFetchApi";
 import { convertUtcToLocalTime } from "../../../packs/datetimeUtils";
 import useUserStore from '../../../stores/UserStore.js'
@@ -327,14 +327,15 @@ watch([() => userStore.username, () => route.query.datasetPath], () => {
 })
 
 // 监听路由参数 templateName 变化，更新模板选择
-watch(() => route.query.templateName, (newTemplateName) => {
-  if (newTemplateName && templateList.value.length > 0 && !templateId.value) {
-    const matchedTemplate = templateList.value.find(
-      (item) => item.name === newTemplateName
-    )
-    if (matchedTemplate) {
-      subForm.value.name = matchedTemplate.name
-      changeTemplate(matchedTemplate.name)
+watch(() => route.query.templateName, (newTemplateName, oldTemplateName) => {
+  // 如果 templateName 发生变化，且不是 templateId 模式
+  if (newTemplateName && newTemplateName !== oldTemplateName && !templateId.value) {
+    // 如果模板列表还未加载，先加载模板列表
+    if (templateList.value.length === 0) {
+      getTemplateData()
+    } else {
+      // 模板列表已加载，直接更新选择
+      updateTemplateSelection()
     }
   }
 }, { immediate: false })
@@ -371,20 +372,33 @@ const getTemplateData = async () => {
     templateList.value = data.value.data.templates
     
     // 如果有 templateName 参数，自动选择对应的模板（带校验）
-    if (templateName.value && !templateId.value) {
-      const matchedTemplate = templateList.value.find(
-        (item) => item.name === templateName.value
-      )
-      if (matchedTemplate) {
-        subForm.value.name = matchedTemplate.name
-        changeTemplate(matchedTemplate.name)
-      }
+    // 每次加载模板列表后都检查是否需要更新选择
+    await nextTick()
+    updateTemplateSelection()
+  }
+}
+
+// 更新模板选择的公共方法
+const updateTemplateSelection = async () => {
+  if (templateName.value && !templateId.value && templateList.value.length > 0) {
+    const matchedTemplate = templateList.value.find(
+      (item) => item.name === templateName.value
+    )
+    if (matchedTemplate && matchedTemplate.name !== subForm.value.name) {
+      // 使用 nextTick 确保 DOM 更新完成后再操作
+      await nextTick()
+      subForm.value.name = matchedTemplate.name
+      changeTemplate(matchedTemplate.name)
     }
   }
 }
 
 const changeTemplate = (e) => {
-  const temp = templateList.value.filter((item) => item.name === e)[0]
+  const temp = templateList.value.find((item) => item.name === e)
+  if (!temp) {
+    console.warn(`Template "${e}" not found in templateList`)
+    return
+  }
   console.log(temp)
 
   subForm.value.type = temp.type || ''

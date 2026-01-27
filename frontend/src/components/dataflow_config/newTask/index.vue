@@ -13,7 +13,7 @@
         class="text-gray-700 text-sm font-medium cursor-pointer hover:text-brand-700"
         @click="navigateToPage"
       >
-        {{ t('dataPipelines.dataProcessing') }}
+        {{ pageTitle }}
       </p>
       <SvgIcon
         class="w-5 h-5 mx-2"
@@ -101,7 +101,7 @@
             <el-option
               v-for="item in dataSourceList"
               :key="item.id"
-              :label="item.name"
+              :label="getParamName(item.name)"
               :value="item.path"
             />
           </el-select>
@@ -123,7 +123,7 @@
             <el-option
               v-for="item in branchList"
               :key="item.name"
-              :label="item.name"
+              :label="getParamName(item.name)"
               :value="item.name"
             />
           </el-select>
@@ -158,7 +158,7 @@
             <el-option
               v-for="item in dataSourceList"
               :key="item.id"
-              :label="item.name"
+              :label="getParamName(item.name)"
               :value="item.path"
             />
           </el-select>
@@ -177,7 +177,7 @@
             <el-option
               v-for="(item, index) in templateList"
               :key="index"
-              :label="item.name"
+              :label="getParamName(item.name)"
               :value="index"
             />
           </el-select>
@@ -205,7 +205,7 @@
           <el-form-item
             v-for="(item, paramIndex) in seltool.params"
             :key="paramIndex"
-            :label="item.name"
+            :label="getParamName(item.name)"
           >
             <el-slider
               v-if="item.type == 'from_2_to_20'"
@@ -219,7 +219,7 @@
               v-if="item.type == 'STRING' && Array.isArray(item.option_values)"
               v-model="item.value"
               class="w-full"
-              :placeholder="item.name"
+              :placeholder="getParamName(item.name)"
             >
               <el-option
                 v-for="selItem in item.option_values"
@@ -232,7 +232,7 @@
               <el-select
                 v-model="item.value"
                 class="w-full"
-                :placeholder="item.name"
+                :placeholder="getParamName(item.name)"
                 filterable
                 allow-create
                 default-first-option
@@ -254,7 +254,7 @@
             </div>
             <el-input
               v-if="item.type == 'STRING' && !Array.isArray(item.option_values)"
-              :placeholder="`${item.name}`"
+              :placeholder="getParamName(item.name)"
               style="width: 100%"
               v-model="item.value"
             />
@@ -307,7 +307,7 @@
               <el-input
                 ref="InputRef"
                 v-model="item.tempVal"
-                :placeholder="item.name"
+                :placeholder="getParamName(item.name)"
                 style="width: 100%"
                 @keyup.enter="handleInputConfirm(item,'tempVal')"
               />
@@ -315,14 +315,14 @@
             <el-checkbox
               v-if="item.type == 'BOOLEAN'"
               v-model="item.value"
-              :label="item.name"
+              :label="getParamName(item.name)"
               class="block my-2.5"
             />
             <div v-if="item.type == 'select-model'" class="w-full">
               <el-select
                 v-model="item.value"
                 class="w-full"
-                :placeholder="item.name"
+                :placeholder="getParamName(item.name)"
                 filterable
               >
                 <el-option
@@ -431,7 +431,7 @@
                       style="width: 98%"
                     />
                     <p class="text-gray-900 text-sm mt-3 mb-5">
-                      {{ scope.row.params[0].name }}
+                      {{ getParamName(scope.row.params[0].name) }}
                     </p>
                     <el-slider
                       v-model="scope.row.params[1].value"
@@ -441,7 +441,7 @@
                       style="width: 98%"
                     />
                     <p class="text-gray-900 text-sm mt-3 mb-5">
-                      {{ scope.row.params[1].name }}
+                      {{ getParamName(scope.row.params[1].name) }}
                     </p>
                   </div>
                   <div
@@ -465,7 +465,7 @@
                       "
                       v-model="item.value"
                       class="w-full"
-                      :placeholder="item.name"
+                      :placeholder="getParamName(item.name)"
                     >
                       <el-option
                         v-for="selItem in item.option_values"
@@ -478,7 +478,7 @@
                       <el-select
                         v-model="item.value"
                         class="w-full"
-                        :placeholder="item.name"
+                        :placeholder="getParamName(item.name)"
                         filterable
                         allow-create
                         default-first-option
@@ -503,7 +503,7 @@
                         item.type == 'STRING' &&
                         !Array.isArray(item.option_values)
                       "
-                      :placeholder="`${item.name}`"
+                      :placeholder="getParamName(item.name)"
                       style="width: 100%"
                       v-model="item.value"
                     />
@@ -556,7 +556,7 @@
                       <el-input
                         ref="InputRef"
                         v-model="item.option_values"
-                        :placeholder="item.name"
+                        :placeholder="getParamName(item.name)"
                         style="width: 100%"
                         @keyup.enter="handleInputConfirm(item,'option_values')"
                       />
@@ -568,14 +568,14 @@
                   <el-checkbox
                     v-if="item.type == 'BOOLEAN'"
                     v-model="item.value"
-                    :label="item.name"
+                    :label="getParamName(item.name)"
                     class="block my-2.5"
                   />
                   <div v-if="item.type == 'select-model'" class="w-full">
                     <el-select
                       v-model="item.value"
                       class="w-full"
-                      :placeholder="item.name"
+                      :placeholder="getParamName(item.name)"
                       filterable
                     >
                       <el-option
@@ -713,7 +713,7 @@
 
 <script setup>
   import { useRouter, useRoute } from 'vue-router'
-  import { ref, onMounted, watch } from 'vue'
+  import { ref, onMounted, watch, nextTick, computed } from 'vue'
   import { ElMessage } from 'element-plus'
   import useUserStore from '../../../stores/UserStore.js'
   import useFetchApi from '../../../packs/useFetchApi'
@@ -728,6 +728,15 @@
 
   const userStore = useUserStore()
   const { t, locale } = useI18n()
+
+  // 获取参数名称的国际化文本
+  const getParamName = (paramName) => {
+    if (!paramName) return ''
+    const i18nKey = `dataPipelines.toolParam.${paramName}`
+    const translated = t(i18nKey)
+    // 如果翻译不存在，返回原始名称
+    return translated !== i18nKey ? translated : paramName
+  }
   const dataSourceList = ref([])
   const branchList = ref([])
   const templateList = ref([])
@@ -745,6 +754,24 @@
   const taskUseType = ref(route.query.type ? route.query.type : 'tool')
   const toolListAll = ref([])
   const seltool = ref({})
+
+  // 工具名称到国际化key的映射
+  const toolNameMap = {
+    "md_to_jsonl_preprocess_internal": "mdToJson",
+    "fineweb_edu_chinese_common_internal": "qualityEvaluation",
+  }
+
+  // 动态页面标题 - 根据选择的工具动态变化
+  const pageTitle = computed(() => {
+    // 优先使用路由参数中的 selToolName（确保响应路由变化）
+    const currentToolName = route.query.selToolName || selToolName.value
+    if (currentToolName && toolNameMap[currentToolName]) {
+      return t(`dataPipelines.${toolNameMap[currentToolName]}`)
+    }
+    
+    // 默认显示数据处理
+    return t('dataPipelines.dataProcessing')
+  })
   const form = ref({
     project_name: '',
     dataset_path: '',
@@ -985,6 +1012,21 @@
   watch([() => userStore.username, () => route.query.datasetPath], () => {
     updateOwner()
   })
+
+  // 监听路由参数 selToolName 变化，更新工具选择
+  watch(() => route.query.selToolName, async (newToolName, oldToolName) => {
+    if (newToolName && newToolName !== oldToolName && taskUseType.value === 'tool') {
+      selToolName.value = newToolName
+      // 如果工具列表已加载，直接更新选择
+      if (toolListAll.value.length > 0) {
+        await nextTick()
+        updateToolSelection()
+      } else {
+        // 如果工具列表未加载，先加载工具列表
+        getToolsData()
+      }
+    }
+  }, { immediate: false })
   const changeTaskType = async () => {
     if (taskUseType.value === 'ops') {
       const tableBody = document.querySelector('.el-table__body-wrapper tbody')
@@ -1008,6 +1050,23 @@
     }
   }
 
+  // 更新工具选择的公共方法
+  const updateToolSelection = () => {
+    if (taskUseType.value === 'tool' && selToolName.value && toolListAll.value.length > 0) {
+      const matchedTool = toolListAll.value.find(
+        (item) => item.name === selToolName.value
+      )
+      if (matchedTool) {
+        seltool.value = matchedTool
+        const toolIndex = toolListAll.value.findIndex(
+          (item) => item.name === selToolName.value
+        )
+        form.value.selToolIndex = toolIndex >= 0 ? toolIndex : 0
+        addTempValToListParams(seltool.value)
+      }
+    }
+  }
+
   const getToolsData = async () => {
     const url = '/dataflow/tools'
     const { data } = await useFetchApi(url).get().json()
@@ -1027,6 +1086,8 @@
         seltool.value = toolListAll.value[0]
       }
       addTempValToListParams(seltool.value)
+      // 工具列表加载后，检查是否需要更新选择
+      updateToolSelection()
     }
   }
 

@@ -100,6 +100,8 @@ const router = useRouter();
 const route = useRoute()
 const { t, locale } = useI18n();
 const formLoading = ref(false);
+const subLoading = ref(false);
+const isSaving = ref(false); // 防止重复提交
 
 const templateId = computed(() => route.query.templateId)
 const type = computed(() => route.query.type)
@@ -175,7 +177,19 @@ const disabledPastSeconds = (selectedHour, selectedMinute) => {
 
 const isRun = ref(false);
 const save = async (type) => {
+  // 防止重复提交
+  if (isSaving.value) {
+    return;
+  }
+  
   isRun.value = type === 2;
+  
+  // 如果是保存并执行，设置加载状态并关闭对话框
+  if (type === 2) {
+    subLoading.value = true;
+    centerDialogVisible.value = false;
+  }
+  
   if (workflowEditorRef.value) {
     workflowEditorRef.value.saveWorkflow();
   }
@@ -191,94 +205,120 @@ const save = async (type) => {
 
 // 保存
 const handleWorkflowSave = async (result) => {
-  if (result.success) {
-    // 处理保存成功的逻辑
-    console.log('工作流数据:', result.data);
+  // 防止重复提交
+  if (isSaving.value) {
+    return;
+  }
+  
+  isSaving.value = true;
+  subLoading.value = true;
+  
+  try {
+    if (result.success) {
+      // 处理保存成功的逻辑
+      console.log('工作流数据:', result.data);
 
-    if (props.init === 'createTemplate') {
-      const combinedData = {
-        id: type.value === 'edit' ? templateId.value : '',
-        ...form.value,
-        dslText: result.data.yaml
-      };
+      if (props.init === 'createTemplate') {
+        const combinedData = {
+          id: type.value === 'edit' ? templateId.value : '',
+          ...form.value,
+          dslText: result.data.yaml
+        };
 
-      console.log('合并后的数据:', combinedData);
-      
-      const options = {
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(combinedData)
-      }
-      
-      const url = type.value === 'edit' ? `/dataflow/algo_templates/${templateId.value}` : '/dataflow/algo_templates'
-      const { data, error } = await useFetchApi(url, options)[type.value === 'edit' ? 'put' : 'post']().json()
-      console.log(data.value, error.value, "dataerror");
-      if (error.value || data.value.code !== 200) {
-        ElMessage({
-          message: data.value.msg || error.value.msg,
-          type: 'error',
-          plain: true,
-          grouping: true,
-        })
+        console.log('合并后的数据:', combinedData);
+        
+        const options = {
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(combinedData)
+        }
+        
+        const url = type.value === 'edit' ? `/dataflow/algo_templates/${templateId.value}` : '/dataflow/algo_templates'
+        const { data, error } = await useFetchApi(url, options)[type.value === 'edit' ? 'put' : 'post']().json()
+        console.log(data.value, error.value, "dataerror");
+        if (error.value || data.value.code !== 200) {
+          ElMessage({
+            message: data.value.msg || error.value.msg,
+            type: 'error',
+            plain: true,
+            grouping: true,
+          })
+          // 保存失败时重新打开对话框（如果是保存并执行）
+          if (isRun.value) {
+            centerDialogVisible.value = true;
+          }
+        } else {
+          ElMessage({
+            message: type.value === 'edit' ? '更新成功' : '创建成功',
+            type: 'success',
+            plain: true,
+          })
+          // 立即跳转
+          router.push('/datapipelines');
+        }
       } else {
-        ElMessage({
-          message: type.value === 'edit' ? '更新成功' : '创建成功',
-          type: 'success',
-          plain: true,
-        })
-        router.go(-1);
-        // window.location.href = '/datapipelines/customTemplate'
+        // 创建任务
+        
+        let combinedData = {
+          ...form.value,
+          dslText: result.data.yaml,
+          is_run: isRun.value,
+          process: [],
+        }
+
+        if (is_run.value) {
+          delete combinedData.task_run_time
+        } else {
+          // 如果选择了执行时间，需要包含 task_run_time
+          combinedData.task_run_time = form.value.task_run_time || '';
+        }
+
+        console.log('合并后的数据:', combinedData);
+        
+        const options = {
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(combinedData)
+        }
+
+        const url = '/dataflow/jobs/pipeline'
+        const { data, error } = await useFetchApi(url, options).post().json()
+        console.log(data.value, error.value, "dataerror");
+        if (error.value || data.value.code !== 200) {
+          ElMessage({
+            message: data.value.msg || error.value.msg,
+            type: 'error',
+            plain: true,
+            grouping: true,
+          })
+          // 保存失败时重新打开对话框（如果是保存并执行）
+          if (isRun.value) {
+            centerDialogVisible.value = true;
+          }
+        } else {
+          ElMessage({
+            message: '创建成功',
+            type: 'success',
+            plain: true,
+          })
+          // 立即跳转到任务列表页面
+          router.push('/datapipelines');
+        }
       }
     } else {
-      // 创建任务
-      
-      let combinedData = {
-        ...form.value,
-        dslText: result.data.yaml,
-        is_run: isRun.value,
-        process: [],
-      }
-
-      if (is_run.value) {
-        delete combinedData.task_run_time
-      }
-
-      console.log('合并后的数据:', combinedData);
-      
-      const options = {
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(combinedData)
-      }
-
-      const url = '/dataflow/jobs/pipeline'
-      const { data, error } = await useFetchApi(url, options).post().json()
-      console.log(data.value, error.value, "dataerror");
-      if (error.value || data.value.code !== 200) {
-        ElMessage({
-          message: data.value.msg || error.value.msg,
-          type: 'error',
-          plain: true,
-          grouping: true,
-        })
-      } else {
-        ElMessage({
-          message: type.value === 'edit' ? '更新成功' : '创建成功',
-          type: 'success',
-          plain: true,
-        })
-        router.go(-1);
-        // window.location.href = '/datapipelines/customTemplate'
+      // 显示错误信息
+      ElMessage.error({
+        message: result.error,
+        duration: 3000,
+        plain: true,
+        grouping: true,
+      });
+      // 保存失败时重新打开对话框（如果是保存并执行）
+      if (isRun.value) {
+        centerDialogVisible.value = true;
       }
     }
-    
-    
-  } else {
-    // 显示错误信息
-    ElMessage.error({
-      message: result.error,
-      duration: 3000,
-      plain: true,
-      grouping: true,
-    });
+  } finally {
+    isSaving.value = false;
+    subLoading.value = false;
   }
 };
 

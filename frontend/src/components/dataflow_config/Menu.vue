@@ -8,7 +8,7 @@
       :style="{ width: isCollapse ? '80px' : '240px' }"
     >
       <el-menu
-        default-active="1"
+        :default-active="currentRoute"
         class="el-menu-vertical"
         :collapse="isCollapse"
         :collapse-transition="false"
@@ -33,13 +33,29 @@
           </div>
         </el-menu-item>
 
-        <!-- 2. 数据源管理 -->
+        <!-- 2. 任务列表 -->
         <el-menu-item
           index="2"
-          @click="handleClickMenu('/datapipelines/dataSourceManagement')"
+          @click="handleClickMenu('/datapipelines')"
         >
           <SvgIcon
             v-if="currentRoute === '2'"
+            name="dataflow_menuline"
+            class="menuline w-1 h-5 mr-1 absolute left-0"
+          />
+          <div class="innerBox w-full px-3 py-2">
+            <SvgIcon name="dataflow_task_management" class="w-4 h-4" />
+            <span class="sle ml-2">{{ t("dataPipelines.taskList") }}</span>
+          </div>
+        </el-menu-item>
+
+        <!-- 3. 数据源管理 -->
+        <el-menu-item
+          index="3"
+          @click="handleClickMenu('/datapipelines/dataSourceManagement')"
+        >
+          <SvgIcon
+            v-if="currentRoute === '3'"
             name="dataflow_menuline"
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
@@ -51,13 +67,13 @@
           </div>
         </el-menu-item>
 
-        <!-- 3. 数据格式转换 -->
+        <!-- 4. 数据格式转换 -->
         <el-menu-item
-          index="3"
+          index="4"
           @click="handleClickMenu('/datapipelines/formatConversion')"
         >
           <SvgIcon
-            v-if="currentRoute === '3'"
+            v-if="currentRoute === '4'"
             name="dataflow_menuline"
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
@@ -69,13 +85,29 @@
           </div>
         </el-menu-item>
 
-        <!-- 4. 数据过滤 -->
+        <!-- 5. MD转JSON -->
         <el-menu-item
-          index="4"
+          index="5"
+          @click="handleClickMenuWithQuery('/datapipelines/newTask', { type: 'tool', selToolName: 'md_to_jsonl_preprocess_internal' })"
+        >
+          <SvgIcon
+            v-if="currentRoute === '5'"
+            name="dataflow_menuline"
+            class="menuline w-1 h-5 mr-1 absolute left-0"
+          />
+          <div class="innerBox w-full px-3 py-2">
+            <SvgIcon name="dataflow_drag" class="w-4 h-4" />
+            <span class="sle ml-2">{{ t("dataPipelines.mdToJson") }}</span>
+          </div>
+        </el-menu-item>
+
+        <!-- 6. 数据过滤 -->
+        <el-menu-item
+          index="6"
           @click="handleClickMenuWithTemplate('/datapipelines/addDataProcessing', '数据过滤')"
         >
           <SvgIcon
-            v-if="currentRoute === '4'"
+            v-if="currentRoute === '6'"
             name="dataflow_menuline"
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
@@ -85,13 +117,13 @@
           </div>
         </el-menu-item>
 
-        <!-- 5. 数据筛选 -->
+        <!-- 7. 数据筛选 -->
         <el-menu-item
-          index="5"
+          index="7"
           @click="handleClickMenuWithTemplate('/datapipelines/addDataProcessing', '数据筛选')"
         >
           <SvgIcon
-            v-if="currentRoute === '5'"
+            v-if="currentRoute === '7'"
             name="dataflow_menuline"
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
@@ -101,13 +133,13 @@
           </div>
         </el-menu-item>
 
-        <!-- 6. 数据脱敏 -->
+        <!-- 8. 数据脱敏 -->
         <el-menu-item
-          index="6"
+          index="8"
           @click="handleClickMenuWithTemplate('/datapipelines/addDataProcessing', '数据脱敏')"
         >
           <SvgIcon
-            v-if="currentRoute === '6'"
+            v-if="currentRoute === '8'"
             name="dataflow_menuline"
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
@@ -117,13 +149,13 @@
           </div>
         </el-menu-item>
 
-        <!-- 7. 语义去重 -->
+        <!-- 9. 语义去重 -->
         <el-menu-item
-          index="7"
+          index="9"
           @click="handleClickMenuWithTemplate('/datapipelines/addDataProcessing', '语义去重')"
         >
           <SvgIcon
-            v-if="currentRoute === '7'"
+            v-if="currentRoute === '9'"
             name="dataflow_menuline"
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
@@ -133,13 +165,13 @@
           </div>
         </el-menu-item>
 
-        <!-- 8. 质量评测 -->
+        <!-- 10. 质量评测 -->
         <el-menu-item
-          index="8"
+          index="10"
           @click="handleClickMenuWithQuery('/datapipelines/newTask', { type: 'tool', selToolName: 'fineweb_edu_chinese_common_internal' })"
         >
           <SvgIcon
-            v-if="currentRoute === '8'"
+            v-if="currentRoute === '10'"
             name="dataflow_menuline"
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
@@ -149,10 +181,10 @@
           </div>
         </el-menu-item>
 
-        <!-- 9. 数据标注 -->
-        <el-menu-item index="9" @click="jump">
+        <!-- 11. 数据标注 -->
+        <el-menu-item index="11" @click="jump">
           <SvgIcon
-            v-if="currentRoute === '9'"
+            v-if="currentRoute === '11'"
             name="dataflow_menuline"
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
@@ -162,10 +194,10 @@
           </div>
         </el-menu-item>
 
-        <!-- 10. 安全扫描 -->
-        <el-menu-item index="10" @click="jumpToSecurityScan">
+        <!-- 12. 安全扫描 -->
+        <el-menu-item index="12" @click="jumpToSecurityScan">
           <SvgIcon
-            v-if="currentRoute === '10'"
+            v-if="currentRoute === '12'"
             name="dataflow_menuline"
             class="menuline w-1 h-5 mr-1 absolute left-0"
           />
@@ -175,80 +207,70 @@
           </div>
         </el-menu-item>
 
-        <!-- 11. 任务管理 -->
-        <el-sub-menu index="11">
-          <template #title>
-            <div class="innerBox w-full px-3 py-2">
-              <SvgIcon name="dataflow_task_management" class="w-4 h-4" />
-              <span class="sle ml-2">{{
-                t("dataPipelines.taskManagement")
-              }}</span>
-            </div>
-          </template>
-          <el-menu-item-group>
-            <!-- 11-1. 任务列表 -->
-            <el-menu-item
-              index="11-1"
-              @click="handleClickMenu('/datapipelines')"
-            >
-              <SvgIcon
-                v-if="currentRoute === '11-1'"
-                name="dataflow_menuline"
-                class="menuline w-1 h-5 mr-1 absolute left-0"
-              />
-              {{ t("dataPipelines.taskList") }}
-            </el-menu-item>
-            <!-- 11-2. 内置任务模板 -->
-            <el-menu-item
-              index="11-2"
-              @click="handleClickMenu('/datapipelines/builtInTemplate')"
-            >
-              <SvgIcon
-                v-if="currentRoute === '11-2'"
-                name="dataflow_menuline"
-                class="menuline w-1 h-5 mr-1 absolute left-0"
-              />
-              {{ t("dataPipelines.builtInTaskTemplate") }}
-            </el-menu-item>
-            <!-- 11-3. 自定义任务模板 -->
-            <el-menu-item
-              index="11-3"
-              @click="handleClickMenu('/datapipelines/customTemplate')"
-            >
-              <SvgIcon
-                v-if="currentRoute === '11-3'"
-                name="dataflow_menuline"
-                class="menuline w-1 h-5 mr-1 absolute left-0"
-              />
-              {{ t("dataPipelines.customTaskTemplate") }}
-            </el-menu-item>
-            <!-- 11-4. 算子池 -->
-            <el-menu-item
-              v-if="isadmin"
-              index="11-4"
-              @click="handleClickMenu('/datapipelines/operatorManagement')"
-            >
-              <SvgIcon
-                v-if="currentRoute === '11-4'"
-                name="dataflow_menuline"
-                class="menuline w-1 h-5 mr-1 absolute left-0"
-              />
-              {{ t("dataPipelines.operatorPool") }}
-            </el-menu-item>
-            <!-- 11-5. 工具池 -->
-            <el-menu-item
-              index="11-5"
-              @click="handleClickMenu('/datapipelines/tools')"
-            >
-              <SvgIcon
-                v-if="currentRoute === '11-5'"
-                name="dataflow_menuline"
-                class="menuline w-1 h-5 mr-1 absolute left-0"
-              />
-              {{ t("dataPipelines.toolsTit") }}
-            </el-menu-item>
-          </el-menu-item-group>
-        </el-sub-menu>
+        <!-- 13. 内置任务模板 -->
+        <el-menu-item
+          index="13"
+          @click="handleClickMenu('/datapipelines/builtInTemplate')"
+        >
+          <SvgIcon
+            v-if="currentRoute === '13'"
+            name="dataflow_menuline"
+            class="menuline w-1 h-5 mr-1 absolute left-0"
+          />
+          <div class="innerBox w-full px-3 py-2">
+            <SvgIcon name="algorithm-template" class="w-4 h-4" />
+            <span class="sle ml-2">{{ t("dataPipelines.builtInTaskTemplate") }}</span>
+          </div>
+        </el-menu-item>
+
+        <!-- 14. 自定义任务模板 -->
+        <el-menu-item
+          index="14"
+          @click="handleClickMenu('/datapipelines/customTemplate')"
+        >
+          <SvgIcon
+            v-if="currentRoute === '14'"
+            name="dataflow_menuline"
+            class="menuline w-1 h-5 mr-1 absolute left-0"
+          />
+          <div class="innerBox w-full px-3 py-2">
+            <SvgIcon name="dataflow_menuIcon_tlp" class="w-4 h-4" />
+            <span class="sle ml-2">{{ t("dataPipelines.customTaskTemplate") }}</span>
+          </div>
+        </el-menu-item>
+
+        <!-- 15. 算子池 -->
+        <el-menu-item
+          v-if="isadmin"
+          index="15"
+          @click="handleClickMenu('/datapipelines/operatorManagement')"
+        >
+          <SvgIcon
+            v-if="currentRoute === '15'"
+            name="dataflow_menuline"
+            class="menuline w-1 h-5 mr-1 absolute left-0"
+          />
+          <div class="innerBox w-full px-3 py-2">
+            <SvgIcon name="dataflow_data_desensitization" class="w-4 h-4" />
+            <span class="sle ml-2">{{ t("dataPipelines.operatorPool") }}</span>
+          </div>
+        </el-menu-item>
+
+        <!-- 16. 工具池 -->
+        <el-menu-item
+          index="16"
+          @click="handleClickMenu('/datapipelines/tools')"
+        >
+          <SvgIcon
+            v-if="currentRoute === '16'"
+            name="dataflow_menuline"
+            class="menuline w-1 h-5 mr-1 absolute left-0"
+          />
+          <div class="innerBox w-full px-3 py-2">
+            <SvgIcon name="dataflow_menuIcon_tools" class="w-4 h-4" />
+            <span class="sle ml-2">{{ t("dataPipelines.toolsTit") }}</span>
+          </div>
+        </el-menu-item>
       </el-menu>
     </div>
     <SvgIcon
@@ -278,34 +300,54 @@ const { t, locale } = useI18n();
 const router = useRouter();
 const route = useRoute();
 const routes = router.getRoutes();
-const currentRoute = ref("1");
 const isadmin = ref(false);
 const menuRoutes = {
   "/datapipelines/celeryNodeService": "1",
-  "/datapipelines/dataSourceManagement": "2",
-  "/datapipelines/formatConversion": "3",
-  "/datapipelines/addDataProcessing": "4", // 默认映射到数据过滤
-  "/datapipelines": "11-1",
-  "/datapipelines/newTask": "11-1",
-  "/datapipelines/dataflowInfo": "11-1",
-  "/datapipelines/builtInTemplate": "11-2",
-  "/datapipelines/customTemplate": "11-3",
-  "/datapipelines/operatorManagement": "11-4",
-  "/datapipelines/tools": "11-5",
+  "/datapipelines": "2",
+  "/datapipelines/newTask": "2",
+  "/datapipelines/dataflowInfo": "2",
+  "/datapipelines/dataSourceManagement": "3",
+  "/datapipelines/formatConversion": "4",
+  "/datapipelines/addDataProcessing": "6", // 默认映射到数据过滤
+  "/datapipelines/builtInTemplate": "13",
+  "/datapipelines/customTemplate": "14",
+  "/datapipelines/operatorManagement": "15",
+  "/datapipelines/tools": "16",
 };
 
 // 模板名称到菜单索引的映射
 const templateMenuMap = {
-  "数据过滤": "4",
-  "数据筛选": "5",
-  "数据脱敏": "6",
-  "语义去重": "7",
+  "数据过滤": "6",
+  "数据筛选": "7",
+  "数据脱敏": "8",
+  "语义去重": "9",
 };
 
 // 工具名称到菜单索引的映射（用于质量评测等工具页面）
 const toolMenuMap = {
-  "fineweb_edu_chinese_common_internal": "8", // 质量评测
+  "md_to_jsonl_preprocess_internal": "5", // MD转JSON
+  "fineweb_edu_chinese_common_internal": "10", // 质量评测
 };
+
+// 初始化当前路由的函数
+const initCurrentRoute = () => {
+  const currentPath = router.currentRoute.value.path;
+  const templateName = router.currentRoute.value.query?.templateName;
+  const selToolName = router.currentRoute.value.query?.selToolName;
+  
+  // 如果有 selToolName 参数（工具类页面），根据工具名称确定菜单索引
+  if (selToolName && toolMenuMap[selToolName]) {
+    return toolMenuMap[selToolName];
+  }
+  // 如果有 templateName 参数，根据模板名称确定菜单索引
+  else if (templateName && templateMenuMap[templateName]) {
+    return templateMenuMap[templateName];
+  } else {
+    return menuRoutes[currentPath] || "1";
+  }
+};
+
+const currentRoute = ref(initCurrentRoute());
 
 const handleClickMenu = (path) => {
   router.push(path);
@@ -330,7 +372,6 @@ watch(
     const newPath = newRoute.path;
     const templateName = newRoute.query?.templateName;
     const selToolName = newRoute.query?.selToolName;
-    console.log("============", currentRoute.value, newPath, templateName, selToolName);
     
     // 如果有 selToolName 参数（工具类页面），根据工具名称确定菜单索引
     if (selToolName && toolMenuMap[selToolName]) {
@@ -343,7 +384,7 @@ watch(
       currentRoute.value = menuRoutes[newPath] || "1";
     }
   },
-  { deep: true }
+  { immediate: true, deep: true }
 );
 const globalStore = useGlobalStore();
 const isCollapse = computed(() => globalStore.isCollapse);
@@ -357,20 +398,8 @@ onMounted(() => {
   handleResize();
   getAdminStatus();
   window.addEventListener("resize", handleResize);
-  const currentPath = router.currentRoute.value.path;
-  const templateName = router.currentRoute.value.query?.templateName;
-  const selToolName = router.currentRoute.value.query?.selToolName;
-  
-  // 如果有 selToolName 参数（工具类页面），根据工具名称确定菜单索引
-  if (selToolName && toolMenuMap[selToolName]) {
-    currentRoute.value = toolMenuMap[selToolName];
-  }
-  // 如果有 templateName 参数，根据模板名称确定菜单索引
-  else if (templateName && templateMenuMap[templateName]) {
-    currentRoute.value = templateMenuMap[templateName];
-  } else {
-    currentRoute.value = menuRoutes[currentPath] || "1";
-  }
+  // 初始化当前路由（watch 会在 immediate: true 时执行，但这里确保初始化）
+  currentRoute.value = initCurrentRoute();
 });
 
 const getAdminStatus = async () => {
@@ -416,21 +445,34 @@ const jumpToSecurityScan = async () => {
     text: `${t("dataPipelines.inProgress")}...`,
     background: "rgba(0, 0, 0, 0.7)",
   });
-  const { data } = await useFetchApi(`/dataflow/security/jump-to-scan`, {
-    headers: {
-      "Content-Type": "application/json",
-      "user_name": `${userStore.username}`,
-    },
-    body: JSON.stringify({}),
-  })
-    .post()
-    .json();
-  loading.close();
-  if (data.value?.code === 200) {
-    const origin = window.location.origin;
-    window.open(`${data.value.data}&origin=${origin}&language=${locale.value}`, "_blank");
-  } else {
-    ElMessage.error(data.value.msg);
+  
+  try {
+    // 获取用户 token
+    const { data, error } = await useFetchApi(
+      `/user/${userStore.username}/tokens?app=git`
+    ).json();
+    
+    loading.close();
+    
+    if (error.value) {
+      ElMessage.error(error.value.msg || t("dataPipelines.error"));
+      return;
+    }
+    
+    const tokens = data.value?.data || [];
+    const token = tokens[0]?.token || '';
+    
+    if (!token) {
+      ElMessage.warning(t("dataPipelines.tokenNotFound") || "Token not found");
+      return;
+    }
+    
+    // 跳转到新窗口
+    const targetUrl = `http://10.1.83.3/data-security/task?token=${token}`;
+    window.open(targetUrl, "_blank");
+  } catch (err) {
+    loading.close();
+    ElMessage.error(err.message || t("dataPipelines.error"));
   }
 };
 
@@ -644,6 +686,26 @@ defineExpose();
   *:not(.menuline):not(img) {
     color: var(--Gold-600) !important;
   }
+  span,
+  .sle {
+    color: var(--Gold-600) !important;
+  }
+  *:not(.menuline):not(img) {
+    color: var(--Gold-600) !important;
+  }
+}
+
+/* 更具体的选择器确保激活状态颜色生效 */
+.el-menu-vertical :deep(.el-menu-item.is-active),
+.el-menu-vertical :deep(.el-menu-item.is-active *) {
+  color: var(--Gold-600) !important;
+}
+
+.el-menu-vertical :deep(.el-menu-item.is-active) span,
+.el-menu-vertical :deep(.el-menu-item.is-active) .sle,
+.el-menu-vertical :deep(.el-menu-item.is-active) .innerBox,
+.el-menu-vertical :deep(.el-menu-item.is-active) .innerBox * {
+  color: var(--Gold-600) !important;
 }
 
 /* 更具体的选择器确保激活状态颜色生效 */
