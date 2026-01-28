@@ -923,6 +923,18 @@
                 "option_values": null,
                 "value": 8000,
                 "config_description": "Maximum Perplexity Threshold; Samples exceeding this threshold will be filtered out"
+            },
+            {
+                "name": "model",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "auth_token",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -1100,6 +1112,18 @@
                 "type": "INTEGER",
                 "option_values": null,
                 "value": 1
+            },
+            {
+                "name": "model",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "auth_token",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -1148,6 +1172,18 @@
                     }
                 ],
                 "value": "all"
+            },
+            {
+                "name": "model",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "auth_token",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },

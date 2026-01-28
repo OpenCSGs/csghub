@@ -429,8 +429,8 @@ const getDataFlowListFun = async () => {
   const { data } = await useFetchApi(url).get().json();
 
   if (data.value) {
-    tableData.value = data.value.data;
-    pagination.value.total = data.value.total || 0;
+    tableData.value = data.value.data.data;
+    pagination.value.total = data.value.data.total || 0;
   }
   tableLoading.value = false;
 };

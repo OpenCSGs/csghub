@@ -922,6 +922,18 @@
                 "option_values": null,
                 "value": 8000,
                 "config_description": "最大困惑度閾值；超過此閾值的樣本將被過濾"
+            },
+            {
+                "name": "模型",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "身份驗證令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -1099,6 +1111,18 @@
                 "type": "INTEGER",
                 "option_values": null,
                 "value": 1
+            },
+            {
+                "name": "模型",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "身份驗證令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -1147,6 +1171,18 @@
                     }
                 ],
                 "value": "all"
+            },
+            {
+                "name": "模型",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "身份驗證令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
