@@ -216,56 +216,31 @@
           data-test="cluster-select"
           v-show="dataForm.evaluation_resource_type === 'dedicated'"
         >
-          <el-select
-            v-model="dataForm.evaluation_cluster"
-            :placeholder="
-              t('all.pleaseSelect', { value: t('evaluation.new.cluster') })
-            "
-            size="large"
-            style="width: 100%"
-            @change="fetchResources"
-          >
-            <el-option
-              v-for="item in evaluationClusters"
-              :key="item.cluster_id"
-              :label="item.region"
-              :value="item.cluster_id"
-            />
-          </el-select>
-        </el-form-item>
-
-        <!-- resource -->
-        <el-form-item
-          :label="t('evaluation.new.resource')"
-          class="w-full"
-          prop="cloud_resource"
-          v-show="dataForm.evaluation_resource_type === 'dedicated'"
-        >
-          <el-select
-            v-model="dataForm.cloud_resource"
-            :placeholder="
-              t('all.pleaseSelect', { value: t('evaluation.new.resource') })
-            "
-            size="large"
-            style="width: 100%"
-          >
-            <el-option-group
-              v-for="group in evaluationResources"
-              :key="group.label"
-              :label="group.label"
+          <div class="w-full flex flex-row sm:flex-col items-start sm:items-start justify-start gap-4 sm:gap-4 mb-4">
+            <el-select
+              v-model="dataForm.evaluation_cluster"
+              :placeholder="
+                t('all.pleaseSelect', { value: t('evaluation.new.cluster') })
+              "
+              size="large"
+              style="width: 100%"
+              @change="fetchResources"
             >
               <el-option
-                v-for="item in group.options"
-                :key="item.name"
-                :label="item.label"
-                :value="`${item.id}/${item.order_detail_id}`"
-                :disabled="!item.is_available"
+                v-for="item in evaluationClusters"
+                :key="item.cluster_id"
+                :label="item.region"
+                :value="item.cluster_id"
               />
-            </el-option-group>
-          </el-select>
-          <p class="text-gray-600 mt-2 font-light">
-            {{ t('evaluation.new.resourceTip') }}
-          </p>
+            </el-select>
+          </div>
+          <div v-show="dataForm.evaluation_resource_type === 'dedicated'">
+            <ResourceSelector
+              :category-resources="evaluationResources"
+              v-model:selected="dataForm.cloud_resource"
+              :model-min-gpu-memory="0"
+            />
+          </div>
         </el-form-item>
 
         <!-- framework -->
@@ -370,6 +345,7 @@
   import useFetchApi from '../../packs/useFetchApi'
   import { useI18n } from 'vue-i18n'
   import { fetchResourcesInCategory } from '../shared/deploy_instance/fetchResourceInCategory'
+  import ResourceSelector from '../shared/deploy_instance/ResourceSelector.vue'
 
   const props = defineProps({
     namespace: String
@@ -388,6 +364,8 @@
     model_id: searchParams.get('model_id') ? [searchParams.get('model_id')] : [],
     evaluation_resource_type: 'shared'
   })
+
+  
 
   const evaluationFrameworks = ref([])
   const selectedFrameworkName = ref('')
@@ -592,6 +570,10 @@
     }
   }
 
+  
+
+  
+
   const datasetCheck = ref('1')
 
   const fetchRuntimeFramework = async () => {
@@ -773,6 +755,8 @@
       return false
     }
   }
+
+  
 
   onMounted(() => {
     fetchRuntimeFramework()

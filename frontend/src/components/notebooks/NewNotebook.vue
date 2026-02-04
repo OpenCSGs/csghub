@@ -86,10 +86,7 @@
           class="w-full"
           prop="notebook_cluster"
         >
-          <div class="flex items-center justify-start gap-[36px] mb-8">
-            <div v-if="Array.isArray(typeList)&&typeList.length>0" class="flex items-center justify-start gap-1">
-              <p v-for="item in typeList" :key="item" class="px-3 py-2 cursor-pointer text-md font-medium rounded-sm" :class="activeType==item?'bg-gray-50 text-gray-700':'bg-white text-gray-500'" @click="setActiveType(item)">{{item}}</p>
-            </div>
+          <div class="w-full flex flex-row sm:flex-col items-start sm:items-start justify-start gap-4 sm:gap-4 mb-4">
             <el-select
               v-model="dataForm.notebook_cluster"
               :placeholder="t('all.pleaseSelect', { value: t('notebooks.new.cluster') })"
@@ -105,14 +102,11 @@
               />
             </el-select>
           </div>
-          <div class="grid grid-cols-4 items-center gap-6 mb-6 md:grid-cols-2">
-            <div v-for="item in selResourceList" :key="item.id" class="flex flex-col items-center gap-2 text-center p-4 rounded-2xl border bg-white relative overflow-hidden shadow-lg" :class="[item.is_available?'cursor-pointer':'cursor-not-allowed',dataForm.resource==`${item.id}/${item.order_detail_id}`?'border-brand-500':(item.is_available?'border-gray-500':'border-gray-300')]" @click="changeCloudResource(item)">
-              <i class="block w-[24px] h-[4px] rounded-xs bg-gray-400 shadow-sm"/>
-              <p class="text-md font-medium" :class="item.is_available?'text-gray-700':'text-gray-500'">{{item.resources[activeType.toLowerCase()]?.type}}</p>
-              <p class="text-md" :class="item.is_available?'text-gray-700':'text-gray-500'">{{item.name}}</p>
-              <p class="text-gray-500 text-md">{{item.priceValue}}</p>
-            </div>
-          </div>
+          <ResourceSelector
+            :category-resources="resourcesOptions"
+            v-model:selected="dataForm.resource"
+            :model-min-gpu-memory="0"
+          />
           <p class="text-gray-600 mt-[8px] font-light">
             {{ t('notebooks.new.resourceTip1') }}
           </p>
@@ -231,6 +225,7 @@ import { ref, inject, onMounted, computed, watch } from 'vue'
 import { ElMessage } from 'element-plus'
 import useFetchApi from '../../packs/useFetchApi'
 import { fetchResourcesInType } from '../shared/deploy_instance/fetchResourceInCategory.js'
+import ResourceSelector from '../shared/deploy_instance/ResourceSelector.vue'
 import useUserStore from '../../stores/UserStore.js'
 import { Warning } from '@element-plus/icons-vue'
 import { useI18n } from 'vue-i18n'
@@ -254,9 +249,7 @@ const resourcesOptions = ref([])
 // 运行时框架版本选项
 const runtimeFrameworkOptions = ref([])
 
-const typeList = ref([])
-const activeType = ref('')
-const selResourceList = ref([])
+// 资源类型切换与选项选择交互由 ResourceSelector 组件内部处理
 
 const minReplicaRanges = [0, 1]
 const replicaRanges = [1]
@@ -330,9 +323,7 @@ const fetchResources = async () => {
   const categoryResources = await fetchResourcesInType(dataForm.value.notebook_cluster, 5)
   const firstAvailableResource = categoryResources.flatMap(item => item.options).find((item) => item.is_available)
   resourcesOptions.value = categoryResources
-  typeList.value = categoryResources.map(item=>item.label)
-  activeType.value = typeList.value[0]||''
-  selResourceList.value = resourcesOptions.value.find(item=>item.label == activeType.value)?.options||[]
+  // 类型标签与选项选择逻辑由 ResourceSelector 组件内部处理
   if (firstAvailableResource) {
     dataForm.value.resource = `${firstAvailableResource.id}/${firstAvailableResource.order_detail_id}`
   } else {
@@ -341,14 +332,6 @@ const fetchResources = async () => {
   fetchRuntimeFrameworks()
 }
 
-const setActiveType = (type)=>{
-  activeType.value = type
-  selResourceList.value = resourcesOptions.value.find(item=>item.label == activeType.value)?.options||[]
-}
-
-const changeCloudResource = (item)=>{
-  dataForm.value.resource = `${item.id}/${item.order_detail_id}`
-}
 
 // 获取运行时框架版本(deploy_type=5)
 const fetchRuntimeFrameworks = async () => {
@@ -504,6 +487,8 @@ const pauseAnimation = () => {
 const handleAnimationClick = () => {
   window.open('https://opencsg.com/docs/inferencefinetune/notebook_intro', '_blank')
 }
+
+// 资源可视化与状态样式统一由 ResourceSelector 组件处理
 
 onMounted(() => {
   fetchClusters()
