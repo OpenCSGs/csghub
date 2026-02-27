@@ -63,10 +63,15 @@
                           :codes="relations['codes']"
       />
 
-      <DatasetRelationsCard v-if="relations['datasets'] && relations['datasets'].length !== 0"
-                            :namespacePath="namespacePath"
-                            :datasets="relations['datasets']"
-      />
+      <SkillRelationsCard
+        v-if="relations['skills'] && relations['skills'].length !== 0"
+        :namespacePath="namespacePath"
+        :skills="relations['skills']" />
+
+      <DatasetRelationsCard
+        v-if="relations['datasets'] && relations['datasets'].length !== 0"
+        :namespacePath="namespacePath"
+        :datasets="relations['datasets']" />
 
       <PromptRelationsCard v-if="relations['prompts'] && relations['prompts'].length !== 0"
                           :namespacePath="namespacePath"
@@ -107,10 +112,11 @@
   import MarkdownViewer from '../../components/shared/viewers/MarkdownViewer.vue'
   import ParquetViewer from '../../components/datasets/ParquetViewer.vue'
   import SpaceRelationsCard from '../application_spaces/SpaceRelationsCard.vue'
-  import PromptRelationsCard from '../prompts/PromptRelationsCard.vue';
-  import CodeRelationsCard from '../codes/CodeRelationsCard.vue';
-  import DatasetRelationsCard from '../datasets/DatasetRelationsCard.vue';
-  import ModelRelationsCard from '../models/ModelRelationsCard.vue';
+  import PromptRelationsCard from '../prompts/PromptRelationsCard.vue'
+  import CodeRelationsCard from '../codes/CodeRelationsCard.vue'
+  import SkillRelationsCard from '../skills/SkillRelationsCard.vue'
+  import DatasetRelationsCard from '../datasets/DatasetRelationsCard.vue'
+  import ModelRelationsCard from '../models/ModelRelationsCard.vue'
   import TestEndpoint from '../endpoints/playground/TestEndpoint.vue'
   import RepoSummaryApiExample from './RepoSummaryApiExample.vue'
   import useFetchApi from '../../packs/useFetchApi'

@@ -13,6 +13,7 @@ import { shared } from './zh_js/shared';
 import { repo } from './zh_js/repo';
 import { application_spaces } from './zh_js/application_spaces';
 import { codes } from './zh_js/codes';
+import { skills } from './zh_js/skills';
 import { widgets } from './zh_js/widgets';
 import { spaces } from './zh_js/spaces';
 import { space } from './zh_js/space';
@@ -45,6 +46,7 @@ export default {
   comment,
   datasets,
   codes,
+  skills,
   organization,
   navbar,
   community,

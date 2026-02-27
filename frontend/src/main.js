@@ -42,6 +42,7 @@ import NewApplicationSpace from "./components/application_spaces/NewApplicationS
 import ProfileRepoList from "./components/shared/ProfileRepoList.vue"
 import RepoCards from "./components/shared/RepoCards.vue"
 import NewCode from "./components/codes/NewCode.vue"
+import NewSkill from "./components/skills/NewSkill.vue"
 import SvgIcon from "./components/shared/SvgIcon.vue"
 import CsgButton from "./components/shared/CsgButton.vue"
 import NewCollection from "./components/collections/NewCollection.vue"
@@ -134,6 +135,7 @@ const app = createApp({
     OrganizationSettings,
     RepoCards,
     NewCode,
+    NewSkill,
     NewCollection,
     NewEndpoint,
     NewFinetune,
@@ -258,8 +260,17 @@ const routes = [
       repoName: route.params.name
     })
   },
-  { 
-    path: '/spaces/:namespace/:name', 
+  {
+    path: '/skills/:namespace/:name',
+    component: RepoDetail,
+    props: (route) => ({
+      repoType: 'skill',
+      namespace: route.params.namespace,
+      repoName: route.params.name
+    })
+  },
+  {
+    path: '/spaces/:namespace/:name',
     component: RepoDetail,
     props: (route) => ({ 
       repoType: 'space',
