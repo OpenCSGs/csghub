@@ -77,7 +77,7 @@
   const isDataLoading = ref(false)
   
   const showNewTag = computed(() => {
-    return ((props.repoType === 'model' || props.repoType === 'dataset')) && (isWithinTwoWeeks(repoDetailStore.createdAt) || isWithinTwoWeeks(repoDetailStore.updatedAt));
+    return ((props.repoType === 'model' || props.repoType === 'dataset' || props.repoType === 'skill')) && (isWithinTwoWeeks(repoDetailStore.createdAt) || isWithinTwoWeeks(repoDetailStore.updatedAt));
   });
 
   const tags = computed(() => {

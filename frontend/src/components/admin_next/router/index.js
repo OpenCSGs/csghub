@@ -6,6 +6,9 @@ import AdminSyncSetting from "../sync/AdminSyncSetting.vue";
 import AdminTagsList from "../tags/AdminTagsList.vue";
 import AdminTagsDetail from "../tags/AdminTagsDetail.vue";
 import AdminTagsForm from "../tags/AdminTagsForm.vue";
+import AdminSkillList from '../skills/AdminSkillList.vue'
+import AdminSkillDetail from '../skills/AdminSkillDetail.vue'
+import AdminSkillEdit from '../skills/AdminSkillEdit.vue'
 import AdminBroadcastList from '../broadcast/AdminBroadcastList.vue'
 import AdminBroadcastEdit from '../broadcast/AdminBroadcastEdit.vue'
 import AdminBroadcastNew from '../broadcast/AdminBroadcastNew.vue'
@@ -115,6 +118,26 @@ export const MENU_SETTING = [
     path: `${BASE_URL}/models/:namespace/:name/edit`,
     component: AdminModelEdit,
     name: adminLocale.models.modelEdit,
+    parentName: PARENT_NAME.hub
+  },
+  {
+    path: `${BASE_URL}/skills`,
+    component: AdminSkillList,
+    name: adminLocale.skills.title,
+    parentName: PARENT_NAME.hub,
+    icon: 'admin-menu-skills',
+    type: 'menu'
+  },
+  {
+    path: `${BASE_URL}/skills/:namespace/:name`,
+    component: AdminSkillDetail,
+    name: '技能详情',
+    parentName: PARENT_NAME.hub
+  },
+  {
+    path: `${BASE_URL}/skills/:namespace/:name/edit`,
+    component: AdminSkillEdit,
+    name: '技能编辑',
     parentName: PARENT_NAME.hub
   },
   {

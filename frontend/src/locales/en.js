@@ -13,6 +13,7 @@ import { shared } from './en_js/shared';
 import { repo } from './en_js/repo';
 import { application_spaces } from './en_js/application_spaces';
 import { codes } from './en_js/codes';
+import { skills } from './en_js/skills';
 import { widgets } from './en_js/widgets';
 import { spaces } from './en_js/spaces';
 import { space } from './en_js/space';
@@ -45,6 +46,7 @@ export default {
   comment,
   datasets,
   codes,
+  skills,
   organization,
   navbar,
   community,

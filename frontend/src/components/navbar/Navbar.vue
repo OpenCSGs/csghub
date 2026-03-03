@@ -246,6 +246,16 @@
               </a>
               <a
                 v-if="!actionLimited"
+                href="/skills/new">
+                <el-dropdown-item>
+                  <div class="flex items-center w-fit gap-2">
+                    <SvgIcon name="navbar-new" />
+                    {{ $t('navbar.newSkill') }}
+                  </div>
+                </el-dropdown-item>
+              </a>
+              <a
+                v-if="!actionLimited"
                 href="/collections/new">
                 <el-dropdown-item>
                   <div class="flex items-center w-fit gap-2">

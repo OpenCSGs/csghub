@@ -117,12 +117,14 @@
   import { ref, watch, onMounted, onUnmounted, shallowRef } from 'vue'
   import Mcp from './menuItem/Mcp.vue'
   import McpTools from './menuItem/McpTools.vue'
+  import Skill from './menuItem/Skill.vue'
   import { useI18n } from 'vue-i18n'
 
   const { t } = useI18n()
 
   const McpRef = shallowRef(Mcp)
   const McpToolsRef = shallowRef(McpTools)
+  const SkillsRef = shallowRef(Skill)
 
   const props = defineProps({
     isLoggedInBoolean: Boolean,
@@ -169,6 +171,12 @@
           condition: true,
         }
       ]
+    },
+    {
+      title: t('navbar.skills'),
+      index: '/skills',
+      class: menuItemClass,
+      style: 'border:none; height: 46px; border-radius: 4px; padding: 12px 16px;',
     },
     {
       title: t('navbar.spaces'),

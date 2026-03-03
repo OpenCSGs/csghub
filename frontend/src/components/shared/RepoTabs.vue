@@ -263,6 +263,13 @@
           :code-desc="repoDetail.description"
           :default_branch="repoDetail.defaultBranch"
         />
+        <skill-settings
+          v-if="repoType === 'skill'"
+          :path="path"
+          :skill-nickname="repoDetail.nickname"
+          :skill-desc="repoDetail.description"
+          :default_branch="repoDetail.defaultBranch"
+        />
         <EndpointSettings
           v-if="repoType === 'endpoint'"
           :endpointName="endpointName"
@@ -317,6 +324,7 @@
   import DatasetSettings from '../datasets/DatasetSettings.vue'
   import ApplicationSpaceSettings from '../application_spaces/ApplicationSpaceSettings.vue'
   import CodeSettings from '../codes/CodeSettings.vue'
+  import SkillSettings from '../skills/SkillSettings.vue'
   import EndpointSettings from '../endpoints/EndpointSettings.vue'
   import McpSettings from '../mcp/McpSettings.vue'
   import UploadFile from '../shared/UploadFile.vue'
@@ -409,7 +417,7 @@
   })
 
   const showAddToCollections = computed(() => {
-    return props.repoType === 'mcp' || props.repoType === 'model' || props.repoType === 'dataset' || props.repoType === 'code' || props.repoType === 'space'
+    return props.repoType === 'mcp' || props.repoType === 'model' || props.repoType === 'dataset' || props.repoType === 'code' || props.repoType === 'skill' || props.repoType === 'space'
   })
 
   const repoTypeClass = computed(() => {

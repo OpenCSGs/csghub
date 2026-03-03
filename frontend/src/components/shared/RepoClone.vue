@@ -189,7 +189,7 @@
       >
         <el-tab-pane
           v-if="
-            repoType == 'model' || repoType == 'dataset' || repoType == 'space'
+            repoType == 'model' || repoType == 'dataset' || repoType == 'skill' || repoType == 'space'
           "
           :label="$t('all.commandLine')"
           name="commandLine"
@@ -311,7 +311,7 @@
           </div>
         </el-tab-pane>
         <el-tab-pane
-          v-if="repoType == 'model' || repoType == 'dataset'"
+          v-if="repoType == 'model' || repoType == 'dataset' || repoType == 'skill'"
           label="SDK"
           name="sdk"
         >
@@ -506,6 +506,8 @@ pip install csghub-sdk
       typeFlag = ' -t dataset'
     } else if (props.repoType === 'space') {
       typeFlag = ' -t space'
+    } else if (props.repoType === 'skill') {
+      typeFlag = ' -t skill'
     }
     return ref(`
 csghub-cli download ${props.namespacePath}${typeFlag}${revision}
@@ -534,6 +536,8 @@ csghub-cli download ${props.namespacePath}${typeFlag}${revision}
         return 'models.download'
       case 'code':
         return 'codes.downloadCode'
+      case 'skill':
+        return 'skills.downloadSkill'
       case 'space':
         return 'application_spaces.download'
       case 'mcp':
@@ -551,6 +555,8 @@ csghub-cli download ${props.namespacePath}${typeFlag}${revision}
         return 'models.downloadModel'
       case 'code':
         return 'codes.downloadCode'
+      case 'skill':
+        return 'skills.downloadSkill'
       case 'space':
         return 'application_spaces.downloadSpace'
       default:
@@ -566,6 +572,8 @@ csghub-cli download ${props.namespacePath}${typeFlag}${revision}
         return 'https://opencsg.com/docs/Model/download_models'
       case 'code':
         return 'https://opencsg.com/docs/Code/download_codes'
+      case 'skill':
+        return 'https://opencsg.com/docs/Skill/download_skills'
       case 'space':
         return 'https://opencsg.com/docs/Space/download_space_repo'
     }

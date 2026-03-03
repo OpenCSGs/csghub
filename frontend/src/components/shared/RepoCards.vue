@@ -2,7 +2,7 @@
   <div
     class="flex gap-6 page-responsive-width m-auto min-h-[calc(100vh-153px)] md:min-h-0 md:px-5">
     <div
-      v-if="repoType !== 'space'"
+      v-if="repoType !== 'space' && repoType !== 'agent' && repoType !== 'skill'"
       class="w-[30%] min-w-[360px] border-r border-gray-200 pr-6 md:hidden">
       <TagSidebar
         :selectedTag="selectedTag"
@@ -30,6 +30,11 @@
             <SvgIcon
               v-if="repoType === 'code'"
               name="codes"
+              width="18"
+              height="18" />
+            <SvgIcon
+              v-if="repoType === 'skill'"
+              name="skills"
               width="18"
               height="18" />
             <SvgIcon

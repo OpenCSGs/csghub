@@ -4,7 +4,8 @@
        `${repoType}-card`,
        repoType === 'model' ? 'bg-gradient-to-r from-[#fafefe] to-white' : '',
        repoType === 'dataset' ? 'bg-gradient-to-r from-[#fbfaff] to-white' : '',
-       repoType === 'code' ? 'bg-gradient-to-r from-[#F9FAFA] to-white' : ''
+       repoType === 'code' ? 'bg-gradient-to-r from-[#F9FAFA] to-white' : '',
+       repoType === 'skill' ? 'bg-gradient-to-r from-[#F9FAFA] to-white' : ''
      ]"
      class="flex flex-col justify-between focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md p-4 gap-1 md:w-full border border-gray-200 rounded-md flex-grow xl:basis-full min-w-[250px] xl:max-w-full h-fit  cursor-pointer"
      :style="isCollection ? 'width:100%' : ''"
@@ -152,6 +153,12 @@
           tab: 'summary'
         })
         return `/codes/${props.repo.path}?tab=summary${returnQuery}`
+      case 'skill':
+        setRepoTab({
+          repoType: 'skill',
+          tab: 'summary'
+        })
+        return `/skills/${props.repo.path}?tab=summary${returnQuery}`
       case 'prompt':
         return `/prompts/library/${props.repo.path}${returnQuery ? '?' + returnQuery.substring(1) : ''}`
       default:

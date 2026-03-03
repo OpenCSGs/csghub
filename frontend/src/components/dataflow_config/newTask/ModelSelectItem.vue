@@ -3,7 +3,8 @@
        `${repoType}-card`,
        repoType === 'model' ? 'bg-gradient-to-r from-[#fafefe] to-white' : '',
        repoType === 'dataset' ? 'bg-gradient-to-r from-[#fbfaff] to-white' : '',
-       repoType === 'code' ? 'bg-gradient-to-r from-[#F9FAFA] to-white' : ''
+       repoType === 'code' ? 'bg-gradient-to-r from-[#F9FAFA] to-white' : '',
+       repoType === 'skill' ? 'bg-gradient-to-r from-[#F9FAFA] to-white' : ''
      ]"
      class="flex flex-col justify-between focus:outline focus:outline-4 focus:outline-gray-200 hover:shadow-md p-4 gap-1 md:w-full border border-gray-200 rounded-md flex-grow xl:basis-full min-w-[250px] xl:max-w-full h-fit  cursor-pointer"
      :style="isCollection ? 'width:100%' : ''"
@@ -12,6 +13,7 @@
       <SvgIcon v-if="repoType === 'model'" name="models" width="18" height="18" />
       <SvgIcon v-if="repoType === 'dataset'" name="datasets" width="18" height="18" />
       <SvgIcon v-if="repoType === 'code'" name="codes" width="18" height="18" />
+      <SvgIcon v-if="repoType === 'skill'" name="skills" width="18" height="18" />
       <SvgIcon v-if="repoType === 'space'" name="spaces" width="18" height="18" />
       <div :class="`${repoType}-path`"
            class="text-sm font-medium text-gray-700 text-ellipsis overflow-hidden whitespace-nowrap w-full flex items-center gap-2"
@@ -88,7 +90,7 @@
   const { t, locale } = useI18n()
   const taskTagIconExists = ref(false)
   const showNewTag = computed(() => {
-    return ((props.repoType === 'model' || props.repoType === 'dataset')) && (isWithinTwoWeeks(props.repo.created_at) || isWithinTwoWeeks(props.repo.updated_at));
+    return ((props.repoType === 'model' || props.repoType === 'dataset' || props.repoType === 'skill')) && (isWithinTwoWeeks(props.repo.created_at) || isWithinTwoWeeks(props.repo.updated_at));
   });
 
   const getComputed = computed(() => {
