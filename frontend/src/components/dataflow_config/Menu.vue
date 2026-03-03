@@ -166,7 +166,7 @@
         </el-menu-item>
 
         <!-- 10. 质量评测 -->
-        <el-menu-item
+        <!-- <el-menu-item
           index="10"
           @click="handleClickMenuWithQuery('/datapipelines/newTask', { type: 'tool', selToolName: 'fineweb_edu_chinese_common_internal' })"
         >
@@ -179,7 +179,7 @@
             <SvgIcon name="dataflow_quality_evaluation" class="w-4 h-4" />
             <span class="sle ml-2">{{ t("dataPipelines.qualityEvaluation") }}</span>
           </div>
-        </el-menu-item>
+        </el-menu-item> -->
 
         <!-- 11. 数据标注 -->
         <el-menu-item index="11" @click="jump">
