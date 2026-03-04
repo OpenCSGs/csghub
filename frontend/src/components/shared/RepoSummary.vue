@@ -166,12 +166,20 @@
   };
 
   const fetchData = async () => {
-    const url = `/${props.repoType}s/${props.namespacePath}/blob/README.md`
+    let content = null
 
-    const { data } = await useFetchApi(url).json()
+    if (props.repoType === 'skill') {
+      const result = await useFetchApi(`/${props.repoType}s/${props.namespacePath}/blob/SKILL.md`).json()
+      content = result.data.value?.data?.content || null
+    }
 
-    if (data.value) {
-      rawReadmeContent.value = data.value.data.content
+    if (!content) {
+      const result = await useFetchApi(`/${props.repoType}s/${props.namespacePath}/blob/README.md`).json()
+      content = result.data.value?.data?.content || null
+    }
+
+    if (content) {
+      rawReadmeContent.value = content
       resolveReadmeContent()
     }
     loading.value = false
