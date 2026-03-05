@@ -108,6 +108,7 @@
       case 'BuildingFailed':
       case 'DeployFailed':
       case 'RuntimeError':
+      case 'ResourceUnhealthy':
         return 'error'
       default:
         return 'Unknown'
