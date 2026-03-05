@@ -351,7 +351,7 @@
     { value: 'RuntimeError', label: t('application_spaces.status.runtimeError') },
     { value: 'Stopped', label: t('application_spaces.status.stopped') },
     { value: 'Sleeping', label: t('application_spaces.status.sleeping') },
-    { value: 'NoAppFile', label: t('application_spaces.status.noAppFile') },
+    { value: 'NoAppFile', label: t('application_spaces.status.noAppfile') },
   ]
   const sortOptions = [
     {
