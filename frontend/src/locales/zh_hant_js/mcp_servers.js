@@ -13,7 +13,7 @@ export const mcps = {
     mcpTool: "MCP 工具",
     mcpToolDesc: "將工具暴露給 LLM 幫助執行動作",
     new: {
-      title: "新建 MCP",
+      title: "新建MCP",
       titleDesc: "倉庫包含所有的模型檔案和修訂的歷史記錄",
       owner: "所有者",
       mcpName: "MCP 名稱",

@@ -4,7 +4,7 @@ export const notebooks = {
   startNotebook: '启动 Notebook',
   loading: '正在加载 Notebook 信息...',
   new: {
-    title: "新建 Notebook",
+    title: "新建Notebook",
     desc: "交互式 Notebook，轻松运行模型",
     name: "Notebook 名称",
     tip: "名称规则：",
