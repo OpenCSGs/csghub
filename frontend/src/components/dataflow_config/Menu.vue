@@ -307,10 +307,13 @@ const menuRoutes = {
   "/datapipelines/newTask": "2",
   "/datapipelines/dataflowInfo": "2",
   "/datapipelines/dataSourceManagement": "3",
+  "/datapipelines/dataCollectionTask": "3", // 数据采集任务属于数据源管理
+  "/datapipelines/newDataSource": "3", // 新建数据源属于数据源管理
   "/datapipelines/formatConversion": "4",
   "/datapipelines/addDataProcessing": "6", // 默认映射到数据过滤
   "/datapipelines/builtInTemplate": "13",
   "/datapipelines/customTemplate": "14",
+  "/datapipelines/createTemplate": "14", // 默认映射到自定义模板，url 参数可覆盖
   "/datapipelines/operatorManagement": "15",
   "/datapipelines/tools": "16",
 };
@@ -329,11 +332,18 @@ const toolMenuMap = {
   "fineweb_edu_chinese_common_internal": "10", // 质量评测
 };
 
+// createTemplate 页面的 url 参数到菜单索引的映射
+const createTemplateUrlMap = {
+  "customize": "14", // 自定义任务模板
+  "builtin": "13", // 内置任务模板
+};
+
 // 初始化当前路由的函数
 const initCurrentRoute = () => {
   const currentPath = router.currentRoute.value.path;
   const templateName = router.currentRoute.value.query?.templateName;
   const selToolName = router.currentRoute.value.query?.selToolName;
+  const url = router.currentRoute.value.query?.url;
   
   // 如果有 selToolName 参数（工具类页面），根据工具名称确定菜单索引
   if (selToolName && toolMenuMap[selToolName]) {
@@ -342,6 +352,10 @@ const initCurrentRoute = () => {
   // 如果有 templateName 参数，根据模板名称确定菜单索引
   else if (templateName && templateMenuMap[templateName]) {
     return templateMenuMap[templateName];
+  }
+  // 如果是 createTemplate 页面，根据 url 参数确定菜单索引
+  else if (currentPath === "/datapipelines/createTemplate" && url && createTemplateUrlMap[url]) {
+    return createTemplateUrlMap[url];
   } else {
     return menuRoutes[currentPath] || "1";
   }
