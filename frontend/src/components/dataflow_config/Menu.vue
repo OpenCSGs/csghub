@@ -363,22 +363,47 @@ const initCurrentRoute = () => {
 
 const currentRoute = ref(initCurrentRoute());
 
+// 以下情况 router.push 时右侧不更新，需使用整页跳转：
+// 1. 系统仪表盘（celeryNodeService）作为来源或目标
+// 2. addDataProcessing、createTemplate 等多步骤页面（含 workflow 编辑器）作为来源时跳转其他页面
+const CELERY_NODE_SERVICE_PATH = "/datapipelines/celeryNodeService";
+const NEED_FULL_PAGE_NAV_PATHS = ["/datapipelines/addDataProcessing", "/datapipelines/createTemplate"];
+
+const doNavigate = (path, query = {}) => {
+  const currentPath = route.path;
+  const targetPath = path;
+  const isFromCelery = currentPath === CELERY_NODE_SERVICE_PATH;
+  const isToCelery = targetPath === CELERY_NODE_SERVICE_PATH;
+  const isFromProblematicPage = NEED_FULL_PAGE_NAV_PATHS.some((p) => currentPath.startsWith(p));
+  const needFullPage =
+    isFromCelery ||
+    isToCelery ||
+    (isFromProblematicPage && currentPath !== targetPath);
+
+  if (needFullPage) {
+    const queryStr = Object.keys(query).length
+      ? "?" + new URLSearchParams(query).toString()
+      : "";
+    window.location.href = targetPath + queryStr;
+  } else {
+    if (Object.keys(query).length) {
+      router.push({ path: targetPath, query });
+    } else {
+      router.push(targetPath);
+    }
+  }
+};
+
 const handleClickMenu = (path) => {
-  router.push(path);
+  doNavigate(path);
 };
 
 const handleClickMenuWithTemplate = (path, templateName) => {
-  router.push({
-    path: path,
-    query: { templateName: templateName }
-  });
+  doNavigate(path, { templateName });
 };
 
 const handleClickMenuWithQuery = (path, query) => {
-  router.push({
-    path: path,
-    query: query
-  });
+  doNavigate(path, query);
 };
 watch(
   () => router.currentRoute.value,
