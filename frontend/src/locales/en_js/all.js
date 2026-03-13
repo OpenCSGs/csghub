@@ -143,6 +143,7 @@ export const all = {
   unknown: "Unknown",
   inBranch: "in branch",
   notExist: "not exist",
+  branchNotExist: "Branch does not exist, please enter a valid branch name",
   useModel: "Use Model",
   clickForQuickTutorial: "Click here to start the quick tutorial"
 }

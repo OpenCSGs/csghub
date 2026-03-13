@@ -49,5 +49,7 @@ export const codes = {
     publicInfo: "Anyone on the Internet can see this code.",
     needCodeName: "Please provide code alias first",
     needCodelDesc: "Please provide code introduction first",
+    defaultBranch: 'Default branch',
+    defaultBranchDesc: 'Change the default branch of the repository',
   },
 }

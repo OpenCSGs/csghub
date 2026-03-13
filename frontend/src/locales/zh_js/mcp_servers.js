@@ -51,7 +51,9 @@ export const mcps = {
     publicInfo: "， 任何互联网上的人都可以看到此 MCP",
     needMcpName: "请先提供 MCP 别名",
     needMcpDesc: "请先提供 MCP 介绍",
-    needMcpTag: '请先提供 MCP 标签'
+    needMcpTag: '请先提供 MCP 标签',
+    defaultBranch: '仓库默认分支',
+    defaultBranchDesc: '修改仓库默认分支',
   },
   schema: {
     title: "协议",

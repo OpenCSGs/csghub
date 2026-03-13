@@ -73,6 +73,36 @@
       </div>
     </div>
 
+    <!-- 更新默认分支 -->
+    <div class="flex lg:flex-col gap-8 lg:gap-1">
+      <div class="w-[380px] lg:w-[512px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('models.edit.defaultBranch') }}
+        </div>
+        <div class="text-sm font-light text-gray-600 leading-5">
+          {{ $t('models.edit.defaultBranchDesc') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <el-select
+          v-model="theDefaultBranch"
+          size="large"
+          class="!w-[512px] sm:!w-full">
+          <el-option
+            v-for="branch in branchList"
+            :key="branch.name"
+            :label="branch.name"
+            :value="branch.name" />
+        </el-select>
+        <CsgButton
+          v-if="hasDefaultBranchChanged"
+          @click="updateDefaultBranch"
+          class="btn btn-secondary-gray btn-sm w-fit"
+          :name="$t('all.update')"
+        />
+      </div>
+    </div>
+
     <el-divider />
 
     <!-- 模型标签 -->
@@ -323,6 +353,9 @@
         isUpdatingIndustryTags: false,
         originalModelNickname: this.modelNickname || '',
         originalModelDesc: this.modelDesc || '',
+        originalDefaultBranch: this.default_branch || '',
+        theDefaultBranch: this.default_branch || '',
+        branchList: [],
         originalTags: [],
         originalIndustryTags: [],
       }
@@ -335,6 +368,9 @@
       },
       hasDescChanged() {
         return this.theModelDesc.trim() !== this.originalModelDesc.trim()
+      },
+      hasDefaultBranchChanged() {
+        return this.theDefaultBranch.trim() !== this.originalDefaultBranch.trim()
       },
       hasTagsChanged() {
         if (this.originalTags.length !== this.selectedTags.length) return true
@@ -364,6 +400,7 @@
       document.addEventListener('click', this.collapseTagList)
       this.getIndustryTags()
       this.fetchReadme()
+      this.fetchBranches()
     },
     watch: {
       modelNickname(newNickname, _) {
@@ -371,6 +408,10 @@
       },
       modelDesc(newDesc, _) {
         this.theModelDesc = newDesc
+      },
+      default_branch(newBranch) {
+        this.theDefaultBranch = newBranch
+        this.originalDefaultBranch = newBranch
       },
       tagList(newTagList, _) {
         this.theTagList = newTagList
@@ -655,7 +696,6 @@
             tags,
             license
           }
-          console.log(111, newMetadata)
           const newMetadataString = yaml.dump(newMetadata)
           const newContent = `---\n${newMetadataString}\n---\n\n${content}`
           await this.updateReadme(newContent)
@@ -723,6 +763,17 @@
             type: 'warning'
           })
         }
+      },
+
+      async updateDefaultBranch() {
+        const branch = this.theDefaultBranch.trim()
+        if (!branch) return
+        this.updateModel({ default_branch: branch })
+      },
+
+      async fetchBranches() {
+        const { data } = await useFetchApi(`/models/${this.path}/branches`).json()
+        this.branchList = data.value?.data || []
       },
 
       async updateModel(payload) {

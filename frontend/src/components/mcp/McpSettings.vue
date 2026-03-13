@@ -78,6 +78,40 @@
 
     <el-divider />
 
+    <!-- 更新默认分支 -->
+    <div class="flex xl:flex-col gap-8">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('mcps.edit.defaultBranch') }}
+        </div>
+        <div class="text-sm font-light text-gray-600 leading-5">
+          {{ $t('mcps.edit.defaultBranchDesc') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <el-select
+          v-model="theDefaultBranch"
+          size="large"
+          class="!w-[512px] sm:!w-full"
+        >
+          <el-option
+            v-for="branch in branchList"
+            :key="branch.name"
+            :label="branch.name"
+            :value="branch.name"
+          />
+        </el-select>
+        <CsgButton
+          v-if="hasDefaultBranchChanged"
+          @click="updateDefaultBranch"
+          class="btn btn-secondary-gray btn-sm w-fit"
+          :name="$t('all.update')"
+        />
+      </div>
+    </div>
+
+    <el-divider />
+
     <div class="flex xl:flex-col gap-8">
       <div class="w-[380px] sm:w-full flex flex-col">
         <div class="text-sm text-gray-700 leading-5 font-medium">
@@ -261,6 +295,9 @@
   const delDesc = ref('')
   const theMcpNickname = ref(props.mcpNickname || '')
   const theMcpDesc = ref(props.mcpDesc || '')
+  const theDefaultBranch = ref(props.defaultBranch || '')
+  const originalDefaultBranch = ref(props.defaultBranch || '')
+  const branchList = ref([])
   const mcpPath = ref(props.path)
   const readmeContent = ref('')
   const readmeSha = ref('')
@@ -297,6 +334,7 @@
     }
     document.addEventListener('click', collapseTagList)
     fetchReadme()
+    fetchBranches()
   })
 
   onBeforeUnmount(() => {
@@ -314,6 +352,14 @@
     () => props.mcpDesc,
     (newDesc) => {
       theMcpDesc.value = newDesc
+    }
+  )
+
+  watch(
+    () => props.defaultBranch,
+    (newBranch) => {
+      theDefaultBranch.value = newBranch
+      originalDefaultBranch.value = newBranch
     }
   )
 
@@ -568,6 +614,21 @@
         type: 'warning'
       })
     }
+  }
+
+  const hasDefaultBranchChanged = computed(() =>
+    theDefaultBranch.value.trim() !== originalDefaultBranch.value.trim()
+  )
+
+  const updateDefaultBranch = () => {
+    const branch = theDefaultBranch.value.trim()
+    if (!branch) return
+    updateMcp({ default_branch: branch })
+  }
+
+  const fetchBranches = async () => {
+    const { data } = await useFetchApi(`/mcps/${props.path}/branches`).json()
+    branchList.value = data.value?.data || []
   }
 
   const updateMcp = async (payload) => {

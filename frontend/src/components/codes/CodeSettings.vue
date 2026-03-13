@@ -74,6 +74,35 @@
       </div>
     </div>
 
+    <!-- 更新默认分支 -->
+    <div class="flex xl:flex-col gap-8">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('codes.edit.defaultBranch') }}
+        </div>
+        <div class="text-sm text-gray-600 leading-5">
+          {{ $t('codes.edit.defaultBranchDesc') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <el-select
+          v-model="theDefaultBranch"
+          size="large"
+          class="!w-[512px] sm:!w-full">
+          <el-option
+            v-for="branch in branchList"
+            :key="branch.name"
+            :label="branch.name"
+            :value="branch.name" />
+        </el-select>
+        <CsgButton
+          v-if="hasDefaultBranchChanged"
+          @click="updateDefaultBranch"
+          class="btn btn-secondary-gray btn-sm w-fit"
+          :name="$t('all.update')" />
+      </div>
+    </div>
+
     <el-divider />
 
     <!-- 修改可见性 -->
@@ -179,6 +208,9 @@
         codePath: this.path,
         originalCodeNickname: this.codeNickname || '',
         originalCodeDesc: this.codeDesc || '',
+        originalDefaultBranch: this.default_branch || '',
+        theDefaultBranch: this.default_branch || '',
+        branchList: [],
         options: [
           { value: 'Private', label: this.$t('all.private') },
           { value: 'Public', label: this.$t('all.public') }
@@ -193,6 +225,9 @@
       },
       hasDescChanged() {
         return this.theCodeDesc.trim() !== this.originalCodeDesc.trim()
+      },
+      hasDefaultBranchChanged() {
+        return this.theDefaultBranch.trim() !== this.originalDefaultBranch.trim()
       },
       visibilityName: {
         get() {
@@ -209,9 +244,15 @@
       },
       codeDesc(newDesc, _) {
         this.theCodeDesc = newDesc
+      },
+      default_branch(newBranch) {
+        this.theDefaultBranch = newBranch
+        this.originalDefaultBranch = newBranch
       }
     },
-    mounted() {},
+    mounted() {
+      this.fetchBranches()
+    },
     inject: ['fetchRepoDetail'],
     methods: {
       ...mapActions(useRepoDetailStore, ['updateVisibility']),
@@ -292,6 +333,17 @@
         } else {
           ElMessage.warning(this.$t('codes.edit.needCodeDesc'))
         }
+      },
+
+      async updateDefaultBranch() {
+        const branch = this.theDefaultBranch.trim()
+        if (!branch) return
+        this.updateCode({ default_branch: branch })
+      },
+
+      async fetchBranches() {
+        const { data } = await useFetchApi(`/codes/${this.path}/branches`).json()
+        this.branchList = data.value?.data || []
       },
 
       async updateCode(payload) {

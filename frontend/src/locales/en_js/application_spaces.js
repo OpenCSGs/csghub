@@ -118,6 +118,8 @@ export const application_spaces = {
     privateVis: "Only creator or members of your organization can see",
     publicVis: "Anyone can see this space",
     confirmDel: "I understand and confirm deletion",
+    defaultBranch: 'Default branch',
+    defaultBranchDesc: 'Change the default branch of the repository',
     privateInfo: ", only the creator or organization admin can make submissions",
     publicInfo: ", visible to anyone on the internet.",
     needName: "Please provide name first",

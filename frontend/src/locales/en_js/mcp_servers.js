@@ -51,7 +51,9 @@ export const mcps = {
     publicInfo: ", visible to anyone on the internet.",
     needMcpName: "Please provide a MCP nickname first",
     needMcpDesc: "Please provide a MCP description first",
-    needMcpTag: 'Please provide a MCP tag first'
+    needMcpTag: 'Please provide a MCP tag first',
+    defaultBranch: 'Default branch',
+    defaultBranchDesc: 'Change the default branch of the repository',
   },
   schema: {
     title: "Schema",
