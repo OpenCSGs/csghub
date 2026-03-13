@@ -50,5 +50,7 @@ export const skills = {
     publicInfo: "Anyone on the Internet can see this skill.",
     needSkillName: "Please provide skill alias first",
     needSkillDesc: "Please provide skill introduction first",
+    defaultBranch: "Default Branch",
+    defaultBranchDesc: "Set the default branch for this skill repository",
   },
 }

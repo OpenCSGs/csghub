@@ -58,6 +58,12 @@ export const datasets = {
     needDatasetName: "Please provide a dataset alias first.",
     needDatasetDesc: "Please provide a dataset description first.",
     needDatasetTag: 'Please provide a dataset tag first',
+    defaultBranch: 'Default branch',
+    defaultBranchDesc: 'Change the default branch of the repository',
+    forbidden: "Action not allowed",
+    unableEditVisibility: "Private dataset cannot be made public. Please contact the administrator for assistance.",
+    confirm: 'Confirm',
+    cancel: 'Cancel',
     updateSuccess: 'Update Success'
   },
 }

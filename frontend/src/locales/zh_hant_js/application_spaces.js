@@ -117,6 +117,8 @@ export const application_spaces = {
     privateVis: "只有創建者或組織成員可見",
     publicVis: "任何人都可以看到此應用空間",
     confirmDel: "我已知曉,確認刪除",
+    defaultBranch: '倉庫預設分支',
+    defaultBranchDesc: '修改倉庫預設分支',
     privateInfo: "，僅創建者或者組織管理員可進行提交",
     publicInfo: "， 任何網際網路上的人都可以看到此應用空間。",
     needName: "請先提供應用空間別名",
