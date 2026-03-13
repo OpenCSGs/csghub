@@ -58,6 +58,12 @@ export const datasets = {
     needDatasetName: "请先提供数据集别名",
     needDatasetDesc: "请先提供数据集介绍",
     needDatasetTag: '请先提供数据集标签',
+    defaultBranch: '仓库默认分支',
+    defaultBranchDesc: '修改仓库默认分支',
+    forbidden: "操作受限",
+    unableEditVisibility: "当前暂不支持设置公开数据集，如有需要，请联系管理员",
+    confirm: '确认',
+    cancel: '取消',
     updateSuccess: '更新成功'
   },
 }

@@ -60,7 +60,9 @@ export const models = {
     publicInfo: "， 任何互联网上的人都可以看到此模型",
     needModelName: "请先提供模型别名",
     needModelDesc: "请先提供模型介绍",
-    needModelTag: '请先提供模型标签'
+    needModelTag: '请先提供模型标签',
+    defaultBranch: '仓库默认分支',
+    defaultBranchDesc: '修改仓库默认分支',
   },
   emptyModels: {
     title: "使用多源同步功能丰富模型",

@@ -66,6 +66,8 @@ export const models = {
     needModelName: "Please provide a model nickname first",
     needModelDesc: "Please provide a model description first",
     needModelTag: "Please provide a model tag first",
+    defaultBranch: 'Default branch',
+    defaultBranchDesc: 'Change the default branch of the repository',
   },
   emptyModels: {
     title: "Enrich the model with multi-source synchronization capabilities",

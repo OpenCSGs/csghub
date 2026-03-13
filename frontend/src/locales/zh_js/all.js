@@ -143,6 +143,7 @@ export const all = {
   unknown: "未知",
   inBranch: "在分支",
   notExist: "中不存在",
+  branchNotExist: "分支不存在，请输入有效的分支名称",
   useModel: "使用模型",
   clickForQuickTutorial: "点击这里，开始快速教程"
 }

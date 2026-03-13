@@ -154,7 +154,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, watch, nextTick } from 'vue'
+  import { ref, onMounted, watch } from 'vue'
   import { useRouter, useRoute } from 'vue-router'
 
   import { format } from 'timeago.js';
@@ -196,7 +196,8 @@
 
   const emit = defineEmits(['changeBranch'])
 
-  const isInitializing = ref(false)
+  // 防止重复初始化的标志
+  const hasInitialized = ref(false)
 
   // 监听路由变化，处理 tab 切换和状态同步
   watch(() => route.query, (newQuery, oldQuery) => {
@@ -253,7 +254,7 @@
     }
     
     // 如果有变化且不在初始化中，重新初始化
-    if (shouldReinit && !isInitializing.value) {
+    if (shouldReinit) {
       resetInitialization() // 重置初始化标志
       ensureInitialized()
     }
@@ -290,8 +291,6 @@
   }
 
   const goToNamespace = () => {
-    if (isInitializing.value) return
-    
     resetFileNotFound()
     resetInitialization() // 重置初始化标志
     
@@ -321,13 +320,11 @@
   }
 
   const goToBreadcrumb = (path) => {
-    if (isInitializing.value) return
-    
     resetFileNotFound()
     resetInitialization() // 重置初始化标志
     
     // 更新状态
-    currentPath.value = path.includes('/') ? path?.slice(1) : path
+    currentPath.value = path.includes('/') ? path.slice(1) : path
     setRepoTab({
       actionName: 'files',
       lastPath: currentPath.value
@@ -440,8 +437,6 @@
   }
 
   const goToDir = (path) => {
-    if (isInitializing.value) return
-    
     resetFileNotFound()
     resetInitialization() // 重置初始化标志
     
@@ -618,7 +613,7 @@
       } else if (response.value.status === 403) {
         ToUnauthorizedPage()
       } else if (response.value.status === 404) {
-        ToNotFoundPage()
+        // commit 接口 404 表示暂无提交记录，静默处理，不跳转
       } else {
         ElMessage.warning(error.value ? error.value.msg : 'Failed to fetch commit list')
       }
@@ -628,6 +623,31 @@
       loading.value = false
     }
   }
+  // 分支不存在时，fallback 到 branches 接口返回的第一个真实分支
+  const hasFallenBack = ref(false)
+  const fallbackToFirstBranch = async () => {
+    if (hasFallenBack.value) {
+      loading.value = false
+      return
+    }
+    hasFallenBack.value = true
+    loading.value = false
+    try {
+      const branchesUrl = `/${apiPrefixPath}/${props.namespacePath}/branches`
+      const { data } = await useFetchApi(branchesUrl).json()
+      if (data.value?.data?.length > 0) {
+        const firstBranch = data.value.data[0].name
+        currentBranch.value = firstBranch
+        files.value = []
+        filePageCursor.value = ''
+        emit('changeBranch', firstBranch)
+        init()
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   const fetchFileListData = async () => {
     // 确保 currentBranch 有值才能发起请求
     // 注意：defaultBranch 也可能为空，所以这个检查是必要的
@@ -653,14 +673,14 @@
       } else if (response.value.status === 403) {
         ToUnauthorizedPage()
       } else if (response.value.status === 404) {
-        ToNotFoundPage()
+        fallbackToFirstBranch()
       } else {
         ElMessage.warning(error.value ? error.value.msg : 'Failed to fetch file list')
         loading.value = false
       }
-    } catch (error) {
-      console.log(error)
-      loading.value = false
+    } catch (err) {
+      // 后端对不存在的分支可能返回空 body，导致 JSON 解析失败，此时 fallback 到第一个真实分支
+      fallbackToFirstBranch()
     }
   }
 
@@ -679,28 +699,19 @@
   }
 
   function init() {
-    if (isInitializing.value) return // 防止重复初始化
-    
-    // 确保 currentBranch 有值才能初始化
     if (!currentBranch.value) {
-      console.warn('[FileList] init called without currentBranch, waiting for branch to be set')
+      console.warn('[FileList] init called without currentBranch')
       loading.value = false
       return
     }
-    
-    isInitializing.value = true
+
     resetFileNotFound()
-    
     files.value = []
     commitList.value = []
     loading.value = true
     updateBreadcrumb()
     fetchFileListData()
     fetchLastCommit()
-    
-    nextTick(() => {
-      isInitializing.value = false
-    })
   }
 
   // 工具函数：检查是否应该显示 FileList
@@ -719,13 +730,10 @@
     // 设置路径
     currentPath.value = urlPath || repoTab.lastPath || ''
     
-    // 设置分支，优先级：URL > repoTab > defaultBranch > 'main'
-    const targetBranch = urlBranch || repoTab.currentBranch || props.defaultBranch || 'main'
+    // 设置分支，优先级：URL > defaultBranch > 'main'（每次进入文件tab都重置为默认分支）
+    const targetBranch = urlBranch || props.defaultBranch || 'main'
     currentBranch.value = targetBranch
   }
-
-  // 防止重复初始化的标志
-  const hasInitialized = ref(false)
 
   // 统一的初始化入口
   const ensureInitialized = () => {
@@ -734,15 +742,11 @@
       loading.value = false
       return
     }
-    
-    if (isInitializing.value) {
-      return
-    }
-    
+
     if (hasInitialized.value) {
       return
     }
-    
+
     hasInitialized.value = true
     init()
   }
@@ -750,16 +754,21 @@
   // 重置初始化标志（用于需要重新初始化的场景）
   const resetInitialization = () => {
     hasInitialized.value = false
+    hasFallenBack.value = false
   }
 
-  // 监听外部状态变化，只用于响应后续的状态变化（不用于初始化）
-  watch(() => [repoTab.currentBranch, props.defaultBranch], ([newRepoTabBranch, newDefaultBranch]) => {
-    // 只有当前没有分支时才设置（用于后续的状态变化）
-    if (!currentBranch.value) {
-      currentBranch.value = targetBranch
-      ensureInitialized()
+  // 监听 defaultBranch prop 变化（设置页更新了默认分支）
+  // 只在文件 tab 激活时立即重新加载；否则仅记录，等切换到文件 tab 时 setupInitialState 会读取最新值
+  watch(() => props.defaultBranch, (newDefaultBranch, oldDefaultBranch) => {
+    if (!newDefaultBranch || newDefaultBranch === oldDefaultBranch) return
+    if (checkShouldShow()) {
+      currentBranch.value = newDefaultBranch
+      files.value = []
+      filePageCursor.value = ''
+      hasInitialized.value = true
+      init()
     }
-  }) // 移除 immediate，完全由 onMounted 负责初始化
+  })
 
   onMounted(() => {
     // 检查是否应该显示 FileList

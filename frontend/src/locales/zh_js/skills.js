@@ -50,5 +50,7 @@ export const skills = {
     publicInfo: "， 任何互联网上的人都可以看到此技能。",
     needSkillName: "请先提供技能别名",
     needSkillDesc: "请先提供技能介绍",
+    defaultBranch: "默认分支",
+    defaultBranchDesc: "设置该技能仓库的默认分支",
   },
 }
