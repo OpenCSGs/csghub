@@ -12,7 +12,11 @@
       </p>
     </div>
     <dataProcessingStep1 v-show="step === 1"></dataProcessingStep1>
-    <dataProcessingStep2 v-show="step === 2" :init="'createJobs'"></dataProcessingStep2>
+    <dataProcessingStep2
+      v-show="step === 2"
+      :key="route.query?.templateName || 'default'"
+      :init="'createJobs'"
+    ></dataProcessingStep2>
   </div>
 </template>
 
@@ -50,31 +54,35 @@ const step = ref(1); // 表单步骤
 
 // 动态页面标题 - 优先使用表单中选择的模板名称，否则使用URL参数
 const pageTitle = computed(() => {
-  // 如果表单中已选择了模板
-  const selectedTemplateName = form.value.name;
-  if (selectedTemplateName) {
-    // 如果有对应的国际化key，使用国际化名称
-    if (templateNameMap[selectedTemplateName]) {
-      return t(`dataPipelines.${templateNameMap[selectedTemplateName]}`);
-    }
-    // 否则直接显示模板名称
-    return selectedTemplateName;
-  }
-  
-  // 使用URL参数中的模板名称
+  // 有 URL 参数 templateName 时（从数据过滤/数据筛选等菜单进入），显示对应模板名称
   const templateName = route.query?.templateName;
-  if (templateName) {
-    if (templateNameMap[templateName]) {
-      return t(`dataPipelines.${templateNameMap[templateName]}`);
-    }
-    return templateName;
+  if (templateName && templateNameMap[templateName]) {
+    return t(`dataPipelines.${templateNameMap[templateName]}`);
   }
-  
+  // 无 templateName 时（从任务列表「创建任务」进入），固定显示「任务列表」，不随下拉选择变化
   return t("dataPipelines.taskList");
 });
 
 provide("subForm", form);
 provide("step", step);
+
+// 切换模板类型（数据筛选、数据脱敏、语义去重等）时，重置为第一步并清空已填数据
+watch(
+  () => route.query?.templateName,
+  (newName, oldName) => {
+    if (newName && newName !== oldName) {
+      step.value = 1;
+      // 清空第一步表单中用户填写的数据，保留 owner 等默认值
+      form.value.project_name = "";
+      form.value.repo_id = "";
+      form.value.branch = "";
+      form.value.text_keys = "";
+      form.value.dataset_path = "";
+      form.value.export_path = "";
+      form.value.process = [];
+    }
+  }
+);
 
 onMounted(() => {});
 

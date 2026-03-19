@@ -83,7 +83,14 @@
             "before": "这是一段 /* 多行注释\n注释内容copyright\n*/ 的文本。另外还有一些 // 单行注释。",
             "after": "这是一段  的文本。另外还有一些 // 单行注释。"
         },
-        "params": []
+        "params": [
+            {
+                "name": "匹配规则",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            }
+        ]
     },
     "clean_email_mapper": {
         "name": "邮箱后缀清理",

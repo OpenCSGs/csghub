@@ -455,6 +455,41 @@
             <div class="input-tag-hint">{{ t('dataPipelines.inputTagHint') }}</div>
         </el-form-item>
         
+        <!-- TextareaArrayData 多行正则输入（一行一个正则，提交格式与 input-tag 相同为数组） -->
+        <el-form-item 
+            v-else-if="config.config_type === 'textarea-array-data'"
+            :prop="`${config.id}.final_value`"
+            :rules="getRules(config)"
+        >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
+            <el-input
+                type="textarea"
+                :model-value="getTextareaArrayDisplay(config.id)"
+                @update:model-value="(val) => setTextareaArrayValue(config.id, val)"
+                :placeholder="`${t('dataPipelines.toInput')}${config.display_name}`"
+                :disabled="config.is_disabled"
+                :rows="6"
+                resize="vertical"
+            />
+            <div class="input-tag-hint">{{ t('dataPipelines.textareaArrayDataHint') }}</div>
+        </el-form-item>
+        
         <!-- 默认情况 - 文本输入框 -->
         <el-form-item 
             v-else
@@ -588,6 +623,28 @@
         
         return [];
       }
+    }
+  }
+
+  // textarea-array-data：数组转多行文本显示（一行一个正则）
+  const getTextareaArrayDisplay = (configId) => {
+    const val = formData.value[configId]?.final_value
+    if (Array.isArray(val)) {
+      return val.join('\n')
+    }
+    if (typeof val === 'string') {
+      return val
+    }
+    return ''
+  }
+  // textarea-array-data：多行文本转数组并更新（与 input-tag 相同的数组格式）
+  // 注意：不过滤空行，以保留换行符，否则用户按 Enter 无法换行
+  const setTextareaArrayValue = (configId, text) => {
+    const arr = (text || '')
+      .split('\n')
+      .map((s) => s.trim())
+    if (formData.value[configId]) {
+      formData.value[configId].final_value = arr
     }
   }
 
@@ -753,6 +810,29 @@
                     formData.value[config.id] = { final_value: [String(defaultValue)] }
                 }
                 break
+            // 多行正则输入组件（一行一个正则，提交格式与 input-tag 相同为数组）
+            case 'textarea-array-data':
+                if (defaultValue === null || defaultValue === undefined) {
+                    formData.value[config.id] = { final_value: [] }
+                } 
+                else if (Array.isArray(defaultValue)) {
+                    formData.value[config.id] = { final_value: [...defaultValue] }
+                }
+                else if (typeof defaultValue === 'string') {
+                    // 支持换行分隔或 JSON 数组格式
+                    const trimmed = defaultValue.trim()
+                    if (trimmed.startsWith('[') && trimmed.endsWith(']')) {
+                        const parsed = parseInputTagArrayValue(trimmed)
+                        formData.value[config.id] = { final_value: parsed }
+                    } else {
+                        const arr = trimmed.split('\n').map((s) => s.trim()).filter((s) => s !== '')
+                        formData.value[config.id] = { final_value: arr }
+                    }
+                }
+                else {
+                    formData.value[config.id] = { final_value: [String(defaultValue)] }
+                }
+                break
             // 默认情况
             default:
                 formData.value[config.id] = { final_value: defaultValue !== undefined 
@@ -784,9 +864,14 @@
   // 保存配置
   const handleSave = () => {
     const newConfigs = props.configs.map(config => {
+      let finalValue = formData.value[config.id].final_value
+      // textarea-array-data 保存时过滤空行，与 input-tag 格式一致
+      if (config.config_type === 'textarea-array-data' && Array.isArray(finalValue)) {
+        finalValue = finalValue.filter((s) => s !== '')
+      }
       return {
         ...config,
-        final_value: formData.value[config.id].final_value
+        final_value: finalValue
       }
     })
     emit('save', newConfigs)

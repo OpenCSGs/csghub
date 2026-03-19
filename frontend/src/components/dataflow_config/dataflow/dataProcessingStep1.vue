@@ -207,13 +207,17 @@ const templateNameMap = {
   "语义去重": "semanticDeduplication",
   "质量评测": "qualityEvaluation",
 };
+// 菜单名称到任务模板名称的映射（菜单名与模板名不一致时使用）
+const menuToTemplateMap = {
+  "语义去重": "数据去重",
+};
 
 const ruleFormRef = ref(null);
 const subForm = inject("subForm", ref({ 
   project_name: '',
   dataset_path: '',
   export_path: '',
-  text_keys: 'text',
+  text_keys: '',
   owner: '',
   repo_id: route.query.datasetPath || '',
   branch: '',
@@ -224,28 +228,16 @@ const subForm = inject("subForm", ref({
   dslText: ""
 }))
 
-// 动态页面大标题 - 根据选择的模板动态变化
+// 动态页面大标题 - 从任务列表「创建任务」进入时固定为「数据处理配置」，从左侧菜单进入时显示模板名称
 const pageMainTitle = computed(() => {
-  // 如果表单中已选择了模板
-  const selectedTemplateName = subForm.value?.name;
-  if (selectedTemplateName) {
-    // 如果有对应的国际化key，使用国际化名称
-    if (templateNameMap[selectedTemplateName]) {
-      return t(`dataPipelines.${templateNameMap[selectedTemplateName]}`);
-    }
-    // 否则直接显示模板名称
-    return selectedTemplateName;
-  }
-  
-  // 使用URL参数中的模板名称
+  // 有 URL 参数 templateName 时（从数据过滤/数据筛选等菜单进入），显示对应模板名称
   if (templateName.value) {
     if (templateNameMap[templateName.value]) {
       return t(`dataPipelines.${templateNameMap[templateName.value]}`);
     }
     return templateName.value;
   }
-  
-  // 默认显示数据处理配置
+  // 无 templateName 时（从任务列表「创建任务」进入），固定显示「数据处理配置」，不随下拉选择变化
   return t("dataPipelines.dataProcessingConfiguration");
 });
 
@@ -381,12 +373,22 @@ const getTemplateData = async () => {
 // 更新模板选择的公共方法
 const updateTemplateSelection = async () => {
   if (templateName.value && !templateId.value && templateList.value.length > 0) {
-    const matchedTemplate = templateList.value.find(
-      (item) => item.name === templateName.value
+    // 菜单名与模板名可能不一致（如语义去重 -> 数据去重）
+    const targetTemplateName = menuToTemplateMap[templateName.value] || templateName.value
+    let matchedTemplate = templateList.value.find(
+      (item) => item.name === targetTemplateName
     )
+    if (!matchedTemplate) {
+      matchedTemplate = templateList.value.find(
+        (item) => item.name === templateName.value
+      )
+    }
     if (matchedTemplate && matchedTemplate.name !== subForm.value.name) {
       // 使用 nextTick 确保 DOM 更新完成后再操作
       await nextTick()
+      // 切换模板时清空分支列表并清除校验状态
+      branchList.value = []
+      ruleFormRef.value?.clearValidate?.()
       subForm.value.name = matchedTemplate.name
       changeTemplate(matchedTemplate.name)
     }

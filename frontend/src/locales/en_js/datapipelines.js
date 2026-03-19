@@ -2,6 +2,7 @@ export const dataPipelines = {
   "toSel": "Please select ",
   "toInput": "Please Input ",
   "inputTagHint": "Press Enter to add a keyword. Multiple keywords can be added",
+  "textareaArrayDataHint": "Enter one regular expression per line. A new line indicates a new regex",
   "noData": "No data available.",
   "saveConfiguration": "Save Configuration",
   "dataAcquisition": "Data Acquisition",

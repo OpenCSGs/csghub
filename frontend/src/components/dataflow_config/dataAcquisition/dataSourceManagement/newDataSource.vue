@@ -693,7 +693,7 @@ const form = ref({
   project_name: "",
   dataset_path: "",
   export_path: "",
-  text_keys: "text",
+  text_keys: "",
   owner: "",
   repo_id: route.query.datasetPath || "",
   branch: "",

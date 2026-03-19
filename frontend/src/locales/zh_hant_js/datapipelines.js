@@ -2,6 +2,7 @@ export const dataPipelines = {
   "toSel": "請選擇",
   "toInput": "請輸入",
   "inputTagHint": "按 Enter 鍵添加關鍵字，可添加多個關鍵字",
+  "textareaArrayDataHint": "每行輸入一個正則表達式，換行表示新的正則",
   "noData": "暫無數據",
   "saveConfiguration": "保存配置",
   "dataAcquisition": "數據採集",

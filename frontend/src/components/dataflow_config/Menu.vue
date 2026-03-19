@@ -356,6 +356,10 @@ const initCurrentRoute = () => {
   // 如果是 createTemplate 页面，根据 url 参数确定菜单索引
   else if (currentPath === "/datapipelines/createTemplate" && url && createTemplateUrlMap[url]) {
     return createTemplateUrlMap[url];
+  }
+  // addDataProcessing 无 templateName 时（从任务列表「创建任务」进入），高亮任务列表
+  else if (currentPath === "/datapipelines/addDataProcessing" && !templateName) {
+    return "2";
   } else {
     return menuRoutes[currentPath] || "1";
   }
@@ -411,6 +415,7 @@ watch(
     const newPath = newRoute.path;
     const templateName = newRoute.query?.templateName;
     const selToolName = newRoute.query?.selToolName;
+    const url = newRoute.query?.url;
     
     // 如果有 selToolName 参数（工具类页面），根据工具名称确定菜单索引
     if (selToolName && toolMenuMap[selToolName]) {
@@ -419,6 +424,14 @@ watch(
     // 如果有 templateName 参数，根据模板名称确定菜单索引
     else if (templateName && templateMenuMap[templateName]) {
       currentRoute.value = templateMenuMap[templateName];
+    }
+    // 如果是 createTemplate 页面，根据 url 参数确定菜单索引
+    else if (newPath === "/datapipelines/createTemplate" && url && createTemplateUrlMap[url]) {
+      currentRoute.value = createTemplateUrlMap[url];
+    }
+    // addDataProcessing 无 templateName 时（从任务列表「创建任务」进入），高亮任务列表
+    else if (newPath === "/datapipelines/addDataProcessing" && !templateName) {
+      currentRoute.value = "2";
     } else {
       currentRoute.value = menuRoutes[newPath] || "1";
     }
