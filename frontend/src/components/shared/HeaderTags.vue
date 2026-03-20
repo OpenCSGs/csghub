@@ -291,6 +291,7 @@
 
   const props = defineProps({
     tags: Object,
+    repoType: String,
     prefix: {
       type: String,
       default: ''
