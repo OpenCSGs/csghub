@@ -280,6 +280,8 @@
   <HeaderTags
     v-if="repoType === 'model' || repoType === 'dataset' || repoType === 'code' || repoType === 'mcp' || repoType === 'space' || repoType === 'skill'"
     :tags="tags"
+    :reportUrl="reportUrl"
+    :repoType="repoType"
     :prefix="`${repoType}s/`" />
 </template>
 

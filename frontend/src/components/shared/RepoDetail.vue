@@ -81,6 +81,9 @@
   });
 
   const tags = computed(() => {
+    if (!isInitialized.value) {
+      return {}
+    }
     return handleRepoTags(repoDetailStore)
   })
 

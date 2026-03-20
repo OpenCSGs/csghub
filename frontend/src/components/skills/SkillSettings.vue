@@ -308,7 +308,6 @@
       }
     },
     mounted() {
-      this.fetchBranches()
       if (Object.keys(this.tags || {}).length > 0) {
         this.getSelectTags()
       }
