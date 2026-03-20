@@ -2,7 +2,7 @@
   <div
     class="flex gap-6 page-responsive-width m-auto min-h-[calc(100vh-153px)] md:min-h-0 md:px-5">
     <div
-      v-if="repoType !== 'space' && repoType !== 'agent' && repoType !== 'skill'"
+      v-if="repoType !== 'space' && repoType !== 'agent'"
       class="w-[30%] min-w-[360px] border-r border-gray-200 pr-6 md:hidden">
       <TagSidebar
         :selectedTag="selectedTag"

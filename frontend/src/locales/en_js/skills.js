@@ -8,6 +8,8 @@ export const skills = {
   namespaceSkillName: "Skill name",
   skillNickName: "Skill alias",
   skillDesc: "Skill description",
+  skillTag: "Skill Tags",
+  skillTagDesc: "Select classification tags for your skill to help users find it more easily when filtering.",
   associated: 'Associated Skills',
   newTips: 'New',
   newSkill: {
@@ -50,5 +52,8 @@ export const skills = {
     publicInfo: "Anyone on the Internet can see this skill.",
     needSkillName: "Please provide skill alias first",
     needSkillDesc: "Please provide skill introduction first",
+    needSkillTag: "Please select at least one skill tag",
+    defaultBranch: "Default Branch",
+    defaultBranchDesc: "Set the default branch for this skill repository",
   },
 }

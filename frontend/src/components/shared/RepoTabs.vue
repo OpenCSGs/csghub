@@ -269,6 +269,8 @@
           :skill-nickname="repoDetail.nickname"
           :skill-desc="repoDetail.description"
           :default_branch="repoDetail.defaultBranch"
+          :tag-list="tagList"
+          :tags="tags"
         />
         <EndpointSettings
           v-if="repoType === 'endpoint'"

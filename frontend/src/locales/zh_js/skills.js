@@ -8,6 +8,8 @@ export const skills = {
   namespaceSkillName: "命名空间/技能仓库名称",
   skillNickName: "技能仓库别名",
   skillDesc: "技能仓库简介",
+  skillTag: "技能标签",
+  skillTagDesc: "选择skill对应的分类标签，便于用户在筛选时更快的找到您的skill。",
   associated: '关联技能',
   newTips: '新',
   newSkill: {
@@ -50,5 +52,8 @@ export const skills = {
     publicInfo: "， 任何互联网上的人都可以看到此技能。",
     needSkillName: "请先提供技能别名",
     needSkillDesc: "请先提供技能介绍",
+    needSkillTag: "请至少选择一个技能标签",
+    defaultBranch: "默认分支",
+    defaultBranchDesc: "设置该技能仓库的默认分支",
   },
 }
