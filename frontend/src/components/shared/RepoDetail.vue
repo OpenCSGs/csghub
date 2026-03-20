@@ -81,8 +81,7 @@
   });
 
   const tags = computed(() => {
-    // 确保 tagCategories 已加载且 repoDetailStore 已初始化
-    if (!tagCategories.value || tagCategories.value.length === 0 || !isInitialized.value) {
+    if (!isInitialized.value) {
       return {}
     }
     return handleRepoTags(repoDetailStore)
