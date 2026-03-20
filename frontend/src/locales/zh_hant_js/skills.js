@@ -8,6 +8,8 @@ export const skills = {
   namespaceSkillName: "命名空間/技能倉庫名稱",
   skillNickName: "技能倉庫別名",
   skillDesc: "技能倉庫簡介",
+  skillTag: "技能標籤",
+  skillTagDesc: "選擇skill對應的分類標籤，便於用戶在篩選時更快的找到您的skill。",
   associated: '關聯技能',
   newTips: '新',
   newSkill: {
@@ -50,5 +52,8 @@ export const skills = {
     publicInfo: "， 任何互聯網上的人都可以看到此技能。",
     needSkillName: "請先提供技能別名",
     needSkillDesc: "請先提供技能介紹",
+    needSkillTag: "請至少選擇一個技能標籤",
+    defaultBranch: "預設分支",
+    defaultBranchDesc: "設置該技能倉庫的預設分支",
   },
 }

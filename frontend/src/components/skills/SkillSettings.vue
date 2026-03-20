@@ -76,6 +76,69 @@
 
     <el-divider />
 
+    <!-- Skill 标签 -->
+    <div class="flex xl:flex-col gap-8">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('skills.skillTag') }}
+        </div>
+        <div class="text-sm text-gray-600 leading-5">
+          {{ $t('skills.skillTagDesc') }}
+        </div>
+      </div>
+      <div
+        class="flex flex-col gap-1.5"
+        ref="tagListContainer">
+        <p class="text-gray-700 text-sm">{{ $t('skills.skillTag') }}</p>
+        <div class="flex flex-col gap-1.5 w-[512px] sm:w-full">
+          <div
+            class="flex gap-1 flex-wrap items-center w-full border rounded-md border-gray-300 min-h-[40px] p-1.5">
+            <div
+              class="scroll-container flex gap-1 flex-wrap max-h-[120px] overflow-y-auto">
+              <span
+                v-for="tag in selectedTags"
+                :key="tag.uid"
+                class="flex items-center text-sm text-gray-700 gap-1 border rounded-sm border-gray-300 px-1 py-0.5">
+                {{
+                  this.$i18n.locale === 'zh'
+                    ? tag.zh_name || tag.show_name || tag.name
+                    : tag.name
+                }}
+                <el-icon><Close @click="removeTag(tag.uid)" /></el-icon>
+              </span>
+            </div>
+            <input
+              class="w-full max-h-8 outline-none"
+              v-model="tagInput"
+              @input="showTagList" />
+          </div>
+          <div
+            v-show="shouldShowTagList"
+            class="rounded-md max-h-[300px] overflow-y-auto border border-gray-200 bg-white shadow-lg py-1 px-1.5">
+            <p
+              v-for="tag in theTagList"
+              :key="tag.name"
+              @click="selectTag(tag)"
+              class="flex gap-2 items-center cursor-pointer p-2.5">
+              {{
+                this.$i18n.locale === 'zh' ? tag.show_name || tag.name : tag.name
+              }}
+            </p>
+          </div>
+          <CsgButton
+            v-if="hasTagsChanged"
+            @click="updateTags"
+            class="btn btn-secondary-gray btn-sm w-fit"
+            :name="$t('all.update')"
+            :loading="isUpdatingTags"
+            :disabled="isUpdatingTags"
+          />
+        </div>
+      </div>
+    </div>
+
+    <el-divider />
+
     <!-- 修改可见性 -->
     <div class="flex xl:flex-col gap-[32px]">
       <div class="w-[380px] sm:w-full flex flex-col">
@@ -158,6 +221,7 @@
 <script>
   import { h } from 'vue'
   import { ElMessage, ElMessageBox } from 'element-plus'
+  import { Close } from '@element-plus/icons-vue'
   import useFetchApi from '../../packs/useFetchApi'
   import useRepoDetailStore from '../../stores/RepoDetailStore'
   import { mapState, mapWritableState, mapActions } from 'pinia'
@@ -167,11 +231,19 @@
       path: String,
       skillNickname: String,
       skillDesc: String,
-      default_branch: String
+      default_branch: String,
+      tagList: Object,
+      tags: Object
     },
-    components: {},
+    components: {
+      Close
+    },
     data() {
       return {
+        theTagList: this.tagList,
+        selectedTags: [],
+        shouldShowTagList: false,
+        tagInput: '',
         delDesc: '',
         skillName: this.path.split('/')[1],
         theSkillNickname: this.skillNickname || '',
@@ -179,6 +251,11 @@
         skillPath: this.path,
         originalSkillNickname: this.skillNickname || '',
         originalSkillDesc: this.skillDesc || '',
+        originalDefaultBranch: this.default_branch || '',
+        theDefaultBranch: this.default_branch || '',
+        branchList: [],
+        isUpdatingTags: false,
+        originalTags: [],
         options: [
           { value: 'Private', label: this.$t('all.private') },
           { value: 'Public', label: this.$t('all.public') }
@@ -193,6 +270,15 @@
       },
       hasDescChanged() {
         return this.theSkillDesc.trim() !== this.originalSkillDesc.trim()
+      },
+      hasDefaultBranchChanged() {
+        return this.theDefaultBranch.trim() !== this.originalDefaultBranch.trim()
+      },
+      hasTagsChanged() {
+        if (this.originalTags.length !== this.selectedTags.length) return true
+        const originalTagIds = this.originalTags.map(tag => tag.uid).sort()
+        const currentTagIds = this.selectedTags.map(tag => tag.uid).sort()
+        return JSON.stringify(originalTagIds) !== JSON.stringify(currentTagIds)
       },
       visibilityName: {
         get() {
@@ -209,9 +295,28 @@
       },
       skillDesc(newDesc, _) {
         this.theSkillDesc = newDesc
+      },
+      default_branch(newBranch) {
+        this.theDefaultBranch = newBranch
+        this.originalDefaultBranch = newBranch
+      },
+      tagList(newTagList, _) {
+        this.theTagList = newTagList
+      },
+      tags(_) {
+        this.getSelectTags()
       }
     },
-    mounted() {},
+    mounted() {
+      this.fetchBranches()
+      if (Object.keys(this.tags || {}).length > 0) {
+        this.getSelectTags()
+      }
+      document.addEventListener('click', this.collapseTagList)
+    },
+    beforeUnmount() {
+      document.removeEventListener('click', this.collapseTagList)
+    },
     inject: ['fetchRepoDetail'],
     methods: {
       ...mapActions(useRepoDetailStore, ['updateVisibility']),
@@ -324,6 +429,112 @@
         document
           .getElementById('confirmDelete')
           .classList.replace('bg-error-700', 'bg-error-600')
+      },
+
+      collapseTagList(event) {
+        if (!this.$refs.tagListContainer?.contains(event.target)) {
+          this.shouldShowTagList = false
+        }
+      },
+
+      getSelectTags() {
+        const taskTags = this.tags?.task_tags || []
+        const otherTags = this.tags?.other_tags || []
+        
+        this.selectedTags = [
+          ...taskTags.map((tag) => {
+            Object.assign(tag, {
+              uid: tag.category + tag.name,
+            })
+            return tag
+          }),
+          ...otherTags.map((tag) => {
+            Object.assign(tag, {
+              uid: tag.category + tag.name,
+            })
+            return tag
+          })
+        ]
+        
+        if (this.originalTags.length === 0) {
+          this.originalTags = JSON.parse(JSON.stringify(this.selectedTags))
+        }
+      },
+
+      showTagList(e) {
+        if (this.tagInput != '') {
+          const userTriggerTagList = this.tagList.filter((tag) => {
+            return (
+              tag.show_name.includes(this.tagInput) ||
+              tag.name.includes(this.tagInput)
+            )
+          })
+          if (userTriggerTagList.length > 0) {
+            this.theTagList = userTriggerTagList
+            this.shouldShowTagList = true
+          }
+        } else {
+          this.shouldShowTagList = false
+        }
+      },
+
+      selectTag(newTag) {
+        const findTag = this.selectedTags.find(
+          (tag) => tag.uid === (newTag.category + newTag.name)
+        )
+        if (!findTag) {
+          this.selectedTags.push({ 
+            name: newTag.name, 
+            zh_name: newTag.show_name, 
+            category: newTag.category,
+            uid: newTag.category + newTag.name 
+          })
+          this.tagInput = ''
+          this.shouldShowTagList = false
+        }
+      },
+
+      removeTag(tagUid) {
+        this.selectedTags = this.selectedTags.filter((item) => item.uid !== tagUid)
+      },
+
+      async updateTags() {
+        if (this.isUpdatingTags) return
+        
+        if (this.selectedTags.length !== 0) {
+          this.isUpdatingTags = true
+          try {
+            const newSelectedTags = this.selectedTags.map((tag) => tag.name)
+            await this.updateTagsAPI(newSelectedTags)
+          } catch (error) {
+            ElMessage({ message: error.message || this.$t('all.updateFailed'), type: 'warning' })
+          } finally {
+            this.isUpdatingTags = false
+          }
+        } else {
+          ElMessage({
+            message: this.$t('skills.edit.needSkillTag'),
+            type: 'warning'
+          })
+        }
+      },
+
+      async updateTagsAPI(tags) {
+        const tagOptions = {
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(tags)
+        }
+        const { error } = await useFetchApi(
+          `/skills/${this.path}/tags/task`,
+          tagOptions
+        ).post().json()
+        if (error.value) {
+          ElMessage({ message: error.value.msg, type: 'warning' })
+        } else {
+          this.fetchRepoDetail(true)
+          this.originalTags = JSON.parse(JSON.stringify(this.selectedTags))
+          ElMessage({ message: this.$t('all.updateSuccess'), type: 'success' })
+        }
       }
     }
   }

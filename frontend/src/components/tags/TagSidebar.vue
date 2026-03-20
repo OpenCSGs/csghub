@@ -198,7 +198,7 @@
       })
 
       avaliableCategories.value.forEach((category) => {
-        if (category.name === 'task' && props.repoType !== 'mcp') {
+        if (category.name === 'task' && props.repoType !== 'mcp' && props.repoType !== 'skill') {
           tagsForCategory.value['task'] = tempTaskTags
         } else {
           tagsForCategory.value[category.name] = data.value.data.filter(

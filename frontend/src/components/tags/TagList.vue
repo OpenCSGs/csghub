@@ -6,7 +6,7 @@
     :placeholder="$t('all.filterTags')"
     :prefix-icon="Search" />
 
-  <div v-show="activeCategory === 'task' && repoType !== 'mcp' && (taskTagFilterInput === '' || hasMatchingTaskTags)">
+  <div v-show="activeCategory === 'task' && repoType !== 'mcp' && repoType !== 'skill' && (taskTagFilterInput === '' || hasMatchingTaskTags)">
     <div class="">
       <div v-for="(value, key) in filteredTaskTags">
         <template v-if="taskTagFilterInput === '' || value.length > 0">
@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  <div v-show="activeCategory === 'task' && repoType === 'mcp' && (taskTagFilterInput === '' || filteredTags.length > 0)">
+  <div v-show="activeCategory === 'task' && (repoType === 'mcp' || repoType === 'skill') && (taskTagFilterInput === '' || filteredTags.length > 0)">
     <div class="flex gap-1 flex-wrap">
       <TaskTagItem
         v-for="tag in filteredTags"
@@ -146,7 +146,7 @@
   })
 
   const filteredTaskTags = computed(() => {
-    if (props.repoType === 'mcp') {
+    if (props.repoType === 'mcp' || props.repoType === 'skill') {
       return []
     }
     const keywordsRegex = new RegExp(taskTagFilterInput.value, 'i')
@@ -175,7 +175,7 @@
   }
 
   const removeNotMatchedTags = (tags, regex) => {
-    if (tags === undefined || (props.activeCategory === 'task' && props.repoType !== 'mcp')) {
+    if (tags === undefined || (props.activeCategory === 'task' && props.repoType !== 'mcp' && props.repoType !== 'skill')) {
       return []
     }
     const matchedTags = tags.filter(
@@ -191,7 +191,7 @@
   }
 
   const hasMatchingTaskTags = computed(() => {
-    if (props.repoType === 'mcp') {
+    if (props.repoType === 'mcp' || props.repoType === 'skill') {
       return false;
     }
     return Object.values(props.taskTags).some(tags => tags.length > 0);
