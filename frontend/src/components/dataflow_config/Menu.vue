@@ -307,10 +307,13 @@ const menuRoutes = {
   "/datapipelines/newTask": "2",
   "/datapipelines/dataflowInfo": "2",
   "/datapipelines/dataSourceManagement": "3",
+  "/datapipelines/dataCollectionTask": "3", // 数据采集任务属于数据源管理
+  "/datapipelines/newDataSource": "3", // 新建数据源属于数据源管理
   "/datapipelines/formatConversion": "4",
   "/datapipelines/addDataProcessing": "6", // 默认映射到数据过滤
   "/datapipelines/builtInTemplate": "13",
   "/datapipelines/customTemplate": "14",
+  "/datapipelines/createTemplate": "14", // 默认映射到自定义模板，url 参数可覆盖
   "/datapipelines/operatorManagement": "15",
   "/datapipelines/tools": "16",
 };
@@ -329,11 +332,18 @@ const toolMenuMap = {
   "fineweb_edu_chinese_common_internal": "10", // 质量评测
 };
 
+// createTemplate 页面的 url 参数到菜单索引的映射
+const createTemplateUrlMap = {
+  "customize": "14", // 自定义任务模板
+  "builtin": "13", // 内置任务模板
+};
+
 // 初始化当前路由的函数
 const initCurrentRoute = () => {
   const currentPath = router.currentRoute.value.path;
   const templateName = router.currentRoute.value.query?.templateName;
   const selToolName = router.currentRoute.value.query?.selToolName;
+  const url = router.currentRoute.value.query?.url;
   
   // 如果有 selToolName 参数（工具类页面），根据工具名称确定菜单索引
   if (selToolName && toolMenuMap[selToolName]) {
@@ -342,6 +352,14 @@ const initCurrentRoute = () => {
   // 如果有 templateName 参数，根据模板名称确定菜单索引
   else if (templateName && templateMenuMap[templateName]) {
     return templateMenuMap[templateName];
+  }
+  // 如果是 createTemplate 页面，根据 url 参数确定菜单索引
+  else if (currentPath === "/datapipelines/createTemplate" && url && createTemplateUrlMap[url]) {
+    return createTemplateUrlMap[url];
+  }
+  // addDataProcessing 无 templateName 时（从任务列表「创建任务」进入），高亮任务列表
+  else if (currentPath === "/datapipelines/addDataProcessing" && !templateName) {
+    return "2";
   } else {
     return menuRoutes[currentPath] || "1";
   }
@@ -349,22 +367,47 @@ const initCurrentRoute = () => {
 
 const currentRoute = ref(initCurrentRoute());
 
+// 以下情况 router.push 时右侧不更新，需使用整页跳转：
+// 1. 系统仪表盘（celeryNodeService）作为来源或目标
+// 2. addDataProcessing、createTemplate 等多步骤页面（含 workflow 编辑器）作为来源时跳转其他页面
+const CELERY_NODE_SERVICE_PATH = "/datapipelines/celeryNodeService";
+const NEED_FULL_PAGE_NAV_PATHS = ["/datapipelines/addDataProcessing", "/datapipelines/createTemplate"];
+
+const doNavigate = (path, query = {}) => {
+  const currentPath = route.path;
+  const targetPath = path;
+  const isFromCelery = currentPath === CELERY_NODE_SERVICE_PATH;
+  const isToCelery = targetPath === CELERY_NODE_SERVICE_PATH;
+  const isFromProblematicPage = NEED_FULL_PAGE_NAV_PATHS.some((p) => currentPath.startsWith(p));
+  const needFullPage =
+    isFromCelery ||
+    isToCelery ||
+    (isFromProblematicPage && currentPath !== targetPath);
+
+  if (needFullPage) {
+    const queryStr = Object.keys(query).length
+      ? "?" + new URLSearchParams(query).toString()
+      : "";
+    window.location.href = targetPath + queryStr;
+  } else {
+    if (Object.keys(query).length) {
+      router.push({ path: targetPath, query });
+    } else {
+      router.push(targetPath);
+    }
+  }
+};
+
 const handleClickMenu = (path) => {
-  router.push(path);
+  doNavigate(path);
 };
 
 const handleClickMenuWithTemplate = (path, templateName) => {
-  router.push({
-    path: path,
-    query: { templateName: templateName }
-  });
+  doNavigate(path, { templateName });
 };
 
 const handleClickMenuWithQuery = (path, query) => {
-  router.push({
-    path: path,
-    query: query
-  });
+  doNavigate(path, query);
 };
 watch(
   () => router.currentRoute.value,
@@ -372,6 +415,7 @@ watch(
     const newPath = newRoute.path;
     const templateName = newRoute.query?.templateName;
     const selToolName = newRoute.query?.selToolName;
+    const url = newRoute.query?.url;
     
     // 如果有 selToolName 参数（工具类页面），根据工具名称确定菜单索引
     if (selToolName && toolMenuMap[selToolName]) {
@@ -380,6 +424,14 @@ watch(
     // 如果有 templateName 参数，根据模板名称确定菜单索引
     else if (templateName && templateMenuMap[templateName]) {
       currentRoute.value = templateMenuMap[templateName];
+    }
+    // 如果是 createTemplate 页面，根据 url 参数确定菜单索引
+    else if (newPath === "/datapipelines/createTemplate" && url && createTemplateUrlMap[url]) {
+      currentRoute.value = createTemplateUrlMap[url];
+    }
+    // addDataProcessing 无 templateName 时（从任务列表「创建任务」进入），高亮任务列表
+    else if (newPath === "/datapipelines/addDataProcessing" && !templateName) {
+      currentRoute.value = "2";
     } else {
       currentRoute.value = menuRoutes[newPath] || "1";
     }

@@ -388,7 +388,7 @@
 
 <script setup>
 import { useRouter, useRoute } from "vue-router";
-import { ref, reactive, onMounted } from "vue";
+import { ref, reactive, onMounted, onBeforeUnmount } from "vue";
 import { ElMessage } from "element-plus";
 import useFetchApi from "../../../../packs/useFetchApi";
 import { convertUtcToLocalTime } from "../../../../packs/datetimeUtils";
@@ -435,9 +435,47 @@ const form = ref({
   searchStr: "",
 });
 
+// 自动刷新定时器（当有进行中任务时每 5 秒刷新一次）
+const REFRESH_INTERVAL = 5000;
+let refreshTimer = null;
+
+/**
+ * 检查是否有进行中的任务
+ */
+const hasRunningTasks = () => {
+  return tableData.value.some((item) => item.task_status === 1);
+};
+
+/**
+ * 启动自动刷新
+ */
+const startAutoRefresh = () => {
+  if (refreshTimer) return;
+  refreshTimer = setInterval(async () => {
+    await gettaskList();
+    if (!hasRunningTasks()) {
+      stopAutoRefresh();
+    }
+  }, REFRESH_INTERVAL);
+};
+
+/**
+ * 停止自动刷新
+ */
+const stopAutoRefresh = () => {
+  if (refreshTimer) {
+    clearInterval(refreshTimer);
+    refreshTimer = null;
+  }
+};
+
 onMounted(() => {
   getDataSourceTypeList();
   gettaskList();
+});
+
+onBeforeUnmount(() => {
+  stopAutoRefresh();
 });
 
 const getDataFlowListFun = async () => {
@@ -487,6 +525,12 @@ const gettaskList = async () => {
   if (data.value.code === 200) {
     tableData.value = data.value.data.list;
 
+    // 根据是否有进行中任务更新自动刷新状态
+    if (hasRunningTasks()) {
+      startAutoRefresh();
+    } else {
+      stopAutoRefresh();
+    }
     return true;
   }
 };

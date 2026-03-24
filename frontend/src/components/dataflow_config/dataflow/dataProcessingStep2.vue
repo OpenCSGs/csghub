@@ -105,6 +105,7 @@ const isSaving = ref(false); // 防止重复提交
 
 const templateId = computed(() => route.query.templateId)
 const type = computed(() => route.query.type)
+const url = computed(() => route.query.url) // customize | builtin，用于提交后跳转回对应模板列表
 
 const formData = ref(null);
 const form = inject("subForm");
@@ -252,8 +253,9 @@ const handleWorkflowSave = async (result) => {
             type: 'success',
             plain: true,
           })
-          // 立即跳转
-          router.push('/datapipelines');
+          // 根据来源跳转回对应模板列表：customize -> 自定义任务模板，builtin -> 内置任务模板
+          const targetPath = url.value === 'builtin' ? '/datapipelines/builtInTemplate' : '/datapipelines/customTemplate';
+          router.push(targetPath);
         }
       } else {
         // 创建任务
