@@ -83,7 +83,14 @@
             "before": "这是一段 /* 多行注释\n注释内容copyright\n*/ 的文本。另外还有一些 // 单行注释。",
             "after": "这是一段  的文本。另外还有一些 // 单行注释。"
         },
-        "params": []
+        "params": [
+            {
+                "name": "匹配規則",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            }
+        ]
     },
     "clean_email_mapper": {
         "name": "郵箱尾碼清理",
@@ -922,6 +929,18 @@
                 "option_values": null,
                 "value": 8000,
                 "config_description": "最大困惑度閾值；超過此閾值的樣本將被過濾"
+            },
+            {
+                "name": "模型",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "身份驗證令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -1099,6 +1118,18 @@
                 "type": "INTEGER",
                 "option_values": null,
                 "value": 1
+            },
+            {
+                "name": "模型",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "身份驗證令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -1147,6 +1178,18 @@
                     }
                 ],
                 "value": "all"
+            },
+            {
+                "name": "模型",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "身份驗證令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
