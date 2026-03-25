@@ -917,6 +917,18 @@
                 "type": "PositiveFloat",
                 "option_values": null,
                 "value": 8000
+            },
+            {
+                "name": "模型",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "身份验证令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -1092,6 +1104,18 @@
                 "type": "INTEGER",
                 "option_values": null,
                 "value": 1
+            },
+            {
+                "name": "模型",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "身份验证令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
@@ -1140,6 +1164,18 @@
                     }
                 ],
                 "value": "all"
+            },
+            {
+                "name": "模型",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
+            },
+            {
+                "name": "身份验证令牌",
+                "type": "LIST",
+                "option_values": null,
+                "value": ""
             }
         ]
     },
