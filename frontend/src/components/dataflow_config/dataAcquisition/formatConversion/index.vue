@@ -326,6 +326,14 @@ const formatVal = ref([
     value: 7,
     label: "PDF",
   },
+  {
+    value: 8,
+    label: "Txt",
+  },
+  {
+    value: 9,
+    label: "Html",
+  },
 ]);
 // 总数
 const total = ref(0);
