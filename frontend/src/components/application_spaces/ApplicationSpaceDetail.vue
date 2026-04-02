@@ -284,10 +284,12 @@
 
       const repoData = data.value.data
       repoDetailStore.initialize(repoData, props.repoType)
-      
-      setRepoTab({
-        currentBranch: props.currentBranch ? props.currentBranch : repoDetailStore.defaultBranch,
-      })
+
+      if (!isUpdate) {
+        setRepoTab({
+          currentBranch: props.currentBranch || repoDetailStore.defaultBranch
+        })
+      }
       return true
     } catch (error) {
       return false

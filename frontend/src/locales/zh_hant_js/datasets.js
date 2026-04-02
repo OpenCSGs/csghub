@@ -58,6 +58,8 @@ export const datasets = {
     needDatasetName: "請先提供數據集別名",
     needDatasetDesc: "請先提供數據集介紹",
     needDatasetTag: '請先提供數據集標籤',
+    defaultBranch: '倉庫預設分支',
+    defaultBranchDesc: '修改倉庫預設分支',
     forbidden: "操作受限",
     unableEditVisibility: "當前暫不支持設置公開數據集，如有需要，請聯繫管理員",
     confirm: '確認',

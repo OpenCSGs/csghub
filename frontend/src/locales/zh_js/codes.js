@@ -49,5 +49,7 @@ export const codes = {
     publicInfo: "， 任何互联网上的人都可以看到此代码。",
     needCodeName: "请先提供代码别名",
     needCodelDesc: "请先提供代码介绍",
+    defaultBranch: '仓库默认分支',
+    defaultBranchDesc: '修改仓库默认分支',
   },
 }

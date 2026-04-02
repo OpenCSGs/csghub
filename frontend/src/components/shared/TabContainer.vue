@@ -349,7 +349,8 @@
           tab: newTab,
           actionName: validateActionName(newQuery.actionName),
           lastPath: normalizePath(newQuery.path || ''),
-          currentBranch: newQuery.branch || repoTab.currentBranch
+          // 切换到files tab时不保留旧分支，让FileList用defaultBranch重置
+          currentBranch: newQuery.branch || ''
         })
       } else if (newTab === 'community') {
         setRepoTab({
@@ -431,21 +432,18 @@
       const validatedActionName = validateActionName(urlActionName)
       const currentTab = params.get('tab')
       
-      // 如果当前在community tab，切换到files时重置为默认的files状态
       if (currentTab === 'community') {
         query.actionName = 'files'
-        // 清除community相关的参数，使用默认的文件列表状态
         query.path = ''
-        query.branch = repoTab.currentBranch || ''
       } else {
-        // 保留URL中的actionName参数，如果没有则默认为'files'
         query.actionName = validatedActionName
-        
         const currentUrlPath = params.get('path')
-        const urlBranch = params.get('branch')
-        
         if (currentUrlPath) query.path = currentUrlPath
-        if (urlBranch) query.branch = urlBranch
+      }
+      // 从非 files tab 切换到 files tab 时，主动带上 defaultBranch，
+      // 确保 FileList 直接从 URL 读到正确分支，不依赖 prop 传递时序
+      if (currentTab !== 'files' && props.repo?.defaultBranch) {
+        query.branch = props.repo.defaultBranch
       }
     } else if (tab === 'community') {
       // 处理社区讨论的URL参数

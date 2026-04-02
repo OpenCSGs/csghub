@@ -119,6 +119,37 @@
         />
       </div>
     </div>
+
+    <!-- 更新默认分支 -->
+    <div class="flex xl:flex-col gap-[32px]">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('application_spaces.edit.defaultBranch') }}
+        </div>
+        <div class="text-sm text-gray-600 leading-5">
+          {{ $t('application_spaces.edit.defaultBranchDesc') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <el-select
+          v-model="theDefaultBranch"
+          size="large"
+          class="!w-[512px] sm:!w-full">
+          <el-option
+            v-for="branch in branchList"
+            :key="branch.name"
+            :label="branch.name"
+            :value="branch.name" />
+        </el-select>
+        <CsgButton
+          v-if="hasDefaultBranchChanged"
+          @click="updateDefaultBranch"
+          class="btn btn-secondary-gray btn-sm"
+          style="width:fit-content"
+          :name="$t('all.update')"
+        />
+      </div>
+    </div>
     
     <el-divider />
     
@@ -600,6 +631,9 @@
         theMinReplica: this.minReplica != null ? this.minReplica : 0,
         originalApplicationSpaceNickname: this.applicationSpaceNickname || '',
         originalApplicationSpaceDesc: this.applicationSpaceDesc || '',
+        originalDefaultBranch: this.default_branch || '',
+        theDefaultBranch: this.default_branch || '',
+        branchList: [],
         originalVariables: JSON.stringify(this.variables || {}),
         originalClusterId: this.clusterId || '',
         originalCloudResource: this.cloudResource != null ? String(this.cloudResource) : '',
@@ -684,6 +718,9 @@
       hasDescChanged() {
         return this.theApplicationSpaceDesc.trim() !== this.originalApplicationSpaceDesc.trim()
       },
+      hasDefaultBranchChanged() {
+        return this.theDefaultBranch.trim() !== this.originalDefaultBranch.trim()
+      },
       hasVariablesChanged() {
         return JSON.stringify(this.theVariables) !== this.originalVariables
       },
@@ -713,6 +750,10 @@
       applicationSpaceDesc(newDesc, _) {
         this.theApplicationSpaceDesc = newDesc
       },
+      default_branch(newBranch) {
+        this.theDefaultBranch = newBranch
+        this.originalDefaultBranch = newBranch
+      },
       cloudResource(newResource, _) {
         this.theCloudResource = /^\d+$/.test(newResource) ? Number(newResource) : this.cloudResource
       },
@@ -737,8 +778,12 @@
     emits: ['showSpaceLogs'],
     async mounted() {
       await this.fetchClusters()
-      // this.fetchSpaceResources()
-      this.fetchSpaceDetail()
+      // Fetch space detail first to get the latest cloudResource value
+      await this.fetchSpaceDetail()
+      // Then fetch resources with the updated cloudResource
+      await this.fetchSpaceResources()
+      await this.fetchBranches()
+      
       if (this.tags && Object.keys(this.tags).length > 0) {
         this.getSelectTags()
       }
@@ -1133,6 +1178,17 @@
             type: 'warning'
           })
         }
+      },
+
+      async updateDefaultBranch() {
+        const branch = this.theDefaultBranch.trim()
+        if (!branch) return
+        this.updateApplicationSpace({ default_branch: branch }, this.$t('application_spaces.edit.defaultBranch'))
+      },
+
+      async fetchBranches() {
+        const { data } = await useFetchApi(`/spaces/${this.path}/branches`).json()
+        this.branchList = data.value?.data || []
       },
 
       updateApplicationSpaceCloudResource() {

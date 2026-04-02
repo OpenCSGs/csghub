@@ -74,6 +74,35 @@
       </div>
     </div>
 
+    <!-- 更新默认分支 -->
+    <div class="flex xl:flex-col gap-8">
+      <div class="w-[380px] sm:w-full flex flex-col">
+        <div class="text-sm text-gray-700 leading-5 font-medium">
+          {{ $t('skills.edit.defaultBranch') }}
+        </div>
+        <div class="text-sm text-gray-600 leading-5">
+          {{ $t('skills.edit.defaultBranchDesc') }}
+        </div>
+      </div>
+      <div class="flex flex-col gap-1.5">
+        <el-select
+          v-model="theDefaultBranch"
+          size="large"
+          class="!w-[512px] sm:!w-full">
+          <el-option
+            v-for="branch in branchList"
+            :key="branch.name"
+            :label="branch.name"
+            :value="branch.name" />
+        </el-select>
+        <CsgButton
+          v-if="hasDefaultBranchChanged"
+          @click="updateDefaultBranch"
+          class="btn btn-secondary-gray btn-sm w-fit"
+          :name="$t('all.update')" />
+      </div>
+    </div>
+
     <el-divider />
 
     <!-- Skill 标签 -->
@@ -311,6 +340,7 @@
       if (Object.keys(this.tags || {}).length > 0) {
         this.getSelectTags()
       }
+      this.fetchBranches()
       document.addEventListener('click', this.collapseTagList)
     },
     beforeUnmount() {
@@ -397,6 +427,17 @@
         } else {
           ElMessage.warning(this.$t('skills.edit.needSkillDesc'))
         }
+      },
+
+      updateDefaultBranch() {
+        const branch = this.theDefaultBranch.trim()
+        if (!branch) return
+        this.updateSkill({ default_branch: branch })
+      },
+
+      async fetchBranches() {
+        const { data } = await useFetchApi(`/skills/${this.path}/branches`).json()
+        this.branchList = data.value?.data || []
       },
 
       async updateSkill(payload) {

@@ -73,7 +73,9 @@ export const models = {
       publicInfo: "， 任何網際網路上的人都可以看到此模型",
       needModelName: "請先提供模型別名",
       needModelDesc: "請先提供模型介紹",
-      needModelTag: '請先提供模型標籤'
+      needModelTag: '請先提供模型標籤',
+      defaultBranch: '倉庫預設分支',
+      defaultBranchDesc: '修改倉庫預設分支',
     },
     emptyModels: {
       title: "使用多源同步功能豐富模型",
