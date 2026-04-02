@@ -267,6 +267,8 @@
     currentBranch.value = branch
     currentPath.value = ''
     
+    filePageCursor.value = ''
+
     setRepoTab({
       currentBranch: branch,
       actionName: 'files',
