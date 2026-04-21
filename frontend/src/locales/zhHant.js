@@ -8,6 +8,7 @@ import { all } from './zh_hant_js/all';
 import { community } from './zh_hant_js/community';
 import { profile } from './zh_hant_js/profile';
 import { accessToken } from './zh_hant_js/accessToken';
+import { apiKeys } from './zh_hant_js/apiKeys';
 import { sshKey } from './zh_hant_js/sshKey';
 import { shared } from './zh_hant_js/shared';
 import { repo } from './zh_hant_js/repo';
@@ -51,6 +52,7 @@ export default {
   community,
   profile,
   accessToken,
+  apiKeys,
   sshKey,
   shared,
   repo,

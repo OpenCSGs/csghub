@@ -18,6 +18,7 @@ export const profile = {
   menu: {
     accountInformation: "Account Information",
     accessToken: "Access Token",
+    apiKeys: "API Keys",
     starshipAccessToken: "Starship API Key",
     syncAccessToken: "Multi-Sync Token",
     gitToken: "Access Token",
@@ -40,5 +41,9 @@ export const profile = {
     internalUsernamePlaceholder: "username",
     emailRequired: "please input email",
     emailValid: "please verfify your email format, example: example{'@'}domain.com",
+  },
+  apiKeys: {
+    title: "API Keys",
+    subtitle: "Create and manage API keys for AI Gateway requests."
   },
 }

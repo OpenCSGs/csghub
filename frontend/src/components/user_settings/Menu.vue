@@ -36,6 +36,14 @@
           {{ $t('profile.menu.gitToken') }}
         </a>
 
+        <a
+          v-if="!actionLimited"
+          href="/settings/api-keys"
+          class="px-3 py-2.5 text-md text-gray-500 rounded-sm hover:bg-gray-50 leading-6 cursor-pointer"
+          :class="menuClass('/settings/api-keys')">
+          {{ $t('profile.menu.apiKeys') }}
+        </a>
+
         <!-- ssh key -->
         <a
           v-if="!actionLimited"
@@ -57,6 +65,10 @@
             v-if="!actionLimited"
             :label="$t('profile.menu.gitToken')"
             name="/settings/access-token"></el-tab-pane>
+          <el-tab-pane
+            v-if="!actionLimited"
+            :label="$t('profile.menu.apiKeys')"
+            name="/settings/api-keys"></el-tab-pane>
           <el-tab-pane
             v-if="!actionLimited"
             :label="$t('profile.menu.sshKey')"

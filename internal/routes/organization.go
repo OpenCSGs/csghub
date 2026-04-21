@@ -9,4 +9,5 @@ func registerOrganizationRoutes(engine *gin.Engine, handlersRegistry *HandlersRe
 	engine.GET("/organizations/new", handlersRegistry.RenderHandler.OrganizationHandler.New)
 	engine.GET("/organizations/:id", handlersRegistry.RenderHandler.OrganizationHandler.Show)
 	engine.GET("/organizations/:id/members", handlersRegistry.RenderHandler.OrganizationHandler.Members)
+	engine.GET("/organizations/:id/api-keys", handlersRegistry.RenderHandler.OrganizationHandler.ApiKeys)
 }

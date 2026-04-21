@@ -8,6 +8,7 @@ import (
 type SettingHandler interface {
 	Profile(ctx *gin.Context)
 	AccessToken(ctx *gin.Context)
+	ApiKeys(ctx *gin.Context)
 	SSHKeys(ctx *gin.Context)
 }
 
@@ -28,6 +29,10 @@ func (i *SettingHandlerImpl) Profile(ctx *gin.Context) {
 
 func (i *SettingHandlerImpl) AccessToken(ctx *gin.Context) {
 	RenderBaseInstance.RenderTemplate(ctx, "settings_access_token", nil)
+}
+
+func (i *SettingHandlerImpl) ApiKeys(ctx *gin.Context) {
+	RenderBaseInstance.RenderTemplate(ctx, "settings_api_keys", nil)
 }
 
 func (i *SettingHandlerImpl) SSHKeys(ctx *gin.Context) {

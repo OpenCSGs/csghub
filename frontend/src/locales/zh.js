@@ -8,6 +8,7 @@ import { all } from './zh_js/all';
 import { community } from './zh_js/community';
 import { profile } from './zh_js/profile';
 import { accessToken } from './zh_js/accessToken';
+import { apiKeys } from './zh_js/apiKeys';
 import { sshKey } from './zh_js/sshKey';
 import { shared } from './zh_js/shared';
 import { repo } from './zh_js/repo';
@@ -52,6 +53,7 @@ export default {
   community,
   profile,
   accessToken,
+  apiKeys,
   sshKey,
   shared,
   repo,

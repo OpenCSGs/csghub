@@ -12,5 +12,6 @@ func registerSettingRoutes(engine *gin.Engine, handlersRegistry *HandlersRegistr
 
 	settingRoute.GET("/profile", handlersRegistry.RenderHandler.SettingHandler.Profile)
 	settingRoute.GET("/access-token", handlersRegistry.RenderHandler.SettingHandler.AccessToken)
+	settingRoute.GET("/api-keys", handlersRegistry.RenderHandler.SettingHandler.ApiKeys)
 	settingRoute.GET("/ssh-keys", handlersRegistry.RenderHandler.SettingHandler.SSHKeys)
 }

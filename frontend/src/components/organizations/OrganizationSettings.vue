@@ -8,6 +8,7 @@
       :homepage="organization.homepage"
       :name="organization.name"
       :logo="organization.logo"
+      :role="role"
     >
     </Menu>
     <OrganizationEdit
@@ -24,6 +25,13 @@
       :organizationRaw="organization"
     >
     </OrganizationMembers>
+    <OrganizationApiKeys
+      v-if="action === 'api-keys' && role === 'admin'"
+      class="grow py-[24px]"
+      :role="role"
+      :organizationRaw="organization"
+    >
+    </OrganizationApiKeys>
   </div>
 </template>
 
@@ -31,6 +39,7 @@
   import Menu from './Menu.vue'
   import OrganizationEdit from './OrganizationEdit.vue'
   import OrganizationMembers from './OrganizationMembers.vue'
+  import OrganizationApiKeys from './OrganizationApiKeys.vue'
   import useFetchApi from "../../packs/useFetchApi"
   import { ref, onMounted, watch } from 'vue'
   import { ElMessage } from 'element-plus'
@@ -49,7 +58,8 @@
     verified: false,
     logo: '',
     homepage: '',
-    org_type: ''
+    org_type: '',
+    namespace_uuid: ''
   })
 
   const role =ref('')
@@ -68,6 +78,7 @@
       organization.value.logo = body.data.logo
       organization.value.homepage = body.data.homepage
       organization.value.org_type = body.data.org_type
+      organization.value.namespace_uuid = body.data.namespace?.UUID || ''
     }
   }
 
@@ -103,6 +114,15 @@
     () => userStore.isLoggedIn,
     () => {
       currentUserRole()
+    }
+  )
+
+  watch(
+    [() => props.action, () => role.value],
+    ([action, currentRole]) => {
+      if (action === 'api-keys' && currentRole && currentRole !== 'admin') {
+        window.location.href = `/organizations/${props.name}/edit`
+      }
     }
   )
 

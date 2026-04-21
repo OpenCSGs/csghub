@@ -165,6 +165,7 @@ func createRender() multitemplate.Renderer {
 		"profile_likes":                  "profile/likes.html",
 		"settings_profile":               "settings/profile.html",
 		"settings_access_token":          "settings/access_token.html",
+		"settings_api_keys":              "settings/api_keys.html",
 		"settings_starship_access_token": "settings/starship_access_token.html",
 		"settings_sync_access_token":     "settings/sync_access_token.html",
 		"settings_ssh_keys":              "settings/ssh_keys.html",
