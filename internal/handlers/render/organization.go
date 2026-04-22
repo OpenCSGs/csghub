@@ -9,6 +9,7 @@ type OrganizationHandler interface {
 	New(ctx *gin.Context)
 	Show(ctx *gin.Context)
 	Members(ctx *gin.Context)
+	ApiKeys(ctx *gin.Context)
 }
 
 type OrganizationHandlerImpl struct {
@@ -41,6 +42,14 @@ func (i *OrganizationHandlerImpl) Show(ctx *gin.Context) {
 func (i *OrganizationHandlerImpl) Members(ctx *gin.Context) {
 	data := map[string]interface{}{
 		"action": "members",
+		"name":   ctx.Param("id"),
+	}
+	RenderBaseInstance.RenderTemplate(ctx, "organizations_settings", data)
+}
+
+func (i *OrganizationHandlerImpl) ApiKeys(ctx *gin.Context) {
+	data := map[string]interface{}{
+		"action": "api-keys",
 		"name":   ctx.Param("id"),
 	}
 	RenderBaseInstance.RenderTemplate(ctx, "organizations_settings", data)

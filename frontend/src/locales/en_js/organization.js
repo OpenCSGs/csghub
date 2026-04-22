@@ -36,6 +36,12 @@ export const organization = {
     addSuccess: "Member added successfully",
     invited:'Invited'
   },
+  apiKeys: {
+    navTitle: "API Keys",
+    title: "API Keys",
+    subtitle: "Manage your organization's AI Gateway API keys",
+    missingOrgUuid: "Organization namespace UUID is missing; API keys cannot be loaded."
+  },
   newOrganization: {
     title: "Create New Organization",
     createOrg: "Create Organization",

@@ -46,6 +46,15 @@
           {{ $t('organization.orgMembers') }}
         </a>
       </div>
+      <div v-if="role === 'admin'" class="flex flex-col">
+        <a
+          :href="`/organizations/${this.name}/api-keys`"
+          class="py-[8px] px-[12px] hover:bg-gray-50 text-md text-gray-500 leading-[24px] cursor-pointer"
+          :class="menuClass(`/organizations/${this.name}/api-keys`)"
+        >
+          {{ $t('organization.apiKeys.navTitle') }}
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -55,7 +64,11 @@
       name: String,
       nickName: String,
       homepage: String,
-      logo: String
+      logo: String,
+      role: {
+        type: String,
+        default: ''
+      }
     },
     data() {
       return {}

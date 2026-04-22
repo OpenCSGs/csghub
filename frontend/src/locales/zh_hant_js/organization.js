@@ -49,6 +49,12 @@ export const organization = {
       addSuccess: "新增成員成功",
       invited:'已邀請'
     },
+    apiKeys: {
+      navTitle: "API Keys",
+      title: "API Keys",
+      subtitle: "管理組織的 AI Gateway API Key",
+      missingOrgUuid: "缺少組織 namespace UUID，無法載入 API Key"
+    },
     newOrganization: {
       title: "新建組織",
       createOrg: "建立組織",

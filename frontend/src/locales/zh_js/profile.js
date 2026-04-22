@@ -18,6 +18,7 @@ export const profile = {
   menu: {
     accountInformation: "账户信息",
     accessToken: "Access Token",
+    apiKeys: "API Keys",
     starshipAccessToken: "Starship API Key",
     syncAccessToken: "多源同步 Token",
     gitToken: "Access Token",
@@ -40,5 +41,9 @@ export const profile = {
     internalUsernamePlaceholder: "用户名",
     emailRequired: "请输入邮箱地址",
     emailValid: "请输入有效的邮箱地址，如example{'@'}domain.com",
+  },
+  apiKeys: {
+    title: "API Keys",
+    subtitle: "创建并管理用于 AI Gateway 请求的 API Keys。"
   },
 }

@@ -8,6 +8,7 @@ import { all } from './en_js/all';
 import { community } from './en_js/community';
 import { profile } from './en_js/profile';
 import { accessToken } from './en_js/accessToken';
+import { apiKeys } from './en_js/apiKeys';
 import { sshKey } from './en_js/sshKey';
 import { shared } from './en_js/shared';
 import { repo } from './en_js/repo';
@@ -52,6 +53,7 @@ export default {
   community,
   profile,
   accessToken,
+  apiKeys,
   sshKey,
   shared,
   repo,

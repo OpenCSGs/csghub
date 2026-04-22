@@ -18,6 +18,7 @@ const useUserStore = defineStore('User', () => {
   const bio = ref('')
   const roles = ref([])
   const orgs = ref([])
+  const namespaces = ref([])
   const lastLoginTime = ref('')
   const initialized = ref(false)
   const timestamp = ref(Date.now())
@@ -47,6 +48,7 @@ const useUserStore = defineStore('User', () => {
     if (initialData.orgs) {
       orgs.value = initialData.orgs
     }
+    namespaces.value = initialData.namespaces || []
     lastLoginTime.value = initialData.lastLoginTime || ''
     initialized.value = true
   }
@@ -96,6 +98,7 @@ const useUserStore = defineStore('User', () => {
     bio,
     roles,
     orgs,
+    namespaces,
     lastLoginTime,
     initialized,
     isAdmin,
