@@ -13,21 +13,21 @@
     </Menu>
     <OrganizationEdit
       v-if="action === 'edit'"
-      class="grow py-[24px]"
+      class="grow min-w-0 py-[24px]"
       :organizationRaw="organization"
       @updateOrganization="updateOrganization"
     >
     </OrganizationEdit>
     <OrganizationMembers
       v-if="action === 'members'"
-      class="grow py-[24px]"
+      class="grow min-w-0 py-[24px]"
       :role="role"
       :organizationRaw="organization"
     >
     </OrganizationMembers>
     <OrganizationApiKeys
       v-if="action === 'api-keys' && role === 'admin'"
-      class="grow py-[24px]"
+      class="grow min-w-0 py-[24px]"
       :role="role"
       :organizationRaw="organization"
     >
