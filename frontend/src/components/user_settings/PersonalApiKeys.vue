@@ -81,6 +81,7 @@
 
     const base = `/namespaces/${uuid}/apikeys`
     return {
+      builtinRefresh: `${base}/builtin/refresh`,
       list: base,
       create: base,
       updateBase: base,

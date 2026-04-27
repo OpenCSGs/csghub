@@ -4,7 +4,10 @@ import { createI18n } from 'vue-i18n'
 import ApiKeysManager from '@/components/shared/ApiKeysManager.vue'
 
 vi.mock('element-plus', () => ({
-  ElMessage: vi.fn()
+  ElMessage: vi.fn(),
+  ElMessageBox: {
+    confirm: vi.fn().mockResolvedValue('confirm')
+  }
 }))
 
 const { copyToClipboardMock, requestLog, useFetchApiMock } = vi.hoisted(() => ({
@@ -22,9 +25,18 @@ const { copyToClipboardMock, requestLog, useFetchApiMock } = vi.hoisted(() => ({
               value: {
                 data: [
                   {
+                    id: 99,
+                    token_name: 'builtin-key',
+                    token: 'sk-****builtin',
+                    token_type: 'builtin',
+                    created_at: '2026-04-01T10:00:00Z',
+                    last_used_at: '2026-04-02T10:00:00Z'
+                  },
+                  {
                     id: 1,
-                    token_name: 'existing-key',
-                    token: 'sk-test-token',
+                    token_name: 'custom-key',
+                    token: 'sk-****custom',
+                    token_type: 'custom',
                     created_at: '2026-04-01T10:00:00Z',
                     last_used_at: '2026-04-02T10:00:00Z'
                   }
@@ -59,7 +71,13 @@ const { copyToClipboardMock, requestLog, useFetchApiMock } = vi.hoisted(() => ({
         json: vi.fn(async () => {
           entry.method = 'put'
           return {
-            data: { value: { data: {} } },
+            data: {
+              value: {
+                data: {
+                  token: 'plain-refreshed-token'
+                }
+              }
+            },
             error: { value: null }
           }
         })
@@ -99,7 +117,9 @@ const createI18nInstance = () =>
         },
         apiKeys: {
           create: 'Create API key',
+          refresh: 'Refresh',
           colName: 'Name',
+          colType: 'Type',
           colKey: 'Key',
           colCreated: 'Created',
           colLastUsed: 'Last used',
@@ -116,8 +136,16 @@ const createI18nInstance = () =>
           expire90d: '90 days',
           expireCustom: 'Custom',
           editExpireCurrent: 'Keep current expiration',
-          successTitle: 'Success',
-          successHint: 'Hint',
+          typeBuiltin: 'Default',
+          typeCustom: 'Custom',
+          builtinNameReadonly: 'Readonly',
+          builtinNeverExpires: 'Never expires',
+          successTitle: 'Created',
+          successHint: 'Created hint',
+          refreshSuccessTitle: 'Refreshed',
+          refreshSuccessHint: 'Refreshed hint',
+          refreshConfirmTitle: 'Refresh default key',
+          refreshConfirmMessage: 'Refresh {name}',
           successWarn: 'Warn',
           close: 'Close',
           copy: 'Copy',
@@ -129,13 +157,16 @@ const createI18nInstance = () =>
           deleteError: 'Delete failed',
           loadError: 'Load failed',
           saveError: 'Save failed',
+          refreshError: 'Refresh failed',
           createSuccess: 'Created',
+          refreshSuccess: 'Refreshed',
           updateSuccess: 'Updated',
           nameRequired: 'Name required',
           nameTooLong: 'Name too long',
           nameInvalidChars: 'Invalid chars',
           expireRequired: 'Expire required',
-          missingPath: 'Missing path'
+          missingPath: 'Missing path',
+          missingUserName: 'Missing user namespace'
         }
       }
     }
@@ -204,6 +235,8 @@ const createWrapper = (props = {}) =>
       subtitle: 'Manage keys',
       canManage: true,
       apiPaths: {
+        builtin: '/namespaces/org-ns/apikeys/builtin',
+        builtinRefresh: '/namespaces/org-ns/apikeys/builtin/refresh',
         list: '/namespaces/org-ns/apikeys',
         create: '/namespaces/org-ns/apikeys',
         updateBase: '/namespaces/org-ns/apikeys',
@@ -223,12 +256,12 @@ describe('ApiKeysManager.vue', () => {
     requestLog.length = 0
   })
 
-  it('有管理权限时挂载后会加载列表', async () => {
-    createWrapper()
+  it('有管理权限时挂载后会同时加载默认 key 和自建 key 列表', async () => {
+    const wrapper = createWrapper()
     await flushPromises()
 
     expect(useFetchApiMock).toHaveBeenCalledWith('/namespaces/org-ns/apikeys')
-    expect(requestLog[0].method).toBe('json')
+    expect(wrapper.vm.apiKeys).toHaveLength(2)
   })
 
   it('创建时会提交名称和过期时间', async () => {
@@ -250,18 +283,33 @@ describe('ApiKeysManager.vue', () => {
     expect(payload.quota_type).toBeUndefined()
   })
 
-  it('编辑时会正确回填表单数据', async () => {
+  it('编辑自建 key 时会正确回填表单数据', async () => {
     const wrapper = createWrapper({ canManage: true })
     await flushPromises()
 
     wrapper.vm.openEditDialog({
       id: 1,
-      token_name: 'existing-key',
+      token_name: 'custom-key',
+      token_type: 'custom',
       expire_at: '2099-12-31T23:59:59Z'
     })
 
-    expect(wrapper.vm.form.name).toBe('existing-key')
+    expect(wrapper.vm.form.name).toBe('custom-key')
     expect(wrapper.vm.expirationPreset).toBe('current')
+  })
+
+  it('默认 key 不可编辑且不可删除', async () => {
+    const wrapper = createWrapper({ canManage: true })
+    await flushPromises()
+
+    const builtin = {
+      id: 99,
+      token_name: 'builtin-key',
+      token_type: 'builtin'
+    }
+
+    expect(wrapper.vm.canEdit(builtin)).toBe(false)
+    expect(wrapper.vm.canDelete(builtin)).toBe(false)
   })
 
   it('无管理权限时不会自动加载列表，也不显示创建按钮', async () => {
@@ -270,5 +318,23 @@ describe('ApiKeysManager.vue', () => {
 
     expect(useFetchApiMock).not.toHaveBeenCalledWith('/namespaces/org-ns/apikeys')
     expect(wrapper.text()).not.toContain('Create API key')
+  })
+
+  it('刷新默认 key 时会调用 builtin refresh 接口并展示明文 token', async () => {
+    const wrapper = createWrapper({ canManage: true })
+    await flushPromises()
+
+    await wrapper.vm.refreshBuiltinToken({
+      id: 99,
+      token_type: 'builtin'
+    })
+    await flushPromises()
+
+    const refreshRequest = requestLog.find(
+      (entry) => entry.url === '/namespaces/org-ns/apikeys/builtin/refresh' && entry.method === 'put'
+    )
+    expect(refreshRequest).toBeTruthy()
+    expect(wrapper.vm.createdPlainToken).toBe('plain-refreshed-token')
+    expect(wrapper.vm.successDialogVisible).toBe(true)
   })
 })
