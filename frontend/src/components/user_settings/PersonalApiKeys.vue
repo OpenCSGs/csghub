@@ -6,7 +6,7 @@
       class="max-w-[411px] md:mb-[24px]"
       :name="profileName"
     ></Menu>
-    <div class="grow flex flex-col px-6 py-10 border-l md:border-l-0 min-h-[calc(100vh-153px)] md:min-h-0">
+    <div class="grow min-w-0 flex flex-col px-6 py-10 border-l md:border-l-0 min-h-[calc(100vh-153px)] md:min-h-0">
       <ApiKeysManager
         :title="$t('profile.apiKeys.title')"
         :subtitle="$t('profile.apiKeys.subtitle')"
@@ -81,6 +81,7 @@
 
     const base = `/namespaces/${uuid}/apikeys`
     return {
+      builtinRefresh: `${base}/builtin/refresh`,
       list: base,
       create: base,
       updateBase: base,
