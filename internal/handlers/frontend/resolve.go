@@ -60,7 +60,7 @@ func (i *ResolveHandlerImpl) Resolve(c *gin.Context) {
 	i.resolveFileOrContent(c, i.downloadResolveFile, i.getFileContent)
 }
 
-func (i *ResolveHandlerImpl) resolveFileOrContent(ctx *gin.Context, downloadFunc func(*gin.Context) ([]byte, error), getContentFunc func(*gin.Context) (string, error)) {
+func (i *ResolveHandlerImpl) resolveFileOrContent(ctx *gin.Context, downloadFunc func(*gin.Context) ([]byte, *http.Response, error), getContentFunc func(*gin.Context) (string, *http.Response, error)) {
 	filePath := strings.TrimPrefix(ctx.Param("path"), "/")
 	if filePath == "" {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "File path is required"})
@@ -75,10 +75,10 @@ func (i *ResolveHandlerImpl) resolveFileOrContent(ctx *gin.Context, downloadFunc
 	}
 }
 
-func (i *ResolveHandlerImpl) sendImageData(ctx *gin.Context, downloadFunc func(*gin.Context) ([]byte, error)) {
-	data, err := downloadFunc(ctx)
+func (i *ResolveHandlerImpl) sendImageData(ctx *gin.Context, downloadFunc func(*gin.Context) ([]byte, *http.Response, error)) {
+	data, resp, err := downloadFunc(ctx)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": errorMsgInternal})
+		renderResolveError(ctx, resp)
 		return
 	}
 
@@ -92,38 +92,79 @@ func (i *ResolveHandlerImpl) sendImageData(ctx *gin.Context, downloadFunc func(*
 	ctx.Data(http.StatusOK, contentType, data)
 }
 
-func (i *ResolveHandlerImpl) renderTextData(ctx *gin.Context, getContentFunc func(*gin.Context) (string, error)) {
-	content, err := getContentFunc(ctx)
+func (i *ResolveHandlerImpl) renderTextData(ctx *gin.Context, getContentFunc func(*gin.Context) (string, *http.Response, error)) {
+	content, resp, err := getContentFunc(ctx)
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, gin.H{"error": errorMsgInternal})
+		renderResolveError(ctx, resp)
 		return
 	}
 
 	ctx.String(http.StatusOK, content)
 }
 
-func (i *ResolveHandlerImpl) downloadResolveFile(ctx *gin.Context) ([]byte, error) {
+func (i *ResolveHandlerImpl) downloadResolveFile(ctx *gin.Context) ([]byte, *http.Response, error) {
 	req := i.buildDownloadReq(ctx)
-	data, resp, err := i.Server.DownloadFile(req)
+	data, resp, err := i.downloadFile(ctx, req)
 	if err != nil {
-		return nil, fmt.Errorf("failed to download file: %w", err)
+		return data, resp, fmt.Errorf("failed to download file: %w", err)
+	}
+	if resp == nil {
+		return data, nil, fmt.Errorf("failed to download file: empty response")
 	}
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("server returned non-success status code: %d", resp.StatusCode)
+		return data, resp, fmt.Errorf("server returned non-success status code: %d", resp.StatusCode)
 	}
-	return data, nil
+	return data, resp, nil
 }
 
-func (i *ResolveHandlerImpl) getFileContent(ctx *gin.Context) (string, error) {
+func (i *ResolveHandlerImpl) getFileContent(ctx *gin.Context) (string, *http.Response, error) {
 	req := i.buildDownloadReq(ctx)
-	rawResp, resp, err := i.Server.DownloadFileRaw(req)
+	rawResp, resp, err := i.downloadFileRaw(ctx, req)
 	if err != nil {
-		return "", fmt.Errorf("failed to get file content: %w", err)
+		return "", resp, fmt.Errorf("failed to get file content: %w", err)
+	}
+	if resp == nil {
+		return "", nil, fmt.Errorf("failed to get file content: empty response")
 	}
 	if resp.StatusCode != http.StatusOK {
-		return "", fmt.Errorf("failed to get file content: %s", resp.Status)
+		return "", resp, fmt.Errorf("failed to get file content: %s", resp.Status)
 	}
-	return rawResp.Data, nil
+	if rawResp == nil {
+		return "", resp, fmt.Errorf("failed to get file content: empty response body")
+	}
+	return rawResp.Data, resp, nil
+}
+
+func (i *ResolveHandlerImpl) downloadFile(ctx *gin.Context, req types.DownloadReq) ([]byte, *http.Response, error) {
+	userToken, err := ctx.Cookie("user_token")
+	if err == nil && userToken != "" {
+		return i.Server.DownloadFileWithUserToken(req, userToken)
+	}
+	return i.Server.DownloadFile(req)
+}
+
+func (i *ResolveHandlerImpl) downloadFileRaw(ctx *gin.Context, req types.DownloadReq) (*types.DownloadFileRawResp, *http.Response, error) {
+	userToken, err := ctx.Cookie("user_token")
+	if err == nil && userToken != "" {
+		return i.Server.DownloadFileRawWithUserToken(req, userToken)
+	}
+	return i.Server.DownloadFileRaw(req)
+}
+
+func renderResolveError(ctx *gin.Context, resp *http.Response) {
+	statusCode := http.StatusInternalServerError
+	if resp != nil && resp.StatusCode > 0 {
+		statusCode = resp.StatusCode
+	}
+
+	message := errorMsgInternal
+	if statusCode != http.StatusInternalServerError {
+		if statusText := http.StatusText(statusCode); statusText != "" {
+			message = statusText
+		}
+	}
+
+	ctx.JSON(statusCode, gin.H{"error": message})
 }
 
 func (i *ResolveHandlerImpl) buildDownloadReq(ctx *gin.Context) types.DownloadReq {

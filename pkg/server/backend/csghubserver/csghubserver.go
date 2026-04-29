@@ -61,6 +61,14 @@ func (c *CsgHubServer) getParsedResponse(method, path string, header http.Header
 	return resp, json.Unmarshal(data, obj)
 }
 
+func (c *CsgHubServer) getParsedUserResponse(userToken, method, path string, header http.Header, body []byte, obj interface{}) (*http.Response, error) {
+	data, resp, err := c.getUserResponse(userToken, method, path, header, body)
+	if err != nil {
+		return resp, err
+	}
+	return resp, json.Unmarshal(data, obj)
+}
+
 func (c *CsgHubServer) getResponse(method, path string, header http.Header, body []byte) ([]byte, *http.Response, error) {
 	slog.Info("Server Request", method, path, headersToString(header), string(body))
 	resp, err := c.doRequest(method, path, header, bytes.NewReader(body))
@@ -76,6 +84,28 @@ func (c *CsgHubServer) getResponse(method, path string, header http.Header, body
 	}
 
 	// success (2XX), read body
+	data, err = io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, resp, err
+	}
+
+	return data, resp, nil
+}
+
+func (c *CsgHubServer) getUserResponse(userToken, method, path string, header http.Header, body []byte) ([]byte, *http.Response, error) {
+	slog.Info("Server User Request", method, path, headersToString(header), string(body))
+	resp, err := c.doUserRequest(userToken, method, path, header, bytes.NewReader(body))
+	if err != nil {
+		return nil, resp, err
+	}
+	defer resp.Body.Close()
+
+	data, err := statusCodeToErr(resp)
+	if err != nil {
+		c.logError(method, path, body, err)
+		return data, resp, err
+	}
+
 	data, err = io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, resp, err
