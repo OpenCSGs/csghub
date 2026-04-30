@@ -12,6 +12,8 @@ type Server interface {
 	CreateJWTToken(req types.CreateJWTReq) (*types.CreateJWTResp, *http.Response, error)
 	DownloadFileRaw(req types.DownloadReq) (*types.DownloadFileRawResp, *http.Response, error)
 	DownloadFile(req types.DownloadReq) ([]byte, *http.Response, error)
+	DownloadFileRawWithUserToken(req types.DownloadReq, userToken string) (*types.DownloadFileRawResp, *http.Response, error)
+	DownloadFileWithUserToken(req types.DownloadReq, userToken string) ([]byte, *http.Response, error)
 	GetUserInfo(uuid string) (*types.VerifyJWTTokenResp, *http.Response, error)
 	GetUserInfoByUsername(username string) (*types.VerifyJWTTokenResp, *http.Response, error)
 }
