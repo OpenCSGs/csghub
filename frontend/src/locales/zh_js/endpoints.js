@@ -8,6 +8,7 @@ export const endpoints = {
   gpuMemoryRequired: '最小显存需求：',
   gpuMemoryRecommendation: '推荐最小显存：',
   lowMemory: '显存不足',
+  resourceUnavailable: '资源不足',
   detail: {
     endpointUrl: '专属实例 URL',
     modelId: '模型 ID',

@@ -360,25 +360,12 @@
           class="w-full !mb-0"
           :label="$t('application_spaces.new.cloudResource')"
         >
-          <el-select
-            v-model="dataForm.cloud_resource"
-            :placeholder="
-              t('all.pleaseSelect', {
-                value: t('application_spaces.new.cloudResource')
-              })
-            "
-            size="large"
-            style="width: 100%"
-            @change="resourceChange"
-          >
-            <el-option
-              v-for="item in spaceResources"
-              :key="item.name"
-              :label="item.name"
-              :value="item.id"
-              :disabled="!item.is_available"
-            />
-          </el-select>
+          <ResourceSelector
+            :category-resources="spaceResources"
+            v-model:selected="dataForm.cloud_resource"
+            :model-min-gpu-memory="0"
+            value-format="id"
+          />
           <p class="text-gray-600 mt-[8px] font-light">
             {{ $t('application_spaces.new.cloudResourceDesc1') }}
           </p>
@@ -438,13 +425,15 @@
 </template>
 
 <script setup>
-  import { ref, onMounted, inject, computed } from 'vue'
+  import { ref, onMounted, inject, computed, watch } from 'vue'
   import { ElInput, ElMessage } from 'element-plus'
   import { useI18n } from 'vue-i18n'
   import useFetchApi from '../../packs/useFetchApi'
   import useUserStore from '../../stores/UserStore'
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
   import ApplicationSpaceEnvEditor from './ApplicationSpaceEnvEditor.vue'
+  import ResourceSelector from '../shared/deploy_instance/ResourceSelector.vue'
+  import { fetchResourcesInType } from '../shared/deploy_instance/fetchResourceInCategory.js'
   const props = defineProps({
     licenses: Array
   })
@@ -593,20 +582,15 @@
   }
 
   const fetchSpaceResources = async () => {
-    const { data, error } = await useFetchApi(`/space_resources?cluster_id=${dataForm.value.space_cluster}&deploy_type=0`).json()
-
-    if (error.value) {
-      ElMessage({
-        message: error.value.msg || t('application_spaces.new.failedFetchResources'),
-        type: 'warning'
-      })
-    } else {
-      const body = data.value
-      const firstAvailableResource = body.data.find(
-        (item) => item.is_available
-      )
-      dataForm.value.cloud_resource = firstAvailableResource?.id || ''
-      spaceResources.value = body.data
+    // 与 Notebook 一致：按资源类型分组并内置价格字段，解析 resources 字段
+    const categoryResources = await fetchResourcesInType(dataForm.value.space_cluster, 0)
+    spaceResources.value = categoryResources
+    const firstAvailableResource = categoryResources
+      .flatMap(group => group.options)
+      .find(item => item.is_available)
+    dataForm.value.cloud_resource = firstAvailableResource?.id || ''
+    if (firstAvailableResource?.id) {
+      handleResourceType(firstAvailableResource.id)
     }
   }
 
@@ -684,6 +668,11 @@
     handleResourceType(e)
   }
 
+  // 监听资源变化，保持与原先 @change 行为一致
+  watch(() => dataForm.value.cloud_resource, (e) => {
+    resourceChange(e)
+  })
+
   const handleResourceType = (resourceId) => {
     const flatResources = spaceResources.value.flatMap((group) => group.options)
     const resource = flatResources.find((item) => item.id === resourceId)
@@ -693,6 +682,9 @@
   }
 
   const createApplicationSpace = async () => {
+    const flatResources = spaceResources.value.flatMap((group) => group.options || [])
+    const currentResource = flatResources.find((item) => item.id === dataForm.value.cloud_resource)
+    const orderDetailId = currentResource?.order_detail_id || 0
     const params = {
       name: dataForm.value.name,
       nickname: dataForm.value.nickname,
