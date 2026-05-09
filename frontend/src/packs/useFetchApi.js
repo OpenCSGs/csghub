@@ -7,10 +7,21 @@ import { user_sessions as sessions_en } from '../locales/en_js/user_sessions.js'
 import { user_sessions as sessions_zh } from '../locales/zh_js/user_sessions.js'
 
 import { logout } from './auth'
+import { getDefaultLanguage } from './utils'
+import { dialogState } from './dialogState'
 
 const { cookies } = useCookies()
 
 const popupReloginDialog = () => {
+  if (dialogState.isReloginDialogShowing) {
+    return
+  }
+  
+  dialogState.isReloginDialogShowing = true
+  
+  const currentURL = window.location.pathname + window.location.search;
+  cookies.set('previous_path', currentURL, '7d', '/', '', false, false);
+  
   const sessionLocale =
     cookies.get('locale') === 'en' ? sessions_en : sessions_zh
   ElMessageBox.confirm(sessionLocale.expiredDesc, sessionLocale.expiredTitle, {
@@ -19,13 +30,17 @@ const popupReloginDialog = () => {
     'cancelButtonText': sessionLocale.cancelLogin
   })
     .then(() => {
-      window.location.href = '/logout?redirect_to=/login'
+      const previousPath = cookies.get('previous_path')
+      logout()
+      cookies.set('previous_path', previousPath, '7d', '/', '', false, false)
+      window.location.href = '/login'
     })
     .catch(() => {
+      logout()
       window.location.href = '/logout'
     })
     .finally(() => {
-      logout()
+      dialogState.isReloginDialogShowing = false
     })
 }
 
