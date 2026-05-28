@@ -423,38 +423,7 @@
                 :disabled="config.is_disabled"
             />
         </el-form-item>
-        
-        <!-- InputTag 标签输入框 -->
-        <el-form-item 
-            v-else-if="config.config_type === 'input-tag'"
-            :prop="`${config.id}.final_value`"
-            :rules="getRules(config)"
-        >
-            <template #label>
-              <div class="form-item-label">
-                <span class="label-text">{{ config.display_name }}</span>
-                <el-popover
-                  v-if="getConfigDescription(config)"
-                  placement="left-start"
-                  width="300"
-                  trigger="hover"
-                  :title="config.display_name"
-                  :content="getConfigDescription(config)"
-                >
-                  <template #reference>
-                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
-                  </template>
-                </el-popover>
-              </div>
-            </template>
-            <el-input-tag
-                v-model="formData[config.id].final_value"
-                :placeholder="`${t('dataPipelines.toInput')}${config.display_name}`"
-                :disabled="config.is_disabled"
-            />
-            <div class="input-tag-hint">{{ t('dataPipelines.inputTagHint') }}</div>
-        </el-form-item>
-        
+
         <!-- TextareaArrayData 多行正则输入（一行一个正则，提交格式与 input-tag 相同为数组） -->
         <el-form-item 
             v-else-if="config.config_type === 'textarea-array-data'"
@@ -489,7 +458,38 @@
             />
             <div class="input-tag-hint">{{ t('dataPipelines.textareaArrayDataHint') }}</div>
         </el-form-item>
-
+        
+        <!-- InputTag 标签输入框 -->
+        <el-form-item 
+            v-else-if="config.config_type === 'input-tag'"
+            :prop="`${config.id}.final_value`"
+            :rules="getRules(config)"
+        >
+            <template #label>
+              <div class="form-item-label">
+                <span class="label-text">{{ config.display_name }}</span>
+                <el-popover
+                  v-if="getConfigDescription(config)"
+                  placement="left-start"
+                  width="300"
+                  trigger="hover"
+                  :title="config.display_name"
+                  :content="getConfigDescription(config)"
+                >
+                  <template #reference>
+                    <el-icon class="help-icon"><QuestionFilled /></el-icon>
+                  </template>
+                </el-popover>
+              </div>
+            </template>
+            <el-input-tag
+                v-model="formData[config.id].final_value"
+                :placeholder="`${t('dataPipelines.toInput')}${config.display_name}`"
+                :disabled="config.is_disabled"
+            />
+            <div class="input-tag-hint">{{ t('dataPipelines.inputTagHint') }}</div>
+        </el-form-item>
+        
         <!-- 默认情况 - 文本输入框 -->
         <el-form-item 
             v-else
@@ -625,7 +625,7 @@
       }
     }
   }
-  
+
   // textarea-array-data：数组转多行文本显示（一行一个正则）
   const getTextareaArrayDisplay = (configId) => {
     const val = formData.value[configId]?.final_value

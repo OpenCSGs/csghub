@@ -49,8 +49,8 @@
               )?.label || "-"
             }}
           </div>
-        </div></el-col
-      >
+        </div>
+      </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
         <div class="mb-[15px]">
           <div class="text-gray-400 text-xs mb-1 mt-1">
@@ -69,6 +69,22 @@
           <div>
             {{ dataSource.to_csg_hub_dataset_name }}{{ dataSource.to_csg_hub_dataset_default_branch ? ' > ' + dataSource.to_csg_hub_dataset_default_branch : '' }}
           </div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+        <div class="mb-[15px]">
+          <div class="text-gray-400 text-xs mb-1 mt-1">
+            {{ t("dataPipelines.region") }}：
+          </div>
+          <div>{{ displayRegion }}</div>
+        </div>
+      </el-col>
+      <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+        <div class="mb-[15px]">
+          <div class="text-gray-400 text-xs mb-1 mt-1">
+            {{ t("dataPipelines.spaceCloudResources") }}：
+          </div>
+          <div class="break-words">{{ displaySpaceResource }}</div>
         </div>
       </el-col>
       <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
@@ -128,7 +144,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineProps, inject } from "vue";
+import { computed, inject, onMounted, ref } from "vue";
 import useFetchApi from "@/packs/useFetchApi";
 import { useI18n } from "vue-i18n";
 const { t, locale } = useI18n();
@@ -137,6 +153,38 @@ const dataSource = inject("dataSource");
 const dataList = inject("dataList");
 const taskStatusVal = inject("taskStatusVal");
 const formatVal = inject("formatVal");
+
+const displayRegion = computed(() => {
+  const d = dataSource?.value;
+  if (!d || typeof d !== "object" || Array.isArray(d)) return "-";
+  const info = d.datasourceInfo || d;
+  const v =
+    info.cluster_name ??
+    d.region ??
+    d.region_name ??
+    d.cluster_region ??
+    d.cluster_name ??
+    d.cluster_label;
+  return v != null && String(v).trim() !== "" ? String(v) : "-";
+});
+
+const displaySpaceResource = computed(() => {
+  const d = dataSource?.value;
+  if (!d || typeof d !== "object" || Array.isArray(d)) return "-";
+  const info = d.datasourceInfo || d;
+  const v =
+    info.resource_name ??
+    d.space_resource_name ??
+    d.space_resource_label ??
+    d.space_resources_summary ??
+    d.space_resource_desc ??
+    d.space_resources ??
+    d.space_resource_spec;
+  if (v != null && String(v).trim() !== "") return String(v);
+  const rid = info.resource_id ?? d.space_resource_id;
+  if (rid != null && String(rid).trim() !== "") return String(rid);
+  return "-";
+});
 // 加载状态
 const loading = ref(true);
 // 连接状态
@@ -151,6 +199,7 @@ onMounted(() => {
   /* width: 600px; */
   display: block;
 }
+
 .info-group h3 {
   margin-bottom: 10px;
   font-size: 16px;

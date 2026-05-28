@@ -204,6 +204,7 @@
   })
   const toolList = ref([])
   const toolListAll = ref([])
+
   const goToNewTask = (name) => {
     router.push(`/datapipelines/newTask?type=tool&selToolName=${name}`)
   }

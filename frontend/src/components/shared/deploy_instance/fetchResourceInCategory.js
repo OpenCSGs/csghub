@@ -1,4 +1,9 @@
 import useFetchApi from '@/packs/useFetchApi'
+import {
+  formatSpaceResourcePriceLabel,
+  getSpaceResourcePayModeCategory,
+  enrichSpaceResourceWithPrice,
+} from '@/packs/spaceResourcePrice.js'
 import { useCookies } from 'vue3-cookies'
 import { all as all_en } from "../../../locales/en_js/all.js"
 import { all as all_zh } from "../../../locales/zh_js/all.js"
@@ -17,12 +22,7 @@ if (locale === 'zh') {
   allLocale = all_en
 }
 
-const payModeMapping = {
-  free: allLocale.free,
-  minute: allLocale.minutePay,
-  month: allLocale.yearMonthPay,
-  year: allLocale.yearMonthPay
-}
+const payModeI18n = { locale: allLocale }
 
 export const fetchResourcesInCategory = async (clusterId, depployType = 1) => {
   const { data, error } = await useFetchApi(
@@ -36,19 +36,18 @@ export const fetchResourcesInCategory = async (clusterId, depployType = 1) => {
     const categories = {}
     // Category data
     allGPUResources?.forEach((item) => {
-      const category = payModeMapping[item.pay_mode] || 'Others'
+      const category =
+        getSpaceResourcePayModeCategory(item, payModeI18n) || 'Others'
       if (!categories[category]) {
         categories[category] = []
       }
-      if (item.pay_mode == 'minute') {
-        item.label = `${item.name} ${(item.price / 100).toFixed(2)}${allLocale.hourUnit}`
-      } else if (item.pay_mode == 'month') {
-        item.label = `${item.name} ${(item.price / 100).toFixed(2)}${allLocale.monthUnit}`
-      } else if (item.pay_mode == 'year') {
-        item.label = `${item.name} ${(item.price / 100).toFixed(2)}${allLocale.yearUnit}`
-      } else {
-        item.label = item.name
-      }
+      const priceLabel = formatSpaceResourcePriceLabel(item, payModeI18n)
+      item.label =
+        item.pay_mode == 'minute' ||
+        item.pay_mode == 'month' ||
+        item.pay_mode == 'year'
+          ? `${item.name} ${priceLabel}`
+          : item.name
       categories[category].push(item)
     })
     // Generate formatted options
@@ -84,21 +83,15 @@ export const fetchResourcesInType = async (clusterId, depployType = 1) => {
         typeEntry = { label: type, options: [] };
         result.push(typeEntry);
       }
-      let priceValue = ''
-      if (item.pay_mode == 'minute') {
-        priceValue = `${(item.price / 100).toFixed(2)}${allLocale.hourUnit}`
-      } else if (item.pay_mode == 'month') {
-        priceValue = `${(item.price / 100).toFixed(2)}${allLocale.monthUnit}`
-      } else if (item.pay_mode == 'year') {
-        priceValue = `${(item.price / 100).toFixed(2)}${allLocale.yearUnit}`
-      } else {
-        priceValue = `${allLocale.free}`
-      }
-      typeEntry.options.push({
-        ...item,
-        resources:item.resources?JSON.parse(item.resources):{},
-        priceValue:priceValue
-      });
+      typeEntry.options.push(
+        enrichSpaceResourceWithPrice(
+          {
+            ...item,
+            resources: item.resources ? JSON.parse(item.resources) : {},
+          },
+          payModeI18n
+        )
+      );
     });
 
     return result;

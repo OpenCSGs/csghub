@@ -146,27 +146,72 @@
         </div>
 
         <div class="task-info">
-          <div>
-            <p class="text-gray-500 text-xs mb-[6px]">
-              {{ t("dataPipelines.taskRunningHost") }}
-            </p>
-            <div class="text-xl">{{ item.task_run_host || "-" }}</div>
-          </div>
-          <div>
-            <p class="text-gray-500 text-xs mb-[6px]">
-              {{ t("dataPipelines.recordsHaveBeenImported") }}
-            </p>
-            <div class="text-xl">{{ item.records_count }}</div>
-          </div>
-          <div>
-            <p class="text-gray-500 text-xs mb-[6px]">
-              {{ t("dataPipelines.totalNumberOfRecords") }}
-            </p>
-            <div class="text-xl">{{ item.total_count }}</div>
+          <div class="task-info__grid">
+            <div class="task-info__cell">
+              <p class="text-gray-500 text-xs mb-[6px]">
+                {{ t("dataPipelines.subtaskCount") }}
+              </p>
+              <div class="text-md font-normal">{{ displaySubtaskCount(item) }}</div>
+            </div>
+            <div class="task-info__cell">
+              <p class="text-gray-500 text-xs mb-[6px]">
+                {{ t("dataPipelines.recordsHaveBeenImported") }}
+              </p>
+              <div class="text-md font-normal">{{ item.records_count ?? 0 }}</div>
+            </div>
+            <div class="task-info__cell">
+              <p class="text-gray-500 text-xs mb-[6px]">
+                {{ t("dataPipelines.totalNumberOfRecords") }}
+              </p>
+              <div class="text-md font-normal">{{ item.total_count ?? 0 }}</div>
+            </div>
+            <div class="task-info__cell">
+              <p class="text-gray-500 text-xs mb-[6px]">
+                {{ t("dataPipelines.region") }}
+              </p>
+              <div class="task-info__value-box text-md font-normal">
+                {{ displayRegion(item) }}
+              </div>
+            </div>
+            <div class="task-info__cell task-info__cell--span-2">
+              <p class="text-gray-500 text-xs mb-[6px]">
+                {{ t("dataPipelines.spaceCloudResources") }}
+              </p>
+              <div
+                class="task-info__value-box task-info__value-box--resource text-md font-normal"
+              >
+                <span
+                  v-if="formatResourceParts(item).product"
+                  class="task-info__resource-part"
+                >{{ formatResourceParts(item).product }}</span>
+                <span
+                  class="task-info__resource-part task-info__resource-part--main"
+                >
+                  {{ formatResourceParts(item).spec }}
+                </span>
+                <span
+                  v-if="formatResourceParts(item).extra"
+                  class="task-info__resource-part"
+                >{{ formatResourceParts(item).extra }}</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="pl-[20px] pr-[20px] pb-[20px] flex justify-start">
+        <div class="task-actions pl-[20px] pr-[20px] pt-1 pb-[20px] flex flex-wrap items-center justify-start gap-3">
+          <button
+            v-if="canShowSubtasks(item)"
+            type="button"
+            class="task-extra__toggle-btn"
+            @click.stop="toggleSubtasks(item.id, item)"
+          >
+            <el-icon class="task-extra__toggle-btn-icon"><List /></el-icon>
+            <span>{{ t("dataPipelines.viewSubtasks") }}</span>
+            <el-icon class="task-extra__toggle-btn-chevron">
+              <ArrowUp v-if="isSubtasksExpanded(item.id)" />
+              <ArrowDown v-else />
+            </el-icon>
+          </button>
           <!-- 取消任务 -->
           <el-popconfirm
             v-if="item.task_status === 1"
@@ -178,7 +223,7 @@
           >
             <template #reference>
               <CsgButton
-                class="btn btn-secondary-gray btn-sm whitespace-nowrap mr-[16px]"
+                class="btn btn-secondary-gray btn-sm whitespace-nowrap"
                 style="border-color: #e14b44; color: #e14b44"
                 :name="t('dataPipelines.cancelTask')"
                 :isElementIcon="true"
@@ -189,7 +234,7 @@
           <!-- 刷新 -->
           <CsgButton
             v-if="item.task_status === 1"
-            class="btn btn-secondary-gray btn-sm whitespace-nowrap mr-[16px]"
+            class="btn btn-secondary-gray btn-sm whitespace-nowrap"
             :name="t('dataPipelines.refreshStatus')"
             :isElementIcon="true"
             @click="
@@ -202,10 +247,10 @@
           <!-- 查看日志 -->
           <CsgButton
             v-if="item.task_status === 2 || item.task_status === 3"
-            class="btn btn-secondary-gray btn-sm whitespace-nowrap mr-[16px]"
+            class="btn btn-secondary-gray btn-sm whitespace-nowrap"
             :name="t('dataPipelines.viewLog')"
             :isElementIcon="true"
-            @click="getLog(item.task_uid)"
+            @click="getLog(item)"
             svgName="Document"
           />
           <!-- 重新运行 -->
@@ -223,7 +268,7 @@
           >
             <template #reference>
               <CsgButton
-                class="btn btn-secondary-gray btn-sm whitespace-nowrap mr-[16px]"
+                class="btn btn-secondary-gray btn-sm whitespace-nowrap"
                 :name="t('dataPipelines.RunItAgain')"
                 @click="rerunIt(item.id)"
                 :isElementIcon="true"
@@ -231,7 +276,90 @@
               />
             </template>
           </el-popconfirm>
+          <el-popconfirm
+            v-if="item.can_delete && item.task_status !== 1"
+            :title="`${t('dataPipelines.deleteConfirm')}?`"
+            :confirm-button-text="t('dataPipelines.confirm')"
+            :cancel-button-text="t('dataPipelines.cancel')"
+            width="220px"
+            @confirm="handleDelete(item.id)"
+          >
+            <template #reference>
+              <CsgButton
+                class="btn btn-secondary-gray btn-sm whitespace-nowrap"
+                :name="t('dataPipelines.delete')"
+                :isElementIcon="true"
+                svgName="Delete"
+              />
+            </template>
+          </el-popconfirm>
         </div>
+        <div
+          v-if="canShowSubtasks(item) && isSubtasksExpanded(item.id)"
+          class="task-extra task-extra__table px-5 pb-4"
+        >
+          <el-table
+            :data="getSubtaskRows(item.id)"
+            :border="false"
+            size="default"
+            class="task-extra__subtable task-extra__subtable--plain w-full"
+            :empty-text="t('dataPipelines.noData')"
+            :header-cell-style="subtaskTableHeaderStyle"
+            :cell-style="subtaskTableCellStyle"
+            v-loading="!!subtasksLoading[String(item.id)]"
+          >
+            <el-table-column
+              prop="id"
+              :label="t('dataPipelines.subtaskIdentifier')"
+              min-width="100"
+            />
+            <el-table-column
+              prop="task_name"
+              :label="t('dataPipelines.taskName')"
+              min-width="160"
+            >
+              <template #default="scope">
+                {{ resolveSubtaskDisplayName(scope.row, t) }}
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="status"
+              :label="t('dataPipelines.executionStatus.label')"
+              min-width="110"
+            >
+              <template #default="scope">
+                {{ resolveSubtaskStatusLabel(scope.row.status, t) }}
+              </template>
+            </el-table-column>
+            <el-table-column
+              prop="started_at"
+              :label="t('dataPipelines.startTime')"
+              min-width="160"
+            />
+            <el-table-column
+              prop="finished_at"
+              :label="t('dataPipelines.endTime')"
+              min-width="160"
+            />
+            <el-table-column
+              :label="t('dataPipelines.operations')"
+              min-width="120"
+              align="left"
+            >
+              <template #default="scope">
+                <el-button
+                  size="small"
+                  class="task-extra__log-btn"
+                  @click.stop="viewSubtaskLog(item, scope.row)"
+                >
+                  <el-icon class="task-extra__log-btn-icon"><Document /></el-icon>
+                  {{ t("dataPipelines.viewLog") }}
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </div>
+
       </div>
     </div>
 
@@ -349,11 +477,12 @@
             <template #default="scope">
               <div class="settingsTableBtn flex items-center justify-start">
                 <el-popconfirm
+                  v-if="scope.row.can_delete"
                   :title="`${t('dataPipelines.deleteConfirm')}?`"
                   :confirm-button-text="t('dataPipelines.confirm')"
                   :cancel-button-text="t('dataPipelines.cancel')"
                   width="220px"
-                  @confirm="handleDelete(scope.row.job_id)"
+                  @confirm="handleDelete(scope.row.id)"
                 >
                   <template #reference>
                     <el-button
@@ -390,8 +519,14 @@
 import { useRouter, useRoute } from "vue-router";
 import { ref, reactive, onMounted, onBeforeUnmount } from "vue";
 import { ElMessage } from "element-plus";
+import { List, ArrowDown, ArrowUp, Document } from "@element-plus/icons-vue";
 import useFetchApi from "../../../../packs/useFetchApi";
+import {
+  resolveCsghubLogParamsFromTask,
+  describeCsghubLogParamsGap,
+} from "../../../../packs/csghubDataflowLogs";
 import { convertUtcToLocalTime } from "../../../../packs/datetimeUtils";
+import { resolveSubtaskDisplayName, resolveSubtaskStatusLabel } from "../../../../packs/subtaskDisplayName.js";
 import { useI18n } from "vue-i18n";
 
 const { t, locale } = useI18n();
@@ -434,6 +569,106 @@ const taskStatusVal = ref([
 const form = ref({
   searchStr: "",
 });
+
+const subtasksByTaskId = reactive({});
+const subtasksLoading = reactive({});
+
+const displaySubtaskCount = (item) => {
+  const count = item?.subtask_count;
+  if (count === null || count === undefined) {
+    return item?.csghub_job_id ? 0 : "-";
+  }
+  return count;
+};
+
+const displayRegion = (item) => {
+  const name =
+    item?.cluster_name ||
+    item?.datasource?.cluster_name ||
+    item?.cluster_id;
+  return name != null && String(name).trim() !== "" ? String(name) : "-";
+};
+
+const formatResourceParts = (item) => {
+  const full =
+    item?.resource_name ||
+    item?.datasource?.resource_name ||
+    "";
+  if (!full) {
+    return { product: "", spec: "-", extra: "" };
+  }
+  const parts = String(full)
+    .split(/[·]/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+  if (parts.length >= 3) {
+    return {
+      product: parts[0],
+      spec: parts[1],
+      extra: parts.slice(2).join(" · "),
+    };
+  }
+  if (parts.length === 2) {
+    return { product: parts[0], spec: parts[1], extra: "" };
+  }
+  return { product: "", spec: full, extra: "" };
+};
+
+const getSubtaskRows = (taskId) => subtasksByTaskId[String(taskId)] || [];
+
+/** 仅 CSGHub 主任务创建成功（有 csghub_job_id）时才展示/查询子任务 */
+const canShowSubtasks = (item) => Boolean(item?.csghub_job_id);
+
+const loadSubtasks = async (taskId) => {
+  const key = String(taskId);
+  subtasksLoading[key] = true;
+  const { data } = await useFetchApi(
+    `/dataflow/datasource/tasks/${taskId}/subtasks`
+  )
+    .get()
+    .json();
+  subtasksLoading[key] = false;
+  if (data.value?.code === 200) {
+    const list = data.value.data?.list || [];
+    subtasksByTaskId[key] = list.map((row) => ({
+      ...row,
+      display_task_name: resolveSubtaskDisplayName(row, t),
+    }));
+  } else {
+    subtasksByTaskId[key] = [];
+    if (data.value?.msg) {
+      ElMessage.warning(data.value.msg);
+    }
+  }
+};
+
+/** 子任务表：表头 / 单元格（无竖线、浅灰表头、行底部分割线） */
+const subtaskTableHeaderStyle = {
+  background: "#f8f8f9",
+  color: "#909399",
+  fontWeight: "400",
+  borderBottom: "1px solid #ebeef5",
+};
+const subtaskTableCellStyle = {
+  color: "#606266",
+  borderBottom: "1px solid #ebeef5",
+  paddingTop: "14px",
+  paddingBottom: "14px",
+};
+
+const subtasksOpen = reactive({});
+const toggleSubtasks = async (id, item) => {
+  if (item && !canShowSubtasks(item)) return;
+  const key = String(id);
+  const willOpen = !subtasksOpen[key];
+  subtasksOpen[key] = willOpen;
+  if (willOpen) {
+    await loadSubtasks(id);
+  } else {
+    delete subtasksByTaskId[key];
+  }
+};
+const isSubtasksExpanded = (id) => !!subtasksOpen[String(id)];
 
 // 自动刷新定时器（当有进行中任务时每 5 秒刷新一次）
 const REFRESH_INTERVAL = 5000;
@@ -490,21 +725,14 @@ const getDataFlowListFun = async () => {
   tableLoading.value = false;
 };
 const handleDelete = async (id) => {
-  const url = `/dataflow/jobs/${id}`;
-
-  const { data, error } = await useFetchApi(url).delete().json();
-
-  // if (error.value) {
-  //   ElMessage({
-  //     message: `操作失败: ${error.value.msg}`,
-  //     type: "error",
-  //   });
-  // } else {
-  //   ElMessage({
-  //     message: "删除成功",
-  //     type: "success",
-  //   });
-  // }
+  const url = `/dataflow/datasource/collection/task/${id}`;
+  const { data } = await useFetchApi(url).delete().json();
+  if (data.value?.code === 200) {
+    ElMessage.success(t("dataPipelines.operationSuccessful"));
+    gettaskList();
+  } else {
+    ElMessage.error(data.value?.msg || t("dataPipelines.operationFailed"));
+  }
 };
 const toDatasetPage = (path, branch) => {
   if (path && branch) {
@@ -552,20 +780,50 @@ const cancelTask = async (task_id) => {
 };
 
 /**
- * 查看日志
- * @param task_id 任务id
+ * 查看主任务日志（直连 CSGHub）
  */
-const getLog = async (task_uid) => {
+const getLog = (task) => {
+  const { namespaceUuid, jobId } = resolveCsghubLogParamsFromTask(task);
+  if (!namespaceUuid || !jobId) {
+    const missing = describeCsghubLogParamsGap({ namespaceUuid, jobId });
+    ElMessage.error(`任务未提交到 CSGHub，无法查看日志（缺少：${missing.join("、")}）`);
+    return;
+  }
   router.push({
     path: "/datapipelines/viewLog",
     query: {
-      task_uid: task_uid,
       type: "datasource",
+      namespace_uuid: namespaceUuid,
+      csghub_job_id: jobId,
+      task_uid: task.task_uid,
     },
   });
-  // let url = `/dataflow/task_log/list?task_uid=${task_uid}&type=datasource`;
-  // const { data } = await useFetchApi(url).get().json();
-  // console.log("日志：", data);
+};
+
+/**
+ * 查看子任务日志（直连 CSGHub，带 dag_task_id）
+ */
+const viewSubtaskLog = (parentTask, subtaskRow) => {
+  const dagTaskId = subtaskRow?.dag_task_id || subtaskRow?.task_id;
+  const jobId = parentTask?.csghub_remote_job_id || parentTask?.csghub_job_id;
+  if (!dagTaskId) {
+    ElMessage.error("子任务 ID 缺失");
+    return;
+  }
+  if (!parentTask?.namespace_uuid || !jobId) {
+    ElMessage.error("任务未提交到 CSGHub，无法查看子任务日志");
+    return;
+  }
+  router.push({
+    path: "/datapipelines/viewLog",
+    query: {
+      type: "datasource",
+      namespace_uuid: parentTask.namespace_uuid,
+      csghub_job_id: jobId,
+      dag_task_id: String(dagTaskId),
+      task_uid: parentTask.task_uid,
+    },
+  });
 };
 
 /**
@@ -681,13 +939,174 @@ const getDataSourceTypeList = async () => {
     }
 
     .task-info {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       padding: 20px;
 
-      > div {
-        width: 33%;
+      &__grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: 12px;
+        row-gap: 16px;
+        align-items: start;
+      }
+
+      &__cell {
+        min-width: 0;
+      }
+
+      &__cell--span-2 {
+        grid-column: span 2;
+      }
+
+      &__value-box {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 10px 14px;
+        background: #f5f5f5;
+        border-radius: 6px;
+        color: #101828;
+      }
+
+      &__value-box--resource {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px 24px;
+        flex-wrap: wrap;
+      }
+
+      &__resource-part {
+        flex: 0 0 auto;
+        white-space: nowrap;
+      }
+
+      &__resource-part--main {
+        flex: 1 1 auto;
+        min-width: 0;
+        white-space: normal;
+        text-align: center;
+      }
+    }
+
+    .task-extra {
+      font-size: 14px;
+      color: #101828;
+
+      &__toolbar {
+        padding-top: 8px;
+        padding-bottom: 4px;
+      }
+
+      &__table {
+        margin-top: 14px;
+      }
+
+      &__toggle-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        margin: 0;
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: 1px solid #3250bd;
+        background: #f0f2ff;
+        color: #3250bd;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.25;
+        cursor: pointer;
+        font-family: inherit;
+        transition:
+          background 0.15s ease,
+          border-color 0.15s ease,
+          color 0.15s ease;
+
+        &:hover {
+          background: #e4e8ff;
+          border-color: #223b99;
+          color: #223b99;
+        }
+
+        &:focus-visible {
+          outline: 2px solid #3250bd;
+          outline-offset: 2px;
+        }
+      }
+
+      &__toggle-btn-icon,
+      &__toggle-btn-chevron {
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+
+      &__toggle-btn-chevron {
+        margin-left: 2px;
+      }
+
+      &__result-tag {
+        border: none !important;
+        font-weight: 400;
+        height: auto;
+        line-height: 1.4;
+        padding: 4px 12px;
+
+        &--success {
+          background-color: #f0f9eb !important;
+          color: #67c23a !important;
+        }
+
+        &--failure {
+          background-color: #fef0f0 !important;
+          color: #f56c6c !important;
+        }
+      }
+
+      &__log-btn {
+        background: #fff !important;
+        border: 1px solid #dcdfe6 !important;
+        color: #606266 !important;
+        border-radius: 6px !important;
+        padding: 6px 12px !important;
+        font-weight: 400;
+
+        &:hover,
+        &:focus {
+          background: #f5f7fa !important;
+          border-color: #c0c4cc !important;
+          color: #606266 !important;
+        }
+      }
+
+      &__log-btn-icon {
+        margin-right: 4px;
+        font-size: 14px;
+        vertical-align: middle;
+      }
+
+      :deep(.task-extra__subtable--plain.el-table) {
+        --el-table-border-color: #ebeef5;
+        --el-table-bg-color: #fff;
+        background: #fff;
+        border-radius: 8px;
+        overflow: hidden;
+
+        &::before,
+        &::after {
+          display: none;
+        }
+
+        .el-table__inner-wrapper::before {
+          display: none;
+        }
+
+        .el-table__header-wrapper th.el-table__cell {
+          background: #f8f8f9 !important;
+        }
+
+        th.el-table__cell,
+        td.el-table__cell {
+          border-right: none !important;
+        }
       }
     }
   }

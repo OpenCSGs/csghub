@@ -265,7 +265,7 @@ const jump = async () => {
   const { data } = await useFetchApi(`/dataflow/studio/jump-to-studio`, {
     headers: {
       "Content-Type": "application/json",
-      "user_name": `${userStore.username}`,
+      user_name: `${userStore.username}`,
       // 'cookie': `user_token=${cookies.get("user_token")};`,
     },
     body: JSON.stringify({}),
@@ -275,6 +275,7 @@ const jump = async () => {
   loading.close();
   console.log(data, "datadatadata");
   if (data.value?.code === 200) {
+    // http://192.168.10.37:8080/user/login1/?email=${userStore.username}@qq.com
     const origin = window.location.origin;
     window.open(`${data.value.data}&origin=${origin}&language=${locale.value}`, "_blank");
   } else {

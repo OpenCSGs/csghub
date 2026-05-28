@@ -13,7 +13,11 @@
         class="text-gray-700 text-sm font-medium cursor-pointer hover:text-brand-700"
         @click="navigateToPage"
       >
-        {{ t('dataPipelines.dataProcessing') }}
+        {{
+          taskUseType === 'tool'
+            ? t('dataPipelines.toolsTit')
+            : t('dataPipelines.dataProcessing')
+        }}
       </p>
       <SvgIcon
         class="w-5 h-5 mx-2"
@@ -24,10 +28,18 @@
       </p>
     </div>
     <p class="text-gray-900 text-3xl font-medium">
-      {{ t('dataPipelines.newTask') }}
+      {{
+        taskUseType === 'tool'
+          ? t('dataPipelines.create')
+          : t('dataPipelines.newTask')
+      }}
     </p>
     <p class="text-gray-600 text-md font-light mt-[2px]">
-      {{ t('dataPipelines.dataProcessingDescription') }}
+      {{
+        taskUseType === 'tool'
+          ? t('dataPipelines.toolsDec')
+          : t('dataPipelines.dataProcessingDescription')
+      }}
     </p>
     <el-radio-group
       v-model="taskUseType"
@@ -53,8 +65,197 @@
         :rules="rules"
         label-width="auto"
         label-position="top"
-        class="w-[640px] sm:w-full"
+        :class="taskUseType === 'tool' ? 'w-full max-w-5xl' : 'w-[640px] sm:w-full'"
       >
+        <template v-if="taskUseType === 'tool'">
+          <TaskNamespaceFields
+            ref="taskNamespaceFieldsRef"
+            v-model:namespace-type="form.namespace_type"
+            v-model:namespace-uuid="form.namespace_uuid"
+            @loaded="onNamespacesLoaded"
+          />
+
+          <div class="p-[12px]">
+            <el-row :gutter="20" class="border rounded-md p-[10px]">
+              <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+                <el-form-item
+                  prop="project_name"
+                >
+                  <template #label>
+                    <p class="text-gray-500 text-xs mt-[12px]">{{ t('dataPipelines.taskName') }}</p>
+                  </template>
+                  <el-input
+                    style="width: 100%"
+                    v-model="form.project_name"
+                    :placeholder="`${t('dataPipelines.toInput')}${t('dataPipelines.taskName')}`"
+                    clearable
+                  />
+                </el-form-item>
+              </el-col>
+
+              <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+                <el-form-item prop="owner">
+                  <template #label>
+                    <p class="text-gray-500 text-xs mt-[12px]">{{ t('models.newModel.owner') }}</p>
+                  </template>
+                  <el-select
+                    v-model="form.owner"
+                    :placeholder="t('all.select')"
+                    style="width: 100%"
+                    @change="getSelListData(true)"
+                  >
+                    <el-option
+                      v-for="item in ownerPathOptions.length ? ownerPathOptions : namespaces()"
+                      :key="item"
+                      :label="item"
+                      :value="item"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+                <el-form-item prop="selToolIndex">
+                  <template #label>
+                    <p class="text-gray-500 text-xs mt-[12px]">{{ t('dataPipelines.taskType2') }}</p>
+                  </template>
+                  <el-select
+                    v-model="form.selToolIndex"
+                    style="width: 100%"
+                    :placeholder="t('dataPipelines.toSel')"
+                    @change="changeTool"
+                  >
+                    <el-option
+                      v-for="(item, index) in toolListAll"
+                      :key="index"
+                      :label="t(`dataPipelines.${item.name}`)"
+                      :value="index"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col
+                v-if="['all', 'input_only'].includes(seltool?.io_requirement)"
+                :xs="24"
+                :sm="24"
+                :md="12"
+                :lg="12"
+                :xl="12"
+              >
+                <el-form-item prop="repo_id">
+                  <template #label>
+                    <p class="text-gray-500 text-xs mt-[12px]">{{ t('dataPipelines.dataSource') }}</p>
+                  </template>
+                  <el-select
+                    v-model="form.repo_id"
+                    style="width: 100%"
+                    :placeholder="t('dataPipelines.toSel')"
+                    @change="fetchBranchList"
+                  >
+                    <el-option
+                      v-for="item in dataSourceList"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.path"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col
+                v-if="['all', 'input_only'].includes(seltool?.io_requirement)"
+                :xs="24"
+                :sm="24"
+                :md="12"
+                :lg="12"
+                :xl="12"
+              >
+                <el-form-item prop="branch">
+                  <template #label>
+                    <p class="text-gray-500 text-xs mt-[12px]">{{ t('dataPipelines.dataSourceBranch') }}</p>
+                  </template>
+                  <el-select
+                    v-model="form.branch"
+                    style="width: 100%"
+                    :placeholder="t('dataPipelines.toSel')"
+                  >
+                    <el-option
+                      v-for="item in branchList"
+                      :key="item.name"
+                      :label="item.name"
+                      :value="item.name"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col
+                v-if="['all', 'output_only'].includes(seltool?.io_requirement)"
+                :xs="24"
+                :sm="24"
+                :md="12"
+                :lg="12"
+                :xl="12"
+              >
+                <el-form-item>
+                  <template #label>
+                    <p class="text-gray-500 text-xs mt-[12px]">{{ t('dataPipelines.dataFlow') }}</p>
+                  </template>
+                  <el-select
+                    v-model="form.repo_id"
+                    style="width: 100%"
+                    :placeholder="t('dataPipelines.toSel')"
+                    :disabled="seltool?.io_requirement !== 'output_only'"
+                  >
+                    <el-option
+                      v-for="item in dataSourceList"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.path"
+                    />
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col
+                v-for="(item, paramIndex) in seltool.params || []"
+                :key="paramIndex"
+                :xs="24"
+                :sm="24"
+                :md="isFullWidthToolParam(item) ? 24 : 12"
+                :lg="isFullWidthToolParam(item) ? 24 : 12"
+                :xl="isFullWidthToolParam(item) ? 24 : 12"
+              >
+                <el-form-item>
+                  <template #label>
+                    <p class="text-gray-500 text-xs mt-[12px]">{{ item.name }}</p>
+                  </template>
+                  <ToolParamField
+                    :item="item"
+                    :get-search-select-options="getSearchSelectOptions"
+                    :is-searching-model="isSearchingModel"
+                    @search-select-change="handleSearchSelectChange"
+                    @open-model-dialog="openModelDialog"
+                    @input-confirm="handleInputConfirm"
+                    @remove-tag="removeTag"
+                  />
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </div>
+
+          <SpaceResourceFields
+            ref="spaceResourceFieldsRef"
+            class="mt-[24px]"
+            v-model:cluster-id="form.cluster_id"
+            v-model:space-resource-id="form.space_resource_id"
+            v-model:cluster-name="form.cluster_name"
+            v-model:resource-name="form.resource_name"
+          />
+        </template>
+
+        <template v-else>
         <el-form-item
           :label="t('dataPipelines.taskName')"
           prop="project_name"
@@ -84,11 +285,6 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          v-if="
-            taskUseType != 'tool' ||
-            (taskUseType == 'tool' &&
-              ['all', 'input_only'].includes(seltool.io_requirement))
-          "
           :label="t('dataPipelines.dataSource')"
           prop="repo_id"
         >
@@ -107,11 +303,6 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          v-if="
-            taskUseType != 'tool' ||
-            (taskUseType == 'tool' &&
-              ['all', 'input_only'].includes(seltool.io_requirement))
-          "
           :label="t('dataPipelines.dataSourceBranch')"
           prop="branch"
         >
@@ -129,7 +320,6 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          v-if="taskUseType == 'ops'"
           :label="t('dataPipelines.processingText')"
           prop="text_keys"
         >
@@ -140,20 +330,12 @@
         </el-form-item>
         <el-form-item
           :label="t('dataPipelines.dataFlow')"
-          v-if="
-            taskUseType != 'tool' ||
-            (taskUseType == 'tool' &&
-              ['all', 'output_only'].includes(seltool.io_requirement))
-          "
         >
           <el-select
             v-model="form.repo_id"
             style="width: 100%"
             :placeholder="t('dataPipelines.toSel')"
-            :disabled="
-              taskUseType != 'tool' ||
-              (taskUseType == 'tool' && seltool.io_requirement != 'output_only')
-            "
+            disabled
           >
             <el-option
               v-for="item in dataSourceList"
@@ -164,7 +346,6 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          v-if="taskUseType == 'ops'"
           :label="t('dataPipelines.taskTemplate')"
           prop="selTemplate"
         >
@@ -182,171 +363,7 @@
             />
           </el-select>
         </el-form-item>
-        <el-form-item
-          v-if="taskUseType == 'tool'"
-          :label="t('dataPipelines.taskType2')"
-          prop="selToolIndex"
-        >
-          <el-select
-            v-model="form.selToolIndex"
-            style="width: 100%"
-            :placeholder="t('dataPipelines.toSel')"
-            @change="changeTool"
-          >
-            <el-option
-              v-for="(item, index) in toolListAll"
-              :key="index"
-              :label="t(`dataPipelines.${item.name}`)"
-              :value="index"
-            />
-          </el-select>
-        </el-form-item>
-        <div v-if="taskUseType == 'tool'">
-          <el-form-item
-            v-for="(item, paramIndex) in seltool.params"
-            :key="paramIndex"
-            :label="item.name"
-          >
-            <el-slider
-              v-if="item.type == 'from_2_to_20'"
-              v-model="item.value"
-              size="small"
-              :min="2"
-              :max="20"
-              style="width: 98%"
-            />
-            <el-select
-              v-if="item.type == 'STRING' && Array.isArray(item.option_values)"
-              v-model="item.value"
-              class="w-full"
-              :placeholder="item.name"
-            >
-              <el-option
-                v-for="selItem in item.option_values"
-                :key="selItem.key"
-                :label="selItem.label"
-                :value="selItem.key"
-              />
-            </el-select>
-            <div v-if="item.type == 'search-select'" class="w-full">
-              <el-select
-                v-model="item.value"
-                class="w-full"
-                :placeholder="item.name"
-                filterable
-                allow-create
-                default-first-option
-                @change="handleSearchSelectChange($event, item)"
-              >
-                <el-option
-                  v-for="selItem in getSearchSelectOptions(item)"
-                  :key="selItem.key"
-                  :label="selItem.label"
-                  :value="selItem.key"
-                />
-              </el-select>
-              <p v-if="isSearchingModel(item)" class="text-gray-400 text-xs mt-1">
-                {{ t('dataPipelines.searchingModel') }}
-              </p>
-              <p class="text-gray-400 text-xs mt-1">
-                {{ t('dataPipelines.searchSelectHint') }}
-              </p>
-            </div>
-            <el-input
-              v-if="item.type == 'STRING' && !Array.isArray(item.option_values)"
-              :placeholder="`${item.name}`"
-              style="width: 100%"
-              v-model="item.value"
-            />
-            <el-input
-              v-if="item.type == 'FLOAT'"
-              type="number"
-              :step="0.01"
-              :precision="2"
-              style="width: 100%"
-              v-model="item.value"
-            />
-            <el-input
-              v-if="item.type == 'INTEGER'"
-              type="number"
-              :min="0"
-              :precision="0"
-              :step="1"
-              style="width: 100%"
-              v-model="item.value"
-            />
-            <el-input
-              v-if="item.type == 'PositiveFloat'"
-              type="number"
-              :min="0"
-              style="width: 100%"
-              v-model="item.value"
-            />
-            <el-slider
-              v-if="item.type == 'ClosedUnitInterval'"
-              size="small"
-              v-model="item.value"
-              :min="0"
-              :max="1"
-              :step="0.01"
-              style="width: 98%"
-            />
-            <div
-              v-if="item.type == 'LIST'"
-              class="w-full flex flex-wrap gap-2 tagInputCont"
-            >
-              <el-tag
-                v-for="tag in item.value"
-                :key="tag"
-                closable
-                :disable-transitions="false"
-                @close="removeTag(tag, item)"
-              >
-                {{ tag }}
-              </el-tag>
-              <el-input
-                ref="InputRef"
-                v-model="item.tempVal"
-                :placeholder="item.name"
-                style="width: 100%"
-                @keyup.enter="handleInputConfirm(item,'tempVal')"
-              />
-            </div>
-            <el-checkbox
-              v-if="item.type == 'BOOLEAN'"
-              v-model="item.value"
-              :label="item.name"
-              class="block my-2.5"
-            />
-            <div v-if="item.type == 'select-model'" class="w-full">
-              <el-select
-                v-model="item.value"
-                class="w-full"
-                :placeholder="item.name"
-                filterable
-              >
-                <el-option
-                  v-for="selItem in getSearchSelectOptions(item)"
-                  :key="selItem.key"
-                  :label="selItem.label"
-                  :value="selItem.key"
-                />
-                <template #footer>
-                  <div @click.stop>
-                    <CsgButton
-                      class="btn btn-primary btn-sm"
-                      :name="t('dataPipelines.moreModels')"
-                      @click.stop="openModelDialog(item)"
-                    />
-                  </div>
-                </template>
-              </el-select>
-              <p v-if="isSearchingModel(item)" class="text-gray-400 text-xs mt-1">
-                {{ t('dataPipelines.searchingModel') }}
-              </p>
-            </div>
-          </el-form-item>
-        </div>
+        </template>
       </el-form>
     </div>
     <div
@@ -724,6 +741,14 @@
   import { useI18n } from 'vue-i18n'
   import { Search } from '@element-plus/icons-vue'
   import ModelSelectItem from './ModelSelectItem.vue'
+  import ToolParamField from './ToolParamField.vue'
+  import TaskNamespaceFields from '../shared/TaskNamespaceFields.vue'
+  import SpaceResourceFields from '../dataAcquisition/dataSourceManagement/SpaceResourceFields.vue'
+  import {
+    applyNamespaceFromLoaded,
+    buildTaskCreatePayload,
+    guardNamespaceBeforeSubmit,
+  } from '../../../packs/useDataflowNamespaces.js'
   import CsgPagination from '../../shared/CsgPagination.vue'
 
   const userStore = useUserStore()
@@ -755,9 +780,39 @@
     branch: '',
     selTemplate: route.query.templateId ? route.query.templateId * 1 : 0,
     selToolIndex: 0,
-    process: []
+    process: [],
+    namespace_type: 'personal',
+    namespace_uuid: '',
+    cluster_id: '',
+    cluster_name: '',
+    space_resource_id: '',
+    resource_name: '',
   })
   const ruleFormRef = ref(null)
+  const spaceResourceFieldsRef = ref(null)
+  const taskNamespaceFieldsRef = ref(null)
+  const ownerPathOptions = ref([])
+
+  const onNamespacesLoaded = (payload) => {
+    applyNamespaceFromLoaded(form, payload)
+    ownerPathOptions.value = payload?.ownerPathOptions || []
+    if (!form.value.owner && ownerPathOptions.value.length) {
+      form.value.owner = ownerPathOptions.value[0]
+      getSelListData(true)
+    }
+  }
+
+  const isFullWidthToolParam = (item) => {
+    if (!item) return false
+    const fullWidthTypes = ['LIST', 'from_2_to_20', 'search-select', 'select-model']
+    if (fullWidthTypes.includes(item.type)) return true
+    if (item.type === 'STRING' && !Array.isArray(item.option_values)) {
+      const sample = String(item.value ?? item.tempVal ?? '')
+      if (sample.includes('\n') || sample.length > 100) return true
+    }
+    return false
+  }
+
   const rules = ref({
     project_name: [
       {
@@ -813,13 +868,32 @@
         message: `${t('dataPipelines.toSel')}${t('dataPipelines.taskType2')}`,
         trigger: 'change'
       }
-    ]
+    ],
+    namespace_uuid: [
+      {
+        validator: (rule, value, callback) => {
+          if (taskUseType.value !== 'tool') {
+            callback()
+            return
+          }
+          const check = guardNamespaceBeforeSubmit(form, t, {
+            namespacesLoading: taskNamespaceFieldsRef.value?.namespacesLoading,
+          })
+          if (!check.ok) {
+            callback(new Error(check.message))
+          } else {
+            callback()
+          }
+        },
+        trigger: ['change', 'blur'],
+      },
+    ],
   })
   const tableData = ref([])
 
   const router = useRouter()
   const navigateToPage = () => {
-    router.push('/datapipelines')
+    router.push(taskUseType.value === 'tool' ? '/datapipelines/tools' : '/datapipelines')
   }
   const geback = () => {
     router.go(-1)
@@ -1103,18 +1177,8 @@
         modelList.value = []
         modelTotal.value = 0
       } else {
-        if (data.value && data.value.data && Array.isArray(data.value.data.models)) {
-          data.value.data.models.forEach((item) => {
-            if (item && typeof item === 'object') {
-              const path = item.path || ''
-              item.hf_path = path
-              item.ms_path = path
-              item.csg_path = path
-              item.name = path
-              item.nickname = path
-            }
-          })
-          modelList.value = data.value.data.models
+        if (data.value && data.value.data) {
+          modelList.value = data.value.data.models || []
           modelTotal.value = data.value.data.total || 0
         } else {
           modelList.value = []
@@ -1266,11 +1330,41 @@
             ])
           }
         } else if (taskUseType.value == 'tool') {
-          params = {
-            ...params,
-            ...seltool.value,
-            ...form.value
+          const nsCheck = guardNamespaceBeforeSubmit(form, t, {
+            namespacesLoading: taskNamespaceFieldsRef.value?.namespacesLoading,
+          })
+          if (!nsCheck.ok) {
+            ElMessage.error(nsCheck.message)
+            subLoading.value = false
+            return
           }
+          if (!form.value.cluster_id) {
+            ElMessage.error(
+              t('all.pleaseSelect', { value: t('dataPipelines.selectRegion') })
+            )
+            subLoading.value = false
+            return
+          }
+          if (
+            form.value.space_resource_id === '' ||
+            form.value.space_resource_id == null
+          ) {
+            ElMessage.error(
+              t('all.pleaseSelect', {
+                value: t('dataPipelines.spaceCloudResources'),
+              })
+            )
+            subLoading.value = false
+            return
+          }
+          const spaceNames =
+            spaceResourceFieldsRef.value?.resolveSelectionNames?.() ?? {}
+          const { selToolIndex, selTemplate, ...formRest } = form.value
+          params = buildTaskCreatePayload({
+            ...seltool.value,
+            ...formRest,
+            ...spaceNames,
+          })
         }
         if (
           taskUseType.value != 'ops' ||
@@ -1323,6 +1417,18 @@
 </script>
 
 <style lang="less" scoped>
+  .task-scope-radio-group {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px;
+  }
+  .task-scope-radio-group :deep(.el-radio) {
+    margin-right: 0;
+    height: auto;
+    align-items: center;
+  }
+
   :deep(.tableCont) {
     .el-button--text {
       background: transparent !important;
@@ -1385,7 +1491,8 @@
     margin-bottom: 0;
   }
 
-  .model-select-item :deep(a) {
+  .model-select-item :deep(a),
+  .model-select-item :deep(div) {
     pointer-events: none;
   }
 </style>

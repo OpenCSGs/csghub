@@ -141,20 +141,37 @@
 
           <el-table-column
             prop="dataFlowDirection"
-            min-width="150"
+            min-width="280"
             align="right"
           >
             <template #default="scope">
               <div class="text-gray-500 text-sm font-light text-xs text-right">
                 {{ t("dataPipelines.dataFlow") }}
               </div>
+              <div class="text-right truncate" :title="formatDataFlow(scope.row.extra_config)">
+                {{ formatDataFlow(scope.row.extra_config) }}
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="cluster_name" min-width="140" align="right">
+            <template #default="scope">
+              <div class="text-gray-500 text-sm font-light text-xs text-right">
+                {{ t("dataPipelines.region") }}
+              </div>
               <div class="text-right truncate">
-                {{
-                  `${
-                    JSON.parse(scope.row.extra_config)?.csg_hub_dataset_name ||
-                    "-"
-                  }`
-                }}
+                {{ scope.row.cluster_name || "-" }}
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="resource_name" min-width="200" align="right">
+            <template #default="scope">
+              <div class="text-gray-500 text-sm font-light text-xs text-right">
+                {{ t("dataPipelines.spaceCloudResources") }}
+              </div>
+              <div class="text-right truncate" :title="scope.row.resource_name">
+                {{ scope.row.resource_name || "-" }}
               </div>
             </template>
           </el-table-column>
@@ -264,7 +281,7 @@
     >
       <DataSourceInfo />
       <template #footer>
-        <div class="dialog-footer">
+        <div class="dialog-footer flex justify-end items-center gap-3">
           <CsgButton
             class="btn btn-secondary-gray btn-md whitespace-nowrap"
             @click="dataSourceDetailsVisible = false"
@@ -277,9 +294,22 @@
     <el-dialog
       v-model="centerDialogVisible"
       :title="t('dataPipelines.execute')"
-      width="500"
+      width="720"
       align-center
     >
+      <SpaceResourceFields
+        ref="executeSpaceResourceFieldsRef"
+        :key="rowId"
+        v-if="centerDialogVisible"
+        v-model:cluster-id="executeClusterId"
+        v-model:cluster-name="executeClusterName"
+        v-model:space-resource-id="executeSpaceResourceId"
+        v-model:resource-name="executeResourceName"
+        compact
+      />
+      <p class="execute-dialog-section-label">
+        {{ t("dataPipelines.executionTime") }}
+      </p>
       <el-radio-group v-model="is_run" class="execute-type">
         <el-radio :value="true" size="large">
           {{ t("dataPipelines.executeImmediately") }}</el-radio
@@ -296,17 +326,18 @@
         type="datetime"
         :placeholder="t('dataPipelines.PleaseSelectTime')"
         style="width: 100%"
+        class="mt-[12px]"
       />
 
       <template #footer>
-        <div class="dialog-footer">
+        <div class="dialog-footer flex flex-row justify-end items-center gap-3">
           <CsgButton
             class="btn btn-secondary-gray btn-md whitespace-nowrap"
             @click="centerDialogVisible = false"
             :name="t('dataPipelines.cancel')"
           />
           <CsgButton
-            class="btn btn-primary btn-md whitespace-nowrap ml-[12px]"
+            class="btn btn-primary btn-md whitespace-nowrap"
             v-loading="subLoading"
             :name="t('dataPipelines.sure')"
             @click="handleExecute"
@@ -324,6 +355,7 @@ import { ElMessage, ElLoading } from "element-plus";
 import useFetchApi from "../../../../packs/useFetchApi";
 import { useI18n } from "vue-i18n";
 import DataSourceInfo from "./components/dataSourceInfo.vue";
+import SpaceResourceFields from "./SpaceResourceFields.vue";
 import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 const router = useRouter();
@@ -356,11 +388,39 @@ const is_run = ref(true);
 const rowId = ref(null);
 // 选择的运行时间
 const task_run_time = ref(null);
+// 执行弹框内：区域与空间云资源（使用 ref，避免 defineModel 与 reactive 嵌套不同步导致不请求接口）
+const executeClusterId = ref("");
+const executeClusterName = ref("");
+const executeSpaceResourceId = ref("");
+const executeResourceName = ref("");
+const executeSpaceResourceFieldsRef = ref(null);
 
 onMounted(() => {
   getDataFlowListFun();
   getDataSourceTypeList();
 });
+
+const formatDataFlow = (extraConfig) => {
+  if (!extraConfig) return "-";
+  let extra = extraConfig;
+  if (typeof extraConfig === "string") {
+    try {
+      extra = JSON.parse(extraConfig);
+    } catch {
+      return "-";
+    }
+  }
+  const datasetId = extra.csg_hub_dataset_id || "";
+  const branch =
+    extra.csg_hub_dataset_default_branch ||
+    extra.csg_hub_dataset_branch ||
+    extra.csg_hub_dataset_name ||
+    "";
+  if (datasetId && branch) return `${datasetId}>${branch}`;
+  if (datasetId) return datasetId;
+  if (branch) return branch;
+  return "-";
+};
 
 /**
  * 搜索
@@ -460,9 +520,13 @@ const viewTasks = (id) => {
  */
 const openExecuteDialog = async (id) => {
   rowId.value = id;
-  centerDialogVisible.value = true;
+  executeClusterId.value = "";
+  executeClusterName.value = "";
+  executeSpaceResourceId.value = "";
+  executeResourceName.value = "";
   task_run_time.value = null;
   is_run.value = true;
+  centerDialogVisible.value = true;
 };
 
 /**
@@ -470,18 +534,37 @@ const openExecuteDialog = async (id) => {
  * @param id 当前行数据的id
  */
 const handleExecute = async (id) => {
+  if (!executeClusterId.value) {
+    return ElMessage.error(
+      t("all.pleaseSelect", { value: t("dataPipelines.selectRegion") })
+    );
+  }
+  if (
+    executeSpaceResourceId.value === "" ||
+    executeSpaceResourceId.value == null
+  ) {
+    return ElMessage.error(
+      t("all.pleaseSelect", { value: t("dataPipelines.spaceCloudResources") })
+    );
+  }
+
   const url = `/dataflow/datasource/datasource/execute/${rowId.value}`;
 
-  let params = {};
+  const spaceNames =
+    executeSpaceResourceFieldsRef.value?.resolveSelectionNames?.() ?? {};
+  let params = {
+    cluster_id: executeClusterId.value,
+    cluster_name: spaceNames.cluster_name || executeClusterName.value,
+    resource_id: executeSpaceResourceId.value,
+    resource_name: spaceNames.resource_name || executeResourceName.value,
+  };
 
   if (!is_run.value) {
-    if (!task_run_time)
+    if (!task_run_time.value)
       return ElMessage.error(
         `${t("dataPipelines.pleaseSelectAnExecutionTime")}...`
       );
-    params = {
-      task_run_time: task_run_time.value,
-    };
+    params.task_run_time = task_run_time.value;
   }
   const options = {
     headers: { "Content-Type": "application/json" },
@@ -529,6 +612,16 @@ const goToNewTask = (path) => {
 };
 </script>
 <style lang="less" scoped>
+/** 与 SpaceResourceFields 内「选择区域 / 空间云资源」小标题同色，避免 el-dialog 正文色偏深 */
+.execute-dialog-section-label {
+  margin: 20px 0 8px;
+  padding: 0;
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #667085;
+}
+
 .data-source-title {
   display: flex;
   align-items: center;

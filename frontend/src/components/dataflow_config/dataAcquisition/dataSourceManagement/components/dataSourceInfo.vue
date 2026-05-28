@@ -30,6 +30,18 @@
             </div>
             <div>{{ getDataFlow(dataSource.datasourceInfo?.extra_config) }}</div>
           </div>
+          <div class="info-item">
+            <div class="text-gray-400 text-xs mb-1 mt-1">
+              {{ t("dataPipelines.region") }}：
+            </div>
+            <div>{{ dataSource.datasourceInfo?.cluster_name || "-" }}</div>
+          </div>
+          <div class="info-item">
+            <div class="text-gray-400 text-xs mb-1 mt-1">
+              {{ t("dataPipelines.spaceCloudResources") }}：
+            </div>
+            <div>{{ dataSource.datasourceInfo?.resource_name || "-" }}</div>
+          </div>
 
           <div class="info-item">
             <div class="text-gray-400 text-xs mb-1 mt-1">

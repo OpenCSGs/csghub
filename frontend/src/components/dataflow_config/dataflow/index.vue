@@ -94,7 +94,6 @@
             min-width="300"
           >
             <template #default="scope">
-              <!--                 @click="toDatasetPage(scope.row.repo_id, scope.row.branch)" -->
               <span>{{
                 `${scope.row.repo_id || "-"}>${scope.row.branch || "-"}`
               }}</span>
@@ -103,18 +102,33 @@
           <el-table-column
             prop="data_target"
             :label="t('dataPipelines.dataFlow')"
+            min-width="300"
+          >
+            <template #default="scope">
+              <span>{{
+                `${scope.row.export_repo_id || "-"}>${scope.row.export_branch_name || "-"}`
+              }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="cluster_name"
+            :label="t('dataPipelines.region')"
+            min-width="140"
+          >
+            <template #default="scope">
+              <span>{{ scope.row.cluster_name || "-" }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="resource_name"
+            :label="t('dataPipelines.spaceCloudResources')"
             min-width="200"
           >
             <template #default="scope">
-              <!--                 @click="
-                  toDatasetPage(
-                    scope.row.export_repo_id,
-                    scope.row.export_branch_name
-                  )
-                " -->
-              <span>
-                {{ scope.row.repo_id }}
-              </span>
+              <span
+                class="truncate inline-block max-w-full"
+                :title="scope.row.resource_name || ''"
+              >{{ scope.row.resource_name || "-" }}</span>
             </template>
           </el-table-column>
           <el-table-column
@@ -129,7 +143,7 @@
           <el-table-column
             prop="token"
             :label="t('dataPipelines.operations')"
-            min-width="260"
+            min-width="320"
             fixed="right"
           >
             <template #default="scope">
@@ -142,11 +156,13 @@
                       `/datapipelines/dataflowInfo?id=${scope.row.job_id}&type=${scope.row.job_source}&jobType=${scope.row.job_type}`
                     )
                   "
-                  >{{
-                    scope.row.job_source == "pipeline"
-                      ? t("dataPipelines.details")
-                      : t("dataPipelines.log")
-                  }}
+                  >{{ t("dataPipelines.details") }}
+                </el-button>
+                <el-button
+                  type="text"
+                  class="flex items-center justify-start cursor-pointer"
+                  @click="getLog(scope.row)"
+                  >{{ t("dataPipelines.log") }}
                 </el-button>
 
                 <el-popconfirm
@@ -175,6 +191,7 @@
                 </el-popconfirm>
 
                 <el-popconfirm
+                  v-if="scope.row.can_delete"
                   :title="`${t('dataPipelines.deleteConfirm')}?`"
                   :confirm-button-text="t('dataPipelines.confirm')"
                   :cancel-button-text="t('dataPipelines.cancel')"
@@ -215,6 +232,10 @@ import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { ElMessage } from "element-plus";
 import useFetchApi from "../../../packs/useFetchApi";
+import {
+  resolveCsghubLogParamsFromTask,
+  describeCsghubLogParamsGap,
+} from "../../../packs/csghubDataflowLogs";
 import { convertUtcToLocalTime } from "../../../packs/datetimeUtils";
 import { useI18n } from "vue-i18n";
 
@@ -391,6 +412,42 @@ const router = useRouter();
 
 const goToNewTask = (path) => {
   router.push(path);
+};
+
+/**
+ * 查看主任务日志（直连 CSGHub；列表缺字段时用 log_context 补全，不调 dataflow 日志接口）
+ */
+const getLog = async (row) => {
+  let task = { ...row };
+  let { namespaceUuid, jobId } = resolveCsghubLogParamsFromTask(task);
+
+  if ((!namespaceUuid || !jobId) && row?.job_id) {
+    const { data } = await useFetchApi(
+      `/dataflow/jobs/log_context/${row.job_id}`
+    )
+      .get()
+      .json();
+    if (data.value?.code === 200 && data.value?.data) {
+      task = { ...task, ...data.value.data };
+      ({ namespaceUuid, jobId } = resolveCsghubLogParamsFromTask(task));
+    }
+  }
+
+  if (!namespaceUuid || !jobId) {
+    const missing = describeCsghubLogParamsGap({ namespaceUuid, jobId });
+    ElMessage.error(`无法查看 CSGHub 日志（缺少：${missing.join("、")}）`);
+    return;
+  }
+  router.push({
+    path: "/datapipelines/viewLog",
+    query: {
+      type: "job",
+      namespace_uuid: namespaceUuid,
+      csghub_job_id: jobId,
+      task_uid: task.uuid || row.uuid,
+      job_id: row.job_id,
+    },
+  });
 };
 
 // 监听路由变化，停止定时任务

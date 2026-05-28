@@ -7,6 +7,13 @@
       label-position="top"
       style="padding: 0;"
     >
+      <TaskNamespaceFields
+        ref="taskNamespaceFieldsRef"
+        v-model:namespace-type="subForm.namespace_type"
+        v-model:namespace-uuid="subForm.namespace_uuid"
+        @loaded="onNamespacesLoaded"
+      />
+
       <p class="text-gray-900 text-2xl font-medium">
         {{ t("dataPipelines.dataProcessingConfiguration") }}
       </p>
@@ -44,15 +51,11 @@
                 @change="getSelListData(true)"
               >
                 <el-option
-                  v-for="item in namespaces()"
+                  v-for="item in ownerPathOptions"
                   :key="item"
                   :label="item"
                   :value="item"
                 />
-                <!-- <el-option
-                  label="z275748353"
-                  value="z275748353"
-                /> -->
               </el-select>
             </el-form-item>
           </el-col>
@@ -163,6 +166,15 @@
           </el-col>
         </el-row>
       </div>
+
+      <SpaceResourceFields
+        ref="spaceResourceFieldsRef"
+        class="mt-[24px]"
+        v-model:cluster-id="subForm.cluster_id"
+        v-model:space-resource-id="subForm.space_resource_id"
+        v-model:cluster-name="subForm.cluster_name"
+        v-model:resource-name="subForm.resource_name"
+      />
     </el-form>
 
     <div class="flex items-center justify-end gap-2 pt-5 bottomBtnGroup">
@@ -184,7 +196,14 @@
 <script setup>
 import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, inject, computed, watch } from "vue";
+import { ElMessage } from "element-plus";
 import useFetchApi from "../../../packs/useFetchApi";
+import SpaceResourceFields from "../dataAcquisition/dataSourceManagement/SpaceResourceFields.vue";
+import TaskNamespaceFields from "../shared/TaskNamespaceFields.vue";
+import {
+  applyNamespaceFromLoaded,
+  guardNamespaceBeforeSubmit,
+} from "../../../packs/useDataflowNamespaces.js";
 import { convertUtcToLocalTime } from "../../../packs/datetimeUtils";
 import useUserStore from '../../../stores/UserStore.js'
 import { useI18n } from "vue-i18n";
@@ -196,23 +215,45 @@ const formLoading = ref(false);
 
 const userStore = useUserStore()
 
-const templateId = computed(() => route.query.templateId)
+const templateId = computed(() => route.query.templateId);
+
+const ownerPathOptions = ref([]);
+const taskNamespaceFieldsRef = ref(null);
+
+const onNamespacesLoaded = (payload) => {
+  applyNamespaceFromLoaded(subForm, payload);
+  ownerPathOptions.value = payload?.ownerPathOptions || [];
+  if (!subForm.value.owner && ownerPathOptions.value.length) {
+    subForm.value.owner = ownerPathOptions.value[0];
+    getSelListData(true);
+  }
+};
 
 const ruleFormRef = ref(null);
-const subForm = inject("subForm", ref({ 
-  project_name: '',
-  dataset_path: '',
-  export_path: '',
-  text_keys: 'text',
-  owner: '',
-  repo_id: route.query.datasetPath || '',
-  branch: '',
-  name: route.query.templateId ? route.query.templateId * 1 : 0,
-  type: '',
-  // selToolIndex: 0,
-  process: [],
-  dslText: ""
-}))
+const spaceResourceFieldsRef = ref(null);
+const subForm = inject(
+  "subForm",
+  ref({
+    project_name: "",
+    dataset_path: "",
+    export_path: "",
+    text_keys: "text",
+    owner: "",
+    repo_id: route.query.datasetPath || "",
+    branch: "",
+    name: route.query.templateId ? route.query.templateId * 1 : 0,
+    type: "",
+    process: [],
+    dslText: "",
+    namespace_type: "personal",
+    namespace_uuid: "",
+    cluster_id: "",
+    cluster_name: "",
+    space_resource_id: "",
+    resource_name: "",
+    job_source: "pipeline",
+  })
+);
 
 const step = inject("step");
 const rules = ref({
@@ -245,6 +286,21 @@ const rules = ref({
       )}`,
       trigger: 'change'
     }
+  ],
+  namespace_uuid: [
+    {
+      validator: (rule, value, callback) => {
+        const check = guardNamespaceBeforeSubmit(subForm, t, {
+          namespacesLoading: taskNamespaceFieldsRef.value?.namespacesLoading,
+        });
+        if (!check.ok) {
+          callback(new Error(check.message));
+        } else {
+          callback();
+        }
+      },
+      trigger: ["change", "blur"],
+    },
   ],
   text_keys: [
     {
@@ -347,17 +403,11 @@ const updateOwner = () => {
   }
 }
 
-const namespaces = () => {
-  let namespaces = userStore.orgs.map((org) => org.path)
-  namespaces.unshift(userStore.username)
-  return namespaces
-}
-
 const getSelListData = async (type) => {
   let url = `/user/${subForm.value.owner}/datasets?per=50&page=1`
-  if (subForm.value.owner !== userStore.username) {
-    url = `/organization/${subForm.value.owner}/datasets?current_user=${userStore.username}&per=50&page=1`
-  }
+  // if (subForm.value.owner !== userStore.username) {
+  //   url = `/organization/${subForm.value.owner}/datasets?current_user=${userStore.username}&per=50&page=1`
+  // }
   const { data } = await useFetchApi(url).get().json()
   if (data.value && data.value.data) {
     dataSourceList.value = data.value.data
@@ -371,9 +421,33 @@ const getSelListData = async (type) => {
 }
 
 const submit = async () => {
+  const nsCheck = guardNamespaceBeforeSubmit(subForm, t, {
+    namespacesLoading: taskNamespaceFieldsRef.value?.namespacesLoading,
+  });
+  if (!nsCheck.ok) {
+    ElMessage.error(nsCheck.message);
+    return;
+  }
+  if (!subForm.value.cluster_id) {
+    ElMessage.error(
+      t("all.pleaseSelect", { value: t("dataPipelines.selectRegion") })
+    );
+    return;
+  }
+  if (
+    subForm.value.space_resource_id === "" ||
+    subForm.value.space_resource_id == null
+  ) {
+    ElMessage.error(
+      t("all.pleaseSelect", { value: t("dataPipelines.spaceCloudResources") })
+    );
+    return;
+  }
   ruleFormRef.value.validate(async (valid, fields) => {
     if (valid) {
-      // formLoading.value = true;
+      const spaceNames =
+        spaceResourceFieldsRef.value?.resolveSelectionNames?.() ?? {};
+      Object.assign(subForm.value, spaceNames);
       step.value = 2;
     }
   });
@@ -384,6 +458,19 @@ const geback = () => {
 };
 </script>
 <style lang="less" scoped>
+/** 任务所属：个人 / 组织各占一行 */
+.task-scope-radio-group {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 12px;
+}
+.task-scope-radio-group :deep(.el-radio) {
+  margin-right: 0;
+  height: auto;
+  align-items: center;
+}
+
 :deep(.settingsTableBtn) {
   .el-button {
     padding: 0 !important;

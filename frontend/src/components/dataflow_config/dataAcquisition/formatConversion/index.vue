@@ -132,6 +132,29 @@
               </div>
             </template>
           </el-table-column>
+          <el-table-column
+            prop="cluster_name"
+            align="center"
+            :label="t('dataPipelines.region')"
+            width="140"
+          >
+            <template #default="scope">
+              <div>{{ displayClusterName(scope.row) }}</div>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="resource_name"
+            align="center"
+            :label="t('dataPipelines.spaceCloudResources')"
+            min-width="200"
+          >
+            <template #default="scope">
+              <div
+                class="truncate"
+                :title="displayResourceName(scope.row)"
+              >{{ displayResourceName(scope.row) }}</div>
+            </template>
+          </el-table-column>
           
           <el-table-column
             prop="created_at"
@@ -142,7 +165,7 @@
 
           <el-table-column
             :label="t('dataPipelines.operations')"
-            :min-width="`${cookies.get('locale') === 'en' ? 330 : 270}`"
+            :min-width="`${cookies.get('locale') === 'en' ? 320 : 260}`"
             align="center"
             fixed="right"
           >
@@ -155,7 +178,7 @@
                   >{{ t("dataPipelines.details") }}
                 </el-button>
                 <el-button
-                  v-if="scope.row.task_status !== 0 || scope.row.task_status !== 1"
+                  v-if="scope.row.task_status !== 0 && scope.row.task_status !== 1"
                   disabled
                   type="text"
                   class="flex items-center justify-start cursor-pointer"
@@ -180,10 +203,11 @@
                 <el-button
                   type="text"
                   class="flex items-center justify-start cursor-pointer"
-                  @click="getLog(scope.row.task_uid)"
+                  @click="getLog(scope.row)"
                   >{{ t("dataPipelines.log") }}
                 </el-button>
                 <el-popconfirm
+                  v-if="scope.row.can_delete"
                   :title="`${t('dataPipelines.deleteConfirm')}?`"
                   :confirm-button-text="t('dataPipelines.confirm')"
                   :cancel-button-text="t('dataPipelines.cancel')"
@@ -237,7 +261,7 @@
     >
       <DataSourceInfo />
       <template #footer>
-        <div class="dialog-footer">
+        <div class="dialog-footer flex justify-end items-center gap-3">
           <CsgButton
             class="btn btn-secondary-gray btn-md whitespace-nowrap"
             @click="dataSourceDetailsVisible = false"
@@ -254,6 +278,10 @@ import { useRouter } from "vue-router";
 import { ref, reactive, onMounted, provide } from "vue";
 import { ElMessage, ElLoading } from "element-plus";
 import useFetchApi from "@/packs/useFetchApi";
+import {
+  resolveCsghubLogParamsFromTask,
+  describeCsghubLogParamsGap,
+} from "@/packs/csghubDataflowLogs";
 import { useI18n } from "vue-i18n";
 import DataSourceInfo from "./components/dataSourceInfo.vue";
 const router = useRouter();
@@ -428,7 +456,7 @@ const getDetail = async (row) => {
     background: "rgba(0, 0, 0, 0.7)",
   });
   const { data } = await useFetchApi(
-    `/dataflow/formatify/formatify/get/${row.id}`
+    `/dataflow/formatify/formatify/get/${row.id}?sync_status=true`
   )
     .get()
     .json();
@@ -471,20 +499,24 @@ const handleTerminate = async (id) => {
   }
 };
 /**
- * 查看日志
- * @param task_id 任务id
+ * 查看主任务日志（直连 CSGHub，与数据采集任务一致）
  */
-const getLog = async (task_uid) => {
+const getLog = (task) => {
+  const { namespaceUuid, jobId } = resolveCsghubLogParamsFromTask(task);
+  if (!namespaceUuid || !jobId) {
+    const missing = describeCsghubLogParamsGap({ namespaceUuid, jobId });
+    ElMessage.error(`任务未提交到 CSGHub，无法查看日志（缺少：${missing.join("、")}）`);
+    return;
+  }
   router.push({
     path: "/datapipelines/viewLog",
     query: {
-      task_uid: task_uid,
       type: "formatity",
+      namespace_uuid: namespaceUuid,
+      csghub_job_id: jobId,
+      task_uid: task.task_uid,
     },
   });
-  // let url = `/dataflow/task_log/list?task_uid=${task_uid}&type=datasource`;
-  // const { data } = await useFetchApi(url).get().json();
-  // console.log("日志：", data);
 };
 
 /**
@@ -514,6 +546,22 @@ const handleDelete = async (id) => {
  */
 const goToNewTask = (path) => {
   router.push(path);
+};
+
+/** 列表展示区域：优先名称，历史数据回退 cluster_id */
+const displayClusterName = (row) => {
+  const name = row?.cluster_name;
+  if (name != null && String(name).trim() !== "") return String(name).trim();
+  const cid = row?.cluster_id;
+  return cid != null && String(cid).trim() !== "" ? String(cid) : "-";
+};
+
+/** 列表展示云资源：优先名称，历史数据回退 resource_id */
+const displayResourceName = (row) => {
+  const name = row?.resource_name;
+  if (name != null && String(name).trim() !== "") return String(name).trim();
+  const rid = row?.resource_id;
+  return rid != null && String(rid).trim() !== "" ? String(rid) : "-";
 };
 </script>
 <style lang="less" scoped>
