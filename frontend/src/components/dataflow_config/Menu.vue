@@ -265,7 +265,6 @@ const jump = async () => {
   const { data } = await useFetchApi(`/dataflow/studio/jump-to-studio`, {
     headers: {
       "Content-Type": "application/json",
-      user_name: `${userStore.username}`,
       // 'cookie': `user_token=${cookies.get("user_token")};`,
     },
     body: JSON.stringify({}),
