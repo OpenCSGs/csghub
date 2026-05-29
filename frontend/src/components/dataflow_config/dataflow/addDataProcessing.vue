@@ -43,6 +43,7 @@ const form = ref({
   cluster_name: "",
   space_resource_id: "",
   resource_name: "",
+  storage_size: "4Gi",
 }); // 表单数据（含任务所属、区域与空间云资源，供 Step1/Step2 与创建接口使用）
 const step = ref(1); // 表单步骤
 

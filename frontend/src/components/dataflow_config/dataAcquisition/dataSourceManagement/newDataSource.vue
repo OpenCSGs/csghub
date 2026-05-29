@@ -522,6 +522,7 @@
         v-model:space-resource-id="formInline.space_resource_id"
         v-model:resource-name="formInline.resource_name"
       />
+      <StorageSizeField v-model="formInline.storage_size" />
       <!-- E 选择区域 / 空间云资源 -->
 
       <!-- <div v-else class="sql-select">
@@ -691,6 +692,7 @@ import enOps from "../../../../locales/en_js/operator_en.json";
 import FieldMapping from "./components/fieldMapping.vue";
 import ConnectAttribute from "./components/connectAttribute.vue";
 import SpaceResourceFields from "./SpaceResourceFields.vue";
+import StorageSizeField from "./StorageSizeField.vue";
 import TaskNamespaceFields from "../../shared/TaskNamespaceFields.vue";
 import {
   applyNamespaceFromLoaded,
@@ -866,6 +868,7 @@ const formInline = reactive({
   cluster_name: "",
   space_resource_id: "",
   resource_name: "",
+  storage_size: "4Gi",
   extra_config: {
     csg_hub_dataset_name: "",
   },

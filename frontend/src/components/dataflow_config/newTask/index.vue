@@ -253,6 +253,7 @@
             v-model:cluster-name="form.cluster_name"
             v-model:resource-name="form.resource_name"
           />
+          <StorageSizeField v-model="form.storage_size" />
         </template>
 
         <template v-else>
@@ -744,6 +745,7 @@
   import ToolParamField from './ToolParamField.vue'
   import TaskNamespaceFields from '../shared/TaskNamespaceFields.vue'
   import SpaceResourceFields from '../dataAcquisition/dataSourceManagement/SpaceResourceFields.vue'
+  import StorageSizeField from '../dataAcquisition/dataSourceManagement/StorageSizeField.vue'
   import {
     applyNamespaceFromLoaded,
     buildTaskCreatePayload,
@@ -787,6 +789,7 @@
     cluster_name: '',
     space_resource_id: '',
     resource_name: '',
+    storage_size: '4Gi',
   })
   const ruleFormRef = ref(null)
   const spaceResourceFieldsRef = ref(null)

@@ -1,6 +1,7 @@
 import { ref, computed } from "vue";
 import useFetchApi from "@/packs/useFetchApi";
 import { normalizeSpaceResourcePayload } from "@/packs/spaceResourcePayload.js";
+import { resolveStorageSizePayload } from "@/packs/storageSize.js";
 
 export const NAMESPACE_TYPE_PERSONAL = "personal";
 export const NAMESPACE_TYPE_ORGANIZATION = "organization";
@@ -147,7 +148,7 @@ export function buildTaskCreatePayload(form) {
   const namespaceFields = resolveNamespacePayload(base);
   delete base.task_scope;
   delete base.organization_id;
-  return { ...base, ...namespaceFields };
+  return { ...base, ...namespaceFields, ...resolveStorageSizePayload(base) };
 }
 
 export function useDataflowNamespaces() {

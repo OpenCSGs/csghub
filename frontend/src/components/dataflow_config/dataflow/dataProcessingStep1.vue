@@ -175,6 +175,7 @@
         v-model:cluster-name="subForm.cluster_name"
         v-model:resource-name="subForm.resource_name"
       />
+      <StorageSizeField v-model="subForm.storage_size" />
     </el-form>
 
     <div class="flex items-center justify-end gap-2 pt-5 bottomBtnGroup">
@@ -199,6 +200,7 @@ import { ref, onMounted, inject, computed, watch } from "vue";
 import { ElMessage } from "element-plus";
 import useFetchApi from "../../../packs/useFetchApi";
 import SpaceResourceFields from "../dataAcquisition/dataSourceManagement/SpaceResourceFields.vue";
+import StorageSizeField from "../dataAcquisition/dataSourceManagement/StorageSizeField.vue";
 import TaskNamespaceFields from "../shared/TaskNamespaceFields.vue";
 import {
   applyNamespaceFromLoaded,
@@ -251,6 +253,7 @@ const subForm = inject(
     cluster_name: "",
     space_resource_id: "",
     resource_name: "",
+    storage_size: "4Gi",
     job_source: "pipeline",
   })
 );

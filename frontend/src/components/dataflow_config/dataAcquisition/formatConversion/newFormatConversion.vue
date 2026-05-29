@@ -282,6 +282,7 @@
       v-model:cluster-name="form.cluster_name"
       v-model:resource-name="form.resource_name"
     />
+    <StorageSizeField v-model="form.storage_size" />
 
     <div class="flex items-center justify-end gap-2 pt-5 bottomBtnGroup">
       <CsgButton
@@ -307,6 +308,7 @@ import useFetchApi from "@/packs/useFetchApi";
 import useUserStore from "@/stores/UserStore";
 import { useI18n } from "vue-i18n";
 import SpaceResourceFields from "../dataSourceManagement/SpaceResourceFields.vue";
+import StorageSizeField from "../dataSourceManagement/StorageSizeField.vue";
 import TaskNamespaceFields from "../../shared/TaskNamespaceFields.vue";
 import {
   applyNamespaceFromLoaded,
@@ -337,6 +339,7 @@ const form = ref({
   space_resource_id: "",
   cluster_name: "",
   resource_name: "",
+  storage_size: "4Gi",
 });
 // 表单校验
 const formData = ref();

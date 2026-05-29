@@ -307,6 +307,7 @@
         v-model:resource-name="executeResourceName"
         compact
       />
+      <StorageSizeField v-model="executeStorageSize" />
       <p class="execute-dialog-section-label">
         {{ t("dataPipelines.executionTime") }}
       </p>
@@ -356,6 +357,8 @@ import useFetchApi from "../../../../packs/useFetchApi";
 import { useI18n } from "vue-i18n";
 import DataSourceInfo from "./components/dataSourceInfo.vue";
 import SpaceResourceFields from "./SpaceResourceFields.vue";
+import StorageSizeField from "./StorageSizeField.vue";
+import { normalizeStorageSize } from "../../../../packs/storageSize.js";
 import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 const router = useRouter();
@@ -393,6 +396,7 @@ const executeClusterId = ref("");
 const executeClusterName = ref("");
 const executeSpaceResourceId = ref("");
 const executeResourceName = ref("");
+const executeStorageSize = ref("4Gi");
 const executeSpaceResourceFieldsRef = ref(null);
 
 onMounted(() => {
@@ -524,6 +528,7 @@ const openExecuteDialog = async (id) => {
   executeClusterName.value = "";
   executeSpaceResourceId.value = "";
   executeResourceName.value = "";
+  executeStorageSize.value = "4Gi";
   task_run_time.value = null;
   is_run.value = true;
   centerDialogVisible.value = true;
@@ -557,6 +562,7 @@ const handleExecute = async (id) => {
     cluster_name: spaceNames.cluster_name || executeClusterName.value,
     resource_id: executeSpaceResourceId.value,
     resource_name: spaceNames.resource_name || executeResourceName.value,
+    storage_size: normalizeStorageSize(executeStorageSize.value),
   };
 
   if (!is_run.value) {
