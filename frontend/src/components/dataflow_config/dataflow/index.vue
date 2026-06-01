@@ -165,30 +165,37 @@
                   >{{ t("dataPipelines.log") }}
                 </el-button>
 
+                <!-- 取消按钮：Processing 状态 -->
                 <el-popconfirm
-                  :title="
-                    scope.row.status === 'Processing' ? `${t('dataPipelines.cancelExecute')}?` : `${t('dataPipelines.executeConfirm')}?`
-                    "
+                  v-if="scope.row.status === 'Processing'"
+                  :title="`${t('dataPipelines.cancelExecute')}?`"
                   :confirm-button-text="t('dataPipelines.confirm')"
                   :cancel-button-text="t('dataPipelines.cancel')"
                   width="220px"
-                  @confirm="openExecuteDialog(scope.row.job_id, scope.row.status)"
+                  @confirm="handleCancel(scope.row.job_id)"
                 >
                   <template #reference>
                     <el-button
                       type="text"
-                      :class="[
-                        'flex items-center justify-start cursor-pointer',
-                        scope.row.status === 'Finished' ? 'text-gray-400' : ''
-                      ]"
-                      :disabled="scope.row.status === 'Finished'"
+                      class="flex items-center justify-start cursor-pointer"
                     >
-                      {{
-                        scope.row.status === 'Processing' ? t("dataPipelines.cancel") : t("dataPipelines.execute")
-                      }}
+                      {{ t("dataPipelines.cancel") }}
                     </el-button>
                   </template>
                 </el-popconfirm>
+                <!-- 执行按钮：非 Processing 状态 -->
+                <el-button
+                  v-if="scope.row.status !== 'Processing'"
+                  type="text"
+                  :class="[
+                    'flex items-center justify-start cursor-pointer',
+                    scope.row.status === 'Finished' ? 'text-gray-400' : ''
+                  ]"
+                  :disabled="scope.row.status === 'Finished'"
+                  @click="openExecuteDialog(scope.row)"
+                >
+                  {{ t("dataPipelines.execute") }}
+                </el-button>
 
                 <el-popconfirm
                   v-if="scope.row.can_delete"
@@ -224,6 +231,40 @@
         </div>
       </div>
     </div>
+    <el-dialog
+      v-model="executeDialogVisible"
+      :title="t('dataPipelines.execute')"
+      width="720"
+      align-center
+      @closed="onExecuteDialogClosed"
+    >
+      <SpaceResourceFields
+        ref="executeSpaceResourceFieldsRef"
+        :key="executeDialogKey"
+        v-if="executeDialogVisible"
+        v-model:cluster-id="executeClusterId"
+        v-model:cluster-name="executeClusterName"
+        v-model:space-resource-id="executeSpaceResourceId"
+        v-model:resource-name="executeResourceName"
+        compact
+      />
+      <StorageSizeField v-model="executeStorageSize" />
+      <template #footer>
+        <div class="dialog-footer flex flex-row justify-end items-center gap-3">
+          <CsgButton
+            class="btn btn-secondary-gray btn-md whitespace-nowrap"
+            @click="executeDialogVisible = false"
+            :name="t('dataPipelines.cancel')"
+          />
+          <CsgButton
+            class="btn btn-primary btn-md whitespace-nowrap"
+            :loading="executeSubmitting"
+            :name="t('dataPipelines.sure')"
+            @click="confirmExecute"
+          />
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -237,12 +278,27 @@ import {
   describeCsghubLogParamsGap,
 } from "../../../packs/csghubDataflowLogs";
 import { convertUtcToLocalTime } from "../../../packs/datetimeUtils";
+import { normalizeStorageSize } from "../../../packs/storageSize.js";
 import { useI18n } from "vue-i18n";
+import SpaceResourceFields from "../dataAcquisition/dataSourceManagement/SpaceResourceFields.vue";
+import StorageSizeField from "../dataAcquisition/dataSourceManagement/StorageSizeField.vue";
 
 const { t, locale } = useI18n();
 const tableLoading = ref(false);
 const refreshTimer = ref(null);
 const route = useRoute();
+
+// 执行弹框相关状态
+const executeDialogVisible = ref(false);
+const executeDialogKey = ref(0);
+const executePendingJobId = ref(null);
+const executeClusterId = ref("");
+const executeClusterName = ref("");
+const executeSpaceResourceId = ref("");
+const executeResourceName = ref("");
+const executeStorageSize = ref("4Gi");
+const executeSubmitting = ref(false);
+const executeSpaceResourceFieldsRef = ref(null);
 
 const form = ref({
   searchStr: "",
@@ -342,45 +398,90 @@ const handleSearch = () => {
   getDataFlowListFun();
 };
 
-const openExecuteDialog = async (job_id, status) => {
-  if (status === 'Failed' || status === 'Timeout' || status === 'Finished' || status === 'Queued') {
-    const url = `/dataflow/jobs/job/execute/${job_id}`;
-    const { data } = await useFetchApi(url).post().json();
-    if (data.value.code === 200) {
-      ElMessage({
-        message: t("dataPipelines.taskExecuted"),
-        type: "success",
-        plain: true,
-        grouping: true,
-      })
-      getDataFlowListFun();
-    } else {
-      ElMessage({
-        message: t("dataPipelines.taskExecutionFailed"),
-        type: "error",
-        plain: true,
-        grouping: true,
-      })
-    }
+const openExecuteDialog = (row) => {
+  executePendingJobId.value = row.job_id;
+  executeClusterId.value = "";
+  executeClusterName.value = "";
+  executeSpaceResourceId.value = "";
+  executeResourceName.value = "";
+  executeStorageSize.value = "4Gi";
+  executeDialogKey.value = Date.now();
+  executeDialogVisible.value = true;
+};
+
+const onExecuteDialogClosed = () => {
+  executePendingJobId.value = null;
+};
+
+const confirmExecute = async () => {
+  if (!executeClusterId.value) {
+    return ElMessage.error(
+      t("all.pleaseSelect", { value: t("dataPipelines.selectRegion") })
+    );
+  }
+  if (!executeSpaceResourceId.value) {
+    return ElMessage.error(
+      t("all.pleaseSelect", { value: t("dataPipelines.spaceCloudResources") })
+    );
+  }
+
+  const spaceNames =
+    executeSpaceResourceFieldsRef.value?.resolveSelectionNames?.() ?? {};
+  const params = {
+    cluster_id: executeClusterId.value,
+    cluster_name: spaceNames.cluster_name || executeClusterName.value,
+    resource_id: executeSpaceResourceId.value,
+    resource_name: spaceNames.resource_name || executeResourceName.value,
+    space_resource_id: executeSpaceResourceId.value,
+    storage_size: normalizeStorageSize(executeStorageSize.value),
+  };
+
+  executeSubmitting.value = true;
+  const url = `/dataflow/jobs/job/execute/${executePendingJobId.value}`;
+  const options = {
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(params),
+  };
+  const { data, error } = await useFetchApi(url, options).post().json();
+  executeSubmitting.value = false;
+
+  if (data.value?.code === 200) {
+    ElMessage({
+      message: t("dataPipelines.taskExecuted"),
+      type: "success",
+      plain: true,
+      grouping: true,
+    });
+    executeDialogVisible.value = false;
+    getDataFlowListFun();
   } else {
-    const url = `/dataflow/jobs/stop_pipline_job?job_id=${job_id}`;
-    const { data } = await useFetchApi(url).post().json();
-    if (data.value.code === 200) {
-      ElMessage({
-        message: t("dataPipelines.taskSuccessStop"),
-        type: "success",
-        plain: true,
-        grouping: true,
-      })
-      getDataFlowListFun();
-    } else {
-      ElMessage({
-        message: t("dataPipelines.taskStopFailed"),
-        type: "error",
-        plain: true,
-        grouping: true,
-      })
-    }
+    ElMessage({
+      message: error.value?.msg || data.value?.msg || t("dataPipelines.taskExecutionFailed"),
+      type: "error",
+      plain: true,
+      grouping: true,
+    });
+  }
+};
+
+const handleCancel = async (job_id) => {
+  const url = `/dataflow/jobs/stop_pipline_job?job_id=${job_id}`;
+  const { data } = await useFetchApi(url).post().json();
+  if (data.value.code === 200) {
+    ElMessage({
+      message: t("dataPipelines.taskSuccessStop"),
+      type: "success",
+      plain: true,
+      grouping: true,
+    });
+    getDataFlowListFun();
+  } else {
+    ElMessage({
+      message: t("dataPipelines.taskStopFailed"),
+      type: "error",
+      plain: true,
+      grouping: true,
+    });
   }
 };
 
