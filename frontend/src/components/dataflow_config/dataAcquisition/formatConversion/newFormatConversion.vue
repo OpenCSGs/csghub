@@ -18,6 +18,15 @@
       {{ t("dataPipelines.dataFormatConversion") }}
     </p>
 
+    <el-card shadow="never" class="mt-[20px]">
+      <TaskNamespaceFields
+        ref="taskNamespaceFieldsRef"
+        v-model:namespace-type="form.namespace_type"
+        v-model:namespace-uuid="form.namespace_uuid"
+        @loaded="onNamespacesLoaded"
+      />
+    </el-card>
+
     <p class="text-gray-900 text-2xl font-medium mt-[20px]">
       {{ t("dataPipelines.dataSource") }}
     </p>
@@ -104,7 +113,7 @@
       </el-row>
 
       <p class="text-gray-900 text-2xl font-medium my-4">
-        {{ t("dataPipelines.dataSourceManagement") }}
+        {{ t("dataPipelines.dataProcessingConfiguration") }}
       </p>
       <el-row
         :gutter="20"
@@ -265,6 +274,16 @@
       </el-row>
     </el-form>
 
+    <SpaceResourceFields
+      ref="spaceResourceFieldsRef"
+      class="mt-[24px]"
+      v-model:cluster-id="form.cluster_id"
+      v-model:space-resource-id="form.space_resource_id"
+      v-model:cluster-name="form.cluster_name"
+      v-model:resource-name="form.resource_name"
+    />
+    <StorageSizeField v-model="form.storage_size" />
+
     <div class="flex items-center justify-end gap-2 pt-5 bottomBtnGroup">
       <CsgButton
         class="btn btn-primary btn-md whitespace-nowrap mr-[5px]"
@@ -288,6 +307,14 @@ import { ElMessage, ElLoading } from "element-plus";
 import useFetchApi from "@/packs/useFetchApi";
 import useUserStore from "@/stores/UserStore";
 import { useI18n } from "vue-i18n";
+import SpaceResourceFields from "../dataSourceManagement/SpaceResourceFields.vue";
+import StorageSizeField from "../dataSourceManagement/StorageSizeField.vue";
+import TaskNamespaceFields from "../../shared/TaskNamespaceFields.vue";
+import {
+  applyNamespaceFromLoaded,
+  buildTaskCreatePayload,
+  guardNamespaceBeforeSubmit,
+} from "@/packs/useDataflowNamespaces.js";
 import { useCookies } from "vue3-cookies";
 const { cookies } = useCookies();
 
@@ -296,11 +323,23 @@ const route = useRoute();
 const { t, locale } = useI18n();
 const formLoading = ref(false);
 const userStore = useUserStore();
+const spaceResourceFieldsRef = ref(null);
+const taskNamespaceFieldsRef = ref(null);
+
+const onNamespacesLoaded = (payload) => {
+  applyNamespaceFromLoaded(form, payload);
+};
+
 // 表单
 const form = ref({
   skip_meta: false,
-  // from_format_types: null,
-  // to_data_type: null,
+  namespace_type: "personal",
+  namespace_uuid: "",
+  cluster_id: "",
+  space_resource_id: "",
+  cluster_name: "",
+  resource_name: "",
+  storage_size: "4Gi",
 });
 // 表单校验
 const formData = ref();
@@ -539,16 +578,38 @@ const getFormatTypeList = async () => {
 };
 
 const submit = async () => {
+  const nsCheck = guardNamespaceBeforeSubmit(form, t, {
+    namespacesLoading: taskNamespaceFieldsRef.value?.namespacesLoading,
+  });
+  if (!nsCheck.ok) {
+    ElMessage.error(nsCheck.message);
+    return;
+  }
+  if (!form.value.cluster_id) {
+    ElMessage.error(
+      t("all.pleaseSelect", { value: t("dataPipelines.selectRegion") })
+    );
+    return;
+  }
+  if (
+    form.value.space_resource_id === "" ||
+    form.value.space_resource_id == null
+  ) {
+    ElMessage.error(
+      t("all.pleaseSelect", { value: t("dataPipelines.spaceCloudResources") })
+    );
+    return;
+  }
   formData.value.validate(async (valid, fields) => {
     console.log(valid, "validvalidvalidvalid");
     if (valid) {
       // formLoading.value = true;
-      console.log(form.value, "-----------------------------");
-      let params = {
+      const spaceNames =
+        spaceResourceFieldsRef.value?.resolveSelectionNames?.() ?? {};
+      const params = buildTaskCreatePayload({
         ...form.value,
-      };
-
-      console.log(params, "paramsparamsparamsparamsparamsparamsparamsparams");
+        ...spaceNames,
+      });
 
       const options = {
         headers: {
@@ -582,6 +643,19 @@ const submit = async () => {
 };
 </script>
 <style lang="less" scoped>
+/** 任务所属：个人 / 组织各占一行 */
+.task-scope-radio-group {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 12px;
+}
+.task-scope-radio-group :deep(.el-radio) {
+  margin-right: 0;
+  height: auto;
+  align-items: center;
+}
+
 :deep(.settingsTableBtn) {
   .el-button {
     padding: 0 !important;

@@ -218,10 +218,8 @@
             @click="drawerWidth === '410px' ? drawerWidth = '1200px' : drawerWidth = '410px'"
           />
         </el-tooltip>
-        <div class="resultBox">
-          <pre v-for="(log, index) in logData" :key="index" class="text-gray-50 text-base font-normal"
-            >{{ log }}
-          </pre>
+        <div class="resultBox log-scroll-box">
+          <pre ref="operatorLogBoxRef" class="operator-log-pre">{{ operatorLogText }}</pre>
         </div>
       </div>
     </el-drawer>
@@ -229,11 +227,18 @@
 </template>
   
 <script setup>
-  import { ref, onMounted, onUnmounted, computed, defineProps, defineExpose, watch } from 'vue'
+  import { ref, onMounted, onUnmounted, computed, defineProps, defineExpose, watch, inject, nextTick } from 'vue'
   import * as G6 from '@antv/g6'
   import { ElMessage } from 'element-plus'
-  import useUserStore from "@/stores/UserStore";
+  import { useCookies } from 'vue3-cookies'
   import useFetchApi from "@/packs/useFetchApi";
+  import refreshJWT from "@/packs/refreshJWT";
+  import {
+    buildCsghubDataflowLogsUrl,
+    normalizePayloadLineBreaks,
+    streamCsghubDataflowLogs,
+    resolveCsghubLogParamsFromTask,
+  } from "@/packs/csghubDataflowLogs";
   import DynamicForm from './components/dynamicForm.vue'
   import jsYaml from 'js-yaml';
   import zhOps from "../../../locales/zh_js/operator_zh.json";
@@ -242,13 +247,13 @@
   import { useI18n } from "vue-i18n";
   import MarkdownIt from "markdown-it";
   const { t, locale } = useI18n();
+  const { cookies } = useCookies();
+  const csghubServer = inject("csghubServer");
   const operatorI18n = {
     zh: zhOps,
     en: enOps,
     zhHant: zhHantOps
   };
-  const userStore = useUserStore();
-  const origin = window.location.origin + '/'; 
   const configsDrawer = ref(false)
   const drawerWidth = ref('410px')
   const dynamicFormRefs = ref({})
@@ -284,8 +289,8 @@
     },
   ]
 
-  const handleLogLevelChange = (value) => {
-    getPiplineJobLog()
+  const handleLogLevelChange = () => {
+    loadOperatorCsghubLog()
   }
   
   const props = defineProps({
@@ -299,6 +304,10 @@
     jobOperatorsStatus: {
       type: Array,
       default: () => ([])
+    },
+    jobLogContext: {
+      type: Object,
+      default: () => ({})
     },
     form: {
       type: Object,
@@ -348,7 +357,7 @@
   // 查询当前用户所在的组织
   const getUserInfo = async () => {
     try {
-      const { data } = await useFetchApi(`/user/${userStore.username}`).get().json()
+      const { data } = await useFetchApi(`/user/root`).get().json()
       const { orgs } = data.value.data
       if (orgs) {
          const orgPaths = orgs.map(org => org.path).join(',') || ''
@@ -490,6 +499,133 @@
 
   const logData = ref([])
   const operatorName = ref('')
+  const operatorLogBoxRef = ref(null)
+  let logAbortController = null
+
+  const operatorLogText = computed(() =>
+    normalizePayloadLineBreaks(
+      (Array.isArray(logData.value) ? logData.value : []).join("\n")
+    )
+  )
+
+  const findOperatorStatus = (model) => {
+    const list = props.jobOperatorsStatus || []
+    if (!model || !list.length) {
+      return {}
+    }
+    const name = model.operator_name
+    const idx = model.index
+    return (
+      list.find(
+        (s) => s.operator_name === name && s.operator_index === idx
+      ) ||
+      list.find((s) => s.operator_name === name) ||
+      list.find((s) => s.operator_index === idx) ||
+      list[idx] ||
+      {}
+    )
+  }
+
+  const abortLogStream = () => {
+    if (logAbortController) {
+      logAbortController.abort()
+      logAbortController = null
+    }
+  }
+
+  const scrollLogToTop = () => {
+    nextTick(() => {
+      const el = operatorLogBoxRef.value
+      if (el) {
+        el.scrollTop = 0
+      }
+    })
+  }
+
+  const ensureJobLogParams = async () => {
+    let task = { ...props.jobLogContext, job_id: props.infoId }
+    let { namespaceUuid, jobId } = resolveCsghubLogParamsFromTask(task)
+    if ((!namespaceUuid || !jobId) && props.infoId) {
+      try {
+        const { data } = await useFetchApi(
+          `/dataflow/jobs/log_context/${props.infoId}`
+        )
+          .get()
+          .json()
+        if (data.value?.code === 200 && data.value?.data) {
+          task = { ...task, ...data.value.data }
+          ;({ namespaceUuid, jobId } = resolveCsghubLogParamsFromTask(task))
+        }
+      } catch (error) {
+        console.warn("ensureJobLogParams failed", error)
+      }
+    }
+    return { namespaceUuid, jobId }
+  }
+
+  const fetchCsghubOperatorLogs = async ({
+    namespaceUuid,
+    jobId,
+    dagTaskId,
+  }) => {
+    await refreshJWT()
+    const jwtToken = cookies.get("user_token")
+    const url = buildCsghubDataflowLogsUrl(csghubServer, {
+      namespaceUuid,
+      jobId,
+      dagTaskId,
+      stream: true,
+    })
+
+    logAbortController = new AbortController()
+    await streamCsghubDataflowLogs(url, {
+      authorization: jwtToken ? `Bearer ${jwtToken}` : undefined,
+      userToken: jwtToken,
+      signal: logAbortController.signal,
+      onLine: (line, { append = false } = {}) => {
+        if (append && logData.value.length > 0) {
+          logData.value[logData.value.length - 1] += line
+        } else {
+          logData.value.push(line)
+        }
+      },
+    })
+  }
+
+  const loadOperatorCsghubLog = async () => {
+    abortLogStream()
+    logData.value = []
+
+    const model = selectedNode.value
+    if (!model) {
+      return
+    }
+
+    const { namespaceUuid, jobId } = await ensureJobLogParams()
+    const opStatus = findOperatorStatus(model)
+    const dagTaskId = opStatus.dag_task_id || opStatus.task_id
+
+    if (!namespaceUuid || !jobId) {
+      logData.value = ["任务未提交到 CSGHub，无法查看算子日志"]
+      scrollLogToTop()
+      return
+    }
+    if (!dagTaskId) {
+      logData.value = ["未找到该算子的子任务 ID，无法查看日志"]
+      scrollLogToTop()
+      return
+    }
+
+    try {
+      await fetchCsghubOperatorLogs({ namespaceUuid, jobId, dagTaskId })
+    } catch (error) {
+      if (error?.name === "AbortError") {
+        return
+      }
+      logData.value = [error?.message || "获取算子日志失败"]
+    }
+    scrollLogToTop()
+  }
 
   // 添加一个标志位跟踪图是否已初始化
   const isGraphInitialized = ref(false)
@@ -664,7 +800,7 @@
         // 查看详情
         if (props.viewMode === 'view') {
           // 节点状态
-          const jobOperatorsInfo = props.jobOperatorsStatus[cfg.index] || {}
+          const jobOperatorsInfo = findOperatorStatus(cfg)
           const status_icon = `/images/task_status_${
                                 jobOperatorsInfo.status === 'success' ? 2 : 
                                 jobOperatorsInfo.status === 'error' ? 3 : 
@@ -1657,7 +1793,7 @@
       const { operator_name } = evt.item.getModel()
       operatorName.value = operator_name
       if (props.viewMode === 'view') {
-        await getPiplineJobLog()
+        await loadOperatorCsghubLog()
       }
     })
     
@@ -2494,19 +2630,22 @@
     }
   }
 
-  // 算子日志
+  // 算子日志（CSGHub dag_task_id）
   const getPiplineJobLog = async () => {
-    const param = `ops_name=${operatorName.value}${logLevelval.value === 'all' ? '' : '&level=' + logLevelval.value}&page=1&page_size=1000000`
-    const url = `dataflow/jobs/pipline_job_log/${props.infoId}?${param}`
-    const { data } = await useFetchApi(url).get().json()
-    if (data.value.code == 200) {
-      logData.value = data.value.data.data.map((item) => {
-        return `${formatTimestamp(item.create_at)} | ${item.level} | ${
-          item.content
-        }`;
-      });
-    }
+    await loadOperatorCsghubLog()
   }
+
+  watch(tabsValue, (val) => {
+    if (val === "log" && props.viewMode === "view" && selectedNode.value) {
+      loadOperatorCsghubLog()
+    }
+  })
+
+  watch(configsDrawer, (open) => {
+    if (!open) {
+      abortLogStream()
+    }
+  })
 
   const formatTimestamp = (timestamp) => {
     // 检查时间戳是否为 null、undefined 或无效值
@@ -2571,6 +2710,7 @@
   })
   
   onUnmounted(() => {
+    abortLogStream()
     document.removeEventListener('keydown', handleKeyDown)
     if (resizeObserver) {
       resizeObserver.disconnect() // 清理监听
@@ -2848,12 +2988,45 @@
     background: #0c111d;
     padding: 24px;
     height: calc(100vh - 230px);
-    overflow-y: auto;
+    overflow: scroll;
     color: #f9fafb;
-    font-family: 'Roboto Mono';
+    font-family: 'Roboto Mono', monospace;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
+    line-height: 24px;
+  }
+
+  .operator-log-pre {
+    margin: 0;
+    white-space: pre;
+    word-wrap: normal;
+    overflow-wrap: normal;
+    color: inherit;
+    font: inherit;
+  }
+
+  .log-scroll-box {
+    scrollbar-gutter: stable both-edges;
+    scrollbar-width: thin;
+    scrollbar-color: #667085 #1d2939;
+
+    &::-webkit-scrollbar {
+      opacity: 1 !important;
+      width: 12px;
+      height: 12px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #1d2939;
+      border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #667085;
+      border-radius: 6px;
+      border: 2px solid #1d2939;
+    }
   }
 
   .expand-but {

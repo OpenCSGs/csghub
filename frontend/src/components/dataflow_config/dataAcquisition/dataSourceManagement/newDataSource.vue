@@ -74,6 +74,19 @@
       shadow="never"
       class="mt-[16px]"
     >
+      <TaskNamespaceFields
+        ref="taskNamespaceFieldsRef"
+        v-model:namespace-type="formInline.namespace_type"
+        v-model:namespace-uuid="formInline.namespace_uuid"
+        @loaded="onNamespacesLoaded"
+      />
+    </el-card>
+
+    <el-card
+      v-if="typeVal === 'Mysql' || typeVal === 'Mongodb' || typeVal === 'Hive'"
+      shadow="never"
+      class="mt-[16px]"
+    >
       <p class="text-gray-900 text-2xl font-medium">
         {{ t("dataPipelines.dataConnectionConfiguration") }}
       </p>
@@ -443,25 +456,6 @@
         <!-- E 选择集合 -->
       </div>
 
-      <!-- <div v-else class="sql-select">
-        <p class="text-gray-500 text-xs mb-[12px]">SQL查询语句</p>
-        <el-input
-          v-model="sqlValue"
-          :rows="6"
-          type="textarea"
-          placeholder="输入SQL查询语句..."
-        />
-        <div class="text-right mt-[12px]">
-          <CsgButton
-            class="btn btn-primary btn-sm whitespace-nowrap"
-            name="测试SQL"
-            :isElementIcon="true"
-            svgName="Check"
-            @click="testSql"
-          />
-        </div>
-      </div> -->
-
       <!-- S 数据流向 -->
       <el-form
         label-position="top"
@@ -518,6 +512,37 @@
         </el-row>
       </el-form>
       <!-- E 数据流向 -->
+
+      <!-- S 选择区域 / 空间云资源 -->
+      <SpaceResourceFields
+        ref="spaceResourceFieldsRef"
+        class="mt-[24px]"
+        v-model:cluster-id="formInline.cluster_id"
+        v-model:cluster-name="formInline.cluster_name"
+        v-model:space-resource-id="formInline.space_resource_id"
+        v-model:resource-name="formInline.resource_name"
+      />
+      <StorageSizeField v-model="formInline.storage_size" />
+      <!-- E 选择区域 / 空间云资源 -->
+
+      <!-- <div v-else class="sql-select">
+        <p class="text-gray-500 text-xs mb-[12px]">SQL查询语句</p>
+        <el-input
+          v-model="sqlValue"
+          :rows="6"
+          type="textarea"
+          placeholder="输入SQL查询语句..."
+        />
+        <div class="text-right mt-[12px]">
+          <CsgButton
+            class="btn btn-primary btn-sm whitespace-nowrap"
+            name="测试SQL"
+            :isElementIcon="true"
+            svgName="Check"
+            @click="testSql"
+          />
+        </div>
+      </div> -->
     </el-card>
 
     <el-card v-if="typeVal === 'File'" shadow="never" class="mt-[16px]">
@@ -658,7 +683,7 @@
 
 <script setup>
 import { useRouter, useRoute } from "vue-router";
-import { ref, onMounted, watch, reactive, computed } from "vue";
+import { ref, onMounted, reactive, computed } from "vue";
 import { ElMessage, ElLoading } from "element-plus";
 import useUserStore from "@/stores/UserStore";
 import useFetchApi from "../../../../packs/useFetchApi";
@@ -666,6 +691,15 @@ import zhOps from "../../../../locales/zh_js/operator_zh.json";
 import enOps from "../../../../locales/en_js/operator_en.json";
 import FieldMapping from "./components/fieldMapping.vue";
 import ConnectAttribute from "./components/connectAttribute.vue";
+import SpaceResourceFields from "./SpaceResourceFields.vue";
+import StorageSizeField from "./StorageSizeField.vue";
+import TaskNamespaceFields from "../../shared/TaskNamespaceFields.vue";
+import {
+  applyNamespaceFromLoaded,
+  buildTaskCreatePayload,
+  guardNamespaceBeforeSubmit,
+} from "@/packs/useDataflowNamespaces.js";
+import { normalizeSpaceResourcePayload } from "@/packs/spaceResourcePayload.js";
 import Sortable from "sortablejs";
 import { useI18n } from "vue-i18n";
 import { useCookies } from "vue3-cookies";
@@ -679,6 +713,12 @@ const dataList = ref([]);
 const dataSourceList = ref([]);
 const templateList = ref([]);
 const subLoading = ref(false);
+const spaceResourceFieldsRef = ref(null);
+const taskNamespaceFieldsRef = ref(null);
+
+const onNamespacesLoaded = (payload) => {
+  applyNamespaceFromLoaded(formInline, payload);
+};
 const dataflowOps = {
   zh: zhOps,
   en: enOps,
@@ -822,6 +862,13 @@ const selectedFields = ref([]);
 
 // =======================================================
 const formInline = reactive({
+  namespace_type: "personal",
+  namespace_uuid: "",
+  cluster_id: "",
+  cluster_name: "",
+  space_resource_id: "",
+  resource_name: "",
+  storage_size: "4Gi",
   extra_config: {
     csg_hub_dataset_name: "",
   },
@@ -1171,15 +1218,50 @@ const handleSelectMiddleTable = (table) => {
 };
 
 const submit = (type) => {
+  const needsTaskScopeAndRegion =
+    typeVal.value === "Mysql" ||
+    typeVal.value === "Mongodb" ||
+    typeVal.value === "Hive";
+
+  if (needsTaskScopeAndRegion) {
+    const nsCheck = guardNamespaceBeforeSubmit(formInline, t, {
+      namespacesLoading: taskNamespaceFieldsRef.value?.namespacesLoading,
+    });
+    if (!nsCheck.ok) {
+      ElMessage.error(nsCheck.message);
+      return;
+    }
+    if (!formInline.cluster_id) {
+      ElMessage.error(
+        t("all.pleaseSelect", { value: t("dataPipelines.selectRegion") })
+      );
+      return;
+    }
+    if (
+      formInline.space_resource_id === "" ||
+      formInline.space_resource_id == null
+    ) {
+      ElMessage.error(
+        t("all.pleaseSelect", { value: t("dataPipelines.spaceCloudResources") })
+      );
+      return;
+    }
+  }
+
   ruleFormRef.value.validate(async (valid, fields) => {
     if (valid) {
       ruleFormRef2.value.validate(async (valid, fields) => {
         if (valid) {
           subLoading.value = true;
-          let params = {
-            ...formInline,
-            source_type: typeId.value,
-          };
+          const spaceNames =
+            spaceResourceFieldsRef.value?.resolveSelectionNames?.() ?? {};
+          let params = buildTaskCreatePayload(
+            normalizeSpaceResourcePayload({
+              ...formInline,
+              ...spaceNames,
+              source_type: typeId.value,
+            })
+          );
 
           if (typeId.value === 1 || typeId.value === 2 || typeId.value === 4) {
             // 数据源采集数据
@@ -1400,6 +1482,19 @@ const getDataSourceTypeList = async () => {
 </script>
 
 <style lang="less" scoped>
+/** 任务所属：个人 / 组织各占一行 */
+.task-scope-radio-group {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 12px;
+}
+.task-scope-radio-group :deep(.el-radio) {
+  margin-right: 0;
+  height: auto;
+  align-items: center;
+}
+
 :deep(.tableCont) {
   .el-button--text {
     background: transparent !important;
@@ -1627,4 +1722,5 @@ const getDataSourceTypeList = async () => {
   border-radius: 6px;
   padding: 16px;
 }
+
 </style>

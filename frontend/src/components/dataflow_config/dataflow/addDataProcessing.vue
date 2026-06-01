@@ -31,11 +31,20 @@ const { t, locale } = useI18n();
 const tableLoading = ref(false);
 
 const form = ref({
-  name: '',
-  description: '',
-  type: 'data_refine',
-  dslText: '',
-}); // 表单数据
+  name: "",
+  description: "",
+  type: "data_refine",
+  job_source: "pipeline",
+  dslText: "",
+  process: [],
+  namespace_type: "personal",
+  namespace_uuid: "",
+  cluster_id: "",
+  cluster_name: "",
+  space_resource_id: "",
+  resource_name: "",
+  storage_size: "4Gi",
+}); // 表单数据（含任务所属、区域与空间云资源，供 Step1/Step2 与创建接口使用）
 const step = ref(1); // 表单步骤
 
 provide("subForm", form);

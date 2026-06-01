@@ -26,7 +26,7 @@ const payModeMapping = {
 
 export const fetchResourcesInCategory = async (clusterId, depployType = 1) => {
   const { data, error } = await useFetchApi(
-    `/space_resources?cluster_id=${clusterId}&deploy_type=${depployType}`
+      `/space_resources?cluster_id=${clusterId}&deploy_type=${depployType}`
   ).json()
   if (error.value) {
     ElMessage({ message: error.value.msg, type: 'warning' })
@@ -62,7 +62,7 @@ export const fetchResourcesInCategory = async (clusterId, depployType = 1) => {
 
 export const fetchResourcesInType = async (clusterId, depployType = 1) => {
   const { data, error } = await useFetchApi(
-    `/space_resources?cluster_id=${clusterId}&deploy_type=${depployType}`
+      `/space_resources?cluster_id=${clusterId}&deploy_type=${depployType}`
   ).json()
   if (error.value) {
     ElMessage({ message: error.value.msg, type: 'warning' })

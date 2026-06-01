@@ -33,9 +33,10 @@
         {{ t('dataPipelines.processingResult') }}
       </p>
     </div>
-    <div
-      class="mainOption my-6 grid grid-cols-4 lg:grid-cols-3 md:grid-cols-2 xs:grid-cols-1 items-start justify-between gap-14 lg:gap-3.5"
-    >
+    <div class="mainOption my-6">
+      <div
+        class="grid grid-cols-4 lg:grid-cols-3 md:grid-cols-2 xs:grid-cols-1 items-start justify-between gap-14 lg:gap-3.5"
+      >
       <div>
         <div class="flex items-center justify-start gap-2 mb-4">
           <p class="text-gray-700 text-sm font-medium textContP">
@@ -45,7 +46,7 @@
             {{ jobInfo.job_name }}
           </p>
         </div>
-        <div class="flex items-center justify-start gap-2">  
+        <div class="flex items-center justify-start gap-2 mb-4">
           <p class="text-gray-700 text-sm font-medium textContP">
             {{ t('dataPipelines.createTime') }}：
           </p>
@@ -65,6 +66,14 @@
             </p>
           </el-tooltip>
         </div>
+        <div class="flex items-center justify-start gap-2">
+          <p class="text-gray-700 text-sm font-medium textContP">
+            {{ t('dataPipelines.region') }}：
+          </p>
+          <p class="text-gray-600 text-sm font-light textContValueP">
+            {{ jobInfo.cluster_name || '-' }}
+          </p>
+        </div>
       </div>
       <div>
         <div class="flex items-center justify-start gap-2 mb-4">
@@ -75,7 +84,7 @@
             {{ jobInfo.data_count || 0 }}
           </p>
         </div>
-        <div class="flex items-center justify-start gap-2">
+        <div class="flex items-center justify-start gap-2 mb-4">
           <p class="text-gray-700 text-sm font-medium textContP">
             {{ t('dataPipelines.finishTime') }}：
           </p>
@@ -92,6 +101,20 @@
                   ? convertUtcToLocalTime(jobInfo.date_finish)
                   : '-'
               }}
+            </p>
+          </el-tooltip>
+        </div>
+        <div class="flex items-center justify-start gap-2">
+          <p class="text-gray-700 text-sm font-medium textContP">
+            {{ t('dataPipelines.spaceCloudResources') }}：
+          </p>
+          <el-tooltip
+            :content="jobInfo.resource_name || '-'"
+            placement="top"
+            effect="dark"
+          >
+            <p class="text-gray-600 text-sm font-light textContValueP">
+              {{ jobInfo.resource_name || '-' }}
             </p>
           </el-tooltip>
         </div>
@@ -158,6 +181,7 @@
           </el-popconfirm>
         </div>
       </div>
+      </div>
     </div>
     <el-tabs
       v-model="activeTab"
@@ -174,6 +198,7 @@
           ref="workflowEditorRef"
           :workflow-data="jobInfo.dslText"
           :jobOperatorsStatus="jobInfo.jobOperatorsStatus"
+          :job-log-context="jobLogContext"
           :form="form"
           :infoId="infoId"
           :viewMode="'view'"
@@ -456,26 +481,17 @@
         :label="t('dataPipelines.taskLog')"
         name="3"
       >
-        <div class="flex items-center justify-between mb-[16px]">
-          <p class="text-gray-900 font-medium text-lg invisible">
-            {{ t('dataPipelines.logName') }}
-          </p>
+        <div class="flex items-center justify-end gap-2 mb-[16px]">
           <CsgButton
             class="btn btn-secondary-gray btn-sm whitespace-nowrap"
             @click="downloadTxt"
             :name="t('dataPipelines.downloadLog')"
           />
         </div>
-        <div v-if="jobType === 'Internal'" class="resultBox">
-          <pre class="text-gray-50 text-base font-normal"
-            >{{ logData }}
-          </pre>
-        </div>
-        <div v-else class="resultBox">
-          <pre v-for="(log, index) in logData" :key="index" class="text-gray-50 text-base font-normal"
-            >{{ log }}
-          </pre>
-        </div>
+        <pre
+          ref="logBoxRef"
+          class="resultBox log-scroll-box"
+        >{{ displayLogText }}</pre>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -483,32 +499,45 @@
 
 <script setup>
   import { useRouter, useRoute } from 'vue-router'
-  import { ref, onMounted, computed, inject } from 'vue'
+  import { ref, onMounted, computed, inject, watch, nextTick, onBeforeUnmount } from 'vue'
   import { ElMessage } from "element-plus";
+  import { useCookies } from 'vue3-cookies'
   import useFetchApi from '../../../packs/useFetchApi'
   import { convertUtcToLocalTime } from '../../../packs/datetimeUtils'
+  import refreshJWT from '../../../packs/refreshJWT'
+  import {
+    buildCsghubDataflowLogsUrl,
+    normalizePayloadLineBreaks,
+    streamCsghubDataflowLogs,
+    resolveCsghubLogParamsFromTask,
+  } from '../../../packs/csghubDataflowLogs'
   import zhOps from '../../../locales/zh_js/operator_zh.json'
   import enOps from '../../../locales/en_js/operator_en.json'
   import { useI18n } from 'vue-i18n'
   import workflowEditor from './workflowEditor.vue'
 
   const { t, locale } = useI18n()
+  const { cookies } = useCookies()
+  const router = useRouter()
+  const route = useRoute()
+  const csghubServer = inject('csghubServer')
 
   const dataflowOps = {
     zh: zhOps,
     en: enOps
   }
 
-  const activeTab = ref('0')
+  const activeTab = ref(route.query.type === 'pipeline' ? '0' : '3')
   const jobInfo = ref({})
   const tableData = ref([])
   const sessionData = ref([])
   const logData = ref([])
+  const useCsghubLogs = ref(false)
+  const logBoxRef = ref(null)
+  let logAbortController = null
   const workflowEditorRef = ref(null);
   const form = inject("subForm");
 
-  const router = useRouter()
-  const route = useRoute()
   const infoId = computed(() => {
     return route.query.id
   })
@@ -518,6 +547,135 @@
   const jobType = computed(() => {
     return route.query.jobType
   })
+
+  const jobLogContext = computed(() => {
+    const j = jobInfo.value || {}
+    return {
+      ...j,
+      job_id: infoId.value,
+    }
+  })
+
+  const displayLogText = computed(() => {
+    if (useCsghubLogs.value) {
+      return normalizePayloadLineBreaks(
+        (Array.isArray(logData.value) ? logData.value : []).join('\n')
+      )
+    }
+    if (jobType.value === 'Internal') {
+      return typeof logData.value === 'string'
+        ? logData.value
+        : (Array.isArray(logData.value) ? logData.value.join('\n') : '')
+    }
+    return Array.isArray(logData.value) ? logData.value.join('\n') : String(logData.value || '')
+  })
+
+  const abortLogStream = () => {
+    if (logAbortController) {
+      logAbortController.abort()
+      logAbortController = null
+    }
+  }
+
+  const scrollLogToTop = () => {
+    nextTick(() => {
+      const el = logBoxRef.value
+      if (el) {
+        el.scrollTop = 0
+      }
+    })
+  }
+
+  const loadLogContext = async () => {
+    if (!infoId.value) return
+    try {
+      const { data } = await useFetchApi(
+        `/dataflow/jobs/log_context/${infoId.value}`
+      ).get().json()
+      if (data.value?.code === 200 && data.value?.data) {
+        jobInfo.value = { ...jobInfo.value, ...data.value.data }
+      }
+    } catch (error) {
+      console.warn('loadLogContext failed', error)
+    }
+  }
+
+  const fetchCsghubLogs = async ({ namespaceUuid, jobId }) => {
+    await refreshJWT()
+    const jwtToken = cookies.get('user_token')
+    const url = buildCsghubDataflowLogsUrl(csghubServer, {
+      namespaceUuid,
+      jobId,
+      stream: true,
+    })
+
+    logAbortController = new AbortController()
+    await streamCsghubDataflowLogs(url, {
+      authorization: jwtToken ? `Bearer ${jwtToken}` : undefined,
+      userToken: jwtToken,
+      signal: logAbortController.signal,
+      onLine: (line, { append = false } = {}) => {
+        if (append && logData.value.length > 0) {
+          logData.value[logData.value.length - 1] += line
+        } else {
+          logData.value.push(line)
+        }
+      },
+    })
+    scrollLogToTop()
+  }
+
+  const getAllLogDataLegacy = async () => {
+    let url = `dataflow/jobs/pipline_job_log/${infoId.value}?page=1&page_size=1000000`
+    if (jobType.value === 'Internal') {
+      url = `dataflow/jobs/log/${infoId.value}?page=1&page_size=1000000`
+    }
+    const { data } = await useFetchApi(url).get().json()
+    if (jobType.value === 'Internal') {
+      logData.value = data.value.session_log || ''
+      return
+    }
+    if (data.value.code == 200) {
+      logData.value = data.value.data.data.map((item) => {
+        return `${formatTimestamp(item.create_at)} | ${item.level} | ${
+          item.content
+        }`
+      })
+    }
+  }
+
+  const loadTaskLogs = async () => {
+    abortLogStream()
+    logData.value = []
+
+    let task = { ...jobInfo.value, job_id: infoId.value }
+    let { namespaceUuid, jobId } = resolveCsghubLogParamsFromTask(task)
+
+    if (!namespaceUuid || !jobId) {
+      await loadLogContext()
+      task = { ...jobInfo.value, job_id: infoId.value }
+      ;({ namespaceUuid, jobId } = resolveCsghubLogParamsFromTask(task))
+    }
+
+    if (namespaceUuid && jobId) {
+      useCsghubLogs.value = true
+      try {
+        await fetchCsghubLogs({ namespaceUuid, jobId })
+      } catch (error) {
+        if (error?.name === 'AbortError') {
+          return
+        }
+        logData.value = [error?.message || '获取日志失败']
+        scrollLogToTop()
+      }
+      return
+    }
+
+    useCsghubLogs.value = false
+    await getAllLogDataLegacy()
+    scrollLogToTop()
+  }
+
   const toDatasetPage = (path,branch) => {
     if(path&&branch){
       window.location.href=`/datasets/${path}/files/${branch}`
@@ -534,7 +692,7 @@
   };
 
   const getInfoData = async () => {
-    const url = `/dataflow/jobs/${infoId.value}`
+    const url = `/dataflow/jobs/${infoId.value}?sync_status=true`
 
     const { data } = await useFetchApi(url).get().json()
 
@@ -597,31 +755,7 @@
     return data.value?.data || []
   }
   const getLogData = async () => {
-    const url = `dataflow/jobs/log/${infoId.value}`
-
-    const { data } = await useFetchApi(url).get().json()
-
-    if (data.value) {
-      logData.value = data.value.session_log
-    }
-  }
-  const getAllLogData = async () => {
-    let url = `dataflow/jobs/pipline_job_log/${infoId.value}?page=1&page_size=1000000`
-    if(jobType.value === 'Internal') {
-      url = `dataflow/jobs/log/${infoId.value}?page=1&page_size=1000000`
-    }
-    const { data } = await useFetchApi(url).get().json()
-    if(jobType.value === 'Internal') {
-      logData.value = data.value.session_log || ''
-      return
-    }
-    if (data.value.code == 200) {
-      logData.value = data.value.data.data.map((item) => {
-        return `${formatTimestamp(item.create_at)} | ${item.level} | ${
-          item.content
-        }`;
-      });
-    }
+    await loadTaskLogs()
   }
   const formatTimestamp = (timestamp) => {
     // 检查时间戳是否为秒级
@@ -648,7 +782,7 @@
     console.log(tab, event)
   }
   const downloadTxt = () => {
-    const content = logData.value
+    const content = displayLogText.value
     const blob = new Blob([content], { type: 'text/plain' })
     const url = URL.createObjectURL(blob)
 
@@ -672,7 +806,7 @@
         grouping: true,
       })
       getInfoData()
-      getAllLogData()
+      loadTaskLogs()
     } else {
       ElMessage({
         message: t("dataPipelines.taskStopFailed"),
@@ -683,14 +817,26 @@
     }
   }
 
-  onMounted(() => {
-    getInfoData()
-    getResourceOccupation()
-    // getLogData()
-    getAllLogData()
-    if(taskType.value!='pipeline'){
-      activeTab.value = '3'
+  watch(activeTab, (tab) => {
+    if (tab === '3') {
+      loadTaskLogs()
+    } else {
+      abortLogStream()
     }
+  })
+
+  onMounted(async () => {
+    await getInfoData()
+    await loadLogContext()
+    getResourceOccupation()
+    await nextTick()
+    if (activeTab.value === '3') {
+      await loadTaskLogs()
+    }
+  })
+
+  onBeforeUnmount(() => {
+    abortLogStream()
   })
 </script>
 <style lang="less" scoped>
@@ -736,12 +882,12 @@
   }
   :deep(.el-tabs__content) {
     padding-top: 16px !important;
+    font-size: 14px;
+    font-weight: 400;
+    color: #101828;
   }
-  .demo-tabs > .el-tabs__content {
+  .demo-tabs > :deep(.el-tabs__content) {
     padding: 32px;
-    color: #6b778c;
-    font-size: 32px;
-    font-weight: 600;
   }
   .statusBox {
     font-size: 12px;
@@ -764,17 +910,55 @@
     font-weight: 500;
   }
   .resultBox {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
     border-radius: 12px;
     background: #0c111d;
     padding: 24px;
     height: 500px;
-    overflow-y: auto;
+    overflow: scroll;
+    white-space: pre;
+    word-wrap: normal;
+    overflow-wrap: normal;
     color: #f9fafb;
-
-    font-family: 'Roboto Mono';
+    font-family: 'Roboto Mono', monospace;
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
+    line-height: 24px;
+  }
+  .log-scroll-box {
+    scrollbar-gutter: stable both-edges;
+    scrollbar-width: thin;
+    scrollbar-color: #667085 #1d2939;
+
+    &::-webkit-scrollbar {
+      opacity: 1 !important;
+      width: 12px;
+      height: 12px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #1d2939;
+      border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #667085;
+      border-radius: 6px;
+      border: 2px solid #1d2939;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #98a2b3;
+    }
+
+    &::-webkit-scrollbar-corner {
+      background: #1d2939;
+    }
   }
   .textContP {
     white-space: nowrap;

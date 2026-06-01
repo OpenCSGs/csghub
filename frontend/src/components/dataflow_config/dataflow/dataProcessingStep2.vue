@@ -86,6 +86,10 @@ import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, inject, computed, watch, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 import useFetchApi from "../../../packs/useFetchApi";
+import {
+  buildTaskCreatePayload,
+  guardNamespaceBeforeSubmit,
+} from "../../../packs/useDataflowNamespaces.js";
 import { convertUtcToLocalTime } from "../../../packs/datetimeUtils";
 import { useI18n } from "vue-i18n";
 import dayjs from 'dayjs';
@@ -229,14 +233,19 @@ const handleWorkflowSave = async (result) => {
         // window.location.href = '/datapipelines/customTemplate'
       }
     } else {
-      // 创建任务
-      
-      let combinedData = {
+      const nsCheck = guardNamespaceBeforeSubmit(form, t);
+      if (!nsCheck.ok) {
+        ElMessage.error(nsCheck.message);
+        return;
+      }
+
+      let combinedData = buildTaskCreatePayload({
         ...form.value,
+        job_source: "pipeline",
+        process: Array.isArray(form.value.process) ? form.value.process : [],
         dslText: result.data.yaml,
         is_run: isRun.value,
-        process: [],
-      }
+      });
 
       if (is_run.value) {
         delete combinedData.task_run_time
