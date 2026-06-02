@@ -359,11 +359,46 @@ const fetchClusters = async () => {
   await fetchSpaceResources();
 };
 
-const onClusterChange = () => {
-  syncClusterNameFromSelection();
+const onClusterChange = (value) => {
+  // value 是 el-select @change 事件提供的新选中值，直接用来更新 clusterName 并拉取资源
+  const id = value ?? clusterId.value
+  const { cluster_name } = resolveSpaceResourceNames(
+    { cluster_id: id },
+    spaceClusters.value,
+    spaceResourcesList.value
+  );
+  clusterName.value = cluster_name;
   spaceResourceId.value = "";
   resourceName.value = "";
-  fetchSpaceResources();
+  fetchSpaceResourcesWithId(id);
+};
+
+const fetchSpaceResourcesWithId = async (id) => {
+  if (!id) {
+    spaceResourcesList.value = [];
+    spaceResourceId.value = "";
+    return;
+  }
+  spaceResourcesLoading.value = true;
+  const { data, error } = await useFetchApi(
+    `/space_resources?cluster_id=${id}&deploy_type=0`
+  ).json();
+  spaceResourcesLoading.value = false;
+  if (error.value) {
+    ElMessage.warning(error.value?.msg || t("dataPipelines.linkError"));
+    spaceResourcesList.value = [];
+    spaceResourceId.value = "";
+    return;
+  }
+  spaceResourcesList.value = normalizeApiArray(data.value)
+    .map(normalizeSpaceResourceRow)
+    .filter(Boolean)
+    .map((item) => ({
+      ...item,
+      priceValue: formatSpaceResourcePrice(item),
+    }));
+  syncResourceTypeTabIfNeeded();
+  pickDefaultSpaceResource();
 };
 
 watch(resourceTypeTab, () => {

@@ -538,6 +538,23 @@
   const workflowEditorRef = ref(null);
   const form = inject("subForm");
 
+  // 图形化界面算子状态轮询
+  const statusRefreshTimer = ref(null)
+  const startStatusRefresh = () => {
+    if (!statusRefreshTimer.value) {
+      statusRefreshTimer.value = setInterval(async () => {
+        const statuses = await getJobOperatorsStatus()
+        jobInfo.value = { ...jobInfo.value, jobOperatorsStatus: statuses }
+      }, 3000)
+    }
+  }
+  const stopStatusRefresh = () => {
+    if (statusRefreshTimer.value) {
+      clearInterval(statusRefreshTimer.value)
+      statusRefreshTimer.value = null
+    }
+  }
+
   const infoId = computed(() => {
     return route.query.id
   })
@@ -825,6 +842,15 @@
     }
   })
 
+  // 当任务主状态为 Processing 或 Queued 时，启动算子状态轮询（仅刷新状态，不动画布）
+  watch(() => jobInfo.value.status, (status) => {
+    if (status === 'Processing' || status === 'Queued') {
+      startStatusRefresh()
+    } else {
+      stopStatusRefresh()
+    }
+  })
+
   onMounted(async () => {
     await getInfoData()
     await loadLogContext()
@@ -837,6 +863,7 @@
 
   onBeforeUnmount(() => {
     abortLogStream()
+    stopStatusRefresh()
   })
 </script>
 <style lang="less" scoped>

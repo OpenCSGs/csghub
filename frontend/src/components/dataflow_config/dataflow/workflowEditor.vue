@@ -231,6 +231,7 @@
   import * as G6 from '@antv/g6'
   import { ElMessage } from 'element-plus'
   import { useCookies } from 'vue3-cookies'
+  import useUserStore from "@/stores/UserStore";
   import useFetchApi from "@/packs/useFetchApi";
   import refreshJWT from "@/packs/refreshJWT";
   import {
@@ -254,6 +255,9 @@
     en: enOps,
     zhHant: zhHantOps
   };
+  const userStore = useUserStore();
+  const origin = window.location.origin + '/';
+
   const configsDrawer = ref(false)
   const drawerWidth = ref('410px')
   const dynamicFormRefs = ref({})
@@ -360,8 +364,8 @@
       const { data } = await useFetchApi(`/user/${userStore.username}`).get().json()
       const { orgs } = data.value.data
       if (orgs) {
-         const orgPaths = orgs.map(org => org.path).join(',') || ''
-         await getOperatorList(orgPaths)
+        const orgPaths = orgs.map(org => org.path).join(',') || ''
+        await getOperatorList(orgPaths)
       } else {
         await getOperatorList()
       }
@@ -524,6 +528,59 @@
       list[idx] ||
       {}
     )
+  }
+
+  /** 仅刷新各节点的状态 DOM 元素，不触动图结构、缩放或位置 */
+  const refreshNodeStatuses = () => {
+    if (props.viewMode !== 'view' || !graph.value || graph.value.destroyed) return
+    const allNodes = graph.value.getNodes()
+    allNodes.forEach(node => {
+      if (node.destroyed) return
+      const model = node.getModel()
+      const group = node.getContainer()
+      if (!group || group.destroyed) return
+
+      // 移除旧的状态形状
+      const oldStatus = group.find(ele => ele.get('name') === 'node-status')
+      if (oldStatus && !oldStatus.destroyed) oldStatus.remove()
+
+      // 重建状态形状
+      const width = 60
+      const jobOperatorsInfo = findOperatorStatus(model)
+      const status_icon = `/images/task_status_${
+        jobOperatorsInfo.status === 'success' ? 2 : 
+        jobOperatorsInfo.status === 'error' ? 3 : 
+        jobOperatorsInfo.status === 'processing' ? 1 : 
+        jobOperatorsInfo.status === 'wainting' ? 5 : 4
+      }.png`
+
+      group.addShape('dom', {
+        attrs: {
+          x: -width,
+          y: 65,
+          width: 180,
+          height: 50,
+          wordWrapWidth: 260,
+          fontSize: 12,
+          textAlign: 'left',
+          textBaseline: 'top',
+          html: `
+            <div class="operator-status">
+              <div class="status-item">
+                <img src="${status_icon}" class="status-icon" />
+                <div>
+                  <div>${jobOperatorsInfo.status ? resolveNodeStatusLabel(jobOperatorsInfo.status) : t("dataPipelines.unknown")}</div>
+                  <div class="status-time">${t("dataPipelines.startTime")}：${formatTimestamp(jobOperatorsInfo.start_time) || "-"}</div>
+                  <div class="status-time">${t("dataPipelines.endTime")}：${formatTimestamp(jobOperatorsInfo.end_time) || "-"}</div>
+                </div>
+              </div>
+            </div>
+          `,
+        },
+        name: 'node-status',
+        draggable: true
+      })
+    })
   }
 
   const abortLogStream = () => {
@@ -824,7 +881,7 @@
                   <div class="status-item">
                     <img src="${status_icon}" class="status-icon" />
                     <div>
-                      <div>${jobOperatorsInfo.status ? t(`dataPipelines.executionStatus.${jobOperatorsInfo.status}`) : t("dataPipelines.unknown")}</div>
+                      <div>${jobOperatorsInfo.status ? resolveNodeStatusLabel(jobOperatorsInfo.status) : t("dataPipelines.unknown")}</div>
                       <div class="status-time">${t("dataPipelines.startTime")}：${formatTimestamp(jobOperatorsInfo.start_time) || "-"}</div>
                       <div class="status-time">${t("dataPipelines.endTime")}：${formatTimestamp(jobOperatorsInfo.end_time) || "-"}</div>
                     </div>
@@ -2647,6 +2704,13 @@
     }
   })
 
+  // 监听算子状态变化（仅 view 模式），增量刷新节点状态 DOM，不触动画布结构
+  watch(() => props.jobOperatorsStatus, () => {
+    if (graph.value && isGraphInitialized.value) {
+      refreshNodeStatuses()
+    }
+  }, { deep: true })
+
   const formatTimestamp = (timestamp) => {
     // 检查时间戳是否为 null、undefined 或无效值
     if (timestamp === null || timestamp === undefined || timestamp === '') {
@@ -2678,9 +2742,45 @@
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   }
 
+  const STATUS_KEY_MAP = {
+    pending: "Pending",
+    waiting: "Waiting",
+    wainting: "Waiting",
+    queued: "Queued",
+    running: "Running",
+    processing: "Processing",
+    in_progress: "Running",
+    executing: "Running",
+    finished: "Finished",
+    completed: "Finished",
+    complete: "Finished",
+    succeeded: "Finished",
+    success: "Finished",
+    failed: "Failed",
+    failure: "Failed",
+    error: "Failed",
+    stopped: "Stopped",
+    canceled: "Canceled",
+    cancelled: "Canceled",
+    timeout: "Timeout",
+  }
+
+  const resolveNodeStatusLabel = (status) => {
+    if (status === null || status === undefined || String(status).trim() === "") {
+      return t("dataPipelines.unknown")
+    }
+    const raw = String(status).trim().toLowerCase()
+    const i18nKey = STATUS_KEY_MAP[raw]
+    if (i18nKey) {
+      return t(`dataPipelines.${i18nKey}`)
+    }
+    return raw
+  }
+
   defineExpose({
     saveWorkflow,
     initGraph,
+    refreshNodeStatuses,
     // loadWorkflowFromYaml,
   })
   
