@@ -81,6 +81,9 @@
             <div class="resource-card-spec">
               {{ item.name }}
             </div>
+            <div class="resource-card-price">
+              {{ item.priceValue || formatSpaceResourcePrice(item) }}
+            </div>
             <div
               v-if="!item.is_available"
               class="resource-card-insufficient-layer"
@@ -107,6 +110,7 @@ import { ref, computed, watch, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
 import useFetchApi from "../../../../packs/useFetchApi";
+import { formatSpaceResourcePriceLabel } from "../../../../packs/spaceResourcePrice.js";
 
 const props = defineProps({
   compact: { type: Boolean, default: false },
@@ -223,6 +227,10 @@ const getCardTitle = (item) => {
   return "CPU";
 };
 
+/** 格式化资源价格显示 */
+const formatSpaceResourcePrice = (item) =>
+  formatSpaceResourcePriceLabel(item, { t });
+
 /** 点击卡片 */
 const selectSpaceResource = (item) => {
   if (!item?.is_available) return;
@@ -273,7 +281,10 @@ const fetchSpaceResources = async (cid) => {
     return;
   }
   const body = data.value;
-  spaceResourcesList.value = body?.data || [];
+  spaceResourcesList.value = (body?.data || []).map((item) => ({
+    ...item,
+    priceValue: formatSpaceResourcePrice(item),
+  }));
 
   autoPickAvailableTab();
   // 自动选中第一个可用
@@ -297,19 +308,28 @@ const fetchClusters = async () => {
     clusterName.value = first.region || "";
   }
 
+  if (clusterId.value) {
+    const matched = spaceClusters.value.find(
+      (x) => String(x.cluster_id) === String(clusterId.value)
+    );
+    clusterName.value = matched?.region || "";
+  }
+
   // 传递显式 id，避免 computed 双绑 emit 未同步导致读空
   fetchSpaceResources(clusterId.value || spaceClusters.value[0]?.cluster_id);
 };
 
-const onClusterChange = () => {
+const onClusterChange = (value) => {
+  // value 是 el-select @change 事件提供的新选中值，避免读取尚未更新的 props.clusterId
+  const id = value ?? clusterId.value
   const c = spaceClusters.value.find(
-    (x) => String(x.cluster_id) === String(clusterId.value)
+    (x) => String(x.cluster_id) === String(id)
   );
   clusterName.value = c?.region || "";
   spaceResourceId.value = "";
   resourceName.value = "";
   resourceTypeTab.value = "cpu";
-  fetchSpaceResources(clusterId.value);
+  fetchSpaceResources(id);
 };
 
 const resolveSelectionNames = () => {
@@ -415,6 +435,14 @@ onMounted(() => {
   overflow: hidden;
   word-break: break-word;
 }
+.resource-card-price {
+  font-size: 12px;
+  font-weight: 500;
+  color: #1570ef;
+  margin-top: auto;
+  padding-top: 10px;
+  line-height: 1.35;
+}
 .resource-card:hover:not(.resource-card--disabled):not(.resource-card--selected) {
   border-color: #cbd5e1;
 }
@@ -435,7 +463,8 @@ onMounted(() => {
   background: #d0d5dd;
 }
 .resource-card--disabled .resource-card-title,
-.resource-card--disabled .resource-card-spec {
+.resource-card--disabled .resource-card-spec,
+.resource-card--disabled .resource-card-price {
   color: #d0d5dd;
 }
 .resource-card-insufficient-layer {
