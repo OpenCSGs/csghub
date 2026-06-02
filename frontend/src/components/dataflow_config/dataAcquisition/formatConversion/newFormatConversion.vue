@@ -274,7 +274,7 @@
       </el-row>
     </el-form>
 
-    <SpaceResourceFields
+    <SpaceResourceSelect
       ref="spaceResourceFieldsRef"
       class="mt-[24px]"
       v-model:cluster-id="form.cluster_id"
@@ -307,7 +307,7 @@ import { ElMessage, ElLoading } from "element-plus";
 import useFetchApi from "@/packs/useFetchApi";
 import useUserStore from "@/stores/UserStore";
 import { useI18n } from "vue-i18n";
-import SpaceResourceFields from "../dataSourceManagement/SpaceResourceFields.vue";
+import SpaceResourceSelect from "../dataSourceManagement/SpaceResourceSelect.vue";
 import StorageSizeField from "../dataSourceManagement/StorageSizeField.vue";
 import TaskNamespaceFields from "../../shared/TaskNamespaceFields.vue";
 import {
@@ -474,7 +474,7 @@ const fetchUserToken = async () => {
 
   const { data } = await useFetchApi(
     // ${userStore.username}
-    `/user/${userStore.username}/tokens?app=git`
+      `/user/${userStore.username}/tokens?app=git`
   ).json();
   if (data.value) {
     const body = data.value;

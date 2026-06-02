@@ -96,7 +96,7 @@
               <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
                 <el-form-item prop="owner">
                   <template #label>
-                    <p class="text-gray-500 text-xs mt-[12px]">{{ t('models.newModel.owner') }}</p>
+                    <p class="text-gray-500 text-xs mt-[12px]">{{ t('dataPipelines.dataOwner') }}</p>
                   </template>
                   <el-select
                     v-model="form.owner"
@@ -245,7 +245,7 @@
             </el-row>
           </div>
 
-          <SpaceResourceFields
+          <SpaceResourceSelect
             ref="spaceResourceFieldsRef"
             class="mt-[24px]"
             v-model:cluster-id="form.cluster_id"
@@ -267,7 +267,7 @@
           />
         </el-form-item>
         <el-form-item
-          :label="t('models.newModel.owner')"
+          :label="t('dataPipelines.dataOwner')"
           prop="owner"
           class="w-full"
         >
@@ -744,7 +744,7 @@
   import ModelSelectItem from './ModelSelectItem.vue'
   import ToolParamField from './ToolParamField.vue'
   import TaskNamespaceFields from '../shared/TaskNamespaceFields.vue'
-  import SpaceResourceFields from '../dataAcquisition/dataSourceManagement/SpaceResourceFields.vue'
+  import SpaceResourceSelect from '../dataAcquisition/dataSourceManagement/SpaceResourceSelect.vue'
   import StorageSizeField from '../dataAcquisition/dataSourceManagement/StorageSizeField.vue'
   import {
     applyNamespaceFromLoaded,
@@ -827,7 +827,7 @@
     owner: [
       {
         required: true,
-        message: `${t('dataPipelines.toSel')}${t('models.newModel.owner')}`,
+        message: `${t('dataPipelines.toSel')}${t('dataPipelines.dataOwner')}`,
         trigger: 'change'
       }
     ],

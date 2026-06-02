@@ -297,7 +297,7 @@
       width="720"
       align-center
     >
-      <SpaceResourceFields
+      <SpaceResourceSelect
         ref="executeSpaceResourceFieldsRef"
         :key="rowId"
         v-if="centerDialogVisible"
@@ -356,7 +356,7 @@ import { ElMessage, ElLoading } from "element-plus";
 import useFetchApi from "../../../../packs/useFetchApi";
 import { useI18n } from "vue-i18n";
 import DataSourceInfo from "./components/dataSourceInfo.vue";
-import SpaceResourceFields from "./SpaceResourceFields.vue";
+import SpaceResourceSelect from "./SpaceResourceSelect.vue";
 import StorageSizeField from "./StorageSizeField.vue";
 import { normalizeStorageSize } from "../../../../packs/storageSize.js";
 import { useCookies } from "vue3-cookies";

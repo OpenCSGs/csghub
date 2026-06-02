@@ -514,7 +514,7 @@
       <!-- E 数据流向 -->
 
       <!-- S 选择区域 / 空间云资源 -->
-      <SpaceResourceFields
+      <SpaceResourceSelect
         ref="spaceResourceFieldsRef"
         class="mt-[24px]"
         v-model:cluster-id="formInline.cluster_id"
@@ -691,7 +691,7 @@ import zhOps from "../../../../locales/zh_js/operator_zh.json";
 import enOps from "../../../../locales/en_js/operator_en.json";
 import FieldMapping from "./components/fieldMapping.vue";
 import ConnectAttribute from "./components/connectAttribute.vue";
-import SpaceResourceFields from "./SpaceResourceFields.vue";
+import SpaceResourceSelect from "./SpaceResourceSelect.vue";
 import StorageSizeField from "./StorageSizeField.vue";
 import TaskNamespaceFields from "../../shared/TaskNamespaceFields.vue";
 import {
