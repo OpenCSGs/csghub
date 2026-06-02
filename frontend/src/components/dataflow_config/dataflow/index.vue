@@ -238,7 +238,7 @@
       align-center
       @closed="onExecuteDialogClosed"
     >
-      <SpaceResourceFields
+      <SpaceResourceSelect
         ref="executeSpaceResourceFieldsRef"
         :key="executeDialogKey"
         v-if="executeDialogVisible"
@@ -280,7 +280,7 @@ import {
 import { convertUtcToLocalTime } from "../../../packs/datetimeUtils";
 import { normalizeStorageSize } from "../../../packs/storageSize.js";
 import { useI18n } from "vue-i18n";
-import SpaceResourceFields from "../dataAcquisition/dataSourceManagement/SpaceResourceFields.vue";
+import SpaceResourceSelect from "../dataAcquisition/dataSourceManagement/SpaceResourceSelect.vue";
 import StorageSizeField from "../dataAcquisition/dataSourceManagement/StorageSizeField.vue";
 
 const { t, locale } = useI18n();

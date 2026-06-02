@@ -42,11 +42,11 @@
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item prop="owner">
               <template #label>
-                <p class="text-gray-500 text-xs mt-[12px]">{{ t("collections.newCollection.owner") }}</p>
+                <p class="text-gray-500 text-xs mt-[12px]">{{ t("dataPipelines.dataOwner") }}</p>
               </template>
               <el-select
                 v-model="subForm.owner"
-                :placeholder="t('dataPipelines.toSel') + t('collections.newCollection.owner')"
+                :placeholder="t('dataPipelines.toSel') + t('dataPipelines.dataOwner')"
                 style="width: 100%"
                 @change="getSelListData(true)"
               >
@@ -167,7 +167,7 @@
         </el-row>
       </div>
 
-      <SpaceResourceFields
+      <SpaceResourceSelect
         ref="spaceResourceFieldsRef"
         class="mt-[24px]"
         v-model:cluster-id="subForm.cluster_id"
@@ -199,7 +199,7 @@ import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, inject, computed, watch } from "vue";
 import { ElMessage } from "element-plus";
 import useFetchApi from "../../../packs/useFetchApi";
-import SpaceResourceFields from "../dataAcquisition/dataSourceManagement/SpaceResourceFields.vue";
+import SpaceResourceSelect from "../dataAcquisition/dataSourceManagement/SpaceResourceSelect.vue";
 import StorageSizeField from "../dataAcquisition/dataSourceManagement/StorageSizeField.vue";
 import TaskNamespaceFields from "../shared/TaskNamespaceFields.vue";
 import {
@@ -270,7 +270,7 @@ const rules = ref({
   owner: [
     {
       required: true,
-      message: `${t('dataPipelines.toSel')}${t('models.newModel.owner')}`,
+      message: `${t('dataPipelines.toSel')}${t('dataPipelines.dataOwner')}`,
       trigger: 'change'
     }
   ],

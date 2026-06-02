@@ -357,7 +357,7 @@
   // 查询当前用户所在的组织
   const getUserInfo = async () => {
     try {
-      const { data } = await useFetchApi(`/user/root`).get().json()
+      const { data } = await useFetchApi(`/user/${userStore.username}`).get().json()
       const { orgs } = data.value.data
       if (orgs) {
          const orgPaths = orgs.map(org => org.path).join(',') || ''
