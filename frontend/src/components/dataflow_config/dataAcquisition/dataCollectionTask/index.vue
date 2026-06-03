@@ -94,7 +94,7 @@
           </div>
           <div class="text-right">
             <p class="text-gray-500 text-xs mb-[6px]">
-              {{ t("dataPipelines.startAt") }}：{{ item.start_run_at || "-" }}
+              {{ t("dataPipelines.startAt") }}：{{ item.start_run_at ? convertUtcToLocalTime(item.start_run_at) : "-" }}
             </p>
             <el-progress
               :percentage="
@@ -332,15 +332,21 @@
               </template>
             </el-table-column>
             <el-table-column
-              prop="started_at"
               :label="t('dataPipelines.startTime')"
               min-width="160"
-            />
+            >
+              <template #default="scope">
+                <span>{{ scope.row.started_at ? convertUtcToLocalTime(scope.row.started_at) : '-' }}</span>
+              </template>
+            </el-table-column>
             <el-table-column
-              prop="finished_at"
               :label="t('dataPipelines.endTime')"
               min-width="160"
-            />
+            >
+              <template #default="scope">
+                <span>{{ scope.row.finished_at ? convertUtcToLocalTime(scope.row.finished_at) : '-' }}</span>
+              </template>
+            </el-table-column>
             <el-table-column
               :label="t('dataPipelines.operations')"
               min-width="120"

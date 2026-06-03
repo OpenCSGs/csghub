@@ -51,7 +51,7 @@
 
       <div class="overflow-hidden text-ellipsis whitespace-nowrap flex gap-1 items-center">
         <SvgIcon name="clock" />
-        {{$t('all.lastTime')}}：{{ repo.updated_at.substring(0, 10) }}
+        {{$t('all.lastTime')}}：{{ repo.updated_at ? convertUtcToLocalTime(repo.updated_at).substring(0, 10) : '-' }}
       </div>
 
       <template v-if="getComputed.visibility">
@@ -74,7 +74,7 @@
   import { computed, ref, watch } from 'vue'
   import { useI18n } from 'vue-i18n'
   import NewTag from '../../shared/NewTag.vue'
-  import { isWithinTwoWeeks } from '../../../packs/datetimeUtils'
+  import { convertUtcToLocalTime, isWithinTwoWeeks } from '../../../packs/datetimeUtils'
 
   const props = defineProps({
     repo: Object,
