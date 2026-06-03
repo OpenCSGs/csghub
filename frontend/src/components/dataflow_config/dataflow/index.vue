@@ -137,7 +137,7 @@
             min-width="260"
           >
             <template #default="scope">
-              <span>{{ scope.row.date_posted }}</span>
+              <span>{{ scope.row.date_posted ? convertUtcToLocalTime(scope.row.date_posted) : '-' }}</span>
             </template>
           </el-table-column>
           <el-table-column

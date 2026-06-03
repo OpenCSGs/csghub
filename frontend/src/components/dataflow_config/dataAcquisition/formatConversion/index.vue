@@ -157,11 +157,14 @@
           </el-table-column>
           
           <el-table-column
-            prop="created_at"
-            align="center"
             :label="t('dataPipelines.createTime')"
+            align="center"
             width="260"
-          />
+          >
+            <template #default="scope">
+              <span>{{ scope.row.created_at ? convertUtcToLocalTime(scope.row.created_at) : '-' }}</span>
+            </template>
+          </el-table-column>
 
           <el-table-column
             :label="t('dataPipelines.operations')"
@@ -283,6 +286,7 @@ import {
   describeCsghubLogParamsGap,
 } from "@/packs/csghubDataflowLogs";
 import { useI18n } from "vue-i18n";
+import { convertUtcToLocalTime } from "@/packs/datetimeUtils";
 import DataSourceInfo from "./components/dataSourceInfo.vue";
 const router = useRouter();
 const { t, locale } = useI18n();

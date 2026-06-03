@@ -94,7 +94,7 @@
               {{ t("dataPipelines.createTime") }}：
             </div>
             <div>
-              {{ dataSource.created_at || "-" }}
+              {{ dataSource.created_at ? convertUtcToLocalTime(dataSource.created_at) : "-" }}
             </div>
           </div>
         </div>
@@ -146,6 +146,7 @@
 <script setup>
 import { computed, inject, onMounted, ref } from "vue";
 import useFetchApi from "@/packs/useFetchApi";
+import { convertUtcToLocalTime } from "@/packs/datetimeUtils";
 import { useI18n } from "vue-i18n";
 const { t, locale } = useI18n();
 // 数据源数据
