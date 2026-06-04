@@ -34,6 +34,34 @@ export function parseNamespacesFromUserResponse(body) {
   return rawList.map(normalizeNamespaceItem).filter(Boolean);
 }
 
+/**
+ * 从 CSGHub /user/{username} 返回的 orgs 字段中提取组织 namespace。
+ * 只保留 role 为 write 或 admin 的组织。
+ */
+export function parseOrgsFromUserResponse(body) {
+  const root = body?.data ?? body ?? {};
+  const rawOrgs = root.orgs ?? root.Orgs ?? [];
+  if (!Array.isArray(rawOrgs)) return [];
+  return rawOrgs
+    .filter((org) => {
+      const role = String(org.role ?? "").trim().toLowerCase();
+      return role === "write" || role === "admin";
+    })
+    .map((org) => {
+      const uuid = String(org.uuid ?? "").trim();
+      const path = String(org.path ?? "").trim();
+      if (!uuid || !path) return null;
+      return {
+        path,
+        type: "organization",
+        uuid,
+        avatar: org.avatar ?? "",
+        nsType: org.nsType ?? org.ns_type ?? "",
+      };
+    })
+    .filter(Boolean);
+}
+
 /** 从 ref 或 reactive 取出表单对象 */
 export function unwrapFormRef(formRef) {
   if (formRef == null) return null;
@@ -210,7 +238,18 @@ export function useDataflowNamespaces() {
         namespaces.value = [];
         return;
       }
-      namespaces.value = parseNamespacesFromUserResponse(data.value);
+      const nsFromNamespaces = parseNamespacesFromUserResponse(data.value);
+      const nsFromOrgs = parseOrgsFromUserResponse(data.value);
+      // 合并并去重（以 uuid 为准）
+      const uuidSet = new Set();
+      const merged = [];
+      for (const ns of [...nsFromNamespaces, ...nsFromOrgs]) {
+        if (!uuidSet.has(ns.uuid)) {
+          uuidSet.add(ns.uuid);
+          merged.push(ns);
+        }
+      }
+      namespaces.value = merged;
       loadedUsername.value = name;
       if (!personalNamespace.value?.uuid) {
         loadError.value = "未找到个人 namespace，请刷新后重试";

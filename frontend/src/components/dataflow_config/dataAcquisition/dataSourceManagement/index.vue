@@ -226,6 +226,7 @@
                   >{{ t("dataPipelines.task") }}
                 </el-button>
                 <el-popconfirm
+                  v-if="scope.row.can_delete"
                   :title="`${t('dataPipelines.deleteConfirm')}?`"
                   :confirm-button-text="t('dataPipelines.confirm')"
                   :cancel-button-text="t('dataPipelines.cancel')"
@@ -240,6 +241,13 @@
                     </el-button>
                   </template>
                 </el-popconfirm>
+                <el-button
+                  v-else
+                  type="text"
+                  disabled
+                  class="flex items-center justify-start"
+                  >{{ t("dataPipelines.delete") }}
+                </el-button>
               </div>
             </template>
           </el-table-column>
@@ -646,6 +654,14 @@ const goToNewTask = (path) => {
     font-weight: 400 !important;
     &:hover {
       color: #3250bd !important;
+    }
+    &.is-disabled,
+    &[disabled] {
+      color: #c0c4cc !important;
+      cursor: not-allowed !important;
+      &:hover {
+        color: #c0c4cc !important;
+      }
     }
   }
 }
