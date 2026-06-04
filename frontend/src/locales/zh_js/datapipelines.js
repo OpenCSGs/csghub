@@ -108,6 +108,8 @@ export const dataPipelines = {
   "DatabaseName": "数据库名称",
   "ServerAddress": "服务器地址",
   "port": "端口号",
+  "portInvalidFormat": "端口格式不正确，请输入有效端口号",
+  "portOutOfRange": "端口号超出范围，请输入 1-65535 之间的端口号",
   "username": "用户名",
   "password": "密码",
   "authType": "鉴权类型",

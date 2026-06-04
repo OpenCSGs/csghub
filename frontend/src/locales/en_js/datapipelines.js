@@ -108,6 +108,8 @@ export const dataPipelines = {
   "DatabaseName": "Database Name",
   "ServerAddress": "Server Address",
   "port": "Port Number",
+  "portInvalidFormat": "Invalid port format, please enter a valid port number",
+  "portOutOfRange": "Port number out of range, please enter 1-65535",
   "username": "Username",
   "password": "Password",
   "authType": "Authentication Type",

@@ -168,7 +168,7 @@
 
           <el-table-column
             :label="t('dataPipelines.operations')"
-            :min-width="`${cookies.get('locale') === 'en' ? 320 : 260}`"
+            :min-width="`${cookies.get('locale') === 'en' ? 380 : 320}`"
             align="center"
             fixed="right"
           >
@@ -225,6 +225,13 @@
                     </el-button>
                   </template>
                 </el-popconfirm>
+                <el-button
+                  v-else
+                  type="text"
+                  disabled
+                  class="flex items-center justify-start"
+                  >{{ t("dataPipelines.delete") }}
+                </el-button>
               </div>
             </template>
           </el-table-column>
@@ -587,6 +594,14 @@ const displayResourceName = (row) => {
     font-weight: 400 !important;
     &:hover {
       color: #3250bd !important;
+    }
+    &.is-disabled,
+    &[disabled] {
+      color: #c0c4cc !important;
+      cursor: not-allowed !important;
+      &:hover {
+        color: #c0c4cc !important;
+      }
     }
   }
 }

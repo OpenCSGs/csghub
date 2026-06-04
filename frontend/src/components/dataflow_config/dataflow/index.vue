@@ -183,15 +183,12 @@
                     </el-button>
                   </template>
                 </el-popconfirm>
-                <!-- 执行按钮：非 Processing 状态 -->
+                <!-- 执行按钮 -->
                 <el-button
-                  v-if="scope.row.status !== 'Processing'"
                   type="text"
-                  :class="[
-                    'flex items-center justify-start cursor-pointer',
-                    scope.row.status === 'Finished' ? 'text-gray-400' : ''
-                  ]"
-                  :disabled="scope.row.status === 'Finished'"
+                  class="flex items-center justify-start cursor-pointer"
+                  :class="{ 'text-gray-400': scope.row.status === 'Processing' || scope.row.status === 'Queued' || scope.row.status === 'Finished' }"
+                  :disabled="scope.row.status === 'Processing' || scope.row.status === 'Queued' || scope.row.status === 'Finished'"
                   @click="openExecuteDialog(scope.row)"
                 >
                   {{ t("dataPipelines.execute") }}
@@ -213,6 +210,13 @@
                     </el-button>
                   </template>
                 </el-popconfirm>
+                <el-button
+                  v-else
+                  type="text"
+                  disabled
+                  class="flex items-center justify-start"
+                  >{{ t("dataPipelines.delete") }}
+                </el-button>
               </div>
             </template>
           </el-table-column>
@@ -578,6 +582,14 @@ onBeforeUnmount(() => {
     font-weight: 400 !important;
     &:hover {
       color: #3250bd !important;
+    }
+    &.is-disabled,
+    &[disabled] {
+      color: #c0c4cc !important;
+      cursor: not-allowed !important;
+      &:hover {
+        color: #c0c4cc !important;
+      }
     }
   }
 }

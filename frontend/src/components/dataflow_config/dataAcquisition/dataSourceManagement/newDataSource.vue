@@ -769,6 +769,26 @@ const rules = ref({
       message: `${t("dataPipelines.toInput")}${t("dataPipelines.port")}`,
       trigger: "blur",
     },
+    {
+      validator: (_rule, value, callback) => {
+        if (!value) {
+          callback();
+          return;
+        }
+        const strValue = String(value).trim();
+        if (!/^\d+$/.test(strValue)) {
+          callback(new Error(t("dataPipelines.portInvalidFormat")));
+          return;
+        }
+        const numValue = parseInt(strValue, 10);
+        if (numValue < 1 || numValue > 65535) {
+          callback(new Error(t("dataPipelines.portOutOfRange")));
+          return;
+        }
+        callback();
+      },
+      trigger: "blur",
+    },
   ],
   username: [
     {
@@ -1022,19 +1042,28 @@ const testLink = async (formEl) => {
         text: `${t("dataPipelines.testingConnection")}...`,
         background: "rgba(0, 0, 0, 0.7)",
       });
-      const { data, error } = await useFetchApi(newEndpoint, options)
-        .post()
-        .json();
-      loading.close();
-      if (data.value.code === 200) {
-        // MongoDB
-        if (typeId.value === 2) {
-          getDatasourceTables(options);
+      try {
+        const { data, error } = await useFetchApi(newEndpoint, options)
+          .post()
+          .json();
+        loading.close();
+        if (data.value && data.value.code === 200) {
+          // MongoDB
+          if (typeId.value === 2) {
+            getDatasourceTables(options);
+          } else {
+            getDatasourceTableAndColumns(options);
+          }
+        } else if (data.value && data.value.msg) {
+          ElMessage.error(data.value.msg);
+        } else if (error.value) {
+          ElMessage.error(_extractApiErrorMessage(error.value));
         } else {
-          getDatasourceTableAndColumns(options);
+          ElMessage.error(t("dataPipelines.linkError"));
         }
-      } else {
-        ElMessage.error(t("dataPipelines.linkError"));
+      } catch (err) {
+        loading.close();
+        ElMessage.error(_extractApiErrorMessage(err));
       }
     }
   });
@@ -1359,25 +1388,60 @@ const submit = (type) => {
             text: `${t("dataPipelines.submitting")}...`,
             background: "rgba(0, 0, 0, 0.7)",
           });
-          const { data, error } = await useFetchApi(
-            "/dataflow/datasource/datasource/create",
-            options
-          )
-            .post()
-            .json();
-          subLoading.value = false;
-          loading.close();
-          if (data.value.code === 200) {
-            // ElMessage.success(data.value.msg);
-            ElMessage.success(t("dataPipelines.operationSuccessful"));
-            router.back();
-          } else {
-            ElMessage.error(data.value.msg);
+          try {
+            const { data, error } = await useFetchApi(
+              "/dataflow/datasource/datasource/create",
+              options
+            )
+              .post()
+              .json();
+            subLoading.value = false;
+            loading.close();
+            if (data.value && data.value.code === 200) {
+              ElMessage.success(t("dataPipelines.operationSuccessful"));
+              router.back();
+            } else if (data.value && data.value.msg) {
+              ElMessage.error(data.value.msg);
+            } else if (error.value) {
+              const errMsg = _extractApiErrorMessage(error.value);
+              ElMessage.error(errMsg);
+            } else {
+              ElMessage.error(t("dataPipelines.operationFailed"));
+            }
+          } catch (err) {
+            subLoading.value = false;
+            loading.close();
+            const errMsg = _extractApiErrorMessage(err);
+            ElMessage.error(errMsg);
           }
         }
       });
     }
   });
+};
+/**
+ * Extract a human-readable error message from API error responses.
+ * Handles Pydantic validation errors (422), standard CSGHub error format,
+ * and thrown exceptions with nested detail structures.
+ */
+const _extractApiErrorMessage = (err) => {
+  if (!err) return t("dataPipelines.operationFailed");
+  if (typeof err === "string") return err;
+  // Pydantic validation error: { detail: [{ msg: "..." }] }
+  if (err.detail) {
+    if (Array.isArray(err.detail)) {
+      const messages = err.detail
+        .map((d) => d.msg)
+        .filter(Boolean);
+      return messages.length ? messages.join("; ") : t("dataPipelines.operationFailed");
+    }
+    if (typeof err.detail === "string") return err.detail;
+  }
+  // Standard CSGHub response format
+  if (err.msg) return String(err.msg);
+  // Error object with message
+  if (err.message) return String(err.message);
+  return t("dataPipelines.operationFailed");
 };
 const syncLeftToMiddle = () => {
   selectedMiddleTables.value = [...new Set(selectedLeftTables.value)];

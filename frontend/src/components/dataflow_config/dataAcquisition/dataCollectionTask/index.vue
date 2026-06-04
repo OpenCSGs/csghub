@@ -293,6 +293,14 @@
               />
             </template>
           </el-popconfirm>
+          <CsgButton
+            v-else-if="item.task_status !== 1"
+            class="btn btn-secondary-gray btn-sm whitespace-nowrap opacity-50 cursor-not-allowed"
+            :name="t('dataPipelines.delete')"
+            :isElementIcon="true"
+            svgName="Delete"
+            :disabled="true"
+          />
         </div>
         <div
           v-if="canShowSubtasks(item) && isSubtasksExpanded(item.id)"
@@ -498,6 +506,13 @@
                     </el-button>
                   </template>
                 </el-popconfirm>
+                <el-button
+                  v-else
+                  type="text"
+                  disabled
+                  class="flex items-center justify-start"
+                  >{{ t("dataPipelines.delete") }}
+                </el-button>
                 <el-button
                   class="flex items-center justify-start cursor-pointer"
                   type="text"
@@ -873,6 +888,14 @@ const getDataSourceTypeList = async () => {
     font-weight: 400 !important;
     &:hover {
       color: #3250bd !important;
+    }
+    &.is-disabled,
+    &[disabled] {
+      color: #c0c4cc !important;
+      cursor: not-allowed !important;
+      &:hover {
+        color: #c0c4cc !important;
+      }
     }
   }
 }
