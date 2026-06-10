@@ -757,7 +757,7 @@ const handleDelete = async (id) => {
 };
 const toDatasetPage = (path, branch) => {
   if (path && branch) {
-    window.location.href = `/datasets/${path}/files/${branch}`;
+    window.location.href = `/datasets/${path}?tab=files&actionName=files&branch=${branch}`;
   }
 };
 

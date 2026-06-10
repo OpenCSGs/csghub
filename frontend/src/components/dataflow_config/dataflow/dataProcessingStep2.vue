@@ -27,57 +27,12 @@
         v-if="init === 'createJobs'"
         class="btn btn-primary btn-md whitespace-nowrap mr-[5px]"
         v-loading="formLoading"
-        @click="centerDialogVisible = true"
+        @click="save(2)"
         :name="t('dataPipelines.saveAndExecute')"
       />
       <!-- save(2) -->
     </div>
 
-    <el-dialog
-      v-model="centerDialogVisible"
-      :title="t('dataPipelines.saveAndExecute')"
-      width="500"
-      align-center
-      @close="saveDialogClose"
-    >
-      <el-radio-group v-model="is_run" class="execute-type">
-        <el-radio :value="true" size="large">
-          {{ t("dataPipelines.executeImmediately") }}</el-radio
-        >
-        <el-radio :value="false" size="large">
-          {{ t("dataPipelines.selectTheExecutionTime") }}</el-radio
-        >
-      </el-radio-group>
-
-      <el-date-picker
-        v-if="is_run === false"
-        v-model="form.task_run_time"
-        value-format="YYYY-MM-DD HH:mm:ss"
-        type="datetime"
-        :placeholder="t('dataPipelines.PleaseSelectTime')"
-        :disabled-date="disabledPastDate"
-        :disabled-hours="disabledPastHours"
-        :disabled-minutes="disabledPastMinutes"
-        :disabled-seconds="disabledPastSeconds"
-        style="width: 100%"
-      />
-
-      <template #footer>
-        <div class="flex justify-end gap-2">
-          <CsgButton
-            class="btn btn-secondary-gray btn-md whitespace-nowrap"
-            @click="centerDialogVisible = false"
-            :name="t('dataPipelines.cancel')"
-          />
-          <CsgButton
-            class="btn btn-primary btn-md whitespace-nowrap ml-[12px]"
-            v-loading="subLoading"
-            :name="t('dataPipelines.sure')"
-            @click="save(2)"
-          />
-        </div>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
@@ -90,15 +45,10 @@ import {
   buildTaskCreatePayload,
   guardNamespaceBeforeSubmit,
 } from "../../../packs/useDataflowNamespaces.js";
-import { convertUtcToLocalTime } from "../../../packs/datetimeUtils";
 import { useI18n } from "vue-i18n";
-import dayjs from 'dayjs';
 import workflowEditor from './workflowEditor.vue'
 
 const workflowEditorRef = ref(null);
-
-const centerDialogVisible = ref(false);
-const is_run = ref(true);
 
 const router = useRouter();
 const route = useRoute()
@@ -130,52 +80,6 @@ const props = defineProps({
     default: () => ''
   }
 })
-
-const saveDialogClose = () => {
-  is_run.value = true;
-  form.value.task_run_time = "";
-}
-
-// 获取当前时间（使用computed保持响应式）
-const now = computed(() => dayjs());
-
-// 禁用过去的日期（包括今天之前的）
-const disabledPastDate = (time) => {
-  return time.getTime() < now.value.startOf('day').valueOf();
-};
-
-// 禁用今天已经过去的小时
-const disabledPastHours = () => {
-  const hours = [];
-  for (let i = 0; i < now.value.hour(); i++) {
-    hours.push(i);
-  }
-  return hours;
-};
-
-// 禁用当前小时已经过去的分钟
-const disabledPastMinutes = (selectedHour) => {
-  if (selectedHour === now.value.hour()) {
-    const minutes = [];
-    for (let i = 0; i < now.value.minute(); i++) {
-      minutes.push(i);
-    }
-    return minutes;
-  }
-  return [];
-};
-
-// 禁用当前分钟已经过去的秒
-const disabledPastSeconds = (selectedHour, selectedMinute) => {
-  if (selectedHour === now.value.hour() && selectedMinute === now.value.minute()) {
-    const seconds = [];
-    for (let i = 0; i < now.value.second(); i++) {
-      seconds.push(i);
-    }
-    return seconds;
-  }
-  return [];
-};
 
 const isRun = ref(false);
 const save = async (type) => {
@@ -247,7 +151,7 @@ const handleWorkflowSave = async (result) => {
         is_run: isRun.value,
       });
 
-      if (is_run.value) {
+      if (isRun.value) {
         delete combinedData.task_run_time
       }
 
@@ -362,10 +266,4 @@ const geback = () => {
 //   width: 0;
 //   height: 0; 
 // }
-
-.execute-type {
-  :deep(.el-radio) {
-    width: 100% !important;
-  }
-}
 </style>
