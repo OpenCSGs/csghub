@@ -695,7 +695,7 @@
 
   const toDatasetPage = (path,branch) => {
     if(path&&branch){
-      window.location.href=`/datasets/${path}/files/${branch}`
+      window.location.href=`/datasets/${path}?tab=files&actionName=files&branch=${branch}`
     }
   }
   /**
@@ -914,7 +914,7 @@
     color: #101828;
   }
   .demo-tabs > :deep(.el-tabs__content) {
-    padding: 32px;
+    padding: 32px 0;
   }
   .statusBox {
     font-size: 12px;

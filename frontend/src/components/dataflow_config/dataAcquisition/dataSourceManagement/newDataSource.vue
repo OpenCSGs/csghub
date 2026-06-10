@@ -634,50 +634,10 @@
         class="btn btn-primary btn-md whitespace-nowrap"
         v-loading="subLoading"
         :name="t('dataPipelines.saveAndExecute')"
-        @click="centerDialogVisible = true"
+        @click="submit(2)"
       />
     </div>
 
-    <el-dialog
-      v-model="centerDialogVisible"
-      :title="t('dataPipelines.saveAndExecute')"
-      width="500"
-      align-center
-    >
-      <el-radio-group v-model="is_run" class="execute-type">
-        <el-radio :value="true" size="large">
-          {{ t("dataPipelines.executeImmediately") }}</el-radio
-        >
-        <el-radio :value="false" size="large">
-          {{ t("dataPipelines.selectTheExecutionTime") }}</el-radio
-        >
-      </el-radio-group>
-
-      <el-date-picker
-        v-if="is_run === false"
-        v-model="formInline.task_run_time"
-        value-format="YYYY-MM-DD HH:mm:ss"
-        type="datetime"
-        :placeholder="t('dataPipelines.PleaseSelectTime')"
-        style="width: 100%"
-      />
-
-      <template #footer>
-        <div class="flex justify-end gap-2">
-          <CsgButton
-            class="btn btn-secondary-gray btn-md whitespace-nowrap"
-            @click="centerDialogVisible = false"
-            :name="t('dataPipelines.cancel')"
-          />
-          <CsgButton
-            class="btn btn-primary btn-md whitespace-nowrap ml-[12px]"
-            v-loading="subLoading"
-            :name="t('dataPipelines.sure')"
-            @click="submit(2)"
-          />
-        </div>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
@@ -917,8 +877,6 @@ const formInline = reactive({
 
 const typeVal = ref("Mysql");
 const typeId = ref(1);
-const centerDialogVisible = ref(false);
-const is_run = ref(true);
 const tableData = ref([]);
 
 const checkList = ref(["1"]);
@@ -1363,14 +1321,7 @@ const submit = (type) => {
 
           // 点击的保存并执行
           if (type === 2) {
-            // 立即执行
-            if (is_run.value === true) {
-              params.is_run = is_run.value;
-            } else {
-              // 选择时间执行
-              if (!formInline.task_run_time)
-                return ElMessage.error( `${t('dataPipelines.pleaseSelectAnExecutionTime')}`);
-            }
+            params.is_run = true;
           }
 
           console.log(
@@ -1601,13 +1552,6 @@ const getDataSourceTypeList = async () => {
   right: 2px !important;
   border-radius: 0 0 8px 0 !important;
 }
-
-.execute-type {
-  :deep(.el-radio) {
-    width: 100% !important;
-  }
-}
-
 :deep(.tableCont) {
   .el-button--text {
     border: none;

@@ -316,27 +316,6 @@
         compact
       />
       <StorageSizeField v-model="executeStorageSize" />
-      <p class="execute-dialog-section-label">
-        {{ t("dataPipelines.executionTime") }}
-      </p>
-      <el-radio-group v-model="is_run" class="execute-type">
-        <el-radio :value="true" size="large">
-          {{ t("dataPipelines.executeImmediately") }}</el-radio
-        >
-        <el-radio :value="false" size="large">
-          {{ t("dataPipelines.selectTheExecutionTime") }}</el-radio
-        >
-      </el-radio-group>
-
-      <el-date-picker
-        v-if="is_run === false"
-        v-model="task_run_time"
-        value-format="YYYY-MM-DD HH:mm:ss"
-        type="datetime"
-        :placeholder="t('dataPipelines.PleaseSelectTime')"
-        style="width: 100%"
-        class="mt-[12px]"
-      />
 
       <template #footer>
         <div class="dialog-footer flex flex-row justify-end items-center gap-3">
@@ -393,12 +372,8 @@ const dataSourceDetailsVisible = ref(false);
 const tableData = ref([]);
 // 执行弹框
 const centerDialogVisible = ref(false);
-// 是否立即执行
-const is_run = ref(true);
 // 当前行数据的Id
 const rowId = ref(null);
-// 选择的运行时间
-const task_run_time = ref(null);
 // 执行弹框内：区域与空间云资源（使用 ref，避免 defineModel 与 reactive 嵌套不同步导致不请求接口）
 const executeClusterId = ref("");
 const executeClusterName = ref("");
@@ -537,8 +512,6 @@ const openExecuteDialog = async (id) => {
   executeSpaceResourceId.value = "";
   executeResourceName.value = "";
   executeStorageSize.value = "4Gi";
-  task_run_time.value = null;
-  is_run.value = true;
   centerDialogVisible.value = true;
 };
 
@@ -573,13 +546,6 @@ const handleExecute = async (id) => {
     storage_size: normalizeStorageSize(executeStorageSize.value),
   };
 
-  if (!is_run.value) {
-    if (!task_run_time.value)
-      return ElMessage.error(
-        `${t("dataPipelines.pleaseSelectAnExecutionTime")}...`
-      );
-    params.task_run_time = task_run_time.value;
-  }
   const options = {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(params),
@@ -626,16 +592,6 @@ const goToNewTask = (path) => {
 };
 </script>
 <style lang="less" scoped>
-/** 与 SpaceResourceFields 内「选择区域 / 空间云资源」小标题同色，避免 el-dialog 正文色偏深 */
-.execute-dialog-section-label {
-  margin: 20px 0 8px;
-  padding: 0;
-  font-size: 12px;
-  line-height: 1.5;
-  font-weight: 400;
-  color: #667085;
-}
-
 .data-source-title {
   display: flex;
   align-items: center;
