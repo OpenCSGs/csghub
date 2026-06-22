@@ -35,13 +35,21 @@
             <div class="text-gray-400 text-xs mb-1 mt-1">
               {{ t("dataPipelines.createTime") }}：
             </div>
-            <div>{{ dataSource.datasourceInfo?.created_at }}</div>
+            <div>{{
+              dataSource.datasourceInfo?.created_at
+                ? convertUtcToLocalTime(dataSource.datasourceInfo.created_at)
+                : '-'
+            }}</div>
           </div>
           <div class="info-item">
             <div class="text-gray-400 text-xs mb-1 mt-1">
               {{ t("dataPipelines.lastUpdate") }}：
             </div>
-            <div>{{ dataSource.datasourceInfo?.updated_at }}</div>
+            <div>{{
+              dataSource.datasourceInfo?.updated_at
+                ? convertUtcToLocalTime(dataSource.datasourceInfo.updated_at)
+                : '-'
+            }}</div>
           </div>
         </div>
       </el-col>
@@ -126,6 +134,7 @@
 <script setup>
 import { ref, onMounted, defineProps, inject } from "vue";
 import useFetchApi from "@/packs/useFetchApi";
+import { convertUtcToLocalTime } from "@/packs/datetimeUtils";
 import { useI18n } from "vue-i18n";
 const { t, locale } = useI18n();
 // 数据源数据
