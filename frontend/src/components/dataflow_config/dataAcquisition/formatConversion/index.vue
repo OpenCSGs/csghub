@@ -138,7 +138,15 @@
             align="center"
             :label="t('dataPipelines.createTime')"
             width="260"
-          />
+          >
+            <template #default="scope">
+              {{
+                scope.row.created_at
+                  ? convertUtcToLocalTime(scope.row.created_at)
+                  : '-'
+              }}
+            </template>
+          </el-table-column>
 
           <el-table-column
             :label="t('dataPipelines.operations')"
@@ -254,6 +262,7 @@ import { useRouter } from "vue-router";
 import { ref, reactive, onMounted, provide } from "vue";
 import { ElMessage, ElLoading } from "element-plus";
 import useFetchApi from "@/packs/useFetchApi";
+import { convertUtcToLocalTime } from "@/packs/datetimeUtils";
 import { useI18n } from "vue-i18n";
 import DataSourceInfo from "./components/dataSourceInfo.vue";
 const router = useRouter();
