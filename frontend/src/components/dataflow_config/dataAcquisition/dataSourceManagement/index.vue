@@ -146,7 +146,7 @@
           >
             <template #default="scope">
               <div class="text-gray-500 text-sm font-light text-xs text-right">
-                {{ t("dataPipelines.dataFlow") }}
+                {{ t("dataPipelines.dataset") }}
               </div>
               <div class="text-right truncate" :title="formatDataFlow(scope.row.extra_config)">
                 {{ formatDataFlow(scope.row.extra_config) }}
@@ -398,15 +398,7 @@ const formatDataFlow = (extraConfig) => {
     }
   }
   const datasetId = extra.csg_hub_dataset_id || "";
-  const branch =
-    extra.csg_hub_dataset_default_branch ||
-    extra.csg_hub_dataset_branch ||
-    extra.csg_hub_dataset_name ||
-    "";
-  if (datasetId && branch) return `${datasetId}>${branch}`;
-  if (datasetId) return datasetId;
-  if (branch) return branch;
-  return "-";
+  return datasetId || "-";
 };
 
 /**

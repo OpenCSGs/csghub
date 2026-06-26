@@ -252,6 +252,7 @@ export const dataPipelines = {
   "dataSource": "Data Source",
   "dataSourceBranch": "Data Source Branch",
   "dataFlow": "Data Flow",
+  "dataset": "Dataset",
   "startTime": "Start Time",
   "endTime": "End Time",
   "executionStatus": {

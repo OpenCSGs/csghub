@@ -232,10 +232,13 @@
       activeName.value === 'Internal'
         ? form.value.sub_type
         : form2.value.sub_type
+    const kw = (searchStr || '').trim().toLowerCase()
     toolList.value = toolListAll.value.filter(
       (item) =>
         item.type === activeName.value &&
-        item.name.includes(searchStr) &&
+        // 列表展示的是翻译后的名称，搜索按展示名(+原始 key)匹配，不区分大小写
+        (t(`dataPipelines.${item.name}`).toLowerCase().includes(kw) ||
+          (item.name || '').toLowerCase().includes(kw)) &&
         (sub_type ? item.sub_type === sub_type : true)
     )
   }
