@@ -26,7 +26,7 @@
           </div>
           <div class="info-item">
             <div class="text-gray-400 text-xs mb-1 mt-1">
-              {{ t("dataPipelines.dataFlow") }}：
+              {{ t("dataPipelines.dataset") }}：
             </div>
             <div>{{ getDataFlow(dataSource.datasourceInfo?.extra_config) }}</div>
           </div>
@@ -153,8 +153,13 @@ onMounted(() => {
 });
 
 const getDataFlow = (extra_config = '{}') => {
-  const dataFlow = JSON.parse(extra_config);
-  return `${dataFlow.csg_hub_dataset_id || ''}${dataFlow.csg_hub_dataset_branch ? ` > ${dataFlow.csg_hub_dataset_branch}` : ''}`;
+  let dataFlow = {};
+  try {
+    dataFlow = JSON.parse(extra_config || '{}');
+  } catch {
+    return '-';
+  }
+  return dataFlow.csg_hub_dataset_id || '-';
 }
 
 /**

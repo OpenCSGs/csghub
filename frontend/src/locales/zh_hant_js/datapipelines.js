@@ -252,6 +252,7 @@ export const dataPipelines = {
   "dataSource": "數據來源",
   "dataSourceBranch": "數據來源分支",
   "dataFlow": "數據流向",
+  "dataset": "數據集",
   "startTime": "開始時間",
   "endTime": "結束時間",
   "executionStatus": {

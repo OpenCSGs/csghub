@@ -149,9 +149,16 @@
           <div class="task-info__grid">
             <div class="task-info__cell">
               <p class="text-gray-500 text-xs mb-[6px]">
-                {{ t("dataPipelines.subtaskCount") }}
+                {{ t("dataPipelines.dataFlow") }}
               </p>
-              <div class="text-md font-normal">{{ displaySubtaskCount(item) }}</div>
+              <div class="text-md font-normal truncate" :title="displayDataFlow(item)">
+                <span
+                  v-if="item.export_repo_id && item.export_branch_name"
+                  class="text-brand-600 hover:underline cursor-pointer"
+                  @click="toDatasetPage(item.export_repo_id, item.export_branch_name)"
+                >{{ displayDataFlow(item) }}</span>
+                <span v-else>{{ displayDataFlow(item) }}</span>
+              </div>
             </div>
             <div class="task-info__cell">
               <p class="text-gray-500 text-xs mb-[6px]">
@@ -594,12 +601,13 @@ const form = ref({
 const subtasksByTaskId = reactive({});
 const subtasksLoading = reactive({});
 
-const displaySubtaskCount = (item) => {
-  const count = item?.subtask_count;
-  if (count === null || count === undefined) {
-    return item?.csghub_job_id ? 0 : "-";
-  }
-  return count;
+// 本次执行的数据流向：目标数据集 + 实际写入分支（后端 export_repo_id / export_branch_name）
+const displayDataFlow = (item) => {
+  const repoId = item?.export_repo_id;
+  const branch = item?.export_branch_name;
+  if (repoId && branch) return `${repoId}>${branch}`;
+  if (repoId) return repoId;
+  return "-";
 };
 
 const displayRegion = (item) => {

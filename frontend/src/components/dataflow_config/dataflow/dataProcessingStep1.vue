@@ -408,9 +408,9 @@ const updateOwner = () => {
 
 const getSelListData = async (type) => {
   let url = `/user/${subForm.value.owner}/datasets?per=50&page=1`
-  // if (subForm.value.owner !== userStore.username) {
-  //   url = `/organization/${subForm.value.owner}/datasets?current_user=${userStore.username}&per=50&page=1`
-  // }
+  if (subForm.value.owner !== userStore.username) {
+    url = `/organization/${subForm.value.owner}/datasets?current_user=${userStore.username}&per=50&page=1`
+  }
   const { data } = await useFetchApi(url).get().json()
   if (data.value && data.value.data) {
     dataSourceList.value = data.value.data
