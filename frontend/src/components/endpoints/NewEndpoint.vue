@@ -148,7 +148,7 @@
           class="w-full"
           prop="endpoint_cluster"
         >
-          <div class="w-full flex flex-row sm:flex-col items-start sm:items-start justify-start gap-4 sm:gap-4 mb-8">
+          <div class="w-full flex flex-row sm:flex-col items-start sm:items-start justify-start gap-4 sm:gap-4 mb-4">
             <el-select
               v-model="dataForm.endpoint_cluster"
               :placeholder="
@@ -165,23 +165,13 @@
                 :value="item.cluster_id"
               />
             </el-select>
-            <div v-if="Array.isArray(typeList)&&typeList.length>0" class="w-full sm:w-auto flex items-center justify-start gap-1 flex-wrap">
-              <p v-for="item in typeList" :key="item" class="px-3 py-2 cursor-pointer text-md font-medium rounded-sm" :class="activeType==item?'bg-gray-50 text-gray-700':'bg-white text-gray-500'" @click="setActiveType(item)">{{item}}</p>
-            </div>
           </div>
-          <div class="w-full grid grid-cols-3 items-center gap-6 mb-6 md:grid-cols-2 sm:grid-cols-1">
-            <div v-for="item in selResourceList" :key="item.id" class="group flex flex-col items-center gap-2 text-center p-4 rounded-2xl border bg-white relative overflow-hidden" :class="[item.is_available ? 'cursor-pointer' : 'cursor-not-allowed', getCardBorderClass(item)]" @click="changeCloudResource(item)">
-              <i class="block w-6 h-1 rounded-xs shadow-sm" :class="getIndicatorClass(item)"/>
-              <div v-if="isResourceInsufficient(item)" class="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <div class="opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 ease-out text-sm text-warning-700 px-2.5 py-0.5 bg-warning-50 border border-warning-700 rounded-xl">
-                  {{ t('endpoints.lowMemory') }}
-                </div>
-              </div>
-              <p class="text-md font-medium" :class="item.is_available?'text-gray-700':'text-gray-500'">{{item.resources[activeType.toLowerCase()]?.type}}</p>
-              <p class="text-md font-normal leading-5 min-h-[2lh] line-clamp-2 break-words" :class="item.is_available?'text-gray-700':'text-gray-500'">{{item.name}}</p>
-              <p class="text-gray-500 text-md">{{item.priceValue}}</p>
-            </div>
-          </div>
+          <ResourceSelector
+            :category-resources="endpointResources"
+            v-model:selected="dataForm.cloud_resource"
+            :model-min-gpu-memory="minGpuMemory"
+            :show-indicator="true"
+          />
           <p
             v-if="minGpuMemory"
             class="text-gray-600 font-light w-full"
@@ -313,6 +303,7 @@
   import PublicAndPrivateRadioGroup from '../shared/form/PublicAndPrivateRadioGroup.vue'
   import EngineArgs from './EngineArgs.vue'
   import { fetchResourcesInType } from '../shared/deploy_instance/fetchResourceInCategory'
+  import ResourceSelector from '../shared/deploy_instance/ResourceSelector.vue'
   import { Vue3Lottie } from 'vue3-lottie'
   import lightAnimation from '../../assets/animations/light.json'
 
@@ -346,9 +337,7 @@
   const animationData = ref(lightAnimation)
   const lottieRef = ref(null)
   const isPlaying = ref(false)
-  const typeList = ref([])
-  const activeType = ref('')
-  const selResourceList = ref([])
+  
 
   const minReplicaRanges = [0, 1, 2, 3, 4, 5]
   const replicaRanges = [1, 2, 3, 4, 5]
@@ -449,9 +438,6 @@
     const categoryResources = await fetchResourcesInType(dataForm.value.endpoint_cluster)
     const firstAvailableResource = categoryResources.flatMap(item => item.options).find((item) => item.is_available)
     endpointResources.value = categoryResources
-    typeList.value = categoryResources.map(item=>item.label)
-    activeType.value = typeList.value[0]||''
-    selResourceList.value = endpointResources.value.find(item=>item.label == activeType.value)?.options||[]
     if (firstAvailableResource) {
       dataForm.value.cloud_resource = `${firstAvailableResource.id}/${firstAvailableResource.order_detail_id}`
       resetCurrentRuntimeFramework()
@@ -473,10 +459,7 @@
     }
   }
 
-  const setActiveType = (type)=>{
-    activeType.value = type
-    selResourceList.value = endpointResources.value.find(item=>item.label == activeType.value)?.options||[]
-  }
+  
 
   const fetchModels = async (query, cb) => {
     const { data, error } = await useFetchApi(
@@ -498,11 +481,7 @@
     fetchQuantizations()
   }
 
-  const changeCloudResource = (item)=>{
-    if (!item?.is_available) return
-    dataForm.value.cloud_resource = `${item.id}/${item.order_detail_id}`
-    resetCurrentRuntimeFramework()
-  }
+  
 
   const resetCurrentRuntimeFramework = async () => {
     // if we have current runtime framework
@@ -744,65 +723,7 @@
     window.open('https://opencsg.com/docs/inferencefinetune/inference_intro', '_blank')
   }
 
-  // indicator color logic for resource cards
-  // - unavailable resource -> gray-400
-  // - otherwise compare recommended minGpuMemory:
-  //   small requirement -> brand-700; large requirement -> warning-700
-  //   if backend provides more precise GPU memory per resource in item.resources, you can enhance here
-  const getResourceGpuMemoryGB = (item) => {
-    try {
-      const spec = item?.resources?.[activeType.value?.toLowerCase?.()] || {}
-      const candidates = [
-        spec.gpu_memory_gb,
-        spec.memory_gb,
-        spec.vram_gb,
-        spec.gpu_memory,
-        spec.vram,
-        spec.memory
-      ]
-      const val = candidates.find(v => v !== undefined && v !== null)
-      if (typeof val === 'number') return val
-      if (typeof val === 'string') {
-        const m = val.match(/([\d.]+)/)
-        return m ? Number(m[1]) : null
-      }
-      return null
-    } catch (_) {
-      return null
-    }
-  }
-
-  const getIndicatorClass = (item) => {
-    if (!item?.is_available) return 'bg-gray-400'
-    const recommend = Number(minGpuMemory?.value || 0)
-    const resourceMem = getResourceGpuMemoryGB(item)
-    if (recommend && resourceMem) {
-      return recommend > resourceMem ? 'bg-warning-700' : 'bg-brand-700'
-    }
-    if (!recommend || recommend <= 8) return 'bg-brand-700'
-    return 'bg-warning-700'
-  }
-
-  const isResourceInsufficient = (item) => {
-    const recommend = Number(minGpuMemory?.value || 0)
-    if (!recommend || recommend <= 0) return false
-    const resourceMem = getResourceGpuMemoryGB(item)
-    if (recommend && resourceMem) {
-      return recommend > resourceMem
-    }
-    // fallback: 当缺少资源显存字段时，按阈值 8GB 判断
-    return recommend > 8
-  }
-
-  const getCardBorderClass = (item) => {
-    if (!item?.is_available) return 'border-gray-300'
-    const insuff = isResourceInsufficient(item)
-    const isSelected = dataForm.value.cloud_resource == `${item.id}/${item.order_detail_id}`
-    if (isSelected && insuff) return 'border border-[2px] border-warning-700'
-    if (isSelected) return 'border border-[2px] border-brand-500'
-    // 未选中时，无论是否显存不足，都走默认灰色（有资源默认灰-400）
-    return 'border-gray-400'
-  }
+  
 
   onMounted(() => {
     fetchClusters()
