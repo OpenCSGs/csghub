@@ -11,7 +11,8 @@ type EndpointHandlerImpl struct {
 func NewEndpointHandler() EndpointHandler {
 	return &EndpointHandlerImpl{
 		BaseHandlerImpl{
-			resourceType: "endpoints",
+			resourceType:       "endpoints",
+			renderBaseInstance: RenderBaseInstance,
 		},
 	}
 }

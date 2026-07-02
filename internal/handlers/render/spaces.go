@@ -11,7 +11,8 @@ type SpaceHandlerImpl struct {
 func NewSpaceHandler() SpaceHandler {
 	return &SpaceHandlerImpl{
 		BaseHandlerImpl{
-			resourceType: "spaces",
+			resourceType:       "spaces",
+			renderBaseInstance: RenderBaseInstance,
 		},
 	}
 }

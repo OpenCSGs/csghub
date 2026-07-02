@@ -11,7 +11,8 @@ type CodeHandlerImpl struct {
 func NewCodeHandler() CodeHandler {
 	return &CodeHandlerImpl{
 		BaseHandlerImpl{
-			resourceType: "codes",
+			resourceType:       "codes",
+			renderBaseInstance: RenderBaseInstance,
 		},
 	}
 }

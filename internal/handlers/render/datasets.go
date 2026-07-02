@@ -11,7 +11,8 @@ type DatasetHandlerImpl struct {
 func NewDatasetHandler() DatasetHandler {
 	return &DatasetHandlerImpl{
 		BaseHandlerImpl{
-			resourceType: "datasets",
+			resourceType:       "datasets",
+			renderBaseInstance: RenderBaseInstance,
 		},
 	}
 }

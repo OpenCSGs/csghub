@@ -59,9 +59,10 @@ type BaseHandler interface {
 }
 
 type BaseHandlerImpl struct {
-	resourceType  string
-	isSmallFooter bool
-	jwtUtils      jwt.JwtUtils
+	resourceType       string
+	isSmallFooter      bool
+	jwtUtils           jwt.JwtUtils
+	renderBaseInstance RenderBase
 }
 
 func init() {
@@ -73,7 +74,7 @@ func init() {
 }
 
 func (b *BaseHandlerImpl) List(ctx *gin.Context) {
-	RenderBaseInstance.RenderTemplate(ctx, b.resourceType+"_index", nil)
+	b.renderBaseInstance.RenderTemplate(ctx, b.resourceType+"_index", nil)
 }
 
 func (b *BaseHandlerImpl) Detail(ctx *gin.Context) {
@@ -131,7 +132,7 @@ func (b *BaseHandlerImpl) Community(ctx *gin.Context) {
 
 func (b *BaseHandlerImpl) Tools(ctx *gin.Context) {
 	data := map[string]interface{}{}
-	RenderBaseInstance.RenderTemplate(ctx, "mcp_servers_tools", data)
+	b.renderBaseInstance.RenderTemplate(ctx, "mcp_servers_tools", data)
 }
 
 func (b *BaseHandlerImpl) Schema(ctx *gin.Context) {
@@ -144,11 +145,11 @@ func (b *BaseHandlerImpl) Deploy(ctx *gin.Context) {
 		"namespace":     ctx.Param("namespace"),
 		"mcpServerName": ctx.Param("mcp_server_name"),
 	}
-	RenderBaseInstance.RenderTemplate(ctx, "mcp_servers_deploy", data)
+	b.renderBaseInstance.RenderTemplate(ctx, "mcp_servers_deploy", data)
 }
 
 func (b *BaseHandlerImpl) New(ctx *gin.Context) {
-	RenderBaseInstance.RenderTemplate(ctx, b.resourceType+"_new", map[string]interface{}{"licenses": DefaultLicensesJSON})
+	b.renderBaseInstance.RenderTemplate(ctx, b.resourceType+"_new", map[string]interface{}{"licenses": DefaultLicensesJSON})
 }
 
 func (b *BaseHandlerImpl) renderShow(ctx *gin.Context, actionName, defaultTab string, extraData ...map[string]interface{}) {
@@ -168,7 +169,7 @@ func (b *BaseHandlerImpl) renderShow(ctx *gin.Context, actionName, defaultTab st
 		}
 	}
 
-	RenderBaseInstance.RenderTemplate(ctx, b.resourceType+"_show", data)
+	b.renderBaseInstance.RenderTemplate(ctx, b.resourceType+"_show", data)
 }
 
 func (b *BaseHandlerImpl) addResourceSpecificData(ctx *gin.Context, data map[string]interface{}) {

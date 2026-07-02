@@ -11,7 +11,8 @@ type ModelHandlerImpl struct {
 func NewModelHandler() ModelHandler {
 	return &ModelHandlerImpl{
 		BaseHandlerImpl{
-			resourceType: "models",
+			resourceType:       "models",
+			renderBaseInstance: RenderBaseInstance,
 		},
 	}
 }

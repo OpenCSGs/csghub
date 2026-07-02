@@ -11,7 +11,8 @@ type McpServerHandlerImpl struct {
 func NewMcpServerHandler() McpServerHandler {
 	return &McpServerHandlerImpl{
 		BaseHandlerImpl{
-			resourceType: "mcp_servers",
+			resourceType:       "mcp_servers",
+			renderBaseInstance: RenderBaseInstance,
 		},
 	}
 }
