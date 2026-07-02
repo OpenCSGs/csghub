@@ -19,9 +19,10 @@ type NotebookHandlerImpl struct {
 func NewNotebookHandler() NotebookHandler {
 	return &NotebookHandlerImpl{
 		BaseHandlerImpl{
-			resourceType:  "notebooks",
-			isSmallFooter: true,
-			jwtUtils:      jwt.NewJwtUtils(),
+			resourceType:       "notebooks",
+			isSmallFooter:      true,
+			jwtUtils:           jwt.NewJwtUtils(),
+			renderBaseInstance: RenderBaseInstance,
 		},
 	}
 }
@@ -33,5 +34,5 @@ func (i *NotebookHandlerImpl) Show(ctx *gin.Context) {
 		"isSmallFooter": i.isSmallFooter,
 	}
 
-	RenderBaseInstance.RenderTemplate(ctx, "notebooks_show", data)
+	i.renderBaseInstance.RenderTemplate(ctx, "notebooks_show", data)
 }

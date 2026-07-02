@@ -13,9 +13,10 @@ type SkillHandlerImpl struct {
 func NewSkillHandler() SkillHandler {
 	return &SkillHandlerImpl{
 		BaseHandlerImpl{
-			resourceType:  "skills",
-			isSmallFooter: true,
-			jwtUtils:      jwt.NewJwtUtils(),
+			resourceType:       "skills",
+			isSmallFooter:      true,
+			jwtUtils:           jwt.NewJwtUtils(),
+			renderBaseInstance: RenderBaseInstance,
 		},
 	}
 }

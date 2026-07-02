@@ -11,7 +11,8 @@ type FinetuneHandlerImpl struct {
 func NewFinetuneHandler() FinetuneHandler {
 	return &FinetuneHandlerImpl{
 		BaseHandlerImpl{
-			resourceType: "finetunes",
+			resourceType:       "finetunes",
+			renderBaseInstance: RenderBaseInstance,
 		},
 	}
 }
