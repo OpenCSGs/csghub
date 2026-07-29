@@ -53,7 +53,15 @@ export const admin = {
     userDetailTitle: 'User Detail',
     editBtn: 'Edit',
     editCancelBtn: 'Cancel',
-    editConfirmBtn: 'Confirm'
+    editConfirmBtn: 'Confirm',
+    destroyConfirmBtn: 'Delete',
+    deleteUserConfirm: 'This action will permanently delete the user. Continue?',
+    deleteUserTitle: 'Warning',
+    confirm: 'Confirm',
+    cancel: 'Cancel',
+    destroySuccess: 'User deleted successfully!',
+    destroyFailed: 'Failed to delete user!',
+    deleteCanceled: 'User deletion canceled'
   },
   models: {
     title: 'Model',

@@ -53,7 +53,15 @@ export const admin = {
     userDetailTitle: '用户详情',
     editBtn: '编辑',
     editCancelBtn: '取消',
-    editConfirmBtn: '确认'
+    editConfirmBtn: '确认',
+    destroyConfirmBtn: '删除',
+    deleteUserConfirm: '此操作将永久删除该用户，是否继续？',
+    deleteUserTitle: '提示',
+    confirm: '确定',
+    cancel: '取消',
+    destroySuccess: '删除成功！',
+    destroyFailed: '删除失败！',
+    deleteCanceled: '已取消删除'
   },
   models: {
     title: '模型管理',

@@ -37,6 +37,10 @@
       </ul>
       <template #footer>
         <CsgButton class="btn btn-primary btn-md" name="Edit" @click="dialogFormVisible = true" />
+        <CsgButton
+          class="btn btn-danger btn-md"
+          :name="$t('admin.users.destroyConfirmBtn')"
+          @click="destroyUser" />
       </template>
     </Card>
 
@@ -81,13 +85,19 @@
 <script setup>
   import { Container, Pagination, Table, Card } from '../admin_component'
   import { ref, onMounted } from 'vue'
-  import { useRoute } from 'vue-router'
+  import { useRoute, useRouter } from 'vue-router'
   import useFetchApi from '../../../packs/useFetchApi'
   import dayjs from 'dayjs'
-  import { ElMessage } from 'element-plus'
+  import { ElMessage, ElMessageBox } from 'element-plus'
   import { BASE_URL } from '../router'
+  import useUserStore from '../../../stores/UserStore'
+  import { useI18n } from 'vue-i18n'
 
+  const { t } = useI18n()
+
+  const userStore = useUserStore()
   const route = useRoute()
+  const router = useRouter()
 
   const user = ref({})
 
@@ -106,6 +116,36 @@
     } else {
       ElMessage.error('Failed to fetch user')
     }
+  }
+
+  const destroyUser = () => {
+    ElMessageBox.confirm(
+      t('admin.users.deleteUserConfirm', '此操作将永久删除该用户, 是否继续?'),
+      t('admin.users.deleteUserTitle', '提示'),
+      {
+        confirmButtonText: t('admin.users.confirm', '确定'),
+        cancelButtonText: t('admin.users.cancel', '取消'),
+        type: 'warning',
+      }
+    ).then(async () => {
+      const res = await useFetchApi(`/user/${user.value.username}?current_user=${userStore.username}`).delete().json()
+
+      if (res.data?.value) {
+        ElMessage.success(t('admin.users.destroySuccess', '删除成功!'))
+        router.push('/admin_panel/users')
+      } else {
+        if(res.error?.value?.msg) {
+          ElMessage.error(res.error.value?.msg)
+        } else {
+          ElMessage.error(res.error.value?.msg || t('admin.users.destroyFailed', '删除失败!'))
+        }
+      }
+    }).catch(() => {
+      ElMessage({
+        type: 'info',
+        message: t('admin.users.deleteCanceled', '已取消删除'),
+      });
+    });
   }
 
   const submitUserForm = async () => {
