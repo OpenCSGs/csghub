@@ -41,6 +41,22 @@
       />
     </div>
     <div
+      v-if="framework === 'PyTorch' || framework === 'ONNX'"
+      class="flex items-center gap-2 mt-4"
+    >
+      <MetaItem
+        v-if="data.model_params"
+        :title="$t('models.metadata.modelSize')"
+        :value="data.model_params"
+        :params="true"
+      />
+      <MetaItem
+        v-if="data.architecture"
+        :title="$t('models.metadata.architecture')"
+        :value="data.architecture"
+      />
+    </div>
+    <div
       v-if="
         framework === 'GGUF' &&
         data.quantizations &&
