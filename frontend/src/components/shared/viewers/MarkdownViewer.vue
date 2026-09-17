@@ -43,7 +43,7 @@
     html: true,
     highlight: function (str, lang) {
       const escapeHtml = mdParser.utils.escapeHtml
-      const langLabel = lang ? lang.toUpperCase() : 'CODE'
+      const langLabel = lang ? escapeHtml(lang.toUpperCase()) : 'CODE'
 
       const copyButtonFragment = `
         <clipboard-copy value="${escapeHtml(str)}"

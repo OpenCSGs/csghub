@@ -55,4 +55,18 @@ describe("MarkdownViewer.vue", () => {
     expect(html).toContain("CODE");
     expect(html).toContain("some plain text");
   });
+
+  it("escapes malicious language tags in code blocks to prevent XSS", () => {
+    const maliciousCodeBlock = "```<img src=x onerror=alert(1)>\nalert('test')\n```";
+    const wrapper = mount(MarkdownViewer, {
+      props: {
+        content: maliciousCodeBlock,
+      },
+    });
+
+    const html = wrapper.html();
+    expect(html).toContain("code-block-container");
+    expect(html).not.toContain("<img src=x onerror=alert(1)>");
+    expect(html).toContain("&lt;IMG");
+  });
 });
