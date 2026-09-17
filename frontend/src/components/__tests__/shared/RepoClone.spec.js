@@ -123,6 +123,8 @@ describe("RepoClone - quickstartCodeMarkdown", () => {
 
     expect(wrapper.vm.quickstartCodeMarkdown).toContain('from transformers import AutoTokenizer, AutoModelForCausalLM');
     expect(wrapper.vm.quickstartCodeMarkdown).toContain('model_id = "opencsg/test-model"');
+    expect(wrapper.vm.quickstartCodeMarkdown).toContain('AutoTokenizer.from_pretrained(model_id)');
+    expect(wrapper.vm.quickstartCodeMarkdown).not.toContain('trust_remote_code=True');
     expect(wrapper.vm.quickstartCodeMarkdown).toContain('```python');
   });
 

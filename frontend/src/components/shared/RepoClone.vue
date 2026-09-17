@@ -557,8 +557,8 @@ csghub-cli download ${props.namespacePath}${typeFlag}${revision}
 model_id = "${props.namespacePath}"
 
 # Load tokenizer and model
-tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained(model_id, trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(model_id)
 
 # Run inference
 inputs = tokenizer("Hello, world!", return_tensors="pt")
