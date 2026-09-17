@@ -145,5 +145,8 @@ export const all = {
   notExist: "not exist",
   branchNotExist: "Branch does not exist, please enter a valid branch name",
   useModel: "Use Model",
-  clickForQuickTutorial: "Click here to start the quick tutorial"
+  clickForQuickTutorial: "Click here to start the quick tutorial",
+  transformersTips: "Load and run this model with the Transformers library",
+  datasetsLibraryTips: "Load and inspect this dataset with the Datasets library",
+  quickstartTips: "Quickstart code snippet"
 }

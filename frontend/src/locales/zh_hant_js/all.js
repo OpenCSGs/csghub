@@ -153,5 +153,8 @@ export const all = {
   notExist: "中不存在",
   branchNotExist: "分支不存在，請輸入有效的分支名稱",
   useModel: "使用模型",
-  clickForQuickTutorial: "點擊這裡，開始快速教程"
+  clickForQuickTutorial: "點擊這裡，開始快速教程",
+  transformersTips: "使用 Transformers 庫加載並運行此模型",
+  datasetsLibraryTips: "使用 Datasets 庫加載並查看此數據集",
+  quickstartTips: "快速入門代碼示例"
 }
