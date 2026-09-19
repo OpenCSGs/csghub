@@ -339,6 +339,27 @@
             <markdown-viewer :content="cmdCloneCodeMarkdown"></markdown-viewer>
           </div>
         </el-tab-pane>
+        <el-tab-pane
+          v-if="repoType == 'model' || repoType == 'dataset'"
+          :label="repoType == 'model' ? 'Transformers' : 'Datasets'"
+          name="quickstart"
+        >
+          <div
+            class="flex flex-col gap-1 px-3 py-2 border-t border-gray-200 bg-white text-gray-700 break-all"
+          >
+            <div class="flex gap-[8px] text-sm leading-[20px] text-gray-500">
+              <SvgIcon
+                name="exclamation_point"
+                width="13"
+                height="13"
+                class="cursor-pointer"
+              />
+              {{ repoType == 'model' ? $t('all.transformersTips') : $t('all.datasetsLibraryTips') }}
+            </div>
+            <div class="text-gray-500 mt-[8px]"># {{ $t('all.quickstartTips') }}</div>
+            <markdown-viewer :content="quickstartCodeMarkdown"></markdown-viewer>
+          </div>
+        </el-tab-pane>
       </el-tabs>
     </el-dialog>
   </div>
@@ -526,6 +547,31 @@ csghub-cli download ${props.namespacePath}${typeFlag}${revision}
   const cmdCloneCodeMarkdown = computed(() => {
     const cmdCloneCode = getCmdCloneCode()
     return getMarkdownCode(cmdCloneCode.value, 'bash', true)
+  })
+
+  const quickstartCodeMarkdown = computed(() => {
+    let code = ''
+    if (props.repoType === 'model') {
+      code = `from transformers import AutoTokenizer, AutoModelForCausalLM
+
+model_id = "${props.namespacePath}"
+
+# Load tokenizer and model
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(model_id)
+
+# Run inference
+inputs = tokenizer("Hello, world!", return_tensors="pt")
+outputs = model.generate(**inputs, max_new_tokens=50)
+print(tokenizer.decode(outputs[0], skip_special_tokens=True))`
+    } else if (props.repoType === 'dataset') {
+      code = `from datasets import load_dataset
+
+# Load dataset
+dataset = load_dataset("${props.namespacePath}")
+print(dataset)`
+    }
+    return getMarkdownCode(code, 'python', false)
   })
 
   const downloadButtonKey = computed(() => {

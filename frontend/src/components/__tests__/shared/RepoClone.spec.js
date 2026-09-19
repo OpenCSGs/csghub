@@ -113,3 +113,29 @@ describe("RepoClone - httpCloneProtocolHostname", () => {
     expect(wrapper.vm.httpCloneProtocolHostname).toBe('https://example.com:9443');
   });
 });
+
+describe("RepoClone - quickstartCodeMarkdown", () => {
+  it("generates transformers code snippet for model repos", () => {
+    const wrapper = createWrapper({
+      repoType: 'model',
+      namespacePath: 'opencsg/test-model'
+    });
+
+    expect(wrapper.vm.quickstartCodeMarkdown).toContain('from transformers import AutoTokenizer, AutoModelForCausalLM');
+    expect(wrapper.vm.quickstartCodeMarkdown).toContain('model_id = "opencsg/test-model"');
+    expect(wrapper.vm.quickstartCodeMarkdown).toContain('AutoTokenizer.from_pretrained(model_id)');
+    expect(wrapper.vm.quickstartCodeMarkdown).not.toContain('trust_remote_code=True');
+    expect(wrapper.vm.quickstartCodeMarkdown).toContain('```python');
+  });
+
+  it("generates datasets library code snippet for dataset repos", () => {
+    const wrapper = createWrapper({
+      repoType: 'dataset',
+      namespacePath: 'opencsg/test-dataset'
+    });
+
+    expect(wrapper.vm.quickstartCodeMarkdown).toContain('from datasets import load_dataset');
+    expect(wrapper.vm.quickstartCodeMarkdown).toContain('dataset = load_dataset("opencsg/test-dataset")');
+    expect(wrapper.vm.quickstartCodeMarkdown).toContain('```python');
+  });
+});
