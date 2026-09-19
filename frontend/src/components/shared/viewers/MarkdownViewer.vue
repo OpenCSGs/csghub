@@ -43,22 +43,32 @@
     html: true,
     highlight: function (str, lang) {
       const escapeHtml = mdParser.utils.escapeHtml
+      const langLabel = lang ? escapeHtml(lang.toUpperCase()) : 'CODE'
 
       const copyButtonFragment = `
         <clipboard-copy value="${escapeHtml(str)}"
-                        class="copy-button p-1 h-fit hidden group-hover:block hover:bg-gray-100 rounded-sm cursor-pointer"
-        >${copyIcon}</clipboard-copy>`
+                        class="copy-button flex items-center gap-1 text-gray-500 hover:text-gray-800 cursor-pointer text-xs transition-colors"
+        >
+          ${copyIcon}
+          <span class="text-[11px] font-sans">Copy</span>
+        </clipboard-copy>`
+
+      const codeHeader = `
+        <div class="code-block-header flex items-center justify-between px-3 py-1.5 bg-gray-100 border-b border-gray-200 text-xs text-gray-500 font-mono select-none rounded-t-md">
+          <span class="font-semibold text-gray-600 tracking-wider text-[11px]">${langLabel}</span>
+          ${copyButtonFragment}
+        </div>`
 
       if (lang && hljs.getLanguage(lang)) {
         try {
           const highlightedCode = hljs.highlight(str, { language: lang, ignoreIllegals: true }).value
-          return `<pre class="group flex space-between w-full !overflow-hidden"><code class="hl-code !leading-6 !overflow-auto w-[calc(100%-24px)]">${highlightedCode}</code>${copyButtonFragment}</pre>`
+          return `<div class="code-block-container my-3 rounded-md border border-gray-200 overflow-hidden shadow-xs">${codeHeader}<pre class="!m-0 !p-3 !bg-gray-50 !overflow-x-auto"><code class="hl-code !leading-6 !text-sm">${highlightedCode}</code></pre></div>`
         } catch (error) {
           console.error(error)
         }
       }
 
-      return `<pre class="group flex space-between w-full !overflow-hidden"><code class="hl-code !leading-6 !overflow-auto w-[calc(100%-24px)]">${escapeHtml(str)}</code> ${copyButtonFragment} </pre>`
+      return `<div class="code-block-container my-3 rounded-md border border-gray-200 overflow-hidden shadow-xs">${codeHeader}<pre class="!m-0 !p-3 !bg-gray-50 !overflow-x-auto"><code class="hl-code !leading-6 !text-sm">${escapeHtml(str)}</code></pre></div>`
     }
   }).use(markdownItAnchor, anchorOptions)
 
