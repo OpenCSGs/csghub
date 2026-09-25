@@ -68,6 +68,10 @@ describe('PromptsDetails.vue', () => {
             name: 'CsgButton'
           },
           ElDialog: true,
+          ElInput: {
+            template: '<input class="el-input-mock" :value="modelValue" @input="$emit(\'update:modelValue\', $event.target.value)" />',
+            props: ['modelValue', 'placeholder', 'clearable', 'size']
+          },
           ElButton: {
             template: '<button @click="$emit(\'click\')"><slot /></button>',
             props: ['type', 'size', 'class']
@@ -370,5 +374,199 @@ describe('PromptsDetails.vue', () => {
       message: errorMessage,
       type: 'warning'
     })
+  })
+
+  it('should detect template variables and render variable playground', async () => {
+    const mockPromptsDetails = {
+      title: 'Prompt with Variables',
+      tags: [],
+      source: '',
+      content: 'Hello {{name}}, welcome to {{platform}}! Hope you enjoy {{platform}}.',
+      can_manage: true,
+      file_path: 'test-var-prompt'
+    }
+
+    useFetchApiMock.mockImplementationOnce(() => ({
+      json: () => Promise.resolve({
+        data: { value: { data: mockPromptsDetails } },
+        error: { value: null },
+        response: { value: { status: 200 } }
+      })
+    }))
+
+    const wrapper = createWrapper()
+    await flushPromises()
+    await nextTick()
+
+    // Verify detected variables are extracted and deduplicated
+    expect(wrapper.vm.detectedVariables).toEqual(['name', 'platform'])
+
+    // Verify playground and input items are rendered
+    expect(wrapper.find('.variable-playground').exists()).toBe(true)
+    const inputFields = wrapper.findAll('.variable-input-item')
+    expect(inputFields.length).toBe(2)
+  })
+
+  it('should dynamically update substitutedContent as variable inputs change', async () => {
+    const mockPromptsDetails = {
+      title: 'Prompt with Variables',
+      tags: [],
+      source: '',
+      content: 'Translate the following {{code}} into {{language}}.',
+      can_manage: true,
+      file_path: 'test-var-prompt'
+    }
+
+    useFetchApiMock.mockImplementationOnce(() => ({
+      json: () => Promise.resolve({
+        data: { value: { data: mockPromptsDetails } },
+        error: { value: null },
+        response: { value: { status: 200 } }
+      })
+    }))
+
+    const wrapper = createWrapper()
+    await flushPromises()
+    await nextTick()
+
+    // Initially inputs are empty, so substitutedContent keeps placeholders
+    expect(wrapper.vm.substitutedContent).toBe('Translate the following {{code}} into {{language}}.')
+
+    // Update variable values
+    wrapper.vm.variableInputs.code = 'console.log("hello")'
+    wrapper.vm.variableInputs.language = 'Python'
+    await nextTick()
+
+    expect(wrapper.vm.substitutedContent).toBe('Translate the following console.log("hello") into Python.')
+    expect(wrapper.find('.substituted-preview-box').text()).toContain('Translate the following console.log("hello") into Python.')
+  })
+
+  it('should copy substituted content to clipboard when copySubstitutedContent is called', async () => {
+    const mockPromptsDetails = {
+      title: 'Prompt with Variables',
+      tags: [],
+      source: '',
+      content: 'Summarize {{document}} in {{sentences}} sentences.',
+      can_manage: true,
+      file_path: 'test-var-prompt'
+    }
+
+    useFetchApiMock.mockImplementationOnce(() => ({
+      json: () => Promise.resolve({
+        data: { value: { data: mockPromptsDetails } },
+        error: { value: null },
+        response: { value: { status: 200 } }
+      })
+    }))
+
+    const wrapper = createWrapper()
+    await flushPromises()
+    await nextTick()
+
+    wrapper.vm.variableInputs.document = 'Quarterly Report'
+    wrapper.vm.variableInputs.sentences = '3'
+    await nextTick()
+
+    wrapper.vm.copySubstitutedContent()
+
+    expect(copyToClipboard).toHaveBeenCalledWith('Summarize Quarterly Report in 3 sentences.')
+    expect(ElMessage).toHaveBeenCalledWith({
+      message: 'prompts.copySubstitutedSuccess',
+      type: 'success'
+    })
+  })
+
+  it('should reset variable inputs when resetVariables is called', async () => {
+    const mockPromptsDetails = {
+      title: 'Prompt with Variables',
+      tags: [],
+      source: '',
+      content: 'Write an email to {{recipient}} regarding {{subject}}.',
+      can_manage: true,
+      file_path: 'test-var-prompt'
+    }
+
+    useFetchApiMock.mockImplementationOnce(() => ({
+      json: () => Promise.resolve({
+        data: { value: { data: mockPromptsDetails } },
+        error: { value: null },
+        response: { value: { status: 200 } }
+      })
+    }))
+
+    const wrapper = createWrapper()
+    await flushPromises()
+    await nextTick()
+
+    wrapper.vm.variableInputs.recipient = 'Alice'
+    wrapper.vm.variableInputs.subject = 'Project Launch'
+    await nextTick()
+
+    expect(wrapper.vm.variableInputs.recipient).toBe('Alice')
+
+    wrapper.vm.resetVariables()
+    await nextTick()
+
+    expect(wrapper.vm.variableInputs.recipient).toBe('')
+    expect(wrapper.vm.variableInputs.subject).toBe('')
+    expect(wrapper.vm.substitutedContent).toBe('Write an email to {{recipient}} regarding {{subject}}.')
+  })
+
+  it('should format content safely with styled variable badges and HTML escaping', async () => {
+    const mockPromptsDetails = {
+      title: 'Prompt with Variables and HTML',
+      tags: [],
+      source: '',
+      content: '<script>alert(1)</script>\nHello {{name}}!',
+      can_manage: true,
+      file_path: 'test-var-prompt'
+    }
+
+    useFetchApiMock.mockImplementationOnce(() => ({
+      json: () => Promise.resolve({
+        data: { value: { data: mockPromptsDetails } },
+        error: { value: null },
+        response: { value: { status: 200 } }
+      })
+    }))
+
+    const wrapper = createWrapper()
+    await flushPromises()
+    await nextTick()
+
+    // Script tags must be safely escaped
+    expect(wrapper.vm.formattedContent).not.toContain('<script>')
+    expect(wrapper.vm.formattedContent).toContain('&lt;script&gt;alert(1)&lt;/script&gt;')
+    // Linebreaks converted to <br>
+    expect(wrapper.vm.formattedContent).toContain('<br>')
+    // {{name}} formatted as badge span
+    expect(wrapper.vm.formattedContent).toContain('<span class="inline-block bg-blue-50 text-blue-700')
+    expect(wrapper.vm.formattedContent).toContain('&#123;&#123;name&#125;&#125;</span>')
+  })
+
+  it('should not display variable playground when prompt has no variables', async () => {
+    const mockPromptsDetails = {
+      title: 'Plain Prompt',
+      tags: [],
+      source: '',
+      content: 'This is a standard prompt without any template variables.',
+      can_manage: true,
+      file_path: 'plain-prompt'
+    }
+
+    useFetchApiMock.mockImplementationOnce(() => ({
+      json: () => Promise.resolve({
+        data: { value: { data: mockPromptsDetails } },
+        error: { value: null },
+        response: { value: { status: 200 } }
+      })
+    }))
+
+    const wrapper = createWrapper()
+    await flushPromises()
+    await nextTick()
+
+    expect(wrapper.vm.detectedVariables).toEqual([])
+    expect(wrapper.find('.variable-playground').exists()).toBe(false)
   })
 })
