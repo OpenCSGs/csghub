@@ -211,7 +211,7 @@
   })
 
   const charCount = computed(() => {
-    return (dataForm.value.content || '').length
+    return Array.from(dataForm.value.content || '').length
   })
 
   const wordCount = computed(() => {
