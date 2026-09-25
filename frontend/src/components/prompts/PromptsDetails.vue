@@ -70,9 +70,77 @@
         </div>
       </div>
       <div
-        v-html="promptsDetails.content.replace(/\n/g, '<br>')"
-        class="text-sm leading-[22px] font-normal text-gray-700 p-5"
+        v-html="formattedContent"
+        class="text-sm leading-[22px] font-normal text-gray-700 p-5 prompt-content-view"
       >
+      </div>
+    </div>
+
+    <!-- Variable Playground Section -->
+    <div
+      v-if="detectedVariables.length > 0"
+      class="mt-6 border border-gray-200 rounded-lg bg-white overflow-hidden shadow-xs variable-playground"
+    >
+      <div
+        class="py-3 px-5 border-b bg-gray-50 flex justify-between items-center flex-wrap gap-2"
+      >
+        <div class="flex items-center gap-2">
+          <SvgIcon name="prompts_source" class="w-4 h-4 text-brand-600" />
+          <span class="text-base font-medium text-gray-900">{{ $t('prompts.variablePlayground') }}</span>
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+            {{ detectedVariables.length }} {{ $t('prompts.detectedVariables') }}
+          </span>
+        </div>
+        <div class="flex items-center gap-2">
+          <CsgButton
+            class="btn btn-secondary-gray btn-sm reset-variables-btn"
+            @click="resetVariables"
+            :name="$t('prompts.resetVariables')"
+            svgName="refresh"
+          />
+          <CsgButton
+            class="btn btn-primary btn-sm copy-substituted-btn"
+            @click="copySubstitutedContent"
+            :name="$t('prompts.copySubstituted')"
+            svgName="copy"
+          />
+        </div>
+      </div>
+
+      <div class="p-5 flex flex-col gap-4">
+        <p class="text-xs text-gray-500">{{ $t('prompts.variablePlaygroundDesc') }}</p>
+
+        <!-- Variable inputs grid -->
+        <div class="grid grid-cols-2 md:grid-cols-1 gap-4 variable-inputs-grid">
+          <div
+            v-for="varName in detectedVariables"
+            :key="varName"
+            class="flex flex-col gap-1.5 variable-input-item"
+          >
+            <label class="text-xs font-medium text-gray-700 font-mono">
+              &#123;&#123;{{ varName }}&#125;&#125;
+            </label>
+            <el-input
+              v-model="variableInputs[varName]"
+              :placeholder="`${$t('prompts.enterValue')} ${varName}...`"
+              clearable
+              size="default"
+              class="variable-input-field"
+            />
+          </div>
+        </div>
+
+        <!-- Substituted preview box -->
+        <div class="mt-2 flex flex-col gap-1.5">
+          <div class="text-xs font-medium text-gray-700 flex justify-between items-center">
+            <span>{{ $t('prompts.substitutedPreview') }}</span>
+          </div>
+          <div
+            class="p-4 bg-gray-50 border border-gray-200 rounded-md text-sm leading-[22px] text-gray-800 whitespace-pre-wrap font-sans substituted-preview-box"
+          >
+            {{ substitutedContent }}
+          </div>
+        </div>
       </div>
     </div>
 
@@ -130,7 +198,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, computed, watch, onMounted } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { copyToClipboard } from '../../packs/clipboard'
   import { ElMessage } from 'element-plus'
@@ -150,6 +218,56 @@
   const promptsDetails = ref({ content: '' })
   const dialogVisible = ref(false)
   const isDataLoading = ref(false)
+  const variableInputs = ref({})
+
+  const detectedVariables = computed(() => {
+    const content = promptsDetails.value?.content || ''
+    const matches = content.match(/\{\{([a-zA-Z0-9_-]+)\}\}/g)
+    if (!matches) return []
+    const vars = matches.map(m => m.replace(/[{}]/g, '').trim())
+    return [...new Set(vars)]
+  })
+
+  watch(
+    detectedVariables,
+    (newVars) => {
+      const updated = { ...variableInputs.value }
+      newVars.forEach((v) => {
+        if (updated[v] === undefined) {
+          updated[v] = ''
+        }
+      })
+      variableInputs.value = updated
+    },
+    { immediate: true }
+  )
+
+  const substitutedContent = computed(() => {
+    const raw = promptsDetails.value?.content || ''
+    return raw.replace(/\{\{([a-zA-Z0-9_-]+)\}\}/g, (match, varName) => {
+      const val = variableInputs.value[varName]
+      return val !== undefined && val !== '' ? val : match
+    })
+  })
+
+  const escapeHtml = (unsafe) => {
+    return (unsafe || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;')
+  }
+
+  const formattedContent = computed(() => {
+    const raw = promptsDetails.value?.content || ''
+    const escaped = escapeHtml(raw)
+    const highlighted = escaped.replace(
+      /\{\{([a-zA-Z0-9_-]+)\}\}/g,
+      '<span class="inline-block bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded text-xs font-mono font-medium border border-blue-200 mx-0.5">&#123;&#123;$1&#125;&#125;</span>'
+    )
+    return highlighted.replace(/\n/g, '<br>')
+  })
 
   const emit = defineEmits(['changeCurrentComponent', 'setPromptsDetails'])
   const changeCurrentComponent = (currentComponent) => {
@@ -163,6 +281,25 @@
   const copyContent = (event) => {
     event.preventDefault()
     copyToClipboard(promptsDetails.value.content)
+  }
+
+  const copySubstitutedContent = (event) => {
+    if (event) {
+      event.preventDefault()
+    }
+    copyToClipboard(substitutedContent.value)
+    ElMessage({
+      message: t('prompts.copySubstitutedSuccess'),
+      type: 'success'
+    })
+  }
+
+  const resetVariables = () => {
+    const cleared = {}
+    detectedVariables.value.forEach((v) => {
+      cleared[v] = ''
+    })
+    variableInputs.value = cleared
   }
 
   const fetchPromptsDetails = async () => {
