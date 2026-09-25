@@ -91,6 +91,9 @@ export const prompts = {
       promptContent: "提示詞內容",
       createSuccess: "提示詞庫建立成功",
       createFail: "建立提示詞庫失敗",
+      detectedVariables: "檢測到的變數",
+      wordCount: "詞",
+      charCount: "字元",
       conversationCreateFailed: '對話建立失敗',
       conversationCreateSuccess: '對話建立成功'
     },

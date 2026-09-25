@@ -428,4 +428,24 @@ describe('NewPrompt.vue', () => {
 
     expect(wrapper.vm.dataForm.scene).toEqual(['Image', 'Code', 'Design'])
   })
+
+  it('should accurately calculate wordCount and charCount for prompt content including Unicode characters', async () => {
+    const wrapper = createWrapper()
+
+    wrapper.vm.dataForm.content = 'Hello 😀 world'
+    await nextTick()
+
+    // With Unicode-aware Array.from, emoji 😀 is counted as 1 character instead of 2 UTF-16 code units
+    expect(wrapper.vm.charCount).toBe(13)
+    expect(wrapper.vm.wordCount).toBe(3)
+  })
+
+  it('should detect template variables enclosed in double braces', async () => {
+    const wrapper = createWrapper()
+
+    wrapper.vm.dataForm.content = 'Summarize the document {{doc_title}} for user {{user_name}} and {{user_name}}.'
+    await nextTick()
+
+    expect(wrapper.vm.detectedVariables).toEqual(['doc_title', 'user_name'])
+  })
 })

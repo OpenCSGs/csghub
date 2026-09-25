@@ -90,6 +90,9 @@ export const prompts = {
     promptContent: "提示词内容",
     createSuccess: "提示词库创建成功",
     createFail: "创建提示词库失败",
+    detectedVariables: "检测到的变量",
+    wordCount: "词",
+    charCount: "字符",
   },
   update: {
     updateSuccess: "提示词库更新成功",

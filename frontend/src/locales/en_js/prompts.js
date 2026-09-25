@@ -91,6 +91,9 @@ export const prompts = {
     promptContent: "Prompt content",
     createSuccess: "Prompt is created successfully",
     createFail: "Failed to create a prompt",
+    detectedVariables: "Detected Variables",
+    wordCount: "words",
+    charCount: "characters",
   },
   update: {
     updateSuccess: "Prompt is updated successfully",

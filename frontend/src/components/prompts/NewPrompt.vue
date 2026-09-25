@@ -133,6 +133,32 @@
               t('all.pleaseInput', { value: t('prompts.new.content') })
             "
           />
+          <!-- Prompt Stats & Detected Variables -->
+          <div class="mt-2 flex flex-col gap-2 w-full">
+            <div class="flex items-center justify-between text-xs text-gray-500 select-none">
+              <span class="flex items-center gap-1 font-mono">
+                <span>{{ charCount }} {{ t('prompts.new.charCount') }}</span>
+                <span>•</span>
+                <span>{{ wordCount }} {{ t('prompts.new.wordCount') }}</span>
+              </span>
+              <span v-if="detectedVariables.length" class="text-brand-600 font-medium">
+                {{ detectedVariables.length }} {{ t('prompts.new.detectedVariables') }}
+              </span>
+            </div>
+            <div
+              v-if="detectedVariables.length"
+              class="flex flex-wrap gap-1.5 items-center p-2 rounded-md bg-gray-50 border border-gray-200"
+            >
+              <span class="text-xs text-gray-500 font-medium">{{ t('prompts.new.detectedVariables') }}:</span>
+              <span
+                v-for="v in detectedVariables"
+                :key="v"
+                class="inline-flex items-center px-2 py-0.5 rounded text-xs font-mono font-medium bg-brand-50 text-brand-700 border border-brand-200"
+              >
+                &#123;&#123; {{ v }} &#125;&#125;
+              </span>
+            </div>
+          </div>
           </el-form-item>
           <el-divider />
           <div class="flex justify-end">
@@ -182,6 +208,23 @@
   })
   const showButton = computed(() => {
     return dataForm.value.title && dataForm.value.content
+  })
+
+  const charCount = computed(() => {
+    return Array.from(dataForm.value.content || '').length
+  })
+
+  const wordCount = computed(() => {
+    const text = (dataForm.value.content || '').trim()
+    if (!text) return 0
+    return text.split(/\s+/).filter(Boolean).length
+  })
+
+  const detectedVariables = computed(() => {
+    const text = dataForm.value.content || ''
+    const matches = text.match(/\{\{([a-zA-Z0-9_-]+)\}\}/g)
+    if (!matches) return []
+    return [...new Set(matches.map(m => m.replace(/[\{\}]/g, '').trim()))]
   })
 
   const languages = ref([{
