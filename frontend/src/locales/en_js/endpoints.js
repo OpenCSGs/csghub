@@ -100,6 +100,18 @@ export const endpoints = {
     retry: "retry",
     undo: "undo",
     clear: "clear",
+    selectPromptOrType: "Select a prompt template or type your message below to test the endpoint:",
+    explainConcept: "Concept Explanation",
+    explainConceptPrompt: "Explain how neural networks learn in simple terms",
+    codeGen: "Code Generation",
+    codeGenPrompt: "Write a Python function to compute cosine similarity between two vectors",
+    summarize: "Summarize",
+    summarizePrompt: "Summarize the key differences between fine-tuning and prompt engineering",
+    creativeTask: "Creative Task",
+    creativeTaskPrompt: "Draft a concise release announcement for an open-source AI model",
+    copyAnswer: "Copy response",
+    copySuccess: "Response copied to clipboard",
+    characters: "chars"
   },
   analysis: {
     selectPeriod: "Select a time period",

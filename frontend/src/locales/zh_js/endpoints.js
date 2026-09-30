@@ -100,6 +100,18 @@ export const endpoints = {
     retry: "重试",
     undo: "撤销",
     clear: "清空",
+    selectPromptOrType: "选择以下示例提示词或输入您自己的问题以测试模型：",
+    explainConcept: "概念解释",
+    explainConceptPrompt: "用通俗易懂的语言解释神经网络是如何学习的",
+    codeGen: "代码生成",
+    codeGenPrompt: "编写一个计算两个向量余弦相似度的 Python 函数",
+    summarize: "文本总结",
+    summarizePrompt: "总结微调（Fine-tuning）与提示工程（Prompt Engineering）的核心差异",
+    creativeTask: "创意写作",
+    creativeTaskPrompt: "起草一份开源大模型发布的精简公告",
+    copyAnswer: "复制回复",
+    copySuccess: "回复已复制到剪贴板",
+    characters: "字符"
   },
   analysis: {
     selectPeriod: "选择时间范围",
