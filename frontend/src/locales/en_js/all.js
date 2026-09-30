@@ -145,5 +145,11 @@ export const all = {
   notExist: "not exist",
   branchNotExist: "Branch does not exist, please enter a valid branch name",
   useModel: "Use Model",
-  clickForQuickTutorial: "Click here to start the quick tutorial"
+  clickForQuickTutorial: "Click here to start the quick tutorial",
+  filterCommits: "Filter commits by message, author, or SHA...",
+  matchingCommits: "matching commits for",
+  noMatchingCommits: "No commits matching",
+  copyCommitId: "Copy full commit SHA",
+  clearSearch: "Clear search",
+  noData: "No data available"
 }

@@ -153,5 +153,11 @@ export const all = {
   notExist: "中不存在",
   branchNotExist: "分支不存在，請輸入有效的分支名稱",
   useModel: "使用模型",
-  clickForQuickTutorial: "點擊這裡，開始快速教程"
+  clickForQuickTutorial: "點擊這裡，開始快速教程",
+  filterCommits: "按提交訊息、作者或 SHA 篩選提交...",
+  matchingCommits: "個相符的提交",
+  noMatchingCommits: "未找到相符的提交",
+  copyCommitId: "複製完整提交 SHA",
+  clearSearch: "清除搜尋",
+  noData: "暫無數據"
 }
