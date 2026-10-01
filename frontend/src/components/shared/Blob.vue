@@ -28,6 +28,15 @@
             >
           </el-breadcrumb-item>
         </el-breadcrumb>
+        <button
+          type="button"
+          @click="copyPath"
+          class="p-1 text-gray-400 hover:text-gray-700 hover:bg-gray-100 rounded transition-colors cursor-pointer flex items-center"
+          :title="$t('shared.copyPath')"
+          data-testid="copy-path-btn"
+        >
+          <SvgIcon name="copy" class="w-3.5 h-3.5" />
+        </button>
       </div>
       <div class="flex items-center text-sm text-gray-500">
         <div class="flex items-center py-[1px] md:hidden">
@@ -120,6 +129,30 @@
             >
           </div>
           <div
+            v-if="!isImage()"
+            class="flex items-center gap-1 cursor-pointer hover:underline"
+            data-testid="blob-raw-btn"
+          >
+            <SvgIcon name="file" />
+            <a
+              :href="rawFileUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              >{{ $t('shared.raw') }}</a
+            >
+          </div>
+          <div
+            class="flex items-center gap-1 cursor-pointer hover:underline"
+            @click="normalFileDownload"
+            data-testid="blob-download-btn"
+          >
+            <SvgIcon name="download" />
+            <a
+              @click.prevent="normalFileDownload"
+              >{{ $t('shared.downloadFile') }}</a
+            >
+          </div>
+          <div
             v-if="canWrite && !isImage()"
             class="flex items-center gap-1 cursor-pointer hover:underline"
           >
@@ -140,7 +173,13 @@
             >
           </div>
         </div>
-        <div>{{ formatBytes(size) }}</div>
+        <div class="flex items-center gap-2 text-gray-500" data-testid="blob-stats">
+          <span v-if="lineCount > 0" data-testid="blob-line-count">
+            {{ lineCount }} {{ lineCount === 1 ? $t('shared.line') : $t('shared.lines') }}
+          </span>
+          <span v-if="lineCount > 0 && size">·</span>
+          <span data-testid="blob-size">{{ formatBytes(size) }}</span>
+        </div>
       </div>
       <div class="p-4">
         <MarkdownViewer
@@ -259,7 +298,7 @@
 </template>
 
 <script setup>
-  import { ref, onMounted } from 'vue'
+  import { ref, computed, onMounted } from 'vue'
   import { useRouter, useRoute } from 'vue-router'
   import { format } from 'timeago.js'
   import MarkdownViewer from './viewers/MarkdownViewer.vue'
@@ -311,6 +350,20 @@
   if (prefixPath === 'mcp') {
     prefixPath = 'mcp/servers'
     apiPrefixPath = 'mcps'
+  }
+
+  const lineCount = computed(() => {
+    if (!content.value || isImage()) return 0
+    return content.value.split('\n').length
+  })
+
+  const rawFileUrl = computed(() => {
+    return `/${apiPrefixPath}/${props.namespacePath}/raw/${currentPath.value}?ref=${currentBranch.value}`
+  })
+
+  const copyPath = () => {
+    if (!currentPath.value) return
+    copyToClipboard(currentPath.value)
   }
 
   const extractNameFromPath = (path) => {
@@ -585,7 +638,8 @@
       return
     }
     
-    const url = `/${apiPrefixPath}/${props.namespacePath}/download/${path.value}?ref=${currentBranch.value}`
+    const targetFile = path.value || currentPath.value
+    const url = `/${apiPrefixPath}/${props.namespacePath}/download/${targetFile}?ref=${currentBranch.value}`
 
     try {
       const { data, error } = await useFetchApi(url).blob()
@@ -597,7 +651,7 @@
         })
       } else {
         const downloadUrl = window.URL.createObjectURL(data.value)
-        createAndClickAnchor(downloadUrl, path.value)
+        createAndClickAnchor(downloadUrl, targetFile)
       }
     } catch (error) {
       console.error(error)
@@ -660,5 +714,21 @@
 
   onMounted(() => {
     init()
+  })
+
+  defineExpose({
+    content,
+    currentPath,
+    currentBranch,
+    size,
+    fileType,
+    lineCount,
+    rawFileUrl,
+    copyPath,
+    copyFile,
+    normalFileDownload,
+    isImage,
+    formatBytes,
+    breadcrumb
   })
 </script>

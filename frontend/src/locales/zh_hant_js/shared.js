@@ -24,4 +24,10 @@ export const shared = {
     deleteFile: "刪除檔案",
     deleteFileConfirm: "確定要刪除此檔案嗎？",
     copyContent: "複製內容",
+    lines: "行",
+    line: "行",
+    raw: "原始檔案",
+    copyPath: "複製路徑",
+    copyPathSuccess: "檔案路徑已複製到剪貼簿",
+    downloadFile: "下載",
 }

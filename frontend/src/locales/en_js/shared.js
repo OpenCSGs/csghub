@@ -24,4 +24,10 @@ export const shared = {
   deleteFile: "Delete file",
   deleteFileConfirm: "Are you sure you want to delete this file?",
   copyContent: "Copy content",
+  lines: "lines",
+  line: "line",
+  raw: "Raw",
+  copyPath: "Copy path",
+  copyPathSuccess: "File path copied to clipboard",
+  downloadFile: "Download",
 }
