@@ -145,5 +145,10 @@ export const all = {
   notExist: "not exist",
   branchNotExist: "Branch does not exist, please enter a valid branch name",
   useModel: "Use Model",
-  clickForQuickTutorial: "Click here to start the quick tutorial"
+  clickForQuickTutorial: "Click here to start the quick tutorial",
+  unifiedDiff: "Unified",
+  splitDiff: "Split",
+  changes: "Changes",
+  modified: "Modified",
+  characters: "characters"
 }

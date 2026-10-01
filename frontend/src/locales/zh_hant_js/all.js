@@ -153,5 +153,10 @@ export const all = {
   notExist: "中不存在",
   branchNotExist: "分支不存在，請輸入有效的分支名稱",
   useModel: "使用模型",
-  clickForQuickTutorial: "點擊這裡，開始快速教程"
+  clickForQuickTutorial: "點擊這裡，開始快速教程",
+  unifiedDiff: "統一視圖",
+  splitDiff: "分欄視圖",
+  changes: "變更",
+  modified: "已修改",
+  characters: "字符"
 }
