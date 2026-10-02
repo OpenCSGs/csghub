@@ -91,4 +91,109 @@ describe('EvaluationDetail', () => {
       model: 'testmodel'
     })
   })
+
+  it('filters evaluation table data by model search query correctly', async () => {
+    wrapper.vm.tableDataResult = [
+      { model: 'Qwen-7B', dataset: { 'mmlu': [{ metric: 'acc', score: 75.2 }] } },
+      { model: 'Llama-3-8B', dataset: { 'mmlu': [{ metric: 'acc', score: 68.4 }] } },
+      { model: 'Mistral-7B', dataset: { 'mmlu': [{ metric: 'acc', score: 65.0 }] } }
+    ]
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.filteredTableData).toHaveLength(3)
+
+    wrapper.vm.searchQuery = 'llama'
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.filteredTableData).toHaveLength(1)
+    expect(wrapper.vm.filteredTableData[0].model).toBe('Llama-3-8B')
+
+    wrapper.vm.searchQuery = 'nonexistent'
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.filteredTableData).toHaveLength(0)
+
+    wrapper.vm.searchQuery = ''
+    await wrapper.vm.$nextTick()
+    expect(wrapper.vm.filteredTableData).toHaveLength(3)
+  })
+
+  it('computes availableDatasets correctly across multiple models', async () => {
+    wrapper.vm.tableDataResult = [
+      {
+        model: 'model1',
+        dataset: {
+          'mmlu': [{ metric: 'acc', score: 80 }],
+          'gsm8k': [{ metric: 'acc', score: 70 }]
+        }
+      },
+      {
+        model: 'model2',
+        dataset: {
+          'mmlu': [{ metric: 'acc', score: 85 }],
+          'humaneval': [{ metric: 'pass@1', score: 60 }]
+        }
+      }
+    ]
+    await wrapper.vm.$nextTick()
+
+    const dsMap = wrapper.vm.availableDatasets
+    expect(Object.keys(dsMap)).toEqual(['mmlu', 'gsm8k', 'humaneval'])
+    expect(dsMap['mmlu']).toEqual([{ metric: 'acc', score: 80 }])
+    expect(dsMap['humaneval']).toEqual([{ metric: 'pass@1', score: 60 }])
+  })
+
+  it('exports evaluation matrix to CSV with UTF-8 BOM and correct headers', async () => {
+    wrapper.vm.tableDataResult = [
+      {
+        model: 'Qwen-7B, "Special"',
+        dataset: {
+          'mmlu': [{ metric: 'accuracy', score: 82.5 }]
+        }
+      }
+    ]
+    wrapper.vm.activeName = 'all'
+    wrapper.vm.evaluation = { task_name: 'test_eval' }
+    await wrapper.vm.$nextTick()
+
+    let capturedBlobParts = null
+    const originalBlob = global.Blob
+    global.Blob = class MockBlob extends originalBlob {
+      constructor(parts, options) {
+        super(parts, options)
+        capturedBlobParts = parts
+      }
+    }
+
+    let downloadLink = null
+    const originalCreateObjectURL = window.URL.createObjectURL
+    const originalRevokeObjectURL = window.URL.revokeObjectURL
+    window.URL.createObjectURL = vi.fn(() => 'blob:mock-url')
+    window.URL.revokeObjectURL = vi.fn()
+
+    const clickSpy = vi.fn()
+    const originalCreateElement = document.createElement.bind(document)
+    vi.spyOn(document, 'createElement').mockImplementation((tag) => {
+      const el = originalCreateElement(tag)
+      if (tag === 'a') {
+        el.click = clickSpy
+        downloadLink = el
+      }
+      return el
+    })
+
+    wrapper.vm.exportCsv()
+
+    expect(window.URL.createObjectURL).toHaveBeenCalled()
+    expect(clickSpy).toHaveBeenCalled()
+    expect(downloadLink.getAttribute('download')).toBe('test_eval_all_scores.csv')
+
+    const text = capturedBlobParts[0]
+    expect(text.startsWith('\uFEFF')).toBe(true)
+    expect(text).includes('mmlu - accuracy')
+    expect(text).includes('"Qwen-7B, ""Special"""')
+    expect(text).includes('82.5')
+
+    global.Blob = originalBlob
+    window.URL.createObjectURL = originalCreateObjectURL
+    window.URL.revokeObjectURL = originalRevokeObjectURL
+    vi.restoreAllMocks()
+  })
 })

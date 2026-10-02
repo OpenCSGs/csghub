@@ -16,7 +16,7 @@ export const evaluation = {
     customDatasetTip: "Select any available dataset from the platform for configuration",
     customDatasetDocumentation: "Documentation",
     dataset: "Evaluation Dataset",
-    customDataset: "Custom Dataset",
+    customdataset: "Custom Dataset",
     resourceType: "Resource Type",
     sharedResource: "Shared Resource",
     sharedResourceTip: "Shared resources may cause congestion, queueing, and longer wait times.",
@@ -45,7 +45,11 @@ export const evaluation = {
     evaluationFailed: "Evaluation Failed",
     return: "Return",
     recreate: "Recreate",
-    invalidDataset: "The dataset has been deleted or is invalid"
+    invalidDataset: "The dataset has been deleted or is invalid",
+    searchPlaceholder: "Filter by model name...",
+    exportCsv: "Export CSV",
+    showingModels: "Showing {filtered} of {total} models",
+    noMatchingModels: "No matching models found"
   },
   list: {
     title: "Model Evaluation",

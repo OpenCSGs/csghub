@@ -98,7 +98,7 @@
                 >
                   <span :class="dataset.url ? 'dataset-item-valid' : 'dataset-item-invalid'">
                     <el-tooltip
-                      :disabled="dataset.url"
+                      :disabled="!!dataset.url"
                       class="datasetTooltip"
                       effect="dark"
                       :content="$t('evaluation.detail.invalidDataset')"
@@ -138,15 +138,38 @@
           :label="tab.label"
           :name="tab.name"
         >
+          <div class="flex items-center justify-between mt-6 mb-3 flex-wrap gap-4">
+            <div class="flex items-center gap-3">
+              <el-input
+                v-model="searchQuery"
+                :placeholder="$t('evaluation.detail.searchPlaceholder')"
+                clearable
+                :prefix-icon="Search"
+                class="w-72"
+              />
+              <span v-if="searchQuery" class="text-xs text-gray-500">
+                {{ $t('evaluation.detail.showingModels', { filtered: filteredTableData.length, total: tableDataResult.length }) }}
+              </span>
+            </div>
+            <CsgButton
+              class="btn btn-secondary-gray btn-sm flex items-center gap-1.5"
+              :name="$t('evaluation.detail.exportCsv')"
+              svgName="download"
+              svgPosition="left"
+              :disabled="!tableDataResult.length"
+              @click="exportCsv"
+            />
+          </div>
+
           <el-table
             v-loading="loading"
-            :data="tableDataResult"
+            :data="filteredTableData"
             :border="true"
             header-row-class-name="evaluation-table-header-row"
             header-cell-class-name="evaluation-table-header-cell"
             row-class-name="evaluation-table-row"
             cell-class-name="evaluation-table-row-cell"
-            class="evaluation-table mt-6 mb-10 rounded-xl"
+            class="evaluation-table mt-3 mb-10 rounded-xl"
           >
             <el-table-column
               prop="model" 
@@ -156,14 +179,14 @@
               fixed="left"
             />
               <el-table-column 
-                v-for="(datasetData, datasetName) in tableDataResult[0]?.dataset || {}" :key="datasetName"
+                v-for="(datasetData, datasetName) in availableDatasets" :key="datasetName"
                 :label="datasetName"
                 header-align="center"
                 align="center"
               >
                 <el-table-column
                   v-for="(metricItem, index) in datasetData"
-                  :key="`${datasetName}-${metricItem}-${index}`"
+                  :key="`${datasetName}-${metricItem.metric || metricItem}-${index}`"
                   :label="metricItem.metric"
                   :min-width="dynamicMinWidth + 'px'"
                   class-name="evaluation-metric-column"
@@ -180,6 +203,9 @@
               </el-table-column>
             <template #empty>
               <span v-if="error">{{ error }}</span>
+              <span v-else-if="searchQuery && !filteredTableData.length">
+                {{ $t('evaluation.detail.noMatchingModels') }}
+              </span>
               <span v-else>{{ $t('all.noData') }}</span>
             </template>
           </el-table>
@@ -223,9 +249,11 @@
   import { ref, onMounted, computed, nextTick, onBeforeUnmount } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { ElMessage } from 'element-plus'
+  import { Search } from '@element-plus/icons-vue'
   import useFetchApi from '@/packs/useFetchApi'
   import { formatDate } from '@/packs/datetimeUtils'
   import SvgIcon from '@/components/shared/SvgIcon.vue';
+  import CsgButton from '@/components/shared/CsgButton.vue';
 
   const props = defineProps({
     evaluationId: {
@@ -245,6 +273,7 @@
   const categories = ref([])
   const evaluationSucceed = ref(true)
   const isCustomDataset = ref(false)
+  const searchQuery = ref('')
 
   const groupedDatasets = computed(() => {
     if(isCustomDataset.value) {
@@ -349,6 +378,100 @@
   const handleTabClick = (tab) => {
     activeName.value = tab.props.name
     refreshTableData(tab.props.name)
+  }
+
+  const filteredTableData = computed(() => {
+    if (!searchQuery.value?.trim()) {
+      return tableDataResult.value
+    }
+    const q = searchQuery.value.trim().toLowerCase()
+    return tableDataResult.value.filter((row) => {
+      return row.model && row.model.toLowerCase().includes(q)
+    })
+  })
+
+  const availableDatasets = computed(() => {
+    if (!tableDataResult.value?.length) return {}
+    const map = {}
+    for (const row of tableDataResult.value) {
+      if (row.dataset) {
+        for (const [dsName, metrics] of Object.entries(row.dataset)) {
+          if (!map[dsName]) {
+            map[dsName] = []
+          }
+          if (Array.isArray(metrics)) {
+            for (const m of metrics) {
+              if (!map[dsName].some((existing) => existing.metric === m.metric)) {
+                map[dsName].push(m)
+              }
+            }
+          }
+        }
+      }
+    }
+    return map
+  })
+
+  const exportCsv = () => {
+    if (!tableDataResult.value?.length) return
+
+    const headers = [t('evaluation.detail.model')]
+    const columnRefs = []
+
+    const dsMap = availableDatasets.value
+    for (const [datasetName, metrics] of Object.entries(dsMap)) {
+      for (const metricItem of metrics) {
+        const headerTitle =
+          activeName.value === 'all'
+            ? `${datasetName} - ${metricItem.metric}`
+            : metricItem.metric
+        headers.push(headerTitle)
+        columnRefs.push({ datasetName, metric: metricItem.metric })
+      }
+    }
+
+    const escapeCsv = (val) => {
+      if (val === null || val === undefined) return '""'
+      const str = String(val)
+      if (
+        str.includes(',') ||
+        str.includes('"') ||
+        str.includes('\n') ||
+        str.includes('\r')
+      ) {
+        return `"${str.replace(/"/g, '""')}"`
+      }
+      return `"${str}"`
+    }
+
+    const rows = [headers.map(escapeCsv).join(',')]
+
+    const dataToExport =
+      filteredTableData.value.length ? filteredTableData.value : tableDataResult.value
+    for (const row of dataToExport) {
+      const rowValues = [escapeCsv(row.model)]
+      for (const col of columnRefs) {
+        const score =
+          (row.dataset?.[col.datasetName] || []).find(
+            (m) => m.metric === col.metric
+          )?.score ?? 0
+        rowValues.push(escapeCsv(score))
+      }
+      rows.push(rowValues.join(','))
+    }
+
+    const csvContent = '\uFEFF' + rows.join('\r\n')
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    const taskName = evaluation.value.task_name || 'evaluation'
+    const tabName = activeName.value || 'all'
+    link.setAttribute('href', url)
+    link.setAttribute('download', `${taskName}_${tabName}_scores.csv`)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
   }
 
   const fetchTags = async () => {

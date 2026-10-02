@@ -45,7 +45,11 @@ export const evaluation = {
     evaluationFailed: "评测失败",
     return: "返回",
     recreate: "重新创建",
-    invalidDataset: "数据集已删除或失效"
+    invalidDataset: "数据集已删除或失效",
+    searchPlaceholder: "按模型名称过滤...",
+    exportCsv: "导出 CSV",
+    showingModels: "显示 {filtered} / {total} 个模型",
+    noMatchingModels: "未找到匹配的模型"
   },
   list: {
     title: "模型评测",
