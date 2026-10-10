@@ -123,27 +123,16 @@
         ToUnauthorizedPage()
         return false
       }
-      // redirect not found page or fallback for standalone dev mode
-      if (response.value?.status === 404 || !data.value) {
-        console.warn('Backend repo not found or unavailable, initializing dev fallback data for preview.')
-        const mockRepoData = {
-          id: 1,
-          name: props.repoName || 'test-model',
-          nickname: 'Test Model (Version Comparison Demo)',
-          description: 'A model repository for testing version comparison tool features.',
-          default_branch: 'main',
-          namespace: { Path: props.namespace || 'test-user', Avatar: '' },
-          can_manage: true,
-          can_write: true,
-          user: { username: props.namespace || 'test-user' },
-          repository: { id: 1 },
-          repository_id: 1,
-          license: 'apache-2.0',
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
+      // redirect not found page
+      if (response.value?.status === 404) {
+        ToNotFoundPage()
+        return false
+      }
+      if (!data.value) {
+        if (error.value?.msg) {
+          ElMessage.warning(error.value.msg)
         }
-        repoDetailStore.initialize(mockRepoData, props.repoType)
-        return true
+        return false
       }
       const repoData = data.value.data
       repoDetailStore.initialize(repoData, props.repoType)

@@ -162,15 +162,19 @@ describe("CompareVersionsModal", () => {
     expect(wrapper.vm).toBeDefined()
   })
 
-  it("fetches version options on mount", async () => {
+  it("fetches real version options on mount from branches, tags, and commits", async () => {
     const wrapper = createWrapper()
     await flushPromises()
-    expect(wrapper.vm.versionOptions.length).toBeGreaterThan(0)
+    await new Promise((r) => setTimeout(r, 10))
+    expect(wrapper.vm.versionOptions.length).toBe(6) // 3 branches + 1 tag + 2 commits
+    expect(wrapper.vm.versionA).toBe("main")
+    expect(wrapper.vm.versionB).toBe("v1.0")
   })
 
   it("renders ConfigDiffViewer, ReadmeDiffViewer, and MetricsCompareViewer components", async () => {
     const wrapper = createWrapper()
     await flushPromises()
+    await new Promise((r) => setTimeout(r, 10))
     expect(wrapper.findComponent(ConfigDiffViewer).exists()).toBe(true)
     expect(wrapper.findComponent(ReadmeDiffViewer).exists()).toBe(true)
     expect(wrapper.findComponent(MetricsCompareViewer).exists()).toBe(true)
@@ -179,9 +183,29 @@ describe("CompareVersionsModal", () => {
   it("handles duplicate version selection cleanly", async () => {
     const wrapper = createWrapper()
     await flushPromises()
+    await new Promise((r) => setTimeout(r, 10))
     wrapper.vm.versionA = "main"
     wrapper.vm.versionB = "main"
     await wrapper.vm.$nextTick()
     expect(wrapper.vm.versionA).toBe(wrapper.vm.versionB)
+  })
+
+  it("populates real commit details for version A and version B", async () => {
+    const wrapper = createWrapper()
+    await flushPromises()
+    await new Promise((r) => setTimeout(r, 10))
+    expect(wrapper.vm.dataA.commitId).toBe("abc123456789")
+    expect(wrapper.vm.dataA.author).toBe("Test Author")
+    expect(wrapper.vm.dataA.message).toBe("Initial commit")
+  })
+
+  it("fetches real config, readme, and metrics from API blob responses", async () => {
+    const wrapper = createWrapper()
+    await flushPromises()
+    await new Promise((r) => setTimeout(r, 10))
+    expect(wrapper.vm.dataA.config).toBeDefined()
+    expect(wrapper.vm.dataA.config.architectures).toEqual(["LlamaForCausalLM"])
+    expect(wrapper.vm.dataA.readme).toContain("# Model Card")
+    expect(wrapper.vm.dataA.metrics).toEqual({ accuracy: 92.5, f1: 88.3 })
   })
 })

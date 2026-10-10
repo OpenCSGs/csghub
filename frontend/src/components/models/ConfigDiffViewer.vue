@@ -13,7 +13,7 @@
         type="warning"
         :closable="false"
         show-icon
-        title="Baseline (Version A) does not contain config.json"
+        title="Baseline (Version A) does not contain config.json. Comparison is limited to the available file."
         class="mb-4"
       />
       <el-alert
@@ -21,12 +21,25 @@
         type="warning"
         :closable="false"
         show-icon
-        title="Target (Version B) does not contain config.json"
+        title="Target (Version B) does not contain config.json. Comparison is limited to the available file."
+        class="mb-4"
+      />
+      <el-alert
+        v-if="invalidJsonMessage"
+        type="warning"
+        :closable="false"
+        show-icon
+        :title="invalidJsonMessage"
         class="mb-4"
       />
 
+      <pre
+        v-if="!canCompare"
+        class="font-mono text-xs rounded border border-gray-200 overflow-x-auto bg-gray-900 text-gray-100 p-4 leading-relaxed"
+      >{{ formatVal(parsedObjA || parsedObjB || configA || configB) }}</pre>
+
       <!-- View mode toggle & Summary bar -->
-      <div class="flex items-center justify-between flex-wrap gap-4 pb-3 border-b border-gray-200">
+      <div v-if="canCompare" class="flex items-center justify-between flex-wrap gap-4 pb-3 border-b border-gray-200">
         <div class="flex items-center gap-2">
           <span class="text-sm font-medium text-gray-700">Parameter Changes:</span>
           <el-tag size="small" type="success" effect="plain" v-if="diffResult.added.length">
@@ -50,7 +63,7 @@
       </div>
 
       <!-- Structured Key-Value View -->
-      <div v-if="viewMode === 'structured'" class="space-y-4">
+      <div v-if="canCompare && viewMode === 'structured'" class="space-y-4">
         <!-- Changed Parameters Table -->
         <div v-if="diffResult.changed.length > 0" class="border border-amber-200 rounded overflow-hidden">
           <div class="bg-amber-50 px-4 py-2 text-xs font-semibold text-amber-800 uppercase tracking-wider flex items-center gap-2">
@@ -143,7 +156,7 @@
       </div>
 
       <!-- Raw JSON Diff View -->
-      <div v-else class="raw-diff-container font-mono text-xs rounded border border-gray-200 overflow-x-auto bg-gray-900 text-gray-100 p-4 leading-relaxed">
+      <div v-else-if="canCompare" class="raw-diff-container font-mono text-xs rounded border border-gray-200 overflow-x-auto bg-gray-900 text-gray-100 p-4 leading-relaxed">
         <div v-for="(part, index) in rawJsonDiff" :key="index" :class="getDiffClass(part)">
           <span class="select-none inline-block w-6 opacity-60 text-right mr-3">{{ part.added ? '+' : part.removed ? '-' : ' ' }}</span>
           <span>{{ part.value }}</span>
@@ -165,24 +178,27 @@ const props = defineProps({
 
 const viewMode = ref('structured')
 
-const parsedObjA = computed(() => {
-  if (!props.configA) return null
-  if (typeof props.configA === 'object') return props.configA
+const tryParse = (config) => {
+  if (!config) return { obj: null, invalid: false }
+  if (typeof config === 'object') return { obj: config, invalid: false }
   try {
-    return JSON.parse(props.configA)
+    return { obj: JSON.parse(config), invalid: false }
   } catch (e) {
-    return null
+    return { obj: null, invalid: true }
   }
-})
+}
 
-const parsedObjB = computed(() => {
-  if (!props.configB) return null
-  if (typeof props.configB === 'object') return props.configB
-  try {
-    return JSON.parse(props.configB)
-  } catch (e) {
-    return null
-  }
+const parsedA = computed(() => tryParse(props.configA))
+const parsedB = computed(() => tryParse(props.configB))
+const parsedObjA = computed(() => parsedA.value.obj)
+const parsedObjB = computed(() => parsedB.value.obj)
+const canCompare = computed(() => !!parsedObjA.value && !!parsedObjB.value)
+
+const invalidJsonMessage = computed(() => {
+  const parts = []
+  if (parsedA.value.invalid) parts.push('Version A config.json is not valid JSON')
+  if (parsedB.value.invalid) parts.push('Version B config.json is not valid JSON')
+  return parts.join('. ')
 })
 
 const formatVal = (val) => {
@@ -192,8 +208,12 @@ const formatVal = (val) => {
 }
 
 const diffResult = computed(() => {
-  const objA = parsedObjA.value || {}
-  const objB = parsedObjB.value || {}
+  if (!canCompare.value) {
+    return { added: [], removed: [], changed: [], unchanged: [] }
+  }
+
+  const objA = parsedObjA.value
+  const objB = parsedObjB.value
 
   const keysA = Object.keys(objA)
   const keysB = Object.keys(objB)
@@ -228,9 +248,8 @@ const diffResult = computed(() => {
 })
 
 const rawJsonDiff = computed(() => {
-  const objA = parsedObjA.value || {}
-  const objB = parsedObjB.value || {}
-  return diffJson(objA, objB)
+  if (!canCompare.value) return []
+  return diffJson(parsedObjA.value, parsedObjB.value)
 })
 
 const getDiffClass = (part) => {

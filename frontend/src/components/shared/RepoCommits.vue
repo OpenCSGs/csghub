@@ -65,6 +65,7 @@
       v-model:visible="compareModalVisible"
       :namespace="namespacePath.split('/')[0]"
       :name="namespacePath.split('/')[1]"
+      :currentBranch="currentBranch"
       :repoType="repoType"
     />
   </div>

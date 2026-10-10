@@ -139,8 +139,8 @@ const renderChart = () => {
     }
 
     const categories = chartData.value.map((d) => d.name)
-    const seriesA = chartData.value.map((d) => d.numA ?? 0)
-    const seriesB = chartData.value.map((d) => d.numB ?? 0)
+    const seriesA = chartData.value.map((d) => d.numA)
+    const seriesB = chartData.value.map((d) => d.numB)
 
     const option = {
       animation: false,

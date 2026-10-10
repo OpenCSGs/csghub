@@ -21,17 +21,18 @@
               class="w-60"
               filterable
               :loading="loadingOptions"
+              :disabled="!!versionLoadError || versionOptions.length === 0"
               @change="handleVersionChange"
             >
               <el-option
                 v-for="opt in versionOptions"
-                :key="opt.value"
+                :key="`${opt.type}-${opt.value}`"
                 :label="opt.label"
                 :value="opt.value"
               >
                 <div class="flex items-center justify-between">
                   <span>{{ opt.value }}</span>
-                  <el-tag size="small" :type="opt.type === 'tag' ? 'success' : opt.type === 'branch' ? 'primary' : 'info'">
+                  <el-tag size="small" :type="opt.type === 'branch' ? 'primary' : 'info'">
                     {{ opt.type }}
                   </el-tag>
                 </div>
@@ -49,17 +50,18 @@
               class="w-60"
               filterable
               :loading="loadingOptions"
+              :disabled="!!versionLoadError || versionOptions.length === 0"
               @change="handleVersionChange"
             >
               <el-option
                 v-for="opt in versionOptions"
-                :key="opt.value"
+                :key="`${opt.type}-${opt.value}`"
                 :label="opt.label"
                 :value="opt.value"
               >
                 <div class="flex items-center justify-between">
                   <span>{{ opt.value }}</span>
-                  <el-tag size="small" :type="opt.type === 'tag' ? 'success' : opt.type === 'branch' ? 'primary' : 'info'">
+                  <el-tag size="small" :type="opt.type === 'branch' ? 'primary' : 'info'">
                     {{ opt.type }}
                   </el-tag>
                 </div>
@@ -74,17 +76,57 @@
             class="btn btn-secondary-gray btn-sm"
             name="Export Report"
             svgName="download"
-            :disabled="loadingData || !versionA || !versionB"
+            :disabled="loadingData || !versionA || !versionB || !!comparisonError"
             @click="exportReport"
           />
           <CsgButton
             class="btn btn-primary btn-sm"
             name="Refresh Data"
-            :loading="loadingData"
-            @click="fetchComparisonData"
+            :loading="loadingData || loadingOptions"
+            @click="retryCurrentRequest"
           />
         </div>
       </div>
+
+      <el-alert
+        v-if="versionLoadError"
+        type="error"
+        :closable="false"
+        show-icon
+        :title="versionLoadError"
+      />
+
+      <el-alert
+        v-else-if="!loadingOptions && versionOptions.length === 0"
+        type="warning"
+        :closable="false"
+        show-icon
+        title="No branches or commits were returned for this repository."
+      />
+
+      <el-alert
+        v-if="versionWarning"
+        type="warning"
+        :closable="false"
+        show-icon
+        :title="versionWarning"
+      />
+
+      <el-alert
+        v-if="comparisonError"
+        type="error"
+        :closable="false"
+        show-icon
+        :title="comparisonError"
+      />
+
+      <el-alert
+        v-if="missingFilesMessage"
+        type="warning"
+        :closable="false"
+        show-icon
+        :title="missingFilesMessage"
+      />
 
       <!-- Warning for same version selection -->
       <el-alert
@@ -96,8 +138,15 @@
       />
     </div>
 
+    <div v-if="loadingOptions" class="py-8">
+      <el-skeleton :rows="4" animated />
+    </div>
+
     <!-- Side-by-side Version Context Header Card -->
-    <div v-if="!loadingData && (dataA || dataB)" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <div
+      v-else-if="!loadingData && versionA && versionB && !comparisonError"
+      class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6"
+    >
       <!-- Version A Metadata Card -->
       <div class="p-4 rounded-lg border border-indigo-200 bg-indigo-50/40">
         <div class="flex items-center justify-between mb-2">
@@ -105,11 +154,14 @@
           <el-tag size="small" type="primary">{{ versionA }}</el-tag>
         </div>
         <div class="text-xs space-y-1 text-gray-700 font-mono">
-          <div><span class="text-gray-500 font-sans">Commit:</span> {{ dataA.commitId?.substring(0, 8) || 'N/A' }}</div>
-          <div><span class="text-gray-500 font-sans">Author:</span> {{ dataA.author || 'N/A' }}</div>
-          <div><span class="text-gray-500 font-sans">Date:</span> {{ dataA.date || 'N/A' }}</div>
+          <div><span class="text-gray-500 font-sans">Commit:</span> {{ formatCommitId(dataA.commitId) }}</div>
+          <div><span class="text-gray-500 font-sans">Author:</span> {{ dataA.author || 'Unavailable' }}</div>
+          <div><span class="text-gray-500 font-sans">Date:</span> {{ dataA.date || 'Unavailable' }}</div>
           <div class="truncate text-gray-600 font-sans mt-1" :title="dataA.message">
-            <span class="text-gray-500">Message:</span> {{ dataA.message || 'No commit message' }}
+            <span class="text-gray-500">Message:</span> {{ dataA.message || 'Unavailable' }}
+          </div>
+          <div v-if="dataA.errors.length" class="text-red-600 font-sans mt-2">
+            {{ dataA.errors.join('; ') }}
           </div>
         </div>
       </div>
@@ -121,18 +173,21 @@
           <el-tag size="small" type="success">{{ versionB }}</el-tag>
         </div>
         <div class="text-xs space-y-1 text-gray-700 font-mono">
-          <div><span class="text-gray-500 font-sans">Commit:</span> {{ dataB.commitId?.substring(0, 8) || 'N/A' }}</div>
-          <div><span class="text-gray-500 font-sans">Author:</span> {{ dataB.author || 'N/A' }}</div>
-          <div><span class="text-gray-500 font-sans">Date:</span> {{ dataB.date || 'N/A' }}</div>
+          <div><span class="text-gray-500 font-sans">Commit:</span> {{ formatCommitId(dataB.commitId) }}</div>
+          <div><span class="text-gray-500 font-sans">Author:</span> {{ dataB.author || 'Unavailable' }}</div>
+          <div><span class="text-gray-500 font-sans">Date:</span> {{ dataB.date || 'Unavailable' }}</div>
           <div class="truncate text-gray-600 font-sans mt-1" :title="dataB.message">
-            <span class="text-gray-500">Message:</span> {{ dataB.message || 'No commit message' }}
+            <span class="text-gray-500">Message:</span> {{ dataB.message || 'Unavailable' }}
+          </div>
+          <div v-if="dataB.errors.length" class="text-red-600 font-sans mt-2">
+            {{ dataB.errors.join('; ') }}
           </div>
         </div>
       </div>
     </div>
 
     <!-- Comparison Main Tabs -->
-    <el-tabs v-model="activeTab" class="compare-tabs">
+    <el-tabs v-if="!loadingOptions && !versionLoadError && versionA && versionB && !comparisonError" v-model="activeTab" class="compare-tabs">
       <!-- Parameters / Config Tab -->
       <el-tab-pane label="Configuration & Parameters" name="config">
         <ConfigDiffViewer
@@ -166,7 +221,15 @@
       <el-tab-pane label="Version History Context" name="history">
         <div class="py-4">
           <div class="text-xs font-semibold text-gray-600 uppercase mb-4">Recent Model Commits Timeline</div>
-          <el-timeline v-if="allCommits.length > 0">
+          <el-alert
+            v-if="commitsError"
+            type="warning"
+            :closable="false"
+            show-icon
+            :title="commitsError"
+            class="mb-4"
+          />
+          <el-timeline v-else-if="allCommits.length > 0">
             <el-timeline-item
               v-for="commit in allCommits"
               :key="commit.id"
@@ -179,7 +242,7 @@
                 <el-tag v-if="commit.id === dataB.commitId" size="small" type="success">Version B</el-tag>
               </div>
               <div class="text-xs text-gray-500 font-mono mt-1">
-                {{ commit.id.substring(0, 8) }} by {{ commit.author_name }}
+                {{ commit.id?.substring(0, 8) }} by {{ commit.author_name }}
               </div>
             </el-timeline-item>
           </el-timeline>
@@ -206,6 +269,8 @@ import ConfigDiffViewer from './ConfigDiffViewer.vue'
 import ReadmeDiffViewer from './ReadmeDiffViewer.vue'
 import MetricsCompareViewer from './MetricsCompareViewer.vue'
 
+const METRICS_FILES = ['metrics.json', 'eval_results.json']
+
 const props = defineProps({
   visible: Boolean,
   namespace: String,
@@ -228,28 +293,116 @@ const loadingData = ref(false)
 const versionOptions = ref([])
 const versionA = ref('')
 const versionB = ref('')
+const versionLoadError = ref('')
+const versionWarning = ref('')
+const comparisonError = ref('')
+const commitsError = ref('')
 
-const dataA = ref({ commitId: '', author: '', date: '', message: '', config: null, readme: null, metrics: null })
-const dataB = ref({ commitId: '', author: '', date: '', message: '', config: null, readme: null, metrics: null })
+const emptyVersionData = () => ({
+  commitId: '',
+  author: '',
+  date: '',
+  message: '',
+  config: null,
+  readme: null,
+  metrics: null,
+  missingFiles: [],
+  errors: []
+})
+
+const dataA = ref(emptyVersionData())
+const dataB = ref(emptyVersionData())
 const allCommits = ref([])
+
+const apiPrefix = computed(() => `${props.repoType}s/${props.namespace}/${props.name}`)
+
+const missingFilesMessage = computed(() => {
+  const parts = []
+  if (dataA.value.missingFiles?.length) {
+    parts.push(`Version A missing: ${dataA.value.missingFiles.join(', ')}`)
+  }
+  if (dataB.value.missingFiles?.length) {
+    parts.push(`Version B missing: ${dataB.value.missingFiles.join(', ')}`)
+  }
+  return parts.join('. ')
+})
 
 const handleClose = () => {
   dialogVisible.value = false
 }
 
-// Fetch available branches, tags, and commits for version options
+const extractErrorMessage = (error) => {
+  if (!error) return 'Request failed'
+  if (typeof error === 'string') return error
+  return error.msg || error.message || 'Request failed'
+}
+
+const formatCommitId = (commitId) => {
+  if (!commitId) return 'Unavailable'
+  return commitId.substring(0, 8)
+}
+
+const resetComparisonState = () => {
+  versionA.value = ''
+  versionB.value = ''
+  versionOptions.value = []
+  versionLoadError.value = ''
+  versionWarning.value = ''
+  comparisonError.value = ''
+  commitsError.value = ''
+  dataA.value = emptyVersionData()
+  dataB.value = emptyVersionData()
+  allCommits.value = []
+}
+
+const parseCommitList = (payload) => {
+  if (Array.isArray(payload?.data?.commits)) return payload.data.commits
+  if (Array.isArray(payload?.data)) return payload.data
+  return []
+}
+
+const extractCommitObj = (resData) => {
+  if (!resData) return null
+  const d = resData.data || resData
+  if (d.commits?.[0]) return d.commits[0]
+  if (Array.isArray(d) && d[0]) return d[0]
+  if (d.id || d.sha) return d
+  return null
+}
+
 const fetchVersionOptions = async () => {
-  if (!props.namespace || !props.name) return
+  if (!props.namespace || !props.name) {
+    versionLoadError.value = 'Repository namespace and name are required to load versions.'
+    return
+  }
+
   loadingOptions.value = true
+  versionLoadError.value = ''
+  versionWarning.value = ''
+  commitsError.value = ''
 
   const options = []
   const existingValues = new Set()
 
   try {
-    // 1. Fetch branches
-    const branchesUrl = `/${props.repoType}s/${props.namespace}/${props.name}/branches`
-    const { data: branchRes } = await useFetchApi(branchesUrl).json()
-    if (branchRes.value?.data && Array.isArray(branchRes.value.data)) {
+    const branchesUrl = `/${apiPrefix.value}/branches`
+    const tagsUrl = `/${apiPrefix.value}/tags`
+    const commitsUrl = `/${apiPrefix.value}/commits?per=20`
+
+    const [{ data: branchRes, error: branchError }, { data: tagRes }, { data: commitRes, error: commitError }] = await Promise.all([
+      useFetchApi(branchesUrl).json(),
+      useFetchApi(tagsUrl).json(),
+      useFetchApi(commitsUrl).json()
+    ])
+
+    if (branchError?.value) {
+      versionLoadError.value = extractErrorMessage(branchError.value)
+      ElMessage.error(versionLoadError.value)
+      versionOptions.value = []
+      return
+    }
+
+    if (branchRes?.value?.data && Array.isArray(branchRes.value.data)) {
       branchRes.value.data.forEach((b) => {
         if (b.name && !existingValues.has(b.name)) {
           existingValues.add(b.name)
@@ -258,10 +411,7 @@ const fetchVersionOptions = async () => {
       })
     }
 
-    // 2. Fetch tags
-    const tagsUrl = `/${props.repoType}s/${props.namespace}/${props.name}/tags`
-    const { data: tagRes } = await useFetchApi(tagsUrl).json()
-    if (tagRes.value?.data && Array.isArray(tagRes.value.data)) {
+    if (tagRes?.value?.data && Array.isArray(tagRes.value.data)) {
       tagRes.value.data.forEach((t) => {
         const tagName = t.name || t.tag_name
         if (tagName && !existingValues.has(tagName)) {
@@ -271,16 +421,11 @@ const fetchVersionOptions = async () => {
       })
     }
 
-    // 3. Fetch commits for list
-    const commitsUrl = `/${props.repoType}s/${props.namespace}/${props.name}/commits?per=20`
-    const { data: commitRes } = await useFetchApi(commitsUrl).json()
-    const commitList = Array.isArray(commitRes.value?.data?.commits)
-      ? commitRes.value.data.commits
-      : Array.isArray(commitRes.value?.data)
-      ? commitRes.value.data
-      : []
-
-    if (commitList.length > 0) {
+    if (commitError?.value) {
+      commitsError.value = extractErrorMessage(commitError.value)
+      versionWarning.value = `Commit history could not be loaded: ${commitsError.value}`
+    } else if (commitRes?.value) {
+      const commitList = parseCommitList(commitRes.value)
       allCommits.value = commitList
       commitList.forEach((c) => {
         const commitId = c.id || c.sha || ''
@@ -288,174 +433,148 @@ const fetchVersionOptions = async () => {
         if (commitId && !existingValues.has(commitId)) {
           existingValues.add(commitId)
           options.push({
-            label: `${shortSha} - ${(c.message || 'Commit').slice(0, 30)}... (Commit)`,
+            label: `${shortSha} - ${(c.message || 'Commit').slice(0, 30)} (Commit)`,
             value: commitId,
             type: 'commit'
           })
         }
       })
     }
-  } catch (error) {
-    console.error('Error fetching version options:', error)
-  } finally {
-    if (options.length === 0) {
-      options.push(
-        { label: 'main (Branch)', value: 'main', type: 'branch' },
-        { label: 'v1.0.0 (Tag)', value: 'v1.0.0', type: 'tag' },
-        { label: 'v1.1.0 (Tag)', value: 'v1.1.0', type: 'tag' }
-      )
-    }
 
-    if (allCommits.value.length === 0) {
-      allCommits.value = [
-        {
-          id: '9f8e7d6c5b4a3210',
-          message: 'Fine-tuned model with optimized attention layers (v1.1.0)',
-          author_name: 'Bob ML Engineer',
-          committer_date: '2026-10-01 14:20:00'
-        },
-        {
-          id: 'a1b2c3d4e5f67890',
-          message: 'Initial model release (v1.0.0 baseline)',
-          author_name: 'Alice Developer',
-          committer_date: '2026-09-15 10:30:00'
-        }
-      ]
-    }
-
-    loadingOptions.value = false
     versionOptions.value = options
 
-    // Set initial defaults if not set
-    if (options.length > 0) {
-      if (!versionA.value) {
-        versionA.value = options[1] ? options[1].value : options[0].value
-      }
-      if (!versionB.value) {
-        versionB.value = options.length > 2 ? options[2].value : options[0].value
-      }
-      fetchComparisonData()
+    if (options.length === 0) {
+      versionLoadError.value = ''
+      ElMessage.warning('No comparable versions were returned by the repository APIs.')
+      return
     }
+
+    const preferred = props.currentBranch && existingValues.has(props.currentBranch)
+      ? props.currentBranch
+      : options[0].value
+    const alternate = options.find((opt) => opt.value !== preferred)?.value || preferred
+
+    if (!versionA.value) versionA.value = preferred
+    if (!versionB.value) versionB.value = alternate
+    await fetchComparisonData()
+  } catch (error) {
+    versionLoadError.value = extractErrorMessage(error)
+    versionOptions.value = []
+    ElMessage.error(versionLoadError.value)
+  } finally {
+    loadingOptions.value = false
   }
 }
 
-// Fetch all resources (commit, config.json, README.md, metrics) for a given ref
-const fetchSingleVersionData = async (refStr) => {
-  const result = {
-    commitId: refStr,
-    author: '',
-    date: '',
-    message: '',
-    config: null,
-    readme: null,
-    metrics: null
+const fetchBlobFile = async (filePath, refStr) => {
+  const url = `/${apiPrefix.value}/blob/${filePath}?ref=${encodeURIComponent(refStr)}`
+  const { data, error, response } = await useFetchApi(url).json()
+  const status = response?.value?.status
+
+  if (status === 404 || (!data.value?.data && !error.value)) {
+    return { content: null, missing: true, error: null }
   }
+
+  if (error.value || !data.value?.data) {
+    return {
+      content: null,
+      missing: false,
+      error: extractErrorMessage(error.value) || `Failed to load ${filePath}`
+    }
+  }
+
+  if (!data.value.data.content) {
+    return { content: null, missing: true, error: null }
+  }
+
+  try {
+    return { content: atob_utf8(data.value.data.content), missing: false, error: null }
+  } catch (decodeError) {
+    return { content: null, missing: false, error: `Failed to decode ${filePath}` }
+  }
+}
+
+const parseJsonFile = (raw, filePath) => {
+  try {
+    return { value: JSON.parse(raw), error: null }
+  } catch (e) {
+    return { value: null, error: `${filePath} is not valid JSON` }
+  }
+}
+
+const fetchSingleVersionData = async (refStr) => {
+  const result = emptyVersionData()
 
   if (!refStr) return result
 
-  const apiPrefix = `${props.repoType}s/${props.namespace}/${props.name}`
-
-  // Fetch in parallel
-  await Promise.all([
-    // 1. Commit metadata
+  const [commitResult, configResult, readmeResult, metricsResult, evalResult] = await Promise.all([
     (async () => {
-      try {
-        const { data } = await useFetchApi(`/${apiPrefix}/commits?ref=${refStr}&per=1`).json()
-        if (data.value?.data?.commits?.[0]) {
-          const c = data.value.data.commits[0]
-          result.commitId = c.id
-          result.author = c.author_name || c.committer_name
-          result.date = c.committer_date || c.created_at
-          result.message = c.message
-        }
-      } catch (e) {
-        // ignore error fallback
-      }
+      const { data: commitsData } = await useFetchApi(
+        `/${apiPrefix.value}/commits?ref=${encodeURIComponent(refStr)}&per=1`
+      ).json()
+      const commitObj = extractCommitObj(commitsData.value)
+      if (commitObj) return { commit: commitObj }
+
+      const { data: lastData } = await useFetchApi(
+        `/${apiPrefix.value}/last_commit?ref=${encodeURIComponent(refStr)}`
+      ).json()
+      const lastCommitObj = extractCommitObj(lastData.value)
+      if (lastCommitObj) return { commit: lastCommitObj }
+
+      return { error: 'Failed to load commit metadata' }
     })(),
-
-    // 2. config.json
-    (async () => {
-      try {
-        const { data } = await useFetchApi(`/${apiPrefix}/blob/config.json?ref=${refStr}`).json()
-        if (data.value?.data?.content) {
-          const decoded = atob_utf8(data.value.data.content)
-          try {
-            result.config = JSON.parse(decoded)
-            if (result.config?.metrics || result.config?.results) {
-              result.metrics = result.config.metrics || result.config.results
-            }
-          } catch (e) {
-            result.config = decoded
-          }
-        }
-      } catch (e) {
-        result.config = null
-      }
-    })(),
-
-    // 3. README.md
-    (async () => {
-      try {
-        const { data } = await useFetchApi(`/${apiPrefix}/blob/README.md?ref=${refStr}`).json()
-        if (data.value?.data?.content) {
-          result.readme = atob_utf8(data.value.data.content)
-        }
-      } catch (e) {
-        result.readme = null
-      }
-    })(),
-
-    // 4. metrics.json / eval_results.json (optional performance metrics file)
-    (async () => {
-      try {
-        const { data } = await useFetchApi(`/${apiPrefix}/blob/metrics.json?ref=${refStr}`).json()
-        if (data.value?.data?.content) {
-          const decoded = atob_utf8(data.value.data.content)
-          try {
-            result.metrics = JSON.parse(decoded)
-          } catch (e) {
-            //
-          }
-        }
-      } catch (e) {
-        // ignore
-      }
-    })()
+    fetchBlobFile('config.json', refStr),
+    fetchBlobFile('README.md', refStr),
+    fetchBlobFile('metrics.json', refStr),
+    fetchBlobFile('eval_results.json', refStr)
   ])
 
-  // Dev preview fallback if backend files are not present
-  if (!result.config && !result.readme) {
-    const isV1 = refStr.includes('1.0') || refStr.includes('v1.0')
-    result.author = isV1 ? 'Alice Developer' : 'Bob ML Engineer'
-    result.date = isV1 ? '2026-09-15 10:30:00' : '2026-10-01 14:20:00'
-    result.message = isV1 ? 'Initial model release (v1.0.0 baseline)' : 'Fine-tuned model with optimized attention layers'
-    result.config = isV1 ? {
-      "model_type": "llama",
-      "architectures": ["LlamaForCausalLM"],
-      "hidden_size": 4096,
-      "num_attention_heads": 32,
-      "num_hidden_layers": 32,
-      "vocab_size": 32000,
-      "torch_dtype": "float16"
-    } : {
-      "model_type": "llama",
-      "architectures": ["LlamaForCausalLM"],
-      "hidden_size": 4096,
-      "num_attention_heads": 32,
-      "num_hidden_layers": 36,
-      "vocab_size": 32000,
-      "torch_dtype": "bfloat16"
+  if (commitResult.commit) {
+    const c = commitResult.commit
+    result.commitId = c.id || ''
+    result.author = c.author_name || c.committer_name || ''
+    result.date = c.committer_date || c.created_at || ''
+    result.message = c.message || ''
+  } else if (commitResult.error) {
+    result.errors.push(`Commit metadata: ${commitResult.error}`)
+  }
+
+  if (configResult.missing) {
+    result.missingFiles.push('config.json')
+  } else if (configResult.error) {
+    result.errors.push(`config.json: ${configResult.error}`)
+  } else if (configResult.content) {
+    const parsed = parseJsonFile(configResult.content, 'config.json')
+    result.config = parsed.error ? configResult.content : parsed.value
+    if (parsed.error) {
+      result.errors.push(parsed.error)
+    } else if (typeof result.config === 'object' && (result.config?.metrics || result.config?.results)) {
+      result.metrics = result.config.metrics || result.config.results
     }
-    result.readme = isV1 ? "# Test Model v1.0.0\n\nBaseline model release." : "# Test Model v1.1.0\n\nOptimized model release with 36 layers and bfloat16 precision."
-    result.metrics = isV1 ? [
-      { metric: 'Accuracy', value: '84.5%' },
-      { metric: 'Latency (ms)', value: '42.1' },
-      { metric: 'Throughput (tok/s)', value: '145' }
-    ] : [
-      { metric: 'Accuracy', value: '89.2%' },
-      { metric: 'Latency (ms)', value: '35.4' },
-      { metric: 'Throughput (tok/s)', value: '182' }
-    ]
+  }
+
+  if (readmeResult.missing) {
+    result.missingFiles.push('README.md')
+  } else if (readmeResult.error) {
+    result.errors.push(`README.md: ${readmeResult.error}`)
+  } else {
+    result.readme = readmeResult.content
+  }
+
+  const activeMetricsRes = !metricsResult.missing && !metricsResult.error ? metricsResult : !evalResult.missing && !evalResult.error ? evalResult : null
+  if (activeMetricsRes && activeMetricsRes.content) {
+    const parsed = parseJsonFile(activeMetricsRes.content, 'metrics')
+    if (parsed.error) {
+      result.errors.push(parsed.error)
+    } else {
+      result.metrics = parsed.value
+    }
+  } else {
+    if (metricsResult.missing && evalResult.missing) {
+      result.missingFiles.push('metrics.json')
+    }
+    if (metricsResult.error) result.errors.push(`metrics.json: ${metricsResult.error}`)
+    if (evalResult.error) result.errors.push(`eval_results.json: ${evalResult.error}`)
   }
 
   return result
@@ -463,7 +582,11 @@ const fetchSingleVersionData = async (refStr) => {
 
 const fetchComparisonData = async () => {
   if (!versionA.value || !versionB.value) return
+
   loadingData.value = true
+  comparisonError.value = ''
+  dataA.value = emptyVersionData()
+  dataB.value = emptyVersionData()
 
   try {
     const [resA, resB] = await Promise.all([
@@ -472,8 +595,19 @@ const fetchComparisonData = async () => {
     ])
     dataA.value = resA
     dataB.value = resB
+
+    const hardFailures = [...resA.errors, ...resB.errors]
+    if (hardFailures.length && !resA.commitId && !resB.commitId && !resA.config && !resB.config && !resA.readme && !resB.readme) {
+      comparisonError.value = hardFailures.join('; ')
+      ElMessage.error(comparisonError.value)
+    } else if (hardFailures.length) {
+      ElMessage.warning(hardFailures.join('; '))
+    }
   } catch (error) {
-    ElMessage.error('Failed to fetch version comparison data')
+    comparisonError.value = extractErrorMessage(error)
+    dataA.value = emptyVersionData()
+    dataB.value = emptyVersionData()
+    ElMessage.error(comparisonError.value)
   } finally {
     loadingData.value = false
   }
@@ -483,8 +617,17 @@ const handleVersionChange = () => {
   fetchComparisonData()
 }
 
-// Export comparison report as Markdown document
+const retryCurrentRequest = () => {
+  if (versionLoadError.value || versionOptions.value.length === 0) {
+    fetchVersionOptions()
+    return
+  }
+  fetchComparisonData()
+}
+
 const exportReport = () => {
+  if (comparisonError.value) return
+
   const content = `# CSGHub Model Version Comparison Report
 
 **Model:** \`${props.namespace}/${props.name}\`  
@@ -497,10 +640,10 @@ const exportReport = () => {
 | Attribute | Version A (Baseline) | Version B (Target) |
 |---|---|---|
 | **Version/Ref** | \`${versionA.value}\` | \`${versionB.value}\` |
-| **Commit SHA** | \`${dataA.value.commitId || 'N/A'}\` | \`${dataB.value.commitId || 'N/A'}\` |
-| **Author** | ${dataA.value.author || 'N/A'} | ${dataB.value.author || 'N/A'} |
-| **Date** | ${dataA.value.date || 'N/A'} | ${dataB.value.date || 'N/A'} |
-| **Message** | ${dataA.value.message || 'N/A'} | ${dataB.value.message || 'N/A'} |
+| **Commit SHA** | \`${dataA.value.commitId || 'Unavailable'}\` | \`${dataB.value.commitId || 'Unavailable'}\` |
+| **Author** | ${dataA.value.author || 'Unavailable'} | ${dataB.value.author || 'Unavailable'} |
+| **Date** | ${dataA.value.date || 'Unavailable'} | ${dataB.value.date || 'Unavailable'} |
+| **Message** | ${dataA.value.message || 'Unavailable'} | ${dataB.value.message || 'Unavailable'} |
 
 ---
 
@@ -510,12 +653,10 @@ const exportReport = () => {
 - **Version B Config Available:** ${dataB.value.config ? 'Yes' : 'No'}
 
 \`\`\`json
-// Version A Configuration
 ${dataA.value.config ? JSON.stringify(dataA.value.config, null, 2) : 'Not available'}
 \`\`\`
 
 \`\`\`json
-// Version B Configuration
 ${dataB.value.config ? JSON.stringify(dataB.value.config, null, 2) : 'Not available'}
 \`\`\`
 
@@ -523,7 +664,7 @@ ${dataB.value.config ? JSON.stringify(dataB.value.config, null, 2) : 'Not availa
 
 ## Performance Metrics Comparison
 
-${dataA.value.metrics || dataB.value.metrics ? JSON.stringify({ versionA: dataA.value.metrics, versionB: dataB.value.metrics }, null, 2) : 'No performance metrics available.'}
+${dataA.value.metrics || dataB.value.metrics ? JSON.stringify({ versionA: dataA.value.metrics, versionB: dataB.value.metrics }, null, 2) : 'No performance metrics file was returned by the API.'}
 
 ---
 
@@ -538,8 +679,9 @@ ${dataA.value.metrics || dataB.value.metrics ? JSON.stringify({ versionA: dataA.
   createAndClickAnchor(url, `comparison-${props.name}-${versionA.value}-vs-${versionB.value}.md`)
 }
 
-watch(dialogVisible, (newVal) => {
-  if (newVal) {
+watch(() => props.visible, (newVal, oldVal) => {
+  if (newVal && !oldVal) {
+    resetComparisonState()
     fetchVersionOptions()
   }
 }, { immediate: true })
