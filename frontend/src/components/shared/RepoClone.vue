@@ -18,6 +18,16 @@
       @syncRepo="handleSyncRepo"
     />
 
+    <!-- compare versions button -->
+    <div v-if="repoType === 'model'" class="relative inline-flex">
+      <CsgButton
+        class="btn btn-secondary-gray btn-sm modelBtn"
+        name="Compare Versions"
+        svgName="git-compare"
+        @click="compareModalVisible = true"
+      />
+    </div>
+
     <!-- evaluation button -->
     <div v-if="!actionLimited && repoType === 'model'"
       class="relative inline-flex">
@@ -341,6 +351,16 @@
         </el-tab-pane>
       </el-tabs>
     </el-dialog>
+
+    <!-- Compare Versions Modal -->
+    <CompareVersionsModal
+      v-if="repoType === 'model'"
+      v-model:visible="compareModalVisible"
+      :namespace="namespacePath?.split('/')[0]"
+      :name="namespacePath?.split('/')[1]"
+      :currentBranch="repoDetailStore.defaultBranch"
+      :repoType="repoType"
+    />
   </div>
 </template>
 
@@ -360,8 +380,11 @@
   import { storeToRefs } from 'pinia'
   import useRepoDetailStore from '@/stores/RepoDetailStore'
 
+  import CompareVersionsModal from '../models/CompareVersionsModal.vue'
+
   const userStore = useUserStore()
   const repoDetailStore = useRepoDetailStore()
+  const compareModalVisible = ref(false)
 
   const props = defineProps({
     repoType: String,

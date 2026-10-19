@@ -12,6 +12,13 @@
           </el-breadcrumb-item>
         </el-breadcrumb>
       </div>
+      <CsgButton
+        v-if="repoType === 'model'"
+        class="btn btn-secondary-gray btn-sm"
+        name="Compare Versions"
+        svgName="git-compare"
+        @click="compareModalVisible = true"
+      />
     </div>
     <div class="flex items-center gap-2 my-4">
       <SvgIcon name="commits" />
@@ -52,6 +59,15 @@
       :total="totalCommits" />
     
     <el-skeleton v-if="loading" class="mt-4" :rows="5" animated />
+
+    <CompareVersionsModal
+      v-if="repoType === 'model'"
+      v-model:visible="compareModalVisible"
+      :namespace="namespacePath.split('/')[0]"
+      :name="namespacePath.split('/')[1]"
+      :currentBranch="currentBranch"
+      :repoType="repoType"
+    />
   </div>
 </template>
 
@@ -65,9 +81,13 @@
   import { copyToClipboard } from '../../packs/clipboard'
   import CsgPagination from './CsgPagination.vue'
   import BranchDropdown from './BranchDropdown.vue'
+  import CsgButton from './CsgButton.vue'
+  import CompareVersionsModal from '../models/CompareVersionsModal.vue'
   import { ElMessage } from 'element-plus'
   import { beiJingTimeParser } from '../../packs/utils'
   import { useRepoTabStore } from '../../stores/RepoTabStore'
+
+  const compareModalVisible = ref(false)
   // import { goToFiles, goToCommitDetail } from '@/packs/fileNavigation'
 
   const { t } = useI18n()

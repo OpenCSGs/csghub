@@ -50,3 +50,5 @@ coverage.html
 junit-report.xml
 
 .idea/
+csghub-server/
+csghub.db

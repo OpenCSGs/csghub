@@ -119,17 +119,19 @@
     try {
       const { response, data, error } = await useFetchApi(url).json()
       // redirect unauthorized page
-      if (response.value.status === 403) {
+      if (response.value?.status === 403) {
         ToUnauthorizedPage()
         return false
       }
       // redirect not found page
-      if (response.value.status === 404) {
+      if (response.value?.status === 404) {
         ToNotFoundPage()
         return false
       }
       if (!data.value) {
-        ElMessage.warning(error.value.msg)
+        if (error.value?.msg) {
+          ElMessage.warning(error.value.msg)
+        }
         return false
       }
       const repoData = data.value.data

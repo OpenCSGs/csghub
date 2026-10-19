@@ -496,15 +496,16 @@
   }
 
   async function fetchTags() {
-    const { error, data } = await useFetchApi(`/tags`).json()
-    if (!data.value) {
-      ElMessage({
-        message: error.value.msg || t('all.fetchError'),
-        type: 'warning'
-      })
-    } else {
-      const tagArray = Array.isArray(data.value.data) ? data.value.data : []
-      tagList.value = tagArray.filter(tag => tag.category === 'task' && tag.scope === props.repoType)
+    try {
+      const { error, data } = await useFetchApi(`/tags`).json()
+      if (!data.value) {
+        console.warn('Failed to fetch tags on mount:', error?.value?.msg)
+      } else {
+        const tagArray = Array.isArray(data.value.data) ? data.value.data : []
+        tagList.value = tagArray.filter(tag => tag.category === 'task' && tag.scope === props.repoType)
+      }
+    } catch (err) {
+      console.warn('Error fetching tags:', err)
     }
   }
 
