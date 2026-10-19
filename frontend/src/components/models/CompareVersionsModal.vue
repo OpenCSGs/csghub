@@ -269,8 +269,6 @@ import ConfigDiffViewer from './ConfigDiffViewer.vue'
 import ReadmeDiffViewer from './ReadmeDiffViewer.vue'
 import MetricsCompareViewer from './MetricsCompareViewer.vue'
 
-const METRICS_FILES = ['metrics.json', 'eval_results.json']
-
 const props = defineProps({
   visible: Boolean,
   namespace: String,
@@ -370,6 +368,44 @@ const extractCommitObj = (resData) => {
   return null
 }
 
+const getCommitId = (commitObj) => commitObj?.id || commitObj?.sha || ''
+
+const commitMatchesRef = (commitId, refStr) => {
+  if (!commitId || !refStr) return false
+  return commitId === refStr || commitId.startsWith(refStr) || refStr.startsWith(commitId)
+}
+
+const resolveVersionOption = (value) => {
+  return versionOptions.value.find((opt) => opt.value === value) || { value, type: 'branch', label: value }
+}
+
+const fetchCommitsForRef = async (refStr, per = 20) => {
+  const { data, error } = await useFetchApi(
+    `/${apiPrefix.value}/commits?ref=${encodeURIComponent(refStr)}&per=${per}`
+  ).json()
+
+  if (error?.value) {
+    return { commits: [], error: extractErrorMessage(error.value) }
+  }
+
+  return { commits: parseCommitList(data?.value), error: null }
+}
+
+const addCommitOptions = (commitList, options, existingValues) => {
+  commitList.forEach((c) => {
+    const commitId = getCommitId(c)
+    const shortSha = commitId.substring(0, 7)
+    if (commitId && !existingValues.has(commitId)) {
+      existingValues.add(commitId)
+      options.push({
+        label: `${shortSha} - ${(c.message || 'Commit').slice(0, 30)} (Commit)`,
+        value: commitId,
+        type: 'commit'
+      })
+    }
+  })
+}
+
 const fetchVersionOptions = async () => {
   if (!props.namespace || !props.name) {
     versionLoadError.value = 'Repository namespace and name are required to load versions.'
@@ -380,20 +416,13 @@ const fetchVersionOptions = async () => {
   versionLoadError.value = ''
   versionWarning.value = ''
   commitsError.value = ''
+  allCommits.value = []
 
   const options = []
   const existingValues = new Set()
 
   try {
-    const branchesUrl = `/${apiPrefix.value}/branches`
-    const tagsUrl = `/${apiPrefix.value}/tags`
-    const commitsUrl = `/${apiPrefix.value}/commits?per=20`
-
-    const [{ data: branchRes, error: branchError }, { data: tagRes }, { data: commitRes, error: commitError }] = await Promise.all([
-      useFetchApi(branchesUrl).json(),
-      useFetchApi(tagsUrl).json(),
-      useFetchApi(commitsUrl).json()
-    ])
+    const { data: branchRes, error: branchError } = await useFetchApi(`/${apiPrefix.value}/branches`).json()
 
     if (branchError?.value) {
       versionLoadError.value = extractErrorMessage(branchError.value)
@@ -402,56 +431,56 @@ const fetchVersionOptions = async () => {
       return
     }
 
-    if (branchRes?.value?.data && Array.isArray(branchRes.value.data)) {
-      branchRes.value.data.forEach((b) => {
-        if (b.name && !existingValues.has(b.name)) {
-          existingValues.add(b.name)
-          options.push({ label: `${b.name} (Branch)`, value: b.name, type: 'branch' })
-        }
-      })
-    }
+    const branches = Array.isArray(branchRes?.value?.data) ? branchRes.value.data : []
+    branches.forEach((b) => {
+      if (b.name && !existingValues.has(b.name)) {
+        existingValues.add(b.name)
+        options.push({ label: `${b.name} (Branch)`, value: b.name, type: 'branch' })
+      }
+    })
 
-    if (tagRes?.value?.data && Array.isArray(tagRes.value.data)) {
-      tagRes.value.data.forEach((t) => {
-        const tagName = t.name || t.tag_name
-        if (tagName && !existingValues.has(tagName)) {
-          existingValues.add(tagName)
-          options.push({ label: `${tagName} (Tag)`, value: tagName, type: 'tag' })
-        }
-      })
-    }
+    const branchNames = options.filter((opt) => opt.type === 'branch').map((opt) => opt.value)
+    const preferredBranch = (props.currentBranch && branchNames.includes(props.currentBranch))
+      ? props.currentBranch
+      : branchNames[0]
 
-    if (commitError?.value) {
-      commitsError.value = extractErrorMessage(commitError.value)
-      versionWarning.value = `Commit history could not be loaded: ${commitsError.value}`
-    } else if (commitRes?.value) {
-      const commitList = parseCommitList(commitRes.value)
-      allCommits.value = commitList
-      commitList.forEach((c) => {
-        const commitId = c.id || c.sha || ''
-        const shortSha = commitId.substring(0, 7)
-        if (commitId && !existingValues.has(commitId)) {
-          existingValues.add(commitId)
-          options.push({
-            label: `${shortSha} - ${(c.message || 'Commit').slice(0, 30)} (Commit)`,
-            value: commitId,
-            type: 'commit'
-          })
+    if (branchNames.length > 0) {
+      const commitResults = await Promise.all(branchNames.map((branchName) => fetchCommitsForRef(branchName, 20)))
+      const commitErrors = []
+
+      commitResults.forEach((result, index) => {
+        if (result.error) {
+          commitErrors.push(`${branchNames[index]}: ${result.error}`)
+          return
+        }
+        addCommitOptions(result.commits, options, existingValues)
+        if (branchNames[index] === preferredBranch) {
+          allCommits.value = result.commits
         }
       })
+
+      if (!allCommits.value.length) {
+        const firstSuccessful = commitResults.find((result) => !result.error && result.commits.length)
+        if (firstSuccessful) allCommits.value = firstSuccessful.commits
+      }
+
+      if (commitErrors.length === branchNames.length) {
+        commitsError.value = commitErrors.join('; ')
+        versionWarning.value = `Commit history could not be loaded: ${commitsError.value}`
+      } else if (commitErrors.length) {
+        commitsError.value = commitErrors.join('; ')
+        versionWarning.value = `Some branch commit histories could not be loaded: ${commitsError.value}`
+      }
     }
 
     versionOptions.value = options
 
     if (options.length === 0) {
-      versionLoadError.value = ''
-      ElMessage.warning('No comparable versions were returned by the repository APIs.')
+      ElMessage.warning('No branches or commits were returned for this repository.')
       return
     }
 
-    const preferred = props.currentBranch && existingValues.has(props.currentBranch)
-      ? props.currentBranch
-      : options[0].value
+    const preferred = preferredBranch || options[0].value
     const alternate = options.find((opt) => opt.value !== preferred)?.value || preferred
 
     if (!versionA.value) versionA.value = preferred
@@ -466,20 +495,41 @@ const fetchVersionOptions = async () => {
   }
 }
 
+const isNotFoundError = (status, errorValue) => {
+  if (status === 404) return true
+  const message = extractErrorMessage(errorValue)
+  return /not found|404/i.test(message)
+}
+
 const fetchBlobFile = async (filePath, refStr) => {
+  if (!refStr) {
+    return { content: null, missing: false, error: `Missing Git ref for ${filePath}` }
+  }
+
   const url = `/${apiPrefix.value}/blob/${filePath}?ref=${encodeURIComponent(refStr)}`
   const { data, error, response } = await useFetchApi(url).json()
   const status = response?.value?.status
 
-  if (status === 404 || (!data.value?.data && !error.value)) {
+  if (status === 404) {
     return { content: null, missing: true, error: null }
   }
 
-  if (error.value || !data.value?.data) {
+  if (error.value) {
+    if (isNotFoundError(status, error.value)) {
+      return { content: null, missing: true, error: null }
+    }
     return {
       content: null,
       missing: false,
       error: extractErrorMessage(error.value) || `Failed to load ${filePath}`
+    }
+  }
+
+  if (!data.value?.data) {
+    return {
+      content: null,
+      missing: false,
+      error: `Failed to load ${filePath} for ref "${refStr}"`
     }
   }
 
@@ -502,27 +552,39 @@ const parseJsonFile = (raw, filePath) => {
   }
 }
 
-const fetchSingleVersionData = async (refStr) => {
+const fetchCommitMetadata = async (refStr, refType) => {
+  const { data, error } = await useFetchApi(
+    `/${apiPrefix.value}/commits?ref=${encodeURIComponent(refStr)}&per=1`
+  ).json()
+
+  if (error?.value) {
+    return { error: `Failed to load commit metadata for "${refStr}": ${extractErrorMessage(error.value)}` }
+  }
+
+  const commitObj = parseCommitList(data?.value)[0] || extractCommitObj(data?.value)
+  const commitId = getCommitId(commitObj)
+
+  if (!commitObj || !commitId) {
+    return { error: `No commit found for ref "${refStr}"` }
+  }
+
+  if (refType === 'commit' && !commitMatchesRef(commitId, refStr)) {
+    return { error: `Commit metadata did not match selected ref "${refStr}"` }
+  }
+
+  return { commit: commitObj }
+}
+
+const fetchSingleVersionData = async (refStr, refType) => {
   const result = emptyVersionData()
 
-  if (!refStr) return result
+  if (!refStr) {
+    result.errors.push('A valid Git branch or commit is required')
+    return result
+  }
 
   const [commitResult, configResult, readmeResult, metricsResult, evalResult] = await Promise.all([
-    (async () => {
-      const { data: commitsData } = await useFetchApi(
-        `/${apiPrefix.value}/commits?ref=${encodeURIComponent(refStr)}&per=1`
-      ).json()
-      const commitObj = extractCommitObj(commitsData.value)
-      if (commitObj) return { commit: commitObj }
-
-      const { data: lastData } = await useFetchApi(
-        `/${apiPrefix.value}/last_commit?ref=${encodeURIComponent(refStr)}`
-      ).json()
-      const lastCommitObj = extractCommitObj(lastData.value)
-      if (lastCommitObj) return { commit: lastCommitObj }
-
-      return { error: 'Failed to load commit metadata' }
-    })(),
+    fetchCommitMetadata(refStr, refType),
     fetchBlobFile('config.json', refStr),
     fetchBlobFile('README.md', refStr),
     fetchBlobFile('metrics.json', refStr),
@@ -531,7 +593,7 @@ const fetchSingleVersionData = async (refStr) => {
 
   if (commitResult.commit) {
     const c = commitResult.commit
-    result.commitId = c.id || ''
+    result.commitId = getCommitId(c)
     result.author = c.author_name || c.committer_name || ''
     result.date = c.committer_date || c.created_at || ''
     result.message = c.message || ''
@@ -589,16 +651,21 @@ const fetchComparisonData = async () => {
   dataB.value = emptyVersionData()
 
   try {
+    const optionA = resolveVersionOption(versionA.value)
+    const optionB = resolveVersionOption(versionB.value)
     const [resA, resB] = await Promise.all([
-      fetchSingleVersionData(versionA.value),
-      fetchSingleVersionData(versionB.value)
+      fetchSingleVersionData(optionA.value, optionA.type),
+      fetchSingleVersionData(optionB.value, optionB.type)
     ])
     dataA.value = resA
     dataB.value = resB
 
     const hardFailures = [...resA.errors, ...resB.errors]
-    if (hardFailures.length && !resA.commitId && !resB.commitId && !resA.config && !resB.config && !resA.readme && !resB.readme) {
+    const hasAnyComparisonData = !!(resA.commitId || resB.commitId || resA.config || resB.config || resA.readme || resB.readme)
+    if (hardFailures.length && !hasAnyComparisonData) {
       comparisonError.value = hardFailures.join('; ')
+      dataA.value = emptyVersionData()
+      dataB.value = emptyVersionData()
       ElMessage.error(comparisonError.value)
     } else if (hardFailures.length) {
       ElMessage.warning(hardFailures.join('; '))
