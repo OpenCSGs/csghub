@@ -3,7 +3,7 @@
     <el-skeleton v-if="loading" :rows="8" animated />
 
     <div v-else-if="!readmeA && !readmeB" class="py-12">
-      <el-empty :description="$t('shared.noData') || 'No README / Model Card files available for comparison'" />
+      <el-empty :description="$t('models.versionComparison.noReadmeAvailable')" />
     </div>
 
     <div v-else class="space-y-4">
@@ -13,7 +13,7 @@
         type="warning"
         :closable="false"
         show-icon
-        title="Baseline (Version A) does not contain a README.md / Model Card"
+        :title="$t('models.versionComparison.versionANoConfig')"
         class="mb-2"
       />
       <el-alert
@@ -21,7 +21,7 @@
         type="warning"
         :closable="false"
         show-icon
-        title="Target (Version B) does not contain a README.md / Model Card"
+        :title="$t('models.versionComparison.versionBNoConfig')"
         class="mb-2"
       />
 
@@ -116,6 +116,9 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 import { diffLines } from 'diff'
 import MarkdownViewer from '../shared/viewers/MarkdownViewer.vue'
 

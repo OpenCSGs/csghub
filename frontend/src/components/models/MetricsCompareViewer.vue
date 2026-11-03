@@ -4,14 +4,14 @@
 
     <div v-else-if="!hasMetrics" class="py-12">
       <el-empty
-        description="No performance metrics file (metrics.json or eval_results.json) found in these versions. Add a metrics file to your model repository to display performance score comparisons."
+        :description="$t('models.versionComparison.noMetricsAvailable')"
       />
     </div>
 
     <div v-else class="space-y-6">
       <div class="flex items-center justify-between pb-3 border-b border-gray-200">
-        <span class="text-sm font-semibold text-gray-800">Performance Metrics Comparison</span>
-        <el-tag size="small" type="info" effect="plain">{{ metricList.length }} Metrics Found</el-tag>
+        <span class="text-sm font-semibold text-gray-800">{{ $t('models.versionComparison.metricsTab') }}</span>
+        <el-tag size="small" type="info" effect="plain">{{ metricList.length }} {{ $t('models.versionComparison.metricsFound').replace('{count}', '') }}</el-tag>
       </div>
 
       <!-- Metrics Table -->
@@ -20,9 +20,9 @@
           <thead class="bg-gray-50 border-b border-gray-200 text-xs text-gray-500 uppercase">
             <tr>
               <th class="px-4 py-2.5">Metric</th>
-              <th class="px-4 py-2.5 w-1/4">{{ versionALabel || 'Version A' }}</th>
-              <th class="px-4 py-2.5 w-1/4">{{ versionBLabel || 'Version B' }}</th>
-              <th class="px-4 py-2.5 w-1/4">Difference (Δ)</th>
+              <th class="px-4 py-2.5 w-1/4">{{ versionALabel || $t('models.versionComparison.versionALabel') }}</th>
+              <th class="px-4 py-2.5 w-1/4">{{ versionBLabel || $t('models.versionComparison.versionBLabel') }}</th>
+              <th class="px-4 py-2.5 w-1/4">{{ $t('models.versionComparison.metricsDelta') }}</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-200 bg-white">
@@ -49,7 +49,7 @@
 
       <!-- ECharts Visual Comparison Chart if numerical metrics exist -->
       <div v-if="chartData.length > 0" class="border border-gray-200 rounded p-4 bg-white">
-        <div class="text-xs font-semibold text-gray-600 uppercase mb-3">Metrics Visual Comparison</div>
+        <div class="text-xs font-semibold text-gray-600 uppercase mb-3">{{ $t('models.versionComparison.metricsVisualTitle') }}</div>
         <div ref="chartRef" class="w-full h-72"></div>
       </div>
     </div>
@@ -58,7 +58,10 @@
 
 <script setup>
 import { ref, computed, onMounted, watch, nextTick, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import * as echarts from 'echarts'
+
+const { t } = useI18n()
 
 const props = defineProps({
   metricsA: [Object, Array, null],

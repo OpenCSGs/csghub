@@ -3,7 +3,7 @@
     <el-skeleton v-if="loading" :rows="6" animated />
 
     <div v-else-if="!configA && !configB" class="py-12">
-      <el-empty :description="$t('shared.noData') || 'No configuration files available for comparison'" />
+      <el-empty :description="$t('models.versionComparison.noConfigAvailable')" />
     </div>
 
     <div v-else class="space-y-6">
@@ -13,7 +13,7 @@
         type="warning"
         :closable="false"
         show-icon
-        title="Baseline (Version A) does not contain config.json. Comparison is limited to the available file."
+        :title="$t('models.versionComparison.versionANoConfig')"
         class="mb-4"
       />
       <el-alert
@@ -21,7 +21,7 @@
         type="warning"
         :closable="false"
         show-icon
-        title="Target (Version B) does not contain config.json. Comparison is limited to the available file."
+        :title="$t('models.versionComparison.versionBNoConfig')"
         class="mb-4"
       />
       <el-alert
@@ -41,24 +41,24 @@
       <!-- View mode toggle & Summary bar -->
       <div v-if="canCompare" class="flex items-center justify-between flex-wrap gap-4 pb-3 border-b border-gray-200">
         <div class="flex items-center gap-2">
-          <span class="text-sm font-medium text-gray-700">Parameter Changes:</span>
+          <span class="text-sm font-medium text-gray-700">{{ $t('models.versionComparison.parameterChanges') }}:</span>
           <el-tag size="small" type="success" effect="plain" v-if="diffResult.added.length">
-            +{{ diffResult.added.length }} Added
+            +{{ diffResult.added.length }} {{ $t('models.versionComparison.added') }}
           </el-tag>
           <el-tag size="small" type="danger" effect="plain" v-if="diffResult.removed.length">
-            -{{ diffResult.removed.length }} Removed
+            -{{ diffResult.removed.length }} {{ $t('models.versionComparison.removed') }}
           </el-tag>
           <el-tag size="small" type="warning" effect="plain" v-if="diffResult.changed.length">
-            Δ {{ diffResult.changed.length }} Changed
+            Δ {{ diffResult.changed.length }} {{ $t('models.versionComparison.changed') }}
           </el-tag>
           <el-tag size="small" type="info" effect="plain">
-            {{ diffResult.unchanged.length }} Unchanged
+            {{ diffResult.unchanged.length }} {{ $t('models.versionComparison.unchanged') }}
           </el-tag>
         </div>
 
         <el-radio-group v-model="viewMode" size="small">
-          <el-radio-button value="structured" label="structured">Key Summary</el-radio-button>
-          <el-radio-button value="raw" label="raw">Raw JSON Diff</el-radio-button>
+          <el-radio-button value="structured" label="structured">{{ $t('models.versionComparison.structuredView') }}</el-radio-button>
+          <el-radio-button value="raw" label="raw">{{ $t('models.versionComparison.rawDiffView') }}</el-radio-button>
         </el-radio-group>
       </div>
 
@@ -72,9 +72,9 @@
           <table class="w-full text-left text-sm">
             <thead class="bg-gray-50 border-b border-amber-200 text-xs text-gray-500 uppercase">
               <tr>
-                <th class="px-4 py-2">Parameter</th>
-                <th class="px-4 py-2 w-1/3">Version A</th>
-                <th class="px-4 py-2 w-1/3">Version B</th>
+                <th class="px-4 py-2">{{ $t('models.versionComparison.parameterChanges') }}</th>
+                <th class="px-4 py-2 w-1/3">{{ $t('models.versionComparison.versionALabel') }}</th>
+                <th class="px-4 py-2 w-1/3">{{ $t('models.versionComparison.versionBLabel') }}</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
@@ -168,7 +168,10 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { diffJson } from 'diff'
+
+const { t } = useI18n()
 
 const props = defineProps({
   configA: [Object, String, null],
@@ -196,8 +199,8 @@ const canCompare = computed(() => !!parsedObjA.value && !!parsedObjB.value)
 
 const invalidJsonMessage = computed(() => {
   const parts = []
-  if (parsedA.value.invalid) parts.push('Version A config.json is not valid JSON')
-  if (parsedB.value.invalid) parts.push('Version B config.json is not valid JSON')
+  if (parsedA.value.invalid) parts.push(t('models.versionComparison.invalidJsonWarningA'))
+  if (parsedB.value.invalid) parts.push(t('models.versionComparison.invalidJsonWarningB'))
   return parts.join('. ')
 })
 
