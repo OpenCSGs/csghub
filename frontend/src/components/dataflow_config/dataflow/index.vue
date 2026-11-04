@@ -19,17 +19,17 @@
       </p>
       <div class="flex items-center justify-between gap-3 xs:block">
         <el-input
-          style="width: 100%"
-          v-model="form.searchStr"
-          @keyup.enter="handleSearch"
-          @clear="handleSearch"
-          :placeholder="`${t('dataPipelines.toInput')}${t(
+            style="width: 100%"
+            v-model="form.searchStr"
+            @keyup.enter="handleSearch"
+            @clear="handleSearch"
+            :placeholder="`${t('dataPipelines.toInput')}${t(
             'dataPipelines.taskName'
           )}`"
-          clearable
-          ><template #prefix>
-            <el-icon class="el-input__icon w-5 h-5"><search /></el-icon>
-          </template>
+            clearable
+        ><template #prefix>
+          <el-icon class="el-input__icon w-5 h-5"><search /></el-icon>
+        </template>
         </el-input>
         <!-- <CsgButton
           class="btn btn-primary btn-sm whitespace-nowrap"
@@ -38,10 +38,10 @@
           :icon="true"
         /> -->
         <CsgButton
-          class="btn btn-primary btn-sm whitespace-nowrap"
-          @click="goToNewTask('/datapipelines/addDataProcessing')"
-          :name="t('dataPipelines.createTask')"
-          :icon="true"
+            class="btn btn-primary btn-sm whitespace-nowrap"
+            @click="goToNewTask('/datapipelines/addDataProcessing')"
+            :name="t('dataPipelines.createTask')"
+            :icon="true"
         />
       </div>
     </div>
@@ -53,21 +53,21 @@
       </div>
       <div class="flex flex-col">
         <el-table
-          :data="tableData"
-          class="rounded tableCont"
-          :empty-text="t('dataPipelines.noData')"
-          header-cell-class-name="tableHeader"
-          v-loading="tableLoading"
+            :data="tableData"
+            class="rounded tableCont"
+            :empty-text="t('dataPipelines.noData')"
+            header-cell-class-name="tableHeader"
+            v-loading="tableLoading"
         >
           <el-table-column
-            prop="job_name"
-            :label="t('dataPipelines.taskName')"
-            min-width="320"
+              prop="job_name"
+              :label="t('dataPipelines.taskName')"
+              min-width="320"
           />
           <el-table-column
-            prop="execution_mode"
-            :label="t('dataPipelines.executionMode')"
-            min-width="140"
+              prop="execution_mode"
+              :label="t('dataPipelines.executionMode')"
+              min-width="140"
           >
             <template #default="scope">
               <span>
@@ -76,23 +76,23 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="job_type"
-            :label="t('dataPipelines.taskType')"
-            min-width="180"
+              prop="job_type"
+              :label="t('dataPipelines.taskType')"
+              min-width="180"
           >
             <template #default="scope">
               {{ t(`dataPipelines.${scope.row.job_type}`) }}
             </template>
           </el-table-column>
           <el-table-column
-            :label="t('dataPipelines.processingStatus')"
-            min-width="180"
+              :label="t('dataPipelines.processingStatus')"
+              min-width="180"
           >
             <template #default="scope">
               <div
-                v-if="scope.row.status"
-                class="statusBox flex items-center gap-1 px-2 py-1"
-                :class="scope.row.status"
+                  v-if="scope.row.status"
+                  class="statusBox flex items-center gap-1 px-2 py-1"
+                  :class="scope.row.status"
               >
                 <SvgIcon :name="scope.row.status" class="w-3 h-3" />
                 <span class="text-sm">{{ t(`dataPipelines.${scope.row.status}`) }}</span>
@@ -100,95 +100,95 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="data_source"
-            :label="t('dataPipelines.dataSource')"
-            min-width="300"
+              prop="data_source"
+              :label="t('dataPipelines.dataSource')"
+              min-width="300"
           >
             <template #default="scope">
               <span>{{
-                `${scope.row.repo_id || "-"}>${scope.row.branch || "-"}`
-              }}</span>
+                  `${scope.row.repo_id || "-"}>${scope.row.branch || "-"}`
+                }}</span>
             </template>
           </el-table-column>
           <el-table-column
-            prop="data_target"
-            :label="t('dataPipelines.dataFlow')"
-            min-width="300"
+              prop="data_target"
+              :label="t('dataPipelines.dataFlow')"
+              min-width="300"
           >
             <template #default="scope">
               <span>{{
-                `${scope.row.export_repo_id || "-"}>${scope.row.export_branch_name || "-"}`
-              }}</span>
+                  `${scope.row.export_repo_id || "-"}>${scope.row.export_branch_name || "-"}`
+                }}</span>
             </template>
           </el-table-column>
           <el-table-column
-            prop="cluster_name"
-            :label="t('dataPipelines.region')"
-            min-width="140"
+              prop="cluster_name"
+              :label="t('dataPipelines.region')"
+              min-width="140"
           >
             <template #default="scope">
               <span>{{ scope.row.cluster_name || "-" }}</span>
             </template>
           </el-table-column>
           <el-table-column
-            prop="resource_name"
-            :label="t('dataPipelines.spaceCloudResources')"
-            min-width="200"
+              prop="resource_name"
+              :label="t('dataPipelines.spaceCloudResources')"
+              min-width="200"
           >
             <template #default="scope">
               <span
-                class="truncate inline-block max-w-full"
-                :title="scope.row.resource_name || ''"
+                  class="truncate inline-block max-w-full"
+                  :title="scope.row.resource_name || ''"
               >{{ scope.row.resource_name || "-" }}</span>
             </template>
           </el-table-column>
           <el-table-column
-            prop="date_posted"
-            :label="t('dataPipelines.startTime')"
-            min-width="260"
+              prop="date_posted"
+              :label="t('dataPipelines.startTime')"
+              min-width="260"
           >
             <template #default="scope">
               <span>{{ scope.row.date_posted ? convertUtcToLocalTime(scope.row.date_posted) : '-' }}</span>
             </template>
           </el-table-column>
           <el-table-column
-            prop="token"
-            :label="t('dataPipelines.operations')"
-            min-width="320"
-            fixed="right"
+              prop="token"
+              :label="t('dataPipelines.operations')"
+              min-width="320"
+              fixed="right"
           >
             <template #default="scope">
               <div class="settingsTableBtn flex items-center justify-start">
                 <el-button
-                  class="flex items-center justify-start cursor-pointer"
-                  type="text"
-                  @click="
+                    class="flex items-center justify-start cursor-pointer"
+                    type="text"
+                    @click="
                     goToNewTask(
                       `/datapipelines/dataflowInfo?id=${scope.row.job_id}&type=${scope.row.job_source}&jobType=${scope.row.job_type}`
                     )
                   "
-                  >{{ t("dataPipelines.details") }}
+                >{{ t("dataPipelines.details") }}
                 </el-button>
                 <el-button
-                  type="text"
-                  class="flex items-center justify-start cursor-pointer"
-                  @click="getLog(scope.row)"
-                  >{{ t("dataPipelines.log") }}
+                    type="text"
+                    class="flex items-center justify-start cursor-pointer"
+                    @click="getLog(scope.row)"
+                >{{ t("dataPipelines.log") }}
                 </el-button>
 
                 <!-- 取消按钮：Processing 状态 -->
                 <el-popconfirm
-                  v-if="scope.row.status === 'Processing'"
-                  :title="`${t('dataPipelines.cancelExecute')}?`"
-                  :confirm-button-text="t('dataPipelines.confirm')"
-                  :cancel-button-text="t('dataPipelines.cancel')"
-                  width="220px"
-                  @confirm="handleCancel(scope.row.job_id)"
+                    v-if="scope.row.status === 'Processing'"
+                    :title="`${t('dataPipelines.cancelExecute')}?`"
+                    :confirm-button-text="t('dataPipelines.confirm')"
+                    :cancel-button-text="t('dataPipelines.cancel')"
+                    width="220px"
+                    @confirm="handleCancel(scope.row.job_id)"
                 >
                   <template #reference>
                     <el-button
-                      type="text"
-                      class="flex items-center justify-start cursor-pointer"
+                        type="text"
+                        class="flex items-center justify-start cursor-pointer"
                     >
                       {{ t("dataPipelines.cancel") }}
                     </el-button>
@@ -196,37 +196,37 @@
                 </el-popconfirm>
                 <!-- 执行按钮 -->
                 <el-button
-                  type="text"
-                  class="flex items-center justify-start cursor-pointer"
-                  :class="{ 'text-gray-400': scope.row.status === 'Processing' || scope.row.status === 'Queued' || scope.row.status === 'Finished' }"
-                  :disabled="scope.row.status === 'Processing' || scope.row.status === 'Queued' || scope.row.status === 'Finished'"
-                  @click="openExecuteDialog(scope.row)"
+                    type="text"
+                    class="flex items-center justify-start cursor-pointer"
+                    :class="{ 'text-gray-400': scope.row.status === 'Processing' || scope.row.status === 'Queued' || scope.row.status === 'Finished' }"
+                    :disabled="scope.row.status === 'Processing' || scope.row.status === 'Queued' || scope.row.status === 'Finished'"
+                    @click="openExecuteDialog(scope.row)"
                 >
                   {{ t("dataPipelines.execute") }}
                 </el-button>
 
                 <el-popconfirm
-                  v-if="scope.row.can_delete"
-                  :title="`${t('dataPipelines.deleteConfirm')}?`"
-                  :confirm-button-text="t('dataPipelines.confirm')"
-                  :cancel-button-text="t('dataPipelines.cancel')"
-                  width="220px"
-                  @confirm="handleDelete(scope.row.job_id)"
+                    v-if="scope.row.can_delete"
+                    :title="`${t('dataPipelines.deleteConfirm')}?`"
+                    :confirm-button-text="t('dataPipelines.confirm')"
+                    :cancel-button-text="t('dataPipelines.cancel')"
+                    width="220px"
+                    @confirm="handleDelete(scope.row.job_id)"
                 >
                   <template #reference>
                     <el-button
-                      type="text"
-                      class="flex items-center justify-start cursor-pointer"
-                      >{{ t("dataPipelines.delete") }}
+                        type="text"
+                        class="flex items-center justify-start cursor-pointer"
+                    >{{ t("dataPipelines.delete") }}
                     </el-button>
                   </template>
                 </el-popconfirm>
                 <el-button
-                  v-else
-                  type="text"
-                  disabled
-                  class="flex items-center justify-start"
-                  >{{ t("dataPipelines.delete") }}
+                    v-else
+                    type="text"
+                    disabled
+                    class="flex items-center justify-start"
+                >{{ t("dataPipelines.delete") }}
                 </el-button>
               </div>
             </template>
@@ -235,38 +235,38 @@
 
         <div class="flex justify-end mt-4 mr-4 mb-4">
           <el-pagination
-            :page-size="pagination.pageSize"
-            :current-page="pagination.currentPage"
-            :total="pagination.total"
-            :page-sizes="[10, 20, 50, 100]"
-            layout="total, sizes, prev, pager, next, jumper"
-            @size-change="pagination.handleSizeChange"
-            @current-change="pagination.handleCurrentChange"
+              :page-size="pagination.pageSize"
+              :current-page="pagination.currentPage"
+              :total="pagination.total"
+              :page-sizes="[10, 20, 50, 100]"
+              layout="total, sizes, prev, pager, next, jumper"
+              @size-change="pagination.handleSizeChange"
+              @current-change="pagination.handleCurrentChange"
           />
         </div>
       </div>
     </div>
     <el-dialog
-      v-model="executeDialogVisible"
-      :title="t('dataPipelines.execute')"
-      width="900px"
-      align-center
-      @closed="onExecuteDialogClosed"
+        v-model="executeDialogVisible"
+        :title="t('dataPipelines.execute')"
+        width="900px"
+        align-center
+        @closed="onExecuteDialogClosed"
     >
       <div class="execute-dialog-content">
         <!-- 空间资源配置区域 -->
         <div class="space-resource-section">
           <p class="section-title">{{ t('dataPipelines.spaceResourceConfig') }}</p>
-          
+
           <SpaceResourceSelect
-            ref="executeSpaceResourceFieldsRef"
-            :key="executeDialogKey"
-            v-if="executeDialogVisible"
-            v-model:cluster-id="executeClusterId"
-            v-model:cluster-name="executeClusterName"
-            v-model:space-resource-id="executeSpaceResourceId"
-            v-model:resource-name="executeResourceName"
-            compact
+              ref="executeSpaceResourceFieldsRef"
+              :key="executeDialogKey"
+              v-if="executeDialogVisible"
+              v-model:cluster-id="executeClusterId"
+              v-model:cluster-name="executeClusterName"
+              v-model:space-resource-id="executeSpaceResourceId"
+              v-model:resource-name="executeResourceName"
+              compact
           />
           <StorageSizeField v-model="executeStorageSize" class="mt-[24px]" />
         </div>
@@ -274,15 +274,15 @@
         <!-- 执行模式选择区域（仅支持流式算子时显示） -->
         <div v-if="executeIsStreamingCompatible" class="execution-mode-section">
           <el-divider />
-          
-          <p class="section-title">{{ t('dataPipelines.executionModeTitle') }}</p>
-          
-          <!-- 检测提示 -->
-          <div class="detection-tip">
+
+          <p class="section-title mb-4">{{ t('dataPipelines.executionModeTitle') }}</p>
+
+          <!-- 检测提示（仅算子任务显示） -->
+          <div v-if="executePendingJobSource === 'pipeline'" class="detection-tip">
             <el-icon class="tip-icon"><CircleCheckFilled /></el-icon>
             <span class="tip-text">{{ t('dataPipelines.streamingCompatibleDetected') }}</span>
           </div>
-          
+
           <el-radio-group v-model="executeExecutionMode" class="mode-radio-group">
             <el-radio value="normal" size="large">
               {{ t('dataPipelines.normalMode') }}
@@ -292,6 +292,19 @@
             </el-radio>
           </el-radio-group>
 
+          <!-- 普通模式提示（仅工具任务显示） -->
+          <el-alert
+              v-if="executePendingJobSource === 'tool' && executeExecutionMode === 'normal'"
+              type="info"
+              :closable="false"
+              class="mt-3"
+              show-icon
+          >
+            <template #title>
+              <span class="text-xs">{{ t("dataPipelines.legacyModeHint") }}</span>
+            </template>
+          </el-alert>
+
           <!-- 批量大小设置（仅流式模式时显示） -->
           <div v-if="executeExecutionMode === 'streaming'" class="batch-size-section">
             <p class="batch-size-label">
@@ -299,25 +312,48 @@
               {{ t('dataPipelines.streamingBatchSize') }}
             </p>
             <el-input
-              v-model.number="executeStreamingBatchSize"
-              type="number"
-              :min="1"
-              :placeholder="t('dataPipelines.streamingBatchSizePlaceholder')"
-              class="batch-size-input"
-              @input="handleExecuteBatchSizeInput"
+                v-model.number="executeStreamingBatchSize"
+                type="number"
+                :min="1"
+                :placeholder="t('dataPipelines.streamingBatchSizePlaceholder')"
+                class="batch-size-input"
+                @input="handleExecuteBatchSizeInput"
             >
               <template #suffix>
                 <span class="input-unit">{{ t('dataPipelines.batchUnit') }}</span>
               </template>
             </el-input>
-            <p class="batch-size-hint">
+            <p v-if="executePendingJobSource === 'pipeline'" class="batch-size-hint">
               <el-icon class="hint-icon"><InfoFilled /></el-icon>
               {{ t('dataPipelines.streamingBatchSizeHint') }}
             </p>
+
+            <!-- 流式模式提示（仅工具任务显示Alert样式） -->
+            <div v-if="executePendingJobSource === 'tool'" class="mt-3 space-y-2">
+              <el-alert
+                  type="success"
+                  :closable="false"
+                  show-icon
+              >
+                <template #title>
+                  <span class="text-xs">{{ t("dataPipelines.streamingModeAdvantage") }}</span>
+                </template>
+              </el-alert>
+
+              <el-alert
+                  type="warning"
+                  :closable="false"
+                  show-icon
+              >
+                <template #title>
+                  <span class="text-xs">{{ t("dataPipelines.batchSizeRecommendation") }}</span>
+                </template>
+              </el-alert>
+            </div>
           </div>
 
-          <!-- 流式模式说明 -->
-          <div class="streaming-benefits">
+          <!-- 流式模式说明（仅算子任务显示） -->
+          <div v-if="executePendingJobSource === 'pipeline'" class="streaming-benefits">
             <p class="benefits-title">{{ t('dataPipelines.streamingModeBenefits') }}</p>
             <ul>
               <li>{{ t('dataPipelines.streamingBenefit1') }}</li>
@@ -330,15 +366,15 @@
       <template #footer>
         <div class="dialog-footer flex flex-row justify-end items-center gap-3">
           <CsgButton
-            class="btn btn-secondary-gray btn-md whitespace-nowrap"
-            @click="executeDialogVisible = false"
-            :name="t('dataPipelines.cancel')"
+              class="btn btn-secondary-gray btn-md whitespace-nowrap"
+              @click="executeDialogVisible = false"
+              :name="t('dataPipelines.cancel')"
           />
           <CsgButton
-            class="btn btn-primary btn-md whitespace-nowrap"
-            :loading="executeSubmitting"
-            :name="t('dataPipelines.sure')"
-            @click="confirmExecute"
+              class="btn btn-primary btn-md whitespace-nowrap"
+              :loading="executeSubmitting"
+              :name="t('dataPipelines.sure')"
+              @click="confirmExecute"
           />
         </div>
       </template>
@@ -350,7 +386,7 @@
 import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, onBeforeUnmount, watch } from "vue";
 import { ElMessage } from "element-plus";
-import { InfoFilled, CircleCheckFilled } from '@element-plus/icons-vue';
+import { InfoFilled, CircleCheckFilled, QuestionFilled, Warning } from '@element-plus/icons-vue';
 import useFetchApi from "../../../packs/useFetchApi";
 import {
   resolveCsghubLogParamsFromTask,
@@ -371,6 +407,7 @@ const route = useRoute();
 const executeDialogVisible = ref(false);
 const executeDialogKey = ref(0);
 const executePendingJobId = ref(null);
+const executePendingJobSource = ref(null); // 保存任务类型：'tool' 或 'pipeline'
 const executeClusterId = ref("");
 const executeClusterName = ref("");
 const executeSpaceResourceId = ref("");
@@ -433,7 +470,7 @@ const getDataFlowListFun = async () => {
     pagination.value.total = data.value.total || 0;
   }
   tableLoading.value = false;
-  
+
   // 数据更新后检查是否需要启动/停止定时任务
   checkAndManageTimer();
 };
@@ -449,7 +486,7 @@ const startRefreshTimer = () => {
   if (refreshTimer.value) {
     stopRefreshTimer();
   }
-  
+
   // 确保定时器不存在后再创建新的
   if (!refreshTimer.value) {
     refreshTimer.value = setInterval(() => {
@@ -539,28 +576,47 @@ const streamingCompatibleOperators = [
  */
 const getExecutionMode = (row) => {
   try {
-    // 优先从 yaml_config 解析
-    if (row.yaml_config) {
-      const yamlLines = row.yaml_config.split('\n');
-      for (const line of yamlLines) {
-        if (line.trim().startsWith('use_streaming:')) {
-          const value = line.split(':')[1].trim().toLowerCase();
-          if (value === 'true') {
-            return t('dataPipelines.streamingExecution');
-          }
+    if (!row.yaml_config) {
+      return t('dataPipelines.normalExecution');
+    }
+
+    // 尝试解析为 JSON（工具任务）
+    try {
+      const config = JSON.parse(row.yaml_config);
+
+      // 检查 params 数组中的 processing_mode 参数
+      if (config.params && Array.isArray(config.params)) {
+        const processingModeParam = config.params.find(p => p.name === 'processing_mode');
+        if (processingModeParam && processingModeParam.value === 'streaming') {
+          return t('dataPipelines.streamingExecution');
+        }
+      }
+    } catch (jsonError) {
+      // 不是 JSON 格式，尝试 YAML 格式（工作流任务）
+    }
+
+    // 解析为 YAML 格式（工作流任务）
+    const yamlLines = row.yaml_config.split('\n');
+
+    // 检查工作流/算子级别的流式执行 (use_streaming: true)
+    for (const line of yamlLines) {
+      if (line.trim().startsWith('use_streaming:')) {
+        const value = line.split(':')[1]?.trim().toLowerCase();
+        if (value === 'true') {
+          return t('dataPipelines.streamingExecution');
         }
       }
     }
-    
+
     // 如果有 use_streaming 字段（未来可能添加）
     if (row.use_streaming === true) {
       return t('dataPipelines.streamingExecution');
     }
-    
+
     // 默认为普通执行
     return t('dataPipelines.normalExecution');
   } catch (error) {
-    console.error('解析执行模式失败:', error);
+    console.error('Error parsing execution mode:', error);
     return t('dataPipelines.normalExecution');
   }
 };
@@ -574,25 +630,25 @@ const checkStreamingCompatibility = (workflowData) => {
     // 1. workflowData.json.process (JSON格式)
     // 2. workflowData.process (YAML解析后的格式)
     const process = workflowData?.json?.process || workflowData?.process;
-    
+
     if (!process) {
       console.log('未找到 process 数据');
       return false;
     }
 
     const processEntries = Object.values(process);
-    
+
     if (processEntries.length === 0) {
       console.log('process 为空');
       return false;
     }
-    
+
     const operators = processEntries.map(node => node.operator_name);
     console.log('检测到的算子:', operators);
-    
+
     const isCompatible = operators.every(op => streamingCompatibleOperators.includes(op));
     console.log('流式模式兼容性检查结果:', isCompatible);
-    
+
     return isCompatible;
   } catch (error) {
     console.error('检查流式模式兼容性时出错:', error);
@@ -607,9 +663,9 @@ const handleExecuteBatchSizeInput = (value) => {
   if (value === '' || value === null || value === undefined) {
     return;
   }
-  
+
   const numValue = Number(value);
-  
+
   if (numValue <= 0) {
     ElMessage.error(t('dataPipelines.streamingBatchSizeMinError'));
   } else if (!Number.isInteger(numValue)) {
@@ -619,6 +675,7 @@ const handleExecuteBatchSizeInput = (value) => {
 
 const openExecuteDialog = async (row) => {
   executePendingJobId.value = row.job_id;
+  executePendingJobSource.value = row.job_source; // 保存任务类型
   executeClusterId.value = "";
   executeClusterName.value = "";
   executeSpaceResourceId.value = "";
@@ -628,36 +685,73 @@ const openExecuteDialog = async (row) => {
   executeStreamingBatchSize.value = 100;
   executeIsStreamingCompatible.value = false;
   executeDialogKey.value = Date.now();
-  
-  // 直接从列表行数据中获取 dslText（列表数据已经包含完整信息）
-  const dslText = row.dslText || row.dsl_text;
-  
-  if (dslText) {
+
+  // 支持流式模式的工具列表
+  const streamingSupportedTools = [
+    'reformat_jsonl_nan_value_preprocess_internal',
+    'reformat_csv_nan_value_preprocess_internal',
+    'dataset_spliter_by_language_preprocess_internal',
+    'cosmopedia_chinese_preprocess_internal'
+  ];
+
+  // 检查是否是工具任务
+  if (row.job_source === 'tool' && row.yaml_config) {
     try {
-      // 尝试 JSON 解析
-      try {
-        const workflowData = JSON.parse(dslText);
-        executeIsStreamingCompatible.value = checkStreamingCompatibility(workflowData);
-      } catch (jsonError) {
-        // YAML 格式，使用正则提取算子名称
-        const operatorNameRegex = /operator_name:\s*(\w+)/g;
-        const operators = [];
-        let match;
-        while ((match = operatorNameRegex.exec(dslText)) !== null) {
-          operators.push(match[1]);
-        }
-        
-        if (operators.length > 0) {
-          executeIsStreamingCompatible.value = operators.every(op => 
-            streamingCompatibleOperators.includes(op)
-          );
+      const config = JSON.parse(row.yaml_config);
+      const toolName = config.name;
+
+      // 检查工具是否支持流式模式
+      if (streamingSupportedTools.includes(toolName)) {
+        executeIsStreamingCompatible.value = true;
+
+        // 读取当前的流式配置
+        if (config.params && Array.isArray(config.params)) {
+          const processingModeParam = config.params.find(p => p.name === 'processing_mode');
+          const batchSizeParam = config.params.find(p => p.name === 'batch_size');
+
+          if (processingModeParam) {
+            executeExecutionMode.value = processingModeParam.value === 'streaming' ? 'streaming' : 'normal';
+          }
+
+          if (batchSizeParam && typeof batchSizeParam.value === 'number') {
+            executeStreamingBatchSize.value = batchSizeParam.value;
+          }
         }
       }
     } catch (error) {
-      console.error('解析工作流数据失败:', error);
+      console.error('Error parsing tool config:', error);
+    }
+  } else {
+    // 工作流任务的流式检测逻辑
+    const dslText = row.dslText || row.dsl_text;
+
+    if (dslText) {
+      try {
+        // 尝试 JSON 解析
+        try {
+          const workflowData = JSON.parse(dslText);
+          executeIsStreamingCompatible.value = checkStreamingCompatibility(workflowData);
+        } catch (jsonError) {
+          // YAML 格式，使用正则提取算子名称
+          const operatorNameRegex = /operator_name:\s*(\w+)/g;
+          const operators = [];
+          let match;
+          while ((match = operatorNameRegex.exec(dslText)) !== null) {
+            operators.push(match[1]);
+          }
+
+          if (operators.length > 0) {
+            executeIsStreamingCompatible.value = operators.every(op =>
+                streamingCompatibleOperators.includes(op)
+            );
+          }
+        }
+      } catch (error) {
+        // 解析失败，保持默认值 false
+      }
     }
   }
-  
+
   executeDialogVisible.value = true;
 };
 
@@ -668,12 +762,12 @@ const onExecuteDialogClosed = () => {
 const confirmExecute = async () => {
   if (!executeClusterId.value) {
     return ElMessage.error(
-      t("all.pleaseSelect", { value: t("dataPipelines.selectRegion") })
+        t("all.pleaseSelect", { value: t("dataPipelines.selectRegion") })
     );
   }
   if (!executeSpaceResourceId.value) {
     return ElMessage.error(
-      t("all.pleaseSelect", { value: t("dataPipelines.spaceCloudResources") })
+        t("all.pleaseSelect", { value: t("dataPipelines.spaceCloudResources") })
     );
   }
 
@@ -682,23 +776,23 @@ const confirmExecute = async () => {
     if (executeStreamingBatchSize.value === null || executeStreamingBatchSize.value === undefined || executeStreamingBatchSize.value === '') {
       return ElMessage.error(t('dataPipelines.streamingBatchSizeRequired'));
     }
-    
+
     const batchSize = Number(executeStreamingBatchSize.value);
-    
+
     if (batchSize <= 0) {
       return ElMessage.error(t('dataPipelines.streamingBatchSizeMinError'));
     }
-    
+
     if (!Number.isInteger(batchSize)) {
       return ElMessage.error(t('dataPipelines.streamingBatchSizeIntegerError'));
     }
   }
 
   const spaceNames =
-    executeSpaceResourceFieldsRef.value?.resolveSelectionNames?.() ?? {};
-  
+      executeSpaceResourceFieldsRef.value?.resolveSelectionNames?.() ?? {};
+
   const useStreaming = executeExecutionMode.value === 'streaming';
-  
+
   const params = {
     cluster_id: executeClusterId.value,
     cluster_name: spaceNames.cluster_name || executeClusterName.value,
@@ -706,12 +800,21 @@ const confirmExecute = async () => {
     resource_name: spaceNames.resource_name || executeResourceName.value,
     space_resource_id: executeSpaceResourceId.value,
     storage_size: normalizeStorageSize(executeStorageSize.value),
-    use_streaming: useStreaming,
   };
 
-  // 只有启用流式模式时才传递批量大小参数
-  if (useStreaming) {
-    params.streaming_batch_size = Number(executeStreamingBatchSize.value);
+  // 根据任务类型发送不同的参数名
+  if (executePendingJobSource.value === 'tool') {
+    // 工具任务：使用 processing_mode 和 batch_size
+    params.processing_mode = useStreaming ? 'streaming' : 'legacy';
+    if (useStreaming) {
+      params.batch_size = Number(executeStreamingBatchSize.value);
+    }
+  } else {
+    // 算子任务：使用 use_streaming 和 streaming_batch_size
+    params.use_streaming = useStreaming;
+    if (useStreaming) {
+      params.streaming_batch_size = Number(executeStreamingBatchSize.value);
+    }
   }
 
   executeSubmitting.value = true;
@@ -802,10 +905,10 @@ const getLog = async (row) => {
 
   if ((!namespaceUuid || !jobId) && row?.job_id) {
     const { data } = await useFetchApi(
-      `/dataflow/jobs/log_context/${row.job_id}`
+        `/dataflow/jobs/log_context/${row.job_id}`
     )
-      .get()
-      .json();
+        .get()
+        .json();
     if (data.value?.code === 200 && data.value?.data) {
       task = { ...task, ...data.value.data };
       ({ namespaceUuid, jobId } = resolveCsghubLogParamsFromTask(task));
@@ -831,10 +934,10 @@ const getLog = async (row) => {
 
 // 监听路由变化，停止定时任务
 watch(
-  () => route.path,
-  () => {
-    stopRefreshTimer();
-  }
+    () => route.path,
+    () => {
+      stopRefreshTimer();
+    }
 );
 
 onMounted(() => {
@@ -882,7 +985,7 @@ onBeforeUnmount(() => {
 .borderBox {
   border-radius: var(--spacing-lg, 12px);
   border: var(--spacing-none, 1px) solid
-    var(--colors-gray-light-mode-200, #eaecf0);
+  var(--colors-gray-light-mode-200, #eaecf0);
   background: var(--Base-White, #fff);
   overflow: hidden;
 }
@@ -919,10 +1022,10 @@ onBeforeUnmount(() => {
 // 执行对话框样式
 .execute-dialog-content {
   padding: 8px 0;
-  
+
   .space-resource-section {
     margin-bottom: 24px;
-    
+
     .section-title {
       font-size: 16px;
       font-weight: 500;
@@ -930,12 +1033,12 @@ onBeforeUnmount(() => {
       margin-bottom: 16px;
     }
   }
-  
+
   .execution-mode-section {
     :deep(.el-divider) {
       margin: 0 0 24px 0;
     }
-    
+
     .section-title {
       font-size: 16px;
       font-weight: 500;
@@ -975,14 +1078,14 @@ onBeforeUnmount(() => {
         margin-right: 0;
         height: 32px;
         line-height: 32px;
-        
+
         .el-radio__label {
           font-size: 14px;
           color: #344054;
           font-weight: 400;
           padding-left: 8px;
         }
-        
+
         &.is-checked {
           .el-radio__label {
             color: #3250bd;
@@ -1049,7 +1152,7 @@ onBeforeUnmount(() => {
       background: #f0f7ff;
       border: 1px solid #d1e9ff;
       border-radius: 8px;
-      
+
       .benefits-title {
         font-size: 14px;
         font-weight: 500;
@@ -1060,7 +1163,7 @@ onBeforeUnmount(() => {
       ul {
         margin: 0;
         padding-left: 20px;
-        
+
         li {
           font-size: 13px;
           color: #475467;

@@ -493,4 +493,13 @@ export const dataPipelines = {
   "streamingBatchSizeMinError": "Batch size must be greater than or equal to 1",
   "streamingBatchSizeIntegerError": "Batch size must be an integer",
   "streamingBatchSizeRequired": "Please enter batch size",
+  "executionModeTooltipDesc1": "Loads all data into memory at once",
+  "executionModeTooltipDesc2": "Suitable for small datasets (< 1 million rows)",
+  "executionModeTooltipTitle2": "Streaming Mode",
+  "executionModeTooltipDesc3": "Processes data in batches, lower memory usage",
+  "executionModeTooltipDesc4": "Suitable for large datasets (> 1 million rows)",
+  "executionModeTooltipDesc5": "Recommended batch size: 10,000 - 100,000 rows",
+  "legacyModeHint": "Normal mode loads all data at once, suitable for small datasets (< 1 million rows). Streaming mode is recommended for large datasets.",
+  "streamingModeAdvantage": "Streaming mode uses batch processing, significantly reducing memory usage, ideal for large-scale datasets.",
+  "batchSizeRecommendation": "Batch size recommendations: For small datasets (<100K items), use 1000; for medium datasets (100K-1M items), use 10,000; for large datasets (>1M items), use 50,000. Larger batch sizes increase processing speed but consume more memory.",
 }

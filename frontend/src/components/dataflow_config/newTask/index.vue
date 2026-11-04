@@ -239,8 +239,9 @@
                 </el-form-item>
               </el-col>
 
+              <!-- 其他工具的通用参数渲染 -->
               <el-col
-                v-for="(item, paramIndex) in seltool.params || []"
+                v-for="(item, paramIndex) in (isStreamingTool(seltool.name) ? (seltool.params || []).filter(p => p.name !== 'processing_mode' && p.name !== 'batch_size') : (seltool.params || []))"
                 :key="paramIndex"
                 :xs="24"
                 :sm="24"
@@ -261,6 +262,87 @@
                     @input-confirm="handleInputConfirm"
                     @remove-tag="removeTag"
                   />
+                </el-form-item>
+              </el-col>
+
+              <!-- 流式模式选择UI（支持流式模式的工具才显示） -->
+              <el-col
+                v-if="isStreamingTool(seltool.name)"
+                :xs="24" :sm="24" :md="24" :lg="24" :xl="24"
+              >
+                <el-form-item class="mt-[12px]">
+                  <template #label>
+                    <div class="flex items-center gap-2">
+                      <p class="text-gray-500 text-xs">
+                        {{ t("dataPipelines.executionMode") }}
+                      </p>
+                    </div>
+                  </template>
+                  <div class="flex items-center gap-4">
+                    <el-radio-group v-model="getStreamingConfig(seltool.name).executionMode.value" class="flex-shrink-0">
+                      <el-radio label="legacy" size="large">
+                        {{ t("dataPipelines.normalMode") }}
+                      </el-radio>
+                      <el-radio label="streaming" size="large">
+                        {{ t("dataPipelines.streamingMode") }}
+                      </el-radio>
+                    </el-radio-group>
+
+                    <!-- 批量大小输入框（仅流式模式时显示） -->
+                    <div v-if="getStreamingConfig(seltool.name).executionMode.value === 'streaming'" class="flex items-center gap-2 flex-1">
+                      <span class="text-gray-500 text-xs whitespace-nowrap">
+                        <span class="text-red-500">*</span>
+                        {{ t("dataPipelines.streamingBatchSize") }}:
+                      </span>
+                      <el-input
+                        v-model.number="getStreamingConfig(seltool.name).batchSize.value"
+                        type="number"
+                        :min="getStreamingConfig(seltool.name).minBatchSize"
+                        :placeholder="t('dataPipelines.streamingBatchSizePlaceholder')"
+                        style="max-width: 200px;"
+                      >
+                        <template #suffix>
+                          <span class="text-gray-400 text-xs">{{ t(`dataPipelines.${getStreamingConfig(seltool.name).unit}`) }}</span>
+                        </template>
+                      </el-input>
+                    </div>
+                  </div>
+
+                  <!-- 普通模式提示 -->
+                  <el-alert
+                    v-if="getStreamingConfig(seltool.name).executionMode.value === 'legacy'"
+                    type="info"
+                    :closable="false"
+                    class="mt-2"
+                    show-icon
+                  >
+                    <template #title>
+                      <span class="text-xs">{{ t("dataPipelines.legacyModeHint") }}</span>
+                    </template>
+                  </el-alert>
+
+                  <!-- 流式模式提示 -->
+                  <div v-if="getStreamingConfig(seltool.name).executionMode.value === 'streaming'" class="mt-2 space-y-2">
+                    <el-alert
+                      type="success"
+                      :closable="false"
+                      show-icon
+                    >
+                      <template #title>
+                        <span class="text-xs">{{ t("dataPipelines.streamingModeAdvantage") }}</span>
+                      </template>
+                    </el-alert>
+
+                    <el-alert
+                      type="warning"
+                      :closable="false"
+                      show-icon
+                    >
+                      <template #title>
+                        <span class="text-xs">{{ t("dataPipelines.batchSizeRecommendation") }}</span>
+                      </template>
+                    </el-alert>
+                  </div>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -766,6 +848,7 @@
   import { useRouter, useRoute } from 'vue-router'
   import { ref, onMounted, watch } from 'vue'
   import { ElMessage } from 'element-plus'
+  import { InfoFilled, QuestionFilled, Warning } from '@element-plus/icons-vue'
   import useUserStore from '../../../stores/UserStore.js'
   import useFetchApi from '../../../packs/useFetchApi'
   import zhOps from '../../../locales/zh_js/operator_zh.json'
@@ -832,6 +915,106 @@
   const spaceResourceFieldsRef = ref(null)
   const taskNamespaceFieldsRef = ref(null)
   const ownerPathOptions = ref([])
+
+  // reformat_jsonl_nan_value 工具的状态
+  const reformatJsonlExecutionMode = ref('legacy')
+  const reformatJsonlBatchSize = ref(100)
+
+  // reformat_csv_nan_value 工具的状态
+  const reformatCsvExecutionMode = ref('legacy')
+  const reformatCsvBatchSize = ref(100)
+
+  // dataset_split_by_language 工具的状态
+  const datasetSplitExecutionMode = ref('legacy')
+  const datasetSplitBatchSize = ref(100)
+
+  // make_cosmopedia 工具的状态
+  const cosmopediaExecutionMode = ref('legacy')
+  const cosmopediaBatchSize = ref(100)
+
+  // 流式模式工具配置（统一管理）
+  const streamingToolConfigs = {
+    'reformat_jsonl_nan_value_preprocess_internal': {
+      executionMode: reformatJsonlExecutionMode,
+      batchSize: reformatJsonlBatchSize,
+      minBatchSize: 1,
+      unit: 'batchUnit'
+    },
+    'reformat_csv_nan_value_preprocess_internal': {
+      executionMode: reformatCsvExecutionMode,
+      batchSize: reformatCsvBatchSize,
+      minBatchSize: 1,
+      unit: 'rowsUnit'
+    },
+    'dataset_spliter_by_language_preprocess_internal': {
+      executionMode: datasetSplitExecutionMode,
+      batchSize: datasetSplitBatchSize,
+      minBatchSize: 1,
+      unit: 'batchUnit'
+    },
+    'cosmopedia_chinese_preprocess_internal': {
+      executionMode: cosmopediaExecutionMode,
+      batchSize: cosmopediaBatchSize,
+      minBatchSize: 1,
+      unit: 'batchUnit'
+    }
+  }
+
+  // 检查工具是否支持流式模式
+  const isStreamingTool = (toolName) => {
+    return toolName in streamingToolConfigs
+  }
+
+  // 获取工具的流式配置
+  const getStreamingConfig = (toolName) => {
+    return streamingToolConfigs[toolName] || null
+  }
+
+  // 统一的批量大小验证函数
+  const validateBatchSize = (toolName) => {
+    const config = getStreamingConfig(toolName)
+    if (!config) return true
+
+    if (config.executionMode.value === 'streaming') {
+      const batchSize = config.batchSize.value
+
+      if (batchSize === null || batchSize === undefined || batchSize === '') {
+        ElMessage.error(t('dataPipelines.streamingBatchSizeRequired'))
+        return false
+      }
+
+      const numBatchSize = Number(batchSize)
+      if (numBatchSize <= 0) {
+        ElMessage.error(t('dataPipelines.streamingBatchSizeMinError'))
+        return false
+      }
+
+      if (!Number.isInteger(numBatchSize)) {
+        ElMessage.error(t('dataPipelines.streamingBatchSizeIntegerError'))
+        return false
+      }
+    }
+
+    return true
+  }
+
+  // 统一的参数更新函数
+  const updateStreamingParams = (tool) => {
+    const config = getStreamingConfig(tool.name)
+    if (!config) return
+
+    // 获取工具的其他原有参数（排除 processing_mode 和 batch_size）
+    const otherParams = (tool.params || []).filter(p =>
+      p.name !== 'processing_mode' && p.name !== 'batch_size'
+    )
+
+    // 更新工具的params，保留原有参数并添加新参数
+    tool.params = [
+      ...otherParams,
+      { name: 'processing_mode', value: config.executionMode.value },
+      { name: 'batch_size', value: Number(config.batchSize.value) }
+    ]
+  }
 
   const onNamespacesLoaded = (payload) => {
     applyNamespaceFromLoaded(form, payload)
@@ -1077,7 +1260,7 @@
     // 设置搜索状态
     const key = item.name || item.key || JSON.stringify(item)
     searchSelectLoadingMap.value.set(key, true)
-    
+
     try {
       const { data } = await useFetchApi(
         `/dataflow/model/check-model?model_name=${encodeURIComponent(value)}`
@@ -1276,7 +1459,7 @@
       const searchParam = modelSearchKeyword.value ? `&search=${encodeURIComponent(modelSearchKeyword.value)}` : ''
       const url = `/dataflow/model/list-models?page=${modelCurrentPage.value}&per_page=${modelPerPage.value}${searchParam}`
       const { data, error } = await useFetchApi(url).get().json()
-      
+
       if (error.value) {
         ElMessage({
           message: error.value.msg || t('dataPipelines.fetchModelListError'),
@@ -1324,7 +1507,7 @@
     if (modelValidating.value) {
       return
     }
-    
+
     if (!currentSelectModelItem.value) {
       return
     }
@@ -1335,7 +1518,7 @@
     // 设置验证状态（用于下拉框下方显示）
     const key = currentSelectModelItem.value.name || currentSelectModelItem.value.key || JSON.stringify(currentSelectModelItem.value)
     searchSelectLoadingMap.value.set(key, true)
-    
+
     // 设置弹框中的验证状态
     modelValidating.value = true
     validatingModelName.value = modelPath
@@ -1465,6 +1648,19 @@
             subLoading.value = false
             return
           }
+
+          // 处理支持流式模式的工具
+          if (isStreamingTool(seltool.value.name)) {
+            // 验证批量大小
+            if (!validateBatchSize(seltool.value.name)) {
+              subLoading.value = false
+              return
+            }
+
+            // 更新工具参数
+            updateStreamingParams(seltool.value)
+          }
+
           const spaceNames =
             spaceResourceFieldsRef.value?.resolveSelectionNames?.() ?? {}
           const { selToolIndex, selTemplate, ...formRest } = form.value
