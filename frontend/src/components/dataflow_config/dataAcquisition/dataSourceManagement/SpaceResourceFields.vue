@@ -318,7 +318,7 @@ const fetchSpaceResources = async () => {
   }
   spaceResourcesLoading.value = true;
   const { data, error } = await useFetchApi(
-    `/space_resources?cluster_id=${clusterId.value}&deploy_type=0`
+    `/space_resources?cluster_id=${clusterId.value}&deploy_type=38`
   ).json();
   spaceResourcesLoading.value = false;
   if (error.value) {
@@ -381,7 +381,7 @@ const fetchSpaceResourcesWithId = async (id) => {
   }
   spaceResourcesLoading.value = true;
   const { data, error } = await useFetchApi(
-    `/space_resources?cluster_id=${id}&deploy_type=0`
+    `/space_resources?cluster_id=${id}&deploy_type=38`
   ).json();
   spaceResourcesLoading.value = false;
   if (error.value) {

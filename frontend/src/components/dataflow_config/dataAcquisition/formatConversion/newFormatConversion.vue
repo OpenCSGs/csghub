@@ -183,6 +183,83 @@
             >
             </el-input>
           </el-form-item>
+
+          <!-- 执行模式选择（仅CSV格式时显示，放在源格式下方） -->
+          <el-form-item v-if="showStreamingOptionForGroup(groupKey)" prop="use_streaming" class="mt-[12px]">
+            <template #label>
+              <div class="flex items-center gap-2">
+                <p class="text-gray-500 text-xs">
+                  {{ t("dataPipelines.executionMode") }}
+                </p>
+              </div>
+            </template>
+            <div class="flex items-center gap-4">
+              <el-radio-group v-model="form.use_streaming" class="flex-shrink-0">
+                <el-radio :label="false" size="large">
+                  {{ t("dataPipelines.normalMode") }}
+                </el-radio>
+                <el-radio :label="true" size="large">
+                  {{ t("dataPipelines.streamingMode") }}
+                </el-radio>
+              </el-radio-group>
+
+              <!-- 批量大小输入框（仅流式模式时显示，放在流式模式旁边） -->
+              <div v-if="form.use_streaming" class="flex items-center gap-2 flex-1">
+                <span class="text-gray-500 text-xs whitespace-nowrap">
+                  <span class="text-red-500">*</span>
+                  {{ t("dataPipelines.streamingBatchSize") }}:
+                </span>
+                <el-input
+                  v-model.number="form.chunk_size"
+                  type="number"
+                  :min="1"
+                  :placeholder="t('dataPipelines.streamingBatchSizePlaceholder')"
+                  @input="handleChunkSizeInput"
+                  style="max-width: 200px;"
+                >
+                  <template #suffix>
+                    <span class="text-gray-400 text-xs">{{ t('dataPipelines.batchUnit') }}</span>
+                  </template>
+                </el-input>
+              </div>
+            </div>
+
+            <!-- 普通模式提示 -->
+            <el-alert
+              v-if="!form.use_streaming"
+              type="info"
+              :closable="false"
+              class="mt-2"
+              show-icon
+            >
+              <template #title>
+                <span class="text-xs">{{ t("dataPipelines.legacyModeHint") }}</span>
+              </template>
+            </el-alert>
+
+            <!-- 流式模式提示 -->
+            <div v-if="form.use_streaming" class="mt-2 space-y-2">
+              <el-alert
+                type="success"
+                :closable="false"
+                show-icon
+              >
+                <template #title>
+                  <span class="text-xs">{{ t("dataPipelines.streamingModeAdvantage") }}</span>
+                </template>
+              </el-alert>
+
+              <el-alert
+                type="warning"
+                :closable="false"
+                show-icon
+              >
+                <template #title>
+                  <span class="text-xs">{{ t("dataPipelines.batchSizeRecommendation") }}</span>
+                </template>
+              </el-alert>
+            </div>
+          </el-form-item>
         </el-col>
 
         <!-- 目标格式 -->
@@ -328,6 +405,7 @@
 import { useRouter, useRoute } from "vue-router";
 import { ref, onMounted, inject, computed, watch } from "vue";
 import { ElMessage, ElLoading } from "element-plus";
+import { InfoFilled, QuestionFilled, Warning } from "@element-plus/icons-vue";
 import useFetchApi from "@/packs/useFetchApi";
 import useUserStore from "@/stores/UserStore";
 import { useI18n } from "vue-i18n";
@@ -373,6 +451,8 @@ const form = ref({
   cluster_name: "",
   resource_name: "",
   storage_size: "4Gi",
+  use_streaming: false,
+  chunk_size: 50000,
 });
 // 表单校验
 const formData = ref();
@@ -495,7 +575,7 @@ const handleSourceChange = (groupKey) => {
   console.log(groupKey, "groupKeygroupKeygroupKey");
   activeGroup.value = groupKey;
   form.value.to_data_type = null; // 重置目标格式选择
-  
+
   // 如果选中的是 PDF，获取默认的 mineru_api_url
   if (isPdfSelected(groupKey)) {
     fetchMineruApiUrl();
@@ -652,6 +732,63 @@ const getFormatTypeList = async () => {
   const { data } = await useFetchApi(url).get().json();
   if (data.value?.code === 200) {
     dataObj.value = data.value.data;
+  }
+};
+
+// 判断指定group是否应该显示流式模式选项
+// 仅当该group的源格式为CSV时显示（Excel不支持流式模式）
+const showStreamingOptionForGroup = (groupKey) => {
+  if (!form.value.from_data_type) {
+    return false;
+  }
+
+  const group = dataObj.value[groupKey];
+  if (!group || !group.from_format_types) {
+    return false;
+  }
+
+  // 检查选中的源格式是否属于这个group
+  const found = group.from_format_types.find(
+    (format) => format.value === form.value.from_data_type
+  );
+
+  if (!found) {
+    return false; // 选中的格式不在这个group中
+  }
+
+  // 只有当源格式是CSV时才显示流式模式选项
+  return found.label.toLowerCase() === 'csv';
+};
+
+// 监听源格式变化，重置流式模式选择
+watch(() => form.value.from_data_type, () => {
+  // 检查新选中的格式是否支持流式模式
+  let supportsStreaming = false;
+  for (const groupKey of Object.keys(dataObj.value)) {
+    if (showStreamingOptionForGroup(groupKey)) {
+      supportsStreaming = true;
+      break;
+    }
+  }
+
+  if (!supportsStreaming) {
+    form.value.use_streaming = false;
+    form.value.chunk_size = 50000;
+  }
+});
+
+// 处理批量大小输入
+const handleChunkSizeInput = (value) => {
+  if (value === '' || value === null || value === undefined) {
+    return;
+  }
+
+  const numValue = Number(value);
+
+  if (numValue <= 0) {
+    ElMessage.error(t('dataPipelines.streamingBatchSizeMinError'));
+  } else if (!Number.isInteger(numValue)) {
+    ElMessage.error(t('dataPipelines.streamingBatchSizeIntegerError'));
   }
 };
 

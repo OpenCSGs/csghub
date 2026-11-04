@@ -491,4 +491,13 @@ export const dataPipelines = {
   "streamingExecution": "流式",
   "streamingCompatibleDetected": "检测到您的工作流中所有算子均支持流式模式",
   "spaceResourceConfig": "空间资源配置",
+  "executionModeTooltipDesc1": "一次性加载所有数据到内存",
+  "executionModeTooltipDesc2": "适合小数据集（< 100万行）",
+  "executionModeTooltipTitle2": "流式模式",
+  "executionModeTooltipDesc3": "分批处理，内存占用更低",
+  "executionModeTooltipDesc4": "适合大数据集（> 100万行）",
+  "executionModeTooltipDesc5": "建议批量大小: 10,000 - 100,000行",
+  "legacyModeHint": "普通模式一次性加载所有数据，适合小数据集（< 100万行）。大数据集建议使用流式模式。",
+  "streamingModeAdvantage": "流式模式采用分批处理，显著降低内存占用，适合大规模数据集处理。",
+  "batchSizeRecommendation": "批量大小建议：小数据集（<10万条）建议1000；中型数据集（10-100万条）建议10,000；大数据集（>100万条）建议50,000。批量大小越大处理速度越快，但内存占用也越高。",
 }

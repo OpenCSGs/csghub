@@ -109,7 +109,6 @@
 import { ref, computed, watch, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
-import useFetchApi from "../../../../packs/useFetchApi";
 import { formatSpaceResourcePriceLabel } from "../../../../packs/spaceResourcePrice.js";
 
 const props = defineProps({
@@ -271,7 +270,7 @@ const fetchSpaceResources = async (cid) => {
   }
   spaceResourcesLoading.value = true;
   const { data, error } = await useFetchApi(
-    `/space_resources?cluster_id=${id}&deploy_type=0`
+    `/space_resources?cluster_id=${id}&deploy_type=38`
   ).json();
   spaceResourcesLoading.value = false;
 

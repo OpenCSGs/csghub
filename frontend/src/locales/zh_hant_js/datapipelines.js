@@ -491,4 +491,13 @@ export const dataPipelines = {
   "streamingBatchSizeMinError": "批量大小必須大於等於1",
   "streamingBatchSizeIntegerError": "批量大小必須是整數",
   "streamingBatchSizeRequired": "請輸入批量大小",
+  "executionModeTooltipDesc1": "一次性加載所有數據到內存",
+  "executionModeTooltipDesc2": "適合小數據集（< 100萬行）",
+  "executionModeTooltipTitle2": "流式模式",
+  "executionModeTooltipDesc3": "分批處理，內存佔用更低",
+  "executionModeTooltipDesc4": "適合大數據集（> 100萬行）",
+  "executionModeTooltipDesc5": "建議批量大小: 10,000 - 100,000行",
+  "legacyModeHint": "普通模式一次性加載所有數據，適合小數據集（< 100萬行）。大數據集建議使用流式模式。",
+  "streamingModeAdvantage": "流式模式採用分批處理，顯著降低內存佔用，適合大規模數據集處理。",
+  "batchSizeRecommendation": "批量大小建議：小數據集（<10萬條）建議1000；中型數據集（10-100萬條）建議10,000；大數據集（>100萬條）建議50,000。批量大小越大處理速度越快，但內存佔用也越高。",
 }
