@@ -8,69 +8,72 @@
     </div>
     <div class="flex items-center justify-end gap-2 pt-5 bottomBtnGroup">
       <CsgButton
-        class="btn btn-secondary-gray btn-md whitespace-nowrap"
-        @click="geback"
-        :name="t('dataPipelines.cancel')"
+          class="btn btn-secondary-gray btn-md whitespace-nowrap"
+          @click="geback"
+          :name="t('dataPipelines.cancel')"
       />
       <CsgButton
-        class="btn btn-secondary-gray btn-md whitespace-nowrap"
-        @click="step = 1"
-        :name="t('dataPipelines.previousStep')"
+          class="btn btn-secondary-gray btn-md whitespace-nowrap"
+          @click="step = 1"
+          :name="t('dataPipelines.previousStep')"
       />
+      <!--
       <CsgButton
+        v-if="init !== 'createJobs'"
         class="btn btn-primary btn-md whitespace-nowrap mr-[5px]"
         v-loading="formLoading"
         @click="save(1)"
         :name="type === 'edit' ? t('dataPipelines.updateTemplate') : t('dataPipelines.creationCompleted')"
       />
+      -->
       <CsgButton
-        v-if="init === 'createJobs'"
-        class="btn btn-primary btn-md whitespace-nowrap mr-[5px]"
-        v-loading="formLoading"
-        @click="save(2)"
-        :name="t('dataPipelines.saveAndExecute')"
+          v-if="init === 'createJobs'"
+          class="btn btn-primary btn-md whitespace-nowrap mr-[5px]"
+          v-loading="formLoading"
+          @click="save(2)"
+          :name="t('dataPipelines.saveAndExecute')"
       />
     </div>
 
     <!-- 空间资源选择对话框 -->
     <el-dialog
-      v-model="resourceDialogVisible"
-      :title="t('dataPipelines.selectSpaceResources')"
-      width="900px"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-      @close="handleResourceDialogClose"
+        v-model="resourceDialogVisible"
+        :title="t('dataPipelines.selectSpaceResources')"
+        width="900px"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+        @close="handleResourceDialogClose"
     >
       <div class="resource-dialog-content">
         <!-- 空间资源配置区域 -->
         <div class="space-resource-section">
           <p class="section-title">{{ t('dataPipelines.spaceResourceConfig') }}</p>
-          
+
           <SpaceResourceSelect
-            ref="spaceResourceSelectRef"
-            v-model:cluster-id="tempResourceData.cluster_id"
-            v-model:space-resource-id="tempResourceData.space_resource_id"
-            v-model:cluster-name="tempResourceData.cluster_name"
-            v-model:resource-name="tempResourceData.resource_name"
+              ref="spaceResourceSelectRef"
+              v-model:cluster-id="tempResourceData.cluster_id"
+              v-model:space-resource-id="tempResourceData.space_resource_id"
+              v-model:cluster-name="tempResourceData.cluster_name"
+              v-model:resource-name="tempResourceData.resource_name"
           />
-          <StorageSizeField 
-            v-model="tempResourceData.storage_size" 
-            class="mt-[24px]"
+          <StorageSizeField
+              v-model="tempResourceData.storage_size"
+              class="mt-[24px]"
           />
         </div>
 
         <!-- 执行模式选择区域（仅支持流式算子时显示） -->
         <div v-if="isStreamingCompatible" class="execution-mode-section">
           <el-divider />
-          
+
           <p class="section-title">{{ t('dataPipelines.executionModeTitle') }}</p>
-          
+
           <!-- 检测提示 -->
           <div class="detection-tip">
             <el-icon class="tip-icon"><CircleCheckFilled /></el-icon>
             <span class="tip-text">{{ t('dataPipelines.streamingCompatibleDetected') }}</span>
           </div>
-          
+
           <el-radio-group v-model="executionMode" class="mode-radio-group">
             <el-radio value="normal" size="large">
               {{ t('dataPipelines.normalMode') }}
@@ -87,12 +90,12 @@
               {{ t('dataPipelines.streamingBatchSize') }}
             </p>
             <el-input
-              v-model.number="streamingBatchSize"
-              type="number"
-              :min="1"
-              :placeholder="t('dataPipelines.streamingBatchSizePlaceholder')"
-              class="batch-size-input"
-              @input="handleBatchSizeInput"
+                v-model.number="streamingBatchSize"
+                type="number"
+                :min="1"
+                :placeholder="t('dataPipelines.streamingBatchSizePlaceholder')"
+                class="batch-size-input"
+                @input="handleBatchSizeInput"
             >
               <template #suffix>
                 <span class="input-unit">{{ t('dataPipelines.batchUnit') }}</span>
@@ -118,15 +121,15 @@
       <template #footer>
         <div class="dialog-footer">
           <CsgButton
-            class="btn btn-secondary-gray btn-md"
-            @click="resourceDialogVisible = false"
-            :name="t('dataPipelines.cancel')"
+              class="btn btn-secondary-gray btn-md"
+              @click="resourceDialogVisible = false"
+              :name="t('dataPipelines.cancel')"
           />
           <CsgButton
-            class="btn btn-primary btn-md"
-            v-loading="formLoading"
-            @click="confirmResourceSelection"
-            :name="t('dataPipelines.confirm')"
+              class="btn btn-primary btn-md"
+              v-loading="formLoading"
+              @click="confirmResourceSelection"
+              :name="t('dataPipelines.confirm')"
           />
         </div>
       </template>
@@ -230,12 +233,12 @@ const streamingCompatibleOperators = [
 ];
 
 watch(
-  () => form.value.dslText,
-  () => {
-    nextTick(() => {
-      workflowEditorRef.value.initGraph()
-    })
-  }
+    () => form.value.dslText,
+    () => {
+      nextTick(() => {
+        workflowEditorRef.value.initGraph()
+      })
+    }
 );
 
 onMounted(() => {});
@@ -264,17 +267,17 @@ const checkStreamingCompatibility = (workflowData) => {
 
     // 从process对象中提取所有算子名称
     const processEntries = Object.values(workflowData.json.process);
-    
+
     if (processEntries.length === 0) {
       console.log('没有算子');
       return false;
     }
-    
+
     const operators = processEntries.map(node => node.operator_name);
-    
+
     // 检查是否所有算子都在可升级列表中
-    const allCompatible = operators.every(op => 
-      streamingCompatibleOperators.includes(op)
+    const allCompatible = operators.every(op =>
+        streamingCompatibleOperators.includes(op)
     );
 
     console.log('算子兼容性检查:', {
@@ -307,10 +310,10 @@ const handleBatchSizeInput = (value) => {
   if (value === '' || value === null || value === undefined) {
     return;
   }
-  
+
   // 转换为数字
   const numValue = Number(value);
-  
+
   // 如果是负数或0，只提示错误，不自动修改
   if (numValue <= 0) {
     ElMessage.error(t('dataPipelines.streamingBatchSizeMinError'));
@@ -327,16 +330,16 @@ const confirmResourceSelection = async () => {
   // 验证必填项
   if (!tempResourceData.value.cluster_id) {
     ElMessage.error(
-      t("all.pleaseSelect", { value: t("dataPipelines.selectRegion") })
+        t("all.pleaseSelect", { value: t("dataPipelines.selectRegion") })
     );
     return;
   }
   if (
-    tempResourceData.value.space_resource_id === "" ||
-    tempResourceData.value.space_resource_id == null
+      tempResourceData.value.space_resource_id === "" ||
+      tempResourceData.value.space_resource_id == null
   ) {
     ElMessage.error(
-      t("all.pleaseSelect", { value: t("dataPipelines.spaceCloudResources") })
+        t("all.pleaseSelect", { value: t("dataPipelines.spaceCloudResources") })
     );
     return;
   }
@@ -348,15 +351,15 @@ const confirmResourceSelection = async () => {
       ElMessage.error(t('dataPipelines.streamingBatchSizeRequired'));
       return;
     }
-    
+
     const batchSize = Number(streamingBatchSize.value);
-    
+
     // 验证必须是大于等于1的整数
     if (batchSize <= 0) {
       ElMessage.error(t('dataPipelines.streamingBatchSizeMinError'));
       return;
     }
-    
+
     if (!Number.isInteger(batchSize)) {
       ElMessage.error(t('dataPipelines.streamingBatchSizeIntegerError'));
       return;
@@ -365,8 +368,8 @@ const confirmResourceSelection = async () => {
 
   // 解析资源名称
   const spaceNames =
-    spaceResourceSelectRef.value?.resolveSelectionNames?.() ?? {};
-  
+      spaceResourceSelectRef.value?.resolveSelectionNames?.() ?? {};
+
   // 将临时数据赋值给表单
   form.value.cluster_id = tempResourceData.value.cluster_id;
   form.value.space_resource_id = tempResourceData.value.space_resource_id;
@@ -376,7 +379,7 @@ const confirmResourceSelection = async () => {
 
   // 关闭对话框
   resourceDialogVisible.value = false;
-  
+
   // 继续执行保存操作
   if (pendingWorkflowResult.value) {
     await proceedWithSave(pendingWorkflowResult.value);
@@ -414,12 +417,12 @@ const proceedWithSave = async (result) => {
     };
 
     console.log('合并后的数据:', combinedData);
-    
+
     const options = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(combinedData)
     }
-    
+
     const url = type.value === 'edit' ? `/dataflow/algo_templates/${templateId.value}` : '/dataflow/algo_templates'
     const { data, error } = await useFetchApi(url, options)[type.value === 'edit' ? 'put' : 'post']().json()
     console.log(data.value, error.value, "dataerror");
@@ -447,7 +450,7 @@ const proceedWithSave = async (result) => {
 
     // 判断是否使用流式模式
     const useStreaming = executionMode.value === 'streaming';
-    
+
     let combinedData = buildTaskCreatePayload({
       ...form.value,
       job_source: "pipeline",
@@ -467,7 +470,7 @@ const proceedWithSave = async (result) => {
     }
 
     console.log('合并后的数据:', combinedData);
-    
+
     const options = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(combinedData)
@@ -504,10 +507,10 @@ const handleWorkflowSave = async (result) => {
     if (props.init === 'createJobs') {
       // 检查是否支持流式模式
       isStreamingCompatible.value = checkStreamingCompatibility(result.data);
-      
+
       // 保存工作流结果
       pendingWorkflowResult.value = result.data;
-      
+
       // 显示空间资源选择对话框（如果支持流式，会显示执行模式选择）
       resourceDialogVisible.value = true;
       console.log('显示空间资源选择对话框，支持流式模式:', isStreamingCompatible.value);
@@ -561,7 +564,7 @@ const geback = () => {
 .borderBox {
   border-radius: var(--spacing-lg, 12px);
   border: var(--spacing-none, 1px) solid
-    var(--colors-gray-light-mode-200, #eaecf0);
+  var(--colors-gray-light-mode-200, #eaecf0);
   background: var(--Base-White, #fff);
   overflow: hidden;
 }
@@ -599,10 +602,10 @@ const geback = () => {
 // 空间资源对话框样式
 .resource-dialog-content {
   padding: 8px 0;
-  
+
   .space-resource-section {
     margin-bottom: 24px;
-    
+
     .section-title {
       font-size: 16px;
       font-weight: 500;
@@ -610,12 +613,12 @@ const geback = () => {
       margin-bottom: 16px;
     }
   }
-  
+
   .execution-mode-section {
     :deep(.el-divider) {
       margin: 0 0 24px 0;
     }
-    
+
     .section-title {
       font-size: 16px;
       font-weight: 500;
@@ -655,14 +658,14 @@ const geback = () => {
         margin-right: 0;
         height: 32px;
         line-height: 32px;
-        
+
         .el-radio__label {
           font-size: 14px;
           color: #344054;
           font-weight: 400;
           padding-left: 8px;
         }
-        
+
         &.is-checked {
           .el-radio__label {
             color: #3250bd;
@@ -729,7 +732,7 @@ const geback = () => {
       background: #f0f7ff;
       border: 1px solid #d1e9ff;
       border-radius: 8px;
-      
+
       .benefits-title {
         font-size: 14px;
         font-weight: 500;
@@ -740,7 +743,7 @@ const geback = () => {
       ul {
         margin: 0;
         padding-left: 20px;
-        
+
         li {
           font-size: 13px;
           color: #475467;
