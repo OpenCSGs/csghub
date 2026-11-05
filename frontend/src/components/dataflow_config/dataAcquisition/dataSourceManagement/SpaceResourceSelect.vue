@@ -109,6 +109,7 @@
 import { ref, computed, watch, onMounted } from "vue";
 import { ElMessage } from "element-plus";
 import { useI18n } from "vue-i18n";
+import useFetchApi from "../../../../packs/useFetchApi";
 import { formatSpaceResourcePriceLabel } from "../../../../packs/spaceResourcePrice.js";
 
 const props = defineProps({
