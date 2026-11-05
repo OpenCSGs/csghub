@@ -166,44 +166,63 @@
   };
 
   const fetchData = async () => {
+    if (!props.namespacePath || props.namespacePath.includes('undefined')) {
+      loading.value = false
+      return
+    }
+    loading.value = true
     let content = null
 
-    if (props.repoType === 'skill') {
-      const result = await useFetchApi(`/${props.repoType}s/${props.namespacePath}/blob/SKILL.md`).json()
-      content = result.data.value?.data?.content || null
-    }
+    try {
+      if (props.repoType === 'skill') {
+        const result = await useFetchApi(`/${props.repoType}s/${props.namespacePath}/blob/SKILL.md`).json()
+        content = result.data.value?.data?.content || null
+      }
 
-    if (!content) {
-      const result = await useFetchApi(`/${props.repoType}s/${props.namespacePath}/blob/README.md`).json()
-      content = result.data.value?.data?.content || null
-    }
+      if (!content) {
+        const result = await useFetchApi(`/${props.repoType}s/${props.namespacePath}/blob/README.md`).json()
+        content = result.data.value?.data?.content || null
+      }
 
-    if (content) {
-      rawReadmeContent.value = content
-      resolveReadmeContent()
+      if (content) {
+        rawReadmeContent.value = content
+        resolveReadmeContent()
+      }
+    } catch (err) {
+      console.warn('Failed to fetch README/SKILL content:', err)
+    } finally {
+      loading.value = false
     }
-    loading.value = false
   }
 
   const fetchCatalog = async () => {
-    if (props.repoType !== 'dataset') return
+    if (props.repoType !== 'dataset' || !props.namespacePath || props.namespacePath.includes('undefined')) return
 
-    const { error, data } = await useFetchApi(
-      `datasets/${props.namespacePath}/dataviewer/catalog`
-    ).json()
+    try {
+      const { error, data } = await useFetchApi(
+        `datasets/${props.namespacePath}/dataviewer/catalog`
+      ).json()
 
-    if (data.value) {
-      datasetInfo.value = data.value.data.dataset_info
-    } else {
-      ElMessage.warning(error.value.msg || t('all.fetchError'))
+      if (data.value) {
+        datasetInfo.value = data.value.data.dataset_info
+      } else {
+        console.warn('Catalog fetch notice:', error?.value?.msg)
+      }
+    } catch (err) {
+      console.warn('Error fetching dataset catalog:', err)
     }
   }
 
   const fetchRepoRelations = async () => {
-    const url = `/${props.repoType}s/${props.namespacePath}/relations`
-    const { data } = await useFetchApi(url).json()
-    if (data.value) {
-      relations.value = data.value.data
+    if (!props.namespacePath || props.namespacePath.includes('undefined')) return
+    try {
+      const url = `/${props.repoType}s/${props.namespacePath}/relations`
+      const { data } = await useFetchApi(url).json()
+      if (data.value) {
+        relations.value = data.value.data
+      }
+    } catch (err) {
+      console.warn('Error fetching repo relations:', err)
     }
   }
 
@@ -214,12 +233,17 @@
   })
 
   const fetchEndpoint = async () => {
-    const url = `/models/${props.namespacePath}/serverless`
+    if (!props.namespacePath || props.namespacePath.includes('undefined')) return
+    try {
+      const url = `/models/${props.namespacePath}/serverless`
 
-    const { data } = await useFetchApi(url).json()
+      const { data } = await useFetchApi(url).json()
 
-    if (data.value) {
-      endpoint.value = data.value.data
+      if (data.value) {
+        endpoint.value = data.value.data
+      }
+    } catch (err) {
+      console.warn('Error fetching serverless endpoint:', err)
     }
   }
 
