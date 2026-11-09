@@ -3,7 +3,7 @@
 [![OpenCSG Slack에 참여하기](https://img.shields.io/badge/slack-join_chat-white.svg?logo=slack&style=social)](https://join.slack.com/t/opencsghq/shared_invite/zt-2fmtem7hs-s_RmMeoOIoF1qzslql2q~A)  
 [![OpenCSG Discord에 참여하기](https://img.shields.io/badge/discord-join_chat-white.svg?logo=discord&style=social)](https://discord.gg/bXnu4C9BkR)  
 
-**[English](README.md) ∙ [简体中文](README_zh.md) ∙ [日本語](README_jp.md)**
+**[English](README.md) ∙ [简体中文](README_zh.md) ∙ [日本語](README_jp.md) ∙ [Tiếng Việt](README_vi.md)**
 
 ## CSGHub
 
