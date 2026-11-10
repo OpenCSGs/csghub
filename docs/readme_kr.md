@@ -1,4 +1,4 @@
-**[English](/docs/readme_en.md) ∙ [简体中文](/docs/readme_cn.md) ∙ [日本語](/docs/readme_ja.md)  ∙ [한국어](/docs/readme_kr.md)**
+**[English](/docs/readme_en.md) ∙ [简体中文](/docs/readme_cn.md) ∙ [日本語](/docs/readme_ja.md)  ∙ [한국어](/docs/readme_kr.md) ∙ [Tiếng Việt](/docs/readme_vi.md)**
 ## CSGHub 설명 문서
 
 CSGHub는 오픈 소스, 신뢰할 수 있는 대규모 모델 자산 관리 플랫폼으로, LLM 및 LLM 응용 프로그램의 수명 주기에 관련된 자산(데이터 세트, 모델 파일, 코드 등)을 관리하는 데 도움을 줍니다. CSGHub를 통해 사용자는 웹 인터페이스, Git 명령 줄 또는 자연어 Chatbot 등을 사용하여 모델 파일, 데이터 세트, 코드 등의 자산을 업로드, 다운로드, 저장, 검증 및 배포할 수 있습니다. 또한 플랫폼은 마이크로서비스 하위 모듈과 표준화된 API를 제공하여 사용자가 자신의 시스템과 쉽게 통합할 수 있습니다.
