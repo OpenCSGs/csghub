@@ -11,7 +11,6 @@ import (
 	"opencsg.com/portal/pkg/server"
 	"opencsg.com/portal/pkg/server/backend"
 	"opencsg.com/portal/pkg/server/types"
-	"opencsg.com/portal/pkg/utils/jwt"
 )
 
 // ContentTypeFormatMapping is a map of file extensions to MIME types
@@ -40,23 +39,40 @@ type ResolveHandler interface {
 	Resolve(c *gin.Context)
 }
 
+// ResolveHandlerImpl delegates repository access decisions to Server.
 type ResolveHandlerImpl struct {
-	Server   backend.Server
-	jwtUtils jwt.JwtUtils
+	Server backend.Server
 }
 
+// NewResolveHandler creates the repository file proxy.
 func NewResolveHandler(config *config.Config) (ResolveHandler, error) {
 	server, err := server.NewServer(config)
 	if err != nil {
 		return nil, fmt.Errorf("failed to create server: %w", err)
 	}
 	return &ResolveHandlerImpl{
-		Server:   server,
-		jwtUtils: jwt.NewJwtUtils(),
+		Server: server,
 	}, nil
 }
 
+// Resolve proxies repository files using the caller's token or anonymous access.
+// @Summary Resolve a repository file
+// @Tags Repository
+// @Param repo_type path string true "Repository route type" Enums(models,datasets,spaces,codes,mcps,skills)
+// @Param namespace path string true "Repository namespace"
+// @Param name path string true "Repository name"
+// @Param branch path string true "Repository revision"
+// @Param path path string true "File path"
+// @Success 200 {string} string "File content"
+// @Failure 400 {object} map[string]string
+// @Failure 401 {object} map[string]string
+// @Failure 403 {object} map[string]string
+// @Router /{repo_type}/{namespace}/{name}/resolve/{branch}/{path} [get]
 func (i *ResolveHandlerImpl) Resolve(c *gin.Context) {
+	if err := i.buildDownloadReq(c).Validate(); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	i.resolveFileOrContent(c, i.downloadResolveFile, i.getFileContent)
 }
 
@@ -167,20 +183,14 @@ func renderResolveError(ctx *gin.Context, resp *http.Response) {
 	ctx.JSON(statusCode, gin.H{"error": message})
 }
 
+// buildDownloadReq reads only route fields; query and session identities are never forwarded.
 func (i *ResolveHandlerImpl) buildDownloadReq(ctx *gin.Context) types.DownloadReq {
-	userName := ""
-	currentUser := i.jwtUtils.GetCurrentUser(ctx)
-	if currentUser != nil {
-		userName = currentUser.Name
-	}
-
 	return types.DownloadReq{
-		RepoType:    types.RepoType(ctx.Param("repo_type")),
-		Namespace:   ctx.Param("namespace"),
-		Name:        ctx.Param("name"),
-		FilePath:    strings.TrimPrefix(ctx.Param("path"), "/"),
-		CurrentUser: userName,
-		Ref:         ctx.Param("branch"),
+		RepoType:  types.RepoType(ctx.Param("repo_type")),
+		Namespace: ctx.Param("namespace"),
+		Name:      ctx.Param("name"),
+		FilePath:  strings.TrimPrefix(ctx.Param("path"), "/"),
+		Ref:       ctx.Param("branch"),
 	}
 }
 
@@ -197,6 +207,12 @@ func determineContentType(filename string) string {
 	return defaultContentType
 }
 
+// getFileExtension returns a lowercase extension without its dot, or an empty
+// string when the filename has no extension or ends in a dot.
 func getFileExtension(filename string) string {
-	return strings.ToLower(filepath.Ext(filename)[1:])
+	ext := filepath.Ext(filename)
+	if len(ext) > 1 {
+		return strings.ToLower(ext[1:])
+	}
+	return ""
 }
