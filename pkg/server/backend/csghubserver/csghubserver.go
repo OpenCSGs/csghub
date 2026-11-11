@@ -61,8 +61,9 @@ func (c *CsgHubServer) getParsedResponse(method, path string, header http.Header
 	return resp, json.Unmarshal(data, obj)
 }
 
-func (c *CsgHubServer) getParsedUserResponse(userToken, method, path string, header http.Header, body []byte, obj interface{}) (*http.Response, error) {
-	data, resp, err := c.getUserResponse(userToken, method, path, header, body)
+// getParsedRepositoryResponse decodes a repository response without changing identity.
+func (c *CsgHubServer) getParsedRepositoryResponse(path, userToken string, obj any) (*http.Response, error) {
+	data, resp, err := c.getRepositoryResponse(path, userToken)
 	if err != nil {
 		return resp, err
 	}
@@ -92,9 +93,17 @@ func (c *CsgHubServer) getResponse(method, path string, header http.Header, body
 	return data, resp, nil
 }
 
-func (c *CsgHubServer) getUserResponse(userToken, method, path string, header http.Header, body []byte) ([]byte, *http.Response, error) {
-	slog.Info("Server User Request", method, path, headersToString(header), string(body))
-	resp, err := c.doUserRequest(userToken, method, path, header, bytes.NewReader(body))
+// getRepositoryResponse reads a repository with the caller's optional token.
+// Public reads never inherit the service API key or retry rejected credentials.
+func (c *CsgHubServer) getRepositoryResponse(path, userToken string) ([]byte, *http.Response, error) {
+	req, err := http.NewRequestWithContext(c.ctx, http.MethodGet, c.baseURL+"/api/v1"+path, nil)
+	if err != nil {
+		return nil, nil, err
+	}
+	if userToken != "" {
+		req.Header.Set("Authorization", "Bearer "+userToken)
+	}
+	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		return nil, resp, err
 	}
@@ -184,30 +193,4 @@ func (c *CsgHubServer) doRequest(method, path string, header http.Header, body i
 		return nil, err
 	}
 	return resp, nil
-}
-
-func (c *CsgHubServer) doUserRequest(
-	userToken string,
-	method, path string,
-	header http.Header,
-	body io.Reader,
-) (*http.Response, error) {
-
-	req, err := http.NewRequestWithContext(
-		c.ctx,
-		method,
-		c.baseURL+"/api/v1"+path,
-		body,
-	)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Set("Authorization", "Bearer "+userToken)
-
-	for k, v := range header {
-		req.Header[k] = v
-	}
-
-	return c.httpClient.Do(req)
 }
