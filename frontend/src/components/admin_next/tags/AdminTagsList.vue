@@ -10,7 +10,7 @@
         :placeholder="$t('admin.tags.searchPlaceholder')"
         size="large"
         clearable
-        @input="handleSearch"
+        @input="fetchFirstPage"
         class="flex-1"
       />
 
@@ -41,7 +41,7 @@
         v-model="keyword"
         size="large"
         :placeholder="$t('admin.tags.category')"
-        @change="fetchtags"
+        @change="fetchFirstPage"
         class="flex-1">
         <el-option
           v-for="c in avaliableCategories"
@@ -71,7 +71,7 @@
     </div>
 
     <Table
-      :data="paginatedTags"
+      :data="tags"
       size="small"
       :border="false"
       v-loading="loading"
@@ -141,11 +141,11 @@
         #footer
         v-if="total > 0">
         <Pagination
-          v-model:current-page="page"
+          :current-page="page"
           :page-size="per"
           layout="prev, pager, next"
           :total="total"
-          @current-change="handlePageChange" />
+          @update:current-page="handlePageChange" />
       </template>
     </Table>
 
@@ -235,55 +235,50 @@
     }
   })
 
-  const paginatedTags = computed(() => {
-    if (!Array.isArray(tags.value) || tags.value.length === 0) {
-      return []
-    } else {
-      const start = (page.value - 1) * per.value
-      const end = start + per.value
-      return tags.value.slice(start, end)
-    }
-  })
+  let latestRequest = 0
 
   const handlePageChange = (newPage) => {
-    page.value = newPage
+    if (page.value !== newPage) {
+      page.value = newPage
+      fetchtags()
+    }
+  }
+
+  const fetchFirstPage = () => {
+    page.value = 1
+    fetchtags()
   }
 
   const fetchtagsAndResetCategory = () => {
     keyword.value = ''
-    fetchtags()
+    fetchFirstPage()
   }
 
-  const fetchtags = async (current) => {
+  const fetchtags = async () => {
+    const request = ++latestRequest
     loading.value = true
+    const params = new URLSearchParams({ page: page.value, per: per.value })
+    if (keyword.value) params.set('category', keyword.value)
+    if (scope.value) params.set('scope', scope.value)
+    if (searchText.value) params.set('search', searchText.value)
 
-    const params = new URLSearchParams({
-      page: current || page.value,
-      per: per.value
-    });
-
-    if (keyword.value) {
-      params.append('category', keyword.value);
-    }
-    if (scope.value) {
-      params.append('scope', scope.value);
-    }
-    if (searchText.value) {
-      params.append('search', searchText.value);
-    }
-
-    const { data, error } = await useFetchApi(
-      `/tags?${params.toString()}`
-    ).json()
-
-    if (data.value) {
+    try {
+      const { data, error } = await useFetchApi(`/tags?${params}`).json()
+      if (request !== latestRequest) return
+      if (error.value) {
+        ElMessage.error(error.value.msg || error.value)
+        return
+      }
+      total.value = data.value.total ?? 0
+      const lastPage = Math.max(1, Math.ceil(total.value / per.value))
+      if (page.value > lastPage) {
+        handlePageChange(lastPage)
+        return
+      }
       tags.value = data.value.data
-      total.value = data.value.data?.length || 0
-    } else {
-      ElMessage.error(error.value.msg)
+    } finally {
+      if (request === latestRequest) loading.value = false
     }
-    page.value = 1
-    loading.value = false
   }
 
   const deleteTag = async (tag) => {
@@ -321,11 +316,6 @@
     } else {
       ElMessage.error(error.value.msg)
     }
-  }
-
-  const handleSearch = () => {
-    page.value = 1
-    fetchtags()
   }
 
   onMounted(() => {
